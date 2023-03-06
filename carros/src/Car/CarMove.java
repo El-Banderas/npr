@@ -1,6 +1,7 @@
 package Car;
 
 import Common.Constants;
+import Common.Messages.SendMessages;
 import Common.Position;
 import Common.TowerInfo;
 
@@ -21,7 +22,7 @@ public class CarMove {
             info.pos.getPosition();
             System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
             checkPossibleCommunication();
-            Thread.sleep(100);
+            Thread.sleep(Constants.refreshRate);
         }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -32,7 +33,8 @@ public class CarMove {
     private void checkPossibleCommunication() {
         for (TowerInfo tower : towers){
             if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
-                System.out.println("Posso comunicar!!!");
+                SendMessages.carHelloTower(info.infoNode, tower.connectionInfo);
+                System.out.println("Send message");
             }
         }
     }

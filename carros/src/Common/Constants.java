@@ -2,6 +2,7 @@ package Common;
 
 public final class Constants {
     public static boolean linux = false;
+    public static int refreshRate = 500;
 
     /**
      * Map Constants, in Windows?
@@ -16,4 +17,6 @@ public final class Constants {
      * Tower
      */
     public static int towerCommunicationRadius = 10;
+    // When in linux, port of tower:
+    public static int towerPort = 7000;
 }

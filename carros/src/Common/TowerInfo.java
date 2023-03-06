@@ -1,15 +1,13 @@
 package Common;
 
-import java.net.InetAddress;
-
 public class TowerInfo {
     public String name;
-    public InetAddress ip;
+    public InfoNode connectionInfo;
     public Position pos;
 
-    public TowerInfo(String name, InetAddress ip, Position pos) {
+    public TowerInfo(String name, InfoNode connectionInfo, Position pos) {
         this.name = name;
-        this.ip = ip;
+        this.connectionInfo = connectionInfo;
         this.pos = pos;
     }
 
@@ -17,7 +15,7 @@ public class TowerInfo {
     public String toString() {
         return "TowerInfo{" +
                 "name='" + name + '\'' +
-                ", ip=" + ip +
+                ", ip=" + connectionInfo +
                 ", pos=" + pos +
                 '}';
     }
