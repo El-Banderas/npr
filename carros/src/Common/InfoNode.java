@@ -22,18 +22,30 @@ public class InfoNode {
     }
 
     public InfoNode(InetAddress ip, int port, boolean createSocket) {
-        this.ip = ip;
         this.port = port;
+        this.ip = ip;
         if (createSocket) {
+            try {
+                socket = new DatagramSocket(port);
+                this.ip = socket.getLocalAddress();
+            } catch (SocketException e) {
+                System.out.println("[Expetion] Error creating socket");
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+    public InfoNode(int port) {
             try {
                 socket = new DatagramSocket(port);
             } catch (SocketException e) {
                 System.out.println("[Expetion] Error creating socket");
                 throw new RuntimeException(e);
             }
-        }
-    }
+        this.ip = socket.getLocalAddress();
 
+    }
     public InfoNode() {
+
     }
 }

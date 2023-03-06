@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Windows: File path that stores the information about towers
  * Example: "src/Car/TowersPosWindows"
+ * Linux parece que é igual...
  *
  */
 public class Main {
@@ -80,16 +81,25 @@ else
     public static void main(String[] args) {
 
         System.out.println("Is linux?: " + Constants.linux);
+        // Information about towers
+        List<TowerInfo> towers = parseFile(args[0]);
+        System.out.println(towers);
+        Position pos;
+        CarInfo info;
         if (!Constants.linux) {
-            // Information about towers
-            List<TowerInfo> towers = parseFile(args[0]);
-            System.out.println(towers);
-            Position pos = new PositionCarWindows(0,0);
+            pos = new PositionCarWindows(0,0);
             InfoNodeWindows infoCarConnection = new InfoNodeWindows();
-            CarInfo info = new CarInfo(pos, infoCarConnection);
-            // Depois separar em 2 threads: comunicações e terminal
-            CarMove carMove = new CarMove(info, towers);
-            carMove.run();
+            info = new CarInfo(pos, infoCarConnection);
         }
+        else {
+            // Depois alterar para usar a forma como se deteta posição no CORE
+            pos = new PositionCarWindows(0,0);
+            InfoNode infoCarConnection = new InfoNode(Constants.carPort);
+            info = new CarInfo(pos, infoCarConnection);
+        }
+        // Depois separar em 2 threads: comunicações e terminal
+        CarMove carMove = new CarMove(info, towers);
+        carMove.run();
+
     }
 }

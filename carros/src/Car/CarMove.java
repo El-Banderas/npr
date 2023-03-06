@@ -19,6 +19,7 @@ public class CarMove {
         try {
 
         while(true){
+            // Depois meter um if aqui para que no linux não atualize a posição
             info.pos.getPosition();
             System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
             checkPossibleCommunication();

@@ -33,6 +33,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "last_opened_file_path": "C:/Users/35193/Desktop/npr/carros/src/Car",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -56,7 +59,7 @@
     <configuration name="Tower1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Tower.Main" />
       <module name="carros" />
-      <option name="PROGRAM_PARAMETERS" value="t1 8000 50 50" />
+      <option name="PROGRAM_PARAMETERS" value="t1 8000 40 40" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

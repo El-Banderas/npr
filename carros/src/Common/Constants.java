@@ -1,7 +1,7 @@
 package Common;
 
 public final class Constants {
-    public static boolean linux = false;
+    public static boolean linux = true;
     public static int refreshRate = 500;
 
     /**
@@ -19,4 +19,9 @@ public final class Constants {
     public static int towerCommunicationRadius = 10;
     // When in linux, port of tower:
     public static int towerPort = 7000;
+
+    /**
+     * Car
+     */
+    public static int carPort = 6000;
 }
