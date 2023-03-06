@@ -4,6 +4,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+/**
+ * Here we store the connection information about one node.
+ * Can also store the socket, necessary to send messages.
+ */
 public class InfoNode {
     public InetAddress ip;
     public int port;

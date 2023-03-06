@@ -13,26 +13,32 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Windows: File path that stores the information about towers
+ * Example: "src/Car/TowersPosWindows"
+ *
+ */
 public class Main {
+    // Parse file that contains information about the RSU's
 
     public static List<TowerInfo> parseFile(String filePath){
         try {
             List<TowerInfo> res = new ArrayList<>();
             Scanner scanner = new Scanner(new File(filePath));
-            // Ignore first line
+            // Ignore first line, header
             scanner.nextLine();
             Pattern pattern;
+            // Linux contains IPS; Windows contains PORTS
 if (Constants.linux)
             pattern = Pattern.compile("(\\w+);((\\d+.){3}\\d+);(\\d+),(\\d+);");
 else
     pattern = Pattern.compile("(\\w+);(\\d+.);(\\d+),(\\d+);");
 
-            //Pattern pattern = Pattern.compile("(.*)");
             while (scanner.hasNextLine()) {
                 String fileLine = scanner.nextLine();
-                System.out.println(fileLine);
                 Matcher matcher = pattern.matcher(fileLine);
                 if (matcher.find()) {
+                    // Tower name
                     String name = matcher.group(1);
 
                     InfoNode infoNode;
@@ -75,8 +81,7 @@ else
 
         System.out.println("Is linux?: " + Constants.linux);
         if (!Constants.linux) {
-           // System.out.println(args[0]);
-
+            // Information about towers
             List<TowerInfo> towers = parseFile(args[0]);
             System.out.println(towers);
             Position pos = new PositionCarWindows(0,0);

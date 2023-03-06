@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
  * Windows
  * Name (unecessary) | Port | PosX | PosY
  * The port must be the same as the file.
+ * Example: "t1 8000 50 50"
  */
 public class Main {
     public static void main(String[] args) throws UnknownHostException, SocketException{

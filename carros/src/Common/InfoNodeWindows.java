@@ -5,6 +5,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+/**
+ * Only used to initialize InfoNodes in Windows, where the IP is localhost.
+ */
+
 public class InfoNodeWindows extends InfoNode{
 
     // Used to create towers
