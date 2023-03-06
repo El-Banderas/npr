@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="carros:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/carros_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="carro:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/carro_jar</output-path>
     <root id="archive" name="carros.jar">
       <element id="module-output" name="carros" />
     </root>
