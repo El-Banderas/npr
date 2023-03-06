@@ -1,0 +1,19 @@
+package Common;
+
+public final class Constants {
+    public static boolean linux = false;
+
+    /**
+     * Map Constants, in Windows?
+     */
+    public static int minXmap = 0;
+    public static int maxXmap = 100;
+    public static int minYmap = 0;
+    public static int maxYmap = 100;
+
+
+    /**
+     * Tower
+     */
+    public static int towerCommunicationRadius = 10;
+}
