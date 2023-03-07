@@ -1,7 +1,7 @@
 package Common;
 
 public final class Constants {
-    public static boolean linux = true;
+    public static boolean linux = false;
     public static int refreshRate = 500;
 
     /**
