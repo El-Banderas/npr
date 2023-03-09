@@ -14,6 +14,13 @@ public class SendMessages {
         sendMessage(sender, packet);
     }
 
+    public static void towerHelloCloud(InfoNode sender, InfoNode destination){
+        byte[]  buf = "Hello".getBytes();
+        DatagramPacket packet
+                = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
+        sendMessage(sender, packet);
+    }
+
     public static void sendMessage(InfoNode send, DatagramPacket packet){
         try {
             send.socket.send(packet);

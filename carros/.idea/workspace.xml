@@ -44,14 +44,22 @@
       <recent name="C:\Users\35193\Desktop\npr\carros\src\Car" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Cloud" />
       <recent name="Common" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Car1">
+  <component name="RunManager" selected="Application.Tower1">
     <configuration name="Car1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Car.Main" />
       <module name="carros" />
       <option name="PROGRAM_PARAMETERS" value="src/Car/TowersPosWindows" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Cloud" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Cloud.Main" />
+      <module name="carros" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -67,6 +75,7 @@
     <list>
       <item itemvalue="Application.Car1" />
       <item itemvalue="Application.Tower1" />
+      <item itemvalue="Application.Cloud" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
