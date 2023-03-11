@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="out/artifacts/carro_jar/carros.jar"/>
+	<classpathentry kind="lib" path="out/artifacts/carros_jar/carros.jar"/>
+	<classpathentry kind="lib" path="out/artifacts/carros_jar2/carros.jar"/>
+	<classpathentry kind="output" path="out/production/carros"/>
+</classpath>
