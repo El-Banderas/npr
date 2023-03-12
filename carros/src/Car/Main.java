@@ -93,7 +93,7 @@ public class Main {
 			// Read node name
 			System.out.println("Working Directory = " + System.getProperty("user.dir"));
 			//Pattern p = Pattern.compile("(\\/tmp\\/pycore\\.\\d+\\/)(\\w+)\\.conf");
-			Pattern p = Pattern.compile("\\/tmp\\/");
+			Pattern p = Pattern.compile("/tmp");
 			Matcher m = p.matcher(System.getProperty("user.dir"));
 			System.out.println("match = " + m.group());
 			String parent_dir = m.group(1);
