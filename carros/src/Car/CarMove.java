@@ -31,6 +31,7 @@ public class CarMove {
 	}
 
 	private void checkPossibleCommunication() {
+		System.out.println("Check Possible communication");
 		for (TowerInfo tower : towers){
 			if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
 				SendMessages.carHelloTower(info.infoNode, tower.connectionInfo);

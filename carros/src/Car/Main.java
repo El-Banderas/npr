@@ -30,7 +30,7 @@ public class Main {
 			Pattern pattern;
 			// Linux contains IPS; Windows contains PORTS
 			if (Constants.linux)
-				pattern = Pattern.compile("(\\w+);((\\d+.){3}\\d+);(\\d+),(\\d+);");
+				pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 			else
 				pattern = Pattern.compile("(\\w+);(\\d+.);(\\d+),(\\d+);");
 
@@ -117,7 +117,7 @@ public class Main {
 
 			System.out.println("Node Coordinates = " + x + " " + y);
 			pos = new PositionCarWindows(x,y);
-			InfoNode infoCarConnection = new InfoNode(Constants.carPort);
+			InfoNodeMulticast infoCarConnection = new InfoNodeMulticast(true);
 			info = new CarInfo(pos, infoCarConnection);
 		}
 		// Depois separar em 2 threads: comunicações e terminal
