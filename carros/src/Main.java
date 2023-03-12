@@ -1,18 +1,30 @@
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+
 public class Main {
 
-	public static void imprime_numeros(int max){
-		for (int i = 0; i < max; i++){
-			System.out.println(i);
+	/**
+	 * Generate executable for all applications to test in linux
+	 * First argument -> 0 -> Car
+	 * Car arguments (file): "src/Car/TowersPosWindows"
+	 * First argument -> 1 -> Tower
+	 * Tower arguments: t1 40 40
+	 * @param args
+	 */
+
+	public static void main(String[] args) throws SocketException, UnknownHostException {
+		String[] restArguments = Arrays.copyOfRange(args, 1, args.length);
+		if (Integer.parseInt(args[0]) == 0){
+			System.out.println("Execute car");
+			Car.Main.main(restArguments);
+			return;
 		}
-		for (int i = max; i > 0; i--){
-			System.out.println(i);
+		if (Integer.parseInt(args[0]) == 1){
+			System.out.println("Execute Tower");
+
+			Tower.Main.main(restArguments);
+			return;
 		}
-	}
-	public static void main(String[] args) {
-		int n_repeticoes = 3;
-		int max = 5;
-	for (int vez_atual = 0; vez_atual < n_repeticoes; vez_atual++){
-		imprime_numeros(max);
-	}
 	}
 }

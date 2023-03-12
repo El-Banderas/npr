@@ -79,7 +79,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		System.out.println("Is linux?: " + Constants.linux);
+		System.out.println("[CAR] Is linux?: " + Constants.linux);
 		
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);
