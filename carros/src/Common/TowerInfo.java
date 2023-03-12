@@ -15,7 +15,7 @@ public class TowerInfo {
 	public String toString() {
 		return "TowerInfo{" +
 				"name='" + name + '\'' +
-				", ip=" + connectionInfo +
+				", Socket=" + connectionInfo.socket +
 				", pos=" + pos +
 				'}';
 	}

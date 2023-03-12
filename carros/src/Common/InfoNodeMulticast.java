@@ -11,9 +11,6 @@ import java.net.SocketException;
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNodeMulticast extends InfoNode {
-	public InetAddress ip;
-	public int port;
-	public MulticastSocket socket;
 
 	@Override
 	public String toString() {
@@ -23,14 +20,20 @@ public class InfoNodeMulticast extends InfoNode {
 				'}';
 	}
 
-	public InfoNodeMulticast(boolean createSocket) {
-		this.port = port;
-		this.ip = ip;
-		try {
-			socket = new MulticastSocket(Constants.portCarsTowersLinux);
-			socket.joinGroup(Constants.MulticastGroup); //deprecated
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-}
+    public InfoNodeMulticast(boolean createSocket) {
+        super();
+        try {
+            if (createSocket) {
+
+                MulticastSocket multicastSocket = new MulticastSocket(Constants.portCarsTowersLinux);
+                multicastSocket.joinGroup(Constants.MulticastGroup);
+                this.socket = multicastSocket;
+                this.port = Constants.portCarsTowersLinux;
+                this.ip =socket.getLocalAddress();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+   }
