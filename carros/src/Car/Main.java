@@ -49,7 +49,7 @@ public class Main {
 					// If is in linux, receives an IP
 					if (Constants.linux) {
 						infoNode = new InfoNode(Constants.MulticastGroup, Constants.towerPort, false);
-						pos = new Position(Integer.parseInt(matcher.group(3)), Integer.parseInt(matcher.group(4)));
+						pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 					}
 					else // If is in windows, receives a port, because IP it's localhost
 					{
