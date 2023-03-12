@@ -50,6 +50,8 @@ public class Main {
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
+		System.out.println("IP do socket?");
+		System.out.println(thisTower.connectionInfo.socket.getLocalAddress());
 		thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
 		while(true){
 			try {
