@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 
 public class SendMessages {
 
+
     public static void carHelloTower(InfoNode sender, InfoNode destination){
         byte[]  buf = "Hello".getBytes();
         DatagramPacket packet;

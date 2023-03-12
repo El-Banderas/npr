@@ -14,6 +14,7 @@ public final class Constants {
     private static final String MCAST_ADDR = "FF7E:230::1234";
     public static InetAddress MulticastGroup;
 
+
     static {
         try {
             MulticastGroup = InetAddress.getByName(MCAST_ADDR);
