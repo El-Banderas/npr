@@ -11,28 +11,26 @@ import java.net.SocketException;
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNodeMulticast extends InfoNode {
-    public InetAddress ip;
-    public int port;
-    public MulticastSocket socket;
+	public InetAddress ip;
+	public int port;
+	public MulticastSocket socket;
 
-    @Override
-    public String toString() {
-        return "InfoNode{" +
-                "ip=" + ip.toString() +
-                ", port=" + port +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "InfoNode{" +
+				"ip=" + ip.toString() +
+				", port=" + port +
+				'}';
+	}
 
-    public InfoNodeMulticast(boolean createSocket) {
-        this.port = port;
-        this.ip = ip;
-        try {
-            socket = new MulticastSocket(Constants.portCarsTowersLinux);
-            socket.joinGroup(Constants.MulticastGroup);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-   }
+	public InfoNodeMulticast(boolean createSocket) {
+		this.port = port;
+		this.ip = ip;
+		try {
+			socket = new MulticastSocket(Constants.portCarsTowersLinux);
+			socket.joinGroup(Constants.MulticastGroup); //deprecated
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+}

@@ -23,46 +23,45 @@ import java.net.UnknownHostException;
  * Example: "t1 40 40"
  */
 public class Main {
-    public static void main(String[] args) throws UnknownHostException, SocketException{
+	public static void main(String[] args) throws UnknownHostException, SocketException {
 
-        System.out.println("[TOWER] Is linux?: " + Constants.linux);
-            String name = args[0];
+		System.out.println("[TOWER] Is linux?: " + Constants.linux);
+		
+		String name = args[0];
 
-            InfoNode towerIPInfo;
-            Position pos;
-            InfoNode cloud;
+		InfoNode towerIPInfo;
+		Position pos;
+		InfoNode cloud;
 
-        if (Constants.linux) {
-            towerIPInfo = new InfoNodeMulticast(true);
-            // TODO: Change position tower
-            pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-            //cloud = new InfoNode(null, CloudConstants.port, false);
-        }
-        else {
-            towerIPInfo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
-            pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-            cloud = new InfoNodeWindows(CloudConstants.port, false);
+		if (Constants.linux) {
+			towerIPInfo = new InfoNodeMulticast(true);
+			// TODO: Change position tower
+			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+			//cloud = new InfoNode(null, CloudConstants.port, false);
+		}
+		else {
+			towerIPInfo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
+			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+			cloud = new InfoNodeWindows(CloudConstants.port, false);
+		}
+		
+		TowerInfo thisTower = new TowerInfo(name, towerIPInfo, pos);
+		System.out.println(thisTower);
 
+		byte[] buf = new byte[256];
+		DatagramPacket packet = new DatagramPacket(buf, buf.length);
+		thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
+		while(true){
+			try {
+				//towerHelloCloud(thisTower.connectionInfo, cloud);
+				thisTower.connectionInfo.socket.receive(packet);
+				System.out.println("[TOWER] Message received");
+			} catch (IOException e) {
+				System.out.println("[TOWER] Timeout passed. Nothing received.");
+				System.out.println("Receiving in: "+thisTower.connectionInfo.socket.getLocalAddress() +" | "+  thisTower.connectionInfo.socket.getLocalPort() );
 
-        }
-            TowerInfo thisTower = new TowerInfo(name, towerIPInfo, pos);
-            System.out.println(thisTower);
+			}
 
-            byte[] buf = new byte[256];
-        DatagramPacket packet
-                = new DatagramPacket(buf, buf.length);
-        thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
-            while(true){
-                try {
-                    //towerHelloCloud(thisTower.connectionInfo, cloud);
-                    thisTower.connectionInfo.socket.receive(packet);
-                    System.out.println("[TOWER] Message received");
-                } catch (IOException e) {
-                    System.out.println("[TOWER] Timeout passed. Nothing received.");
-                    System.out.println("Receiving in: "+thisTower.connectionInfo.socket.getLocalAddress() +" | "+  thisTower.connectionInfo.socket.getLocalPort() );
-
-                }
-
-            }
-        }
-    }
+		}
+	}
+}
