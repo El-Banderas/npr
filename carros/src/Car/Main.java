@@ -48,9 +48,8 @@ public class Main {
 					Position pos;
 					// If is in linux, receives an IP
 					if (Constants.linux) {
-						InetAddress ip = InetAddress.getByName(matcher.group(2));
-						infoNode = new InfoNode(ip, Constants.towerPort, false);
-						pos = new Position(Integer.parseInt(matcher.group(4)), Integer.parseInt(matcher.group(5)));
+						infoNode = new InfoNode(Constants.MulticastGroup, Constants.towerPort, false);
+						pos = new Position(Integer.parseInt(matcher.group(3)), Integer.parseInt(matcher.group(4)));
 					}
 					else // If is in windows, receives a port, because IP it's localhost
 					{
