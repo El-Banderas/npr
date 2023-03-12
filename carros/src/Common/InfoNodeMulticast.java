@@ -24,12 +24,10 @@ public class InfoNodeMulticast extends InfoNode {
     }
 
     public InfoNodeMulticast(boolean createSocket) {
-        this.port = port;
-        this.ip = ip;
         try {
             socket = new MulticastSocket(Constants.portCarsTowersLinux);
             socket.joinGroup(Constants.MulticastGroup);
-
+            this.ip = socket.getLocalAddress();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
