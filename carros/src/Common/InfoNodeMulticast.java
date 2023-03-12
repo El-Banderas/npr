@@ -30,6 +30,7 @@ public class InfoNodeMulticast extends InfoNode {
                 this.socket = multicastSocket;
                 this.port = Constants.portCarsTowersLinux;
                 this.ip =socket.getLocalAddress();
+                System.out.println("IP do multicast: " + this.ip);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
