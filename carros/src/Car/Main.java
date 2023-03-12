@@ -109,6 +109,7 @@ public class Main {
 			}
 			Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
 			Matcher m1 = p1.matcher(xy);
+			m1.find();
 			int x = Integer.parseInt(m1.group(1));
 			int y = Integer.parseInt(m1.group(2));
 
