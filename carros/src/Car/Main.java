@@ -36,6 +36,8 @@ public class Main {
 
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
+				System.out.println("Linha do ficheiro:");
+				System.out.println(fileLine);
 				Matcher matcher = pattern.matcher(fileLine);
 				if (matcher.find()) {
 					// Tower name

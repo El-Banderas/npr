@@ -28,17 +28,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/35193/Desktop/npr/carros/src/Car",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/35193/Desktop/npr/carros/src/Car&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\35193\Desktop\npr\carros\src\Car" />
@@ -48,11 +48,11 @@
       <recent name="Cloud" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Tower1">
+  <component name="RunManager" selected="Application.Car1">
     <configuration name="Car1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Car.Main" />
       <module name="carros" />
-      <option name="PROGRAM_PARAMETERS" value="src/Car/TowersPosWindows" />
+      <option name="PROGRAM_PARAMETERS" value="src/Car/TowersPos" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -72,9 +72,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="carros" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Car1" />
       <item itemvalue="Application.Tower1" />
+      <item itemvalue="Application.Unnamed" />
       <item itemvalue="Application.Cloud" />
     </list>
   </component>

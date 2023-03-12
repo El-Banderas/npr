@@ -1,13 +1,18 @@
 public class Main {
 
-	/**
-	 * Coisas que temos de ver
-	 * Como verifica se é windows ou linux? Pelo argumento do terminal, ou pelo ficheiro de constantes?
-	 * @param args
-	 */
-
+	public static void imprime_numeros(int max){
+		for (int i = 0; i < max; i++){
+			System.out.println(i);
+		}
+		for (int i = max; i > 0; i--){
+			System.out.println(i);
+		}
+	}
 	public static void main(String[] args) {
-
-		System.out.println("Hello world!");
+		int n_repeticoes = 3;
+		int max = 5;
+	for (int vez_atual = 0; vez_atual < n_repeticoes; vez_atual++){
+		imprime_numeros(max);
+	}
 	}
 }
