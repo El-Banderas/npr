@@ -1,7 +1,9 @@
 package Common;
 
+import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.net.SocketException;
 
 /**
@@ -26,10 +28,12 @@ public class InfoNode {
         this.ip = ip;
         if (createSocket) {
             try {
-                socket = new DatagramSocket(port);
-                this.ip = socket.getLocalAddress();
+                    socket = new DatagramSocket(port);
+                    this.ip = socket.getLocalAddress();
             } catch (SocketException e) {
                 System.out.println("[Expetion] Error creating socket");
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -37,7 +41,11 @@ public class InfoNode {
     }
     public InfoNode(int port) {
             try {
+                if (!Constants.linux)
                 socket = new DatagramSocket(port);
+                else
+                    socket = new DatagramSocket();
+
             } catch (SocketException e) {
                 System.out.println("[Expetion] Error creating socket");
                 throw new RuntimeException(e);

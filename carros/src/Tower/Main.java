@@ -8,8 +8,6 @@ import java.net.DatagramPacket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import static Common.Messages.SendMessages.towerHelloCloud;
-
 /**
  * Arguments:
  * Windows
@@ -34,7 +32,8 @@ public class Main {
             Position pos;
             InfoNode cloud;
         if (Constants.linux) {
-            towerIPInfo = new InfoNode(null, Constants.towerPort, true);
+            towerIPInfo = new InfoNodeMulticast(true);
+            // TODO: Change position tower
             pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
             cloud = new InfoNode(null, CloudConstants.port, false);
         }
@@ -54,7 +53,7 @@ public class Main {
         thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
             while(true){
                 try {
-                    towerHelloCloud(thisTower.connectionInfo, cloud);
+                    //towerHelloCloud(thisTower.connectionInfo, cloud);
                     thisTower.connectionInfo.socket.receive(packet);
                     System.out.println("[TOWER] Message received");
                 } catch (IOException e) {

@@ -1,5 +1,6 @@
 package Common.Messages;
 
+import Common.Constants;
 import Common.InfoNode;
 
 import java.io.IOException;
@@ -9,8 +10,15 @@ public class SendMessages {
 
     public static void carHelloTower(InfoNode sender, InfoNode destination){
         byte[]  buf = "Hello".getBytes();
-        DatagramPacket packet
-                = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
+        DatagramPacket packet;
+        if (Constants.linux){
+            packet
+                    = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portCarsTowersLinux);
+        }
+        else {
+            packet
+                    = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
+        }
         sendMessage(sender, packet);
     }
 

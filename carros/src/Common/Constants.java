@@ -1,8 +1,28 @@
 package Common;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public final class Constants {
     public static boolean linux = false;
     public static int refreshRate = 500;
+
+    /**
+     * Connection's
+     */
+
+    private static final String MCAST_ADDR = "FF7E:230::1234";
+    public static InetAddress MulticastGroup;
+
+    static {
+        try {
+            MulticastGroup = InetAddress.getByName(MCAST_ADDR);
+        } catch (UnknownHostException e) {
+            //throw new RuntimeException(e);
+            System.out.println("Error creating multicast adress");
+        }
+    }
+    public static int portCarsTowersLinux = 6000;
 
     /**
      * Map Constants, in Windows?
@@ -16,7 +36,7 @@ public final class Constants {
     /**
      * Tower
      */
-    public static int towerCommunicationRadius = 10;
+    public static int towerCommunicationRadius = 100;
     // When in linux, port of tower:
     public static int towerPort = 7000;
 
