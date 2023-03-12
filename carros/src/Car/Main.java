@@ -78,7 +78,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		System.out.println("Is linux?: " + Constants.linux);
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);
@@ -91,8 +90,29 @@ public class Main {
 			info = new CarInfo(pos, infoCarConnection);
 		}
 		else {
-			// Depois alterar para usar a forma como se deteta posição no CORE
-			pos = new PositionCarWindows(0,0);
+			// Read node name
+			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+			Pattern p = Pattern.compile("(/tmp/pycore\\.\\d+/)(\\w+)\\.conf");
+			Matcher m = p.matcher(System.getProperty("user.dir"));
+			String parent_dir = m.group(1);
+			String node_name = m.group(2);
+			
+			// Read xy contents
+			System.out.println("Node Coordinates file = " + parent_dir + node_name + ".xy");
+			String xy = "0.0 0.0";
+			try {
+				Scanner scanner = new Scanner(new File(parent_dir + node_name + ".xy"));
+				xy = scanner.nextLine();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
+			Matcher m1 = p1.matcher(xy);
+			int x = Integer.parseInt(m1.group(1));
+			int y = Integer.parseInt(m1.group(2));
+
+			System.out.println("Node Coordinates = " + x + " " + y);
+			pos = new PositionCarWindows(x,y);
 			InfoNode infoCarConnection = new InfoNode(Constants.carPort);
 			info = new CarInfo(pos, infoCarConnection);
 		}
