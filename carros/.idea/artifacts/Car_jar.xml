@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="torre:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/torre_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="Car:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Car_jar</output-path>
     <root id="archive" name="carros.jar">
       <element id="module-output" name="carros" />
     </root>

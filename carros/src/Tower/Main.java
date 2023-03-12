@@ -25,7 +25,7 @@ import java.net.UnknownHostException;
 public class Main {
     public static void main(String[] args) throws UnknownHostException, SocketException{
 
-        System.out.println("Is linux?: " + Constants.linux);
+        System.out.println("[TOWER] Is linux?: " + Constants.linux);
             String name = args[0];
 
             InfoNode towerIPInfo;
