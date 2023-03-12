@@ -11,49 +11,49 @@ import java.net.SocketException;
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNode {
-    public InetAddress ip;
-    public int port;
-    public DatagramSocket socket;
+	public InetAddress ip;
+	public int port;
+	public DatagramSocket socket;
 
-    @Override
-    public String toString() {
-        return "InfoNode{" +
-                "ip=" + ip.toString() +
-                ", port=" + port +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "InfoNode{" +
+				"ip=" + ip.toString() +
+				", port=" + port +
+				'}';
+	}
 
-    public InfoNode(InetAddress ip, int port, boolean createSocket) {
-        this.port = port;
-        this.ip = ip;
-        if (createSocket) {
-            try {
-                    socket = new DatagramSocket(port);
-                    this.ip = socket.getLocalAddress();
-            } catch (SocketException e) {
-                System.out.println("[Expetion] Error creating socket");
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+	public InfoNode(InetAddress ip, int port, boolean createSocket) {
+		this.port = port;
+		this.ip = ip;
+		if (createSocket) {
+			try {
+				socket = new DatagramSocket(port);
+				this.ip = socket.getLocalAddress();
+			} catch (SocketException e) {
+				System.out.println("[Expetion] Error creating socket");
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	
+	public InfoNode(int port) {
+		try {
+			if (!Constants.linux)
+				socket = new DatagramSocket(port);
+			else
+				socket = new DatagramSocket();
 
-    }
-    public InfoNode(int port) {
-            try {
-                if (!Constants.linux)
-                socket = new DatagramSocket(port);
-                else
-                    socket = new DatagramSocket();
+		} catch (SocketException e) {
+			System.out.println("[Expetion] Error creating socket");
+			throw new RuntimeException(e);
+		}
+		this.ip = socket.getLocalAddress();
 
-            } catch (SocketException e) {
-                System.out.println("[Expetion] Error creating socket");
-                throw new RuntimeException(e);
-            }
-        this.ip = socket.getLocalAddress();
-
-    }
-    public InfoNode() {
-
-    }
+	}
+	
+	public InfoNode() {
+	}
 }

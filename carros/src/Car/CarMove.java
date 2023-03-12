@@ -8,35 +8,34 @@ import Common.TowerInfo;
 import java.util.List;
 
 public class CarMove {
-    private CarInfo info;
-    private  List<TowerInfo> towers;
+	private CarInfo info;
+	private  List<TowerInfo> towers;
 
-    public CarMove(CarInfo info, List<TowerInfo> towers) {
-        this.info = info;
-        this.towers = towers;
-    }
-    public void run(){
-        try {
+	public CarMove(CarInfo info, List<TowerInfo> towers) {
+		this.info = info;
+		this.towers = towers;
+	}
+	
+	public void run(){
+		try {
+			while(true){
+				// Depois meter um if aqui para que no linux não atualize a posição
+				info.pos.getPosition();
+				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
+				checkPossibleCommunication();
+				Thread.sleep(Constants.refreshRate);
+			}
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-        while(true){
-            // Depois meter um if aqui para que no linux não atualize a posição
-            info.pos.getPosition();
-            System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-            checkPossibleCommunication();
-            Thread.sleep(Constants.refreshRate);
-        }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    private void checkPossibleCommunication() {
-        for (TowerInfo tower : towers){
-            if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
-                SendMessages.carHelloTower(info.infoNode, tower.connectionInfo);
-                System.out.println("Send message");
-            }
-        }
-    }
+	private void checkPossibleCommunication() {
+		for (TowerInfo tower : towers){
+			if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
+				SendMessages.carHelloTower(info.infoNode, tower.connectionInfo);
+				System.out.println("Send message");
+			}
+		}
+	}
 }
