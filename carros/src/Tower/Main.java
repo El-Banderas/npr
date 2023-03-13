@@ -39,29 +39,29 @@ public class Main {
 			//cloud = new InfoNode(null, CloudConstants.port, false);
 		}
 
-		//TowerInfo thisTower = new TowerInfo(name, pos);
+		TowerInfo thisTower = new TowerInfo(name, pos);
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		if (Constants.linux){
-			//thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
+			thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
 		}
-		MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
-		socketReceive.joinGroup(Constants.MulticastGroup);
-		socketReceive.setSoTimeout(Constants.refreshRate);
+		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
+		//socketReceive.joinGroup(Constants.MulticastGroup);
+		//socketReceive.setSoTimeout(Constants.refreshRate);
 
 		while(true){
 			try {
 				//towerHelloCloud(thisTower.connectionInfo, cloud);
-				socketReceive.receive(packet);
-				//f (Constants.linux){
-				//thisTower.connectionInfoLinuxReceive.socket.receive(packet);
-				//}
+				//socketReceive.receive(packet);
+				if (Constants.linux){
+				thisTower.connectionInfoLinuxReceive.socket.receive(packet);
+				}
 				System.out.println("[TOWER] Message received: " + packet.getAddress());
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
-				System.out.println("Receiving in: " +socketReceive.getLocalAddress());
-				System.out.println("Receiving in: " +socketReceive.getInterface());
+				//System.out.println("Receiving in: " +socketReceive.getLocalAddress());
+				//System.out.println("Receiving in: " +socketReceive.getInterface());
 
 			}
 
