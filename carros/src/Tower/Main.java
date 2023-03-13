@@ -45,18 +45,28 @@ public class Main {
 			cloud = new InfoNodeWindows(CloudConstants.port, false);
 		}
 		
-		TowerInfo thisTower = new TowerInfo(name, towerIPInfo, pos);
+		TowerInfo thisTower = new TowerInfo(name, pos);
 		System.out.println(thisTower);
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		System.out.println("IP do socket?");
 		System.out.println(thisTower.connectionInfo.socket.getLocalAddress());
-		thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
+		if (Constants.linux){
+			thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
+		}
+		else {
+			thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
+		}
 		while(true){
 			try {
 				//towerHelloCloud(thisTower.connectionInfo, cloud);
-				thisTower.connectionInfo.socket.receive(packet);
+				if (Constants.linux){
+				thisTower.connectionInfoLinuxReceive.socket.receive(packet);
+				}
+				else {
+					thisTower.connectionInfo.socket.receive(packet);
+				}
 				System.out.println("[TOWER] Message received");
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received.");

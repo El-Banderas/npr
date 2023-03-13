@@ -1,6 +1,7 @@
 package Car;
 
 import Common.InfoNode;
+import Common.InfoNodeMulticast;
 import Common.Position;
 
 /**
@@ -11,12 +12,21 @@ public class CarInfo {
 	public String brand;
 	public String color;
 	public Position pos;
-	public InfoNode infoNode;
-	
-	public CarInfo(Position pos, InfoNode infoNode) {
+	public InfoNode sendInfo;
+	public InfoNodeMulticast receiveInfo;
+
+	public CarInfo(Position pos, InfoNode sendInfo, InfoNodeMulticast receiveInfo) {
 		this.brand = "Mercedes";
 		this.color = "Blue";
 		this.pos = pos;
-		this.infoNode = infoNode;
+		this.receiveInfo = receiveInfo;
+		this.sendInfo = sendInfo;
+	}
+	// Used in windows, later fix
+	public CarInfo(Position pos, InfoNode sendInfo) {
+		this.brand = "Mercedes";
+		this.color = "Blue";
+		this.pos = pos;
+		this.sendInfo = sendInfo;
 	}
 }

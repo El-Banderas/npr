@@ -41,7 +41,7 @@ public class InfoNode {
 	
 	public InfoNode(int port) {
 		try {
-			if (!Constants.linux)
+			if (!Constants.linux) // Windows
 				socket = new DatagramSocket(port);
 			else
 				socket = new DatagramSocket();
