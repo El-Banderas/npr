@@ -2,6 +2,9 @@ package Tower;
 
 import Cloud.CloudConstants;
 import Common.*;
+import Common.Messages.MessageAndType;
+import Common.Messages.MessagesConstants;
+import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
 import java.net.*;
@@ -61,7 +64,9 @@ public class Main {
 			try {
 				towerHelloCloud(sendSocket, cloud);
 				//socketReceive.receive(packet);
-				receiveSocket.receive(packet);
+				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
+				//receiveSocket.receive(packet);
+				handleMessage(message);
 				System.out.println("[TOWER] Message received: " + packet.getAddress() + " | " + packet.getPort());
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
@@ -69,6 +74,17 @@ public class Main {
 				//System.out.println("Receiving in: " +socketReceive.getInterface());
 
 			}
+
+		}
+	}
+
+	private static void handleMessage(MessageAndType message) {
+		switch (message.type){
+			case MessagesConstants.HelloMessage:
+				System.out.println("Received Hello");
+				break;
+			default:
+				System.out.println("Received message, type unkown: " + message.type);
 
 		}
 	}

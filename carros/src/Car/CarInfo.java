@@ -13,9 +13,9 @@ public class CarInfo {
 	public String color;
 	public Position pos;
 	public InfoNode sendInfo;
-	public InfoNodeMulticast receiveInfo;
+	public InfoNode receiveInfo;
 
-	public CarInfo(Position pos, InfoNode sendInfo, InfoNodeMulticast receiveInfo) {
+	public CarInfo(Position pos, InfoNode sendInfo, InfoNode receiveInfo) {
 		this.brand = "Mercedes";
 		this.color = "Blue";
 		this.pos = pos;

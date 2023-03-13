@@ -87,7 +87,8 @@ public class Main {
 		if (!Constants.linux) {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
-			info = new CarInfo(pos, infoCarConnection);
+			info = new CarInfo(pos, infoCarConnection,infoCarConnection);
+
 		}
 		else {
 			// Read node name
@@ -120,9 +121,11 @@ public class Main {
 
 			}
 			pos = new PositionCarWindows(0,0);
-			InfoNodeMulticast infoCarConnectionReceive = new InfoNodeMulticast(true);
+
+			InfoNode infoCarConnectionReceive;
 			// Isto vai partir coisas no windows :(
 			InfoNode socketSendMessages = new InfoNode(Constants.carPort);
+				infoCarConnectionReceive= new InfoNodeMulticast(true);
 			info = new CarInfo(pos, socketSendMessages,infoCarConnectionReceive);
 		}
 		// Depois separar em 2 threads: comunicações e terminal

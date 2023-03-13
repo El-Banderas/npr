@@ -7,12 +7,13 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.ByteBuffer;
 
 public class SendMessages {
 
 
 	public static void carHelloTower(InfoNode sender, InfoNode destination){
-		byte[]  buf = "Hello".getBytes();
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet;
 		if (Constants.linux){
 			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portCarsTowersLinux);
