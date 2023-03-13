@@ -15,7 +15,7 @@ public class ReceiveMessages {
                 = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         int type = ByteBuffer.wrap(buf).getInt();
-        MessageAndType received = new MessageAndType(type, packet.getData());
+        MessageAndType received = new MessageAndType(type, packet.getData(), packet.getAddress());
         return received;
 
     }
