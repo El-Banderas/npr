@@ -29,9 +29,7 @@ public class Main {
 		
 		String name = args[0];
 
-		InfoNode towerIPInfo;
-		Position pos;
-		InfoNode cloud;
+		Position pos = null;
 
 		if (Constants.linux) {
 			//towerIPInfo = new InfoNodeMulticast(true);
@@ -39,12 +37,7 @@ public class Main {
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 			//cloud = new InfoNode(null, CloudConstants.port, false);
 		}
-		else {
-			towerIPInfo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
-			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-			cloud = new InfoNodeWindows(CloudConstants.port, false);
-		}
-		
+
 		TowerInfo thisTower = new TowerInfo(name, pos);
 
 		byte[] buf = new byte[256];
