@@ -61,6 +61,7 @@ public class Main {
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
 				System.out.println("Receiving in: " +socketReceive.getLocalAddress());
+				System.out.println("Receiving in: " +socketReceive.getInterface());
 
 			}
 
