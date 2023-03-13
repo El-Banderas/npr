@@ -45,19 +45,14 @@ public class Main {
 		if (Constants.linux){
 			thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
 		}
-		else {
-			thisTower.connectionInfo.socket.setSoTimeout(Constants.refreshRate);
-		}
+
 		while(true){
 			try {
 				//towerHelloCloud(thisTower.connectionInfo, cloud);
 				if (Constants.linux){
 				thisTower.connectionInfoLinuxReceive.socket.receive(packet);
 				}
-				else {
-					thisTower.connectionInfo.socket.receive(packet);
-				}
-				System.out.println("[TOWER] Message received");
+				System.out.println("[TOWER] Message received: " + packet.getAddress());
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received.");
 
