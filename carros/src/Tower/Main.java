@@ -46,12 +46,9 @@ public class Main {
 		}
 		
 		TowerInfo thisTower = new TowerInfo(name, pos);
-		System.out.println(thisTower);
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
-		System.out.println("IP do socket?");
-		System.out.println(thisTower.connectionInfo.socket.getLocalAddress());
 		if (Constants.linux){
 			thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
 		}
