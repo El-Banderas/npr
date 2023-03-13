@@ -27,7 +27,7 @@ public class InfoNodeMulticast extends InfoNode {
 
                 MulticastSocket multicastSocket = new MulticastSocket(Constants.portCarsTowersLinux);
                 multicastSocket.joinGroup(Constants.MulticastGroup);
-                multicastSocket.setInterface(Constants.MulticastGroup);
+                //multicastSocket.setInterface(Constants.MulticastGroup);
 
                 this.socket = multicastSocket;
                 this.port = Constants.portCarsTowersLinux;
