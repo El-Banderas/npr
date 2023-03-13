@@ -4,10 +4,7 @@ import Cloud.CloudConstants;
 import Common.*;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.MulticastSocket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 
 /**
  * Arguments:
@@ -32,20 +29,25 @@ public class Main {
 
 		Position pos = null;
 
+		TowerInfo thisTower ;
 		if (Constants.linux) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-			//cloud = new InfoNode(null, CloudConstants.port, false);
-		}
+		//	cloud = new InfoNode(null, CloudConstants.port, false);
+			thisTower = new TowerInfo(name, pos);
 
-		TowerInfo thisTower = new TowerInfo(name, pos);
+		}
+		else {
+			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
+			thisTower = new TowerInfo(name, infoNodo, pos);
+		}
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
-		if (Constants.linux){
-			thisTower.connectionInfoLinuxReceive.socket.setSoTimeout(Constants.refreshRate);
-		}
+		DatagramSocket receiveSocket = thisTower.receiveSocket();
+		receiveSocket.setSoTimeout(Constants.refreshRate);
 		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
 		//socketReceive.joinGroup(Constants.MulticastGroup);
 		//socketReceive.setSoTimeout(Constants.refreshRate);
@@ -54,10 +56,8 @@ public class Main {
 			try {
 				//towerHelloCloud(thisTower.connectionInfo, cloud);
 				//socketReceive.receive(packet);
-				if (Constants.linux){
-				thisTower.connectionInfoLinuxReceive.socket.receive(packet);
-				}
-				System.out.println("[TOWER] Message received: " + packet.getAddress());
+				receiveSocket.receive(packet);
+				System.out.println("[TOWER] Message received: " + packet.getAddress() + " | " + packet.getPort());
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
 				//System.out.println("Receiving in: " +socketReceive.getLocalAddress());

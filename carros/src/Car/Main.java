@@ -29,14 +29,13 @@ public class Main {
 			scanner.nextLine();
 			Pattern pattern;
 			// Linux contains IPS; Windows contains PORTS
+
 			if (Constants.linux)
 				pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 			else
-				pattern = Pattern.compile("(\\w+);(\\d+.);(\\d+),(\\d+);");
-
+				pattern = Pattern.compile("(\\w+);(\\d+);(\\d+),(\\d+);");
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
-				System.out.println("Linha do ficheiro:");
 				System.out.println(fileLine);
 				Matcher matcher = pattern.matcher(fileLine);
 				if (matcher.find()) {
@@ -45,7 +44,7 @@ public class Main {
 
 					InfoNode infoNode;
 					// Position must be separated beacuse ip occupies 2 groups
-					Position pos;
+					Position pos = null;
 					// If is in linux, receives an IP
 					if (Constants.linux) {
 						infoNode = new InfoNode(Constants.MulticastGroup, Constants.towerPort, false);

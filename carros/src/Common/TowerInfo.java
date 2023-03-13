@@ -1,15 +1,17 @@
 package Common;
 
+import java.net.DatagramSocket;
+
 public class TowerInfo {
 	public String name;
-	public InfoNode connectionInfo;
+	public InfoNode connectionInfoWindowsReceive;
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
 	public Position pos;
 
 	public TowerInfo(String name, InfoNode connectionInfo, Position pos) {
 		this.name = name;
-		this.connectionInfo = connectionInfo;
+		this.connectionInfoWindowsReceive = connectionInfo;
 		this.pos = pos;
 	}
 
@@ -17,7 +19,7 @@ public class TowerInfo {
 	public String toString() {
 		return "TowerInfo{" +
 				"name='" + name + '\'' +
-				", Socket=" + connectionInfo.socket +
+				", Socket=" + connectionInfoWindowsReceive.socket +
 				", pos=" + pos +
 				'}';
 	}
@@ -30,9 +32,22 @@ public class TowerInfo {
 	public TowerInfo(String name, Position pos) {
 		this.name = name;
 		this.pos = pos;
-		this.connectionInfo = null;
+		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast(true);
 		// Port doesn't matter to send.
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
+	}
+
+	public DatagramSocket receiveSocket(){
+		if (Constants.linux)
+			return this.connectionInfoLinuxReceive.socket;
+		else
+			return this.connectionInfoWindowsReceive.socket;
+	}
+	public DatagramSocket sendSocket(){
+		if (Constants.linux)
+			return this.connectionInfoLinuxSend.socket;
+		else
+			return this.connectionInfoWindowsReceive.socket;
 	}
 }
