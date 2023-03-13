@@ -6,6 +6,8 @@ import Common.*;
 import java.io.IOException;
 import java.net.*;
 
+import static Common.Messages.SendMessages.towerHelloCloud;
+
 /**
  * Arguments:
  * Windows
@@ -28,13 +30,14 @@ public class Main {
 		String name = args[0];
 
 		Position pos = null;
+		InfoNode cloud;
 
 		TowerInfo thisTower ;
 		if (Constants.linux) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-		//	cloud = new InfoNode(null, CloudConstants.port, false);
+			cloud = new InfoNode(Constants.CloudIP, CloudConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
 
 		}
@@ -42,11 +45,13 @@ public class Main {
 			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
 			thisTower = new TowerInfo(name, infoNodo, pos);
+			cloud = new InfoNode(InetAddress.getByName("localhost"),CloudConstants.port, false );
 		}
 
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
+		DatagramSocket sendSocket = thisTower.sendSocket();
 		receiveSocket.setSoTimeout(Constants.refreshRate);
 		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
 		//socketReceive.joinGroup(Constants.MulticastGroup);
@@ -54,7 +59,7 @@ public class Main {
 
 		while(true){
 			try {
-				//towerHelloCloud(thisTower.connectionInfo, cloud);
+				towerHelloCloud(sendSocket, cloud);
 				//socketReceive.receive(packet);
 				receiveSocket.receive(packet);
 				System.out.println("[TOWER] Message received: " + packet.getAddress() + " | " + packet.getPort());

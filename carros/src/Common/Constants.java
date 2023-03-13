@@ -45,4 +45,19 @@ public final class Constants {
 	 * Car
 	 */
 	public static int carPort = 6000;
+
+	/**
+	 * Tower
+	 */
+	// Used in Core
+	public static InetAddress CloudIP;
+
+	static {
+		try {
+			CloudIP = InetAddress.getByName("2001:8::10");
+		} catch (UnknownHostException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }
