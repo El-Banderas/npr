@@ -34,7 +34,7 @@ public class Main {
 		InfoNode cloud;
 
 		if (Constants.linux) {
-			towerIPInfo = new InfoNodeMulticast(true);
+			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 			//cloud = new InfoNode(null, CloudConstants.port, false);
