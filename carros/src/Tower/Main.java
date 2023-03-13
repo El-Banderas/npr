@@ -60,7 +60,6 @@ public class Main {
 				System.out.println("[TOWER] Message received");
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received.");
-				System.out.println("Receiving in: "+thisTower.connectionInfo.socket.getLocalAddress() +" | "+  thisTower.connectionInfo.socket.getLocalPort() );
 
 			}
 
