@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ public class Main {
 	 * @param args
 	 */
 
-	public static void main(String[] args) throws SocketException, UnknownHostException {
+	public static void main(String[] args) throws IOException {
 		String[] restArguments = Arrays.copyOfRange(args, 1, args.length);
 		if (Integer.parseInt(args[0]) == 0){
 			System.out.println("Execute car");
