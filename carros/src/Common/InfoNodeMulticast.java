@@ -27,10 +27,11 @@ public class InfoNodeMulticast extends InfoNode {
 
                 MulticastSocket multicastSocket = new MulticastSocket(Constants.portCarsTowersLinux);
                 multicastSocket.joinGroup(Constants.MulticastGroup);
+
                 this.socket = multicastSocket;
                 this.port = Constants.portCarsTowersLinux;
                 this.ip =socket.getLocalAddress();
-                System.out.println("IP do multicast: " + this.ip);
+                System.out.println("Add multicast: " + this.ip);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -48,7 +48,7 @@
       <recent name="Cloud" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Car1">
+  <component name="RunManager" selected="Application.Mainzinha">
     <configuration name="Car1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Car.Main" />
       <module name="carros" />
@@ -64,10 +64,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Mainzinha" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Mainzinha" />
+      <module name="carros" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tower1" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Tower.Main" />
       <module name="carros" />
       <option name="PROGRAM_PARAMETERS" value="t1 8000 40 40" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UdpBroadcaster" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="UdpBroadcaster" />
+      <module name="carros" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -84,7 +98,15 @@
       <item itemvalue="Application.Tower1" />
       <item itemvalue="Application.Unnamed" />
       <item itemvalue="Application.Cloud" />
+      <item itemvalue="Application.Mainzinha" />
+      <item itemvalue="Application.UdpBroadcaster" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Mainzinha" />
+        <item itemvalue="Application.UdpBroadcaster" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
