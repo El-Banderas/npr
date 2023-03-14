@@ -35,7 +35,7 @@ public class TowerInfo {
 		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 		// Port doesn't matter to send.
-		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
+		this.connectionInfoLinuxSend = new InfoNode(Constants.towerPort);
 	}
 
 	public DatagramSocket receiveSocket(){

@@ -24,13 +24,18 @@ public class CarMove {
 	public CarMove(CarInfo info, List<TowerInfo> towers) {
 		this.info = info;
 		this.towers = towers;
+		receiveSocket = info.receiveSocket();
+		sendSocket = info.sendSocket();
+
+		try {
+			receiveSocket.setSoTimeout(Constants.refreshRate);
+		} catch (SocketException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 	
 	public void run(){
-		try {
-			receiveSocket = info.receiveSocket();
-				receiveSocket.setSoTimeout(Constants.refreshRate);
-			sendSocket = info.sendSocket();
 
 			while(true){
 				try {
@@ -52,9 +57,7 @@ public class CarMove {
 					);
 				}
 			}
-		} catch (SocketException e) {
-			throw new RuntimeException(e);
-		}
+
 
 	}
 
