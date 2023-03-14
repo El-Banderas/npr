@@ -25,6 +25,7 @@ public class CarMove {
 		receiveSocket = info.receiveSocket();
 		sendSocket = info.sendSocket();
 		try {
+			System.out.println("My IP: "+ Constants.getMyIp());
 			myIp = Inet6Address.getByName(Constants.getMyIp());
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);

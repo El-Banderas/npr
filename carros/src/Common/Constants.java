@@ -80,11 +80,11 @@ public final class Constants {
 			Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-				System.out.println("InetAddress: " + inetAddress);
+				//System.out.println("InetAddress: " + inetAddress);
 				if (inetAddress.toString().contains("2001:")) {
 
 					//String myIP = inetAddress.toString().split("%")[0];
-					return inetAddress.toString().split("%")[0];
+					return inetAddress.toString().substring(1).split("%")[0];
 					//System.out.println("Encontrado + " + myIP);
 					//return myIp;
 				}
