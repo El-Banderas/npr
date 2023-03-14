@@ -6,7 +6,7 @@ public class MessageEntry {
 
     public MessageEntry(String text) {
         this.text = text;
-        numberEntryes = 0;
+        numberEntryes = 1;
     }
 
     public void addEntry(){
