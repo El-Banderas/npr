@@ -19,18 +19,24 @@ public class CarTerminal implements Runnable {
 
         this.options = new TreeMap();
         options.put(TerminalConstants.BreakOption, new BreakOption());
+        options.put(TerminalConstants.Refresh, new RefreshOption());
         Scanner scan = new Scanner(System.in);
         while(true) {
+            System.out.println("################");
+            shared.printMessagesInfo();
             System.out.println("Introduza uma das opções");
             for (Map.Entry<Integer, Option> entry : options.entrySet()) {
                 System.out.println("(" + entry.getKey() + ") " + entry.getValue().text);
             }
+            System.out.println("################");
+
             int option = scan.nextInt();
             handleOption(option);
         }
     }
 
     private void handleOption(int option) {
+        if (option == TerminalConstants.Refresh) return;
         options.get(option).action(shared.info.sendSocket());
     }
 }

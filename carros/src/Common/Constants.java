@@ -9,7 +9,7 @@ import java.util.Enumeration;
 
 
 public final class Constants {
-	public static boolean linux = false;
+	public static boolean core = true;
 	public static int refreshRate = 500;
 
 	/**
@@ -42,7 +42,7 @@ public final class Constants {
 	/**
 	 * Tower
 	 */
-	public static int towerCommunicationRadius = 100;
+	public static int towerCommunicationRadius = 10;
 	// When in linux, port of tower:
 	public static int towerPort = 7000;
 
@@ -52,7 +52,7 @@ public final class Constants {
 	public static int carPort = 6000;
 
 	/**
-	 * Tower
+	 * Cloud
 	 */
 	// Used in Core
 	public static InetAddress CloudIP;

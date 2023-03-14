@@ -27,13 +27,13 @@ public class CarMove {
 		this.sendSocket = info.sendSocket();
 		this.shared = shared;
 		try {
-			System.out.println("My IP: "+ Constants.getMyIp());
+			//System.out.println("My IP: "+ Constants.getMyIp());
 			myIp = Inet6Address.getByName(Constants.getMyIp());
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
 		// Multicast sockets got the setTimeout when created
-		if (!Constants.linux){
+		if (!Constants.core){
 			try {
 				receiveSocket.setSoTimeout(Constants.refreshRate);
 			} catch (SocketException e) {
@@ -51,8 +51,8 @@ public class CarMove {
 
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
-				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				if (!Constants.linux)
+				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
+				if (!Constants.core)
 					checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket);
 				MessageAndType message = null;
@@ -62,7 +62,10 @@ public class CarMove {
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
 				} catch (IOException e) {
-					System.out.println("Timeout, nothing received");
+					//System.out.println("Adiciona entrada");
+					shared.addEntryMessages(MessagesConstants.Timeout);
+
+					//System.out.println("Timeout, nothing received");
 					//throw new RuntimeException(e);
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
@@ -76,29 +79,29 @@ public class CarMove {
 	 * This function checks distance to towers. Now is not necessary, we send hellos to everyone
 	 */
 	private void checkPossibleCommunication() {
-		System.out.println("Check Possible communication");
+		//System.out.println("Check Possible communication");
 		for (TowerInfo tower : towers){
 			if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
 				SendMessages.carHelloTower(info.sendSocket(), tower.connectionInfoWindowsReceive);
-				System.out.println("Send message");
+				//System.out.println("Send message");
 			}
 		}
 	}
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
+		//System.out.println("Recebeu algo: " + message.type);
 		if (message.ipSender.equals(myIp) ) {
 			//System.out.println("Received from himself");
 			return;
 		}
-		System.out.println("IPs: " + message.ipSender);
 		//System.out.println("IP2s: " + sendSocket.getLocalAddress());
 		//System.out.println("IP3s: " + InetAddress.getLocalHost());
-
+		shared.addEntryMessages(message.type);
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
-				System.out.println("Received Hello from: " + message.ipSender);
+				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			default:
-				System.out.println("Received message, type unkown: " + message.type);
+				//System.out.println("Received message, type unkown: " + message.type);
 
 		}
 	}

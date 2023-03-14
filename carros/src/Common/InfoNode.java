@@ -3,7 +3,6 @@ package Common;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.net.SocketException;
 
 /**
@@ -41,7 +40,7 @@ public class InfoNode {
 	
 	public InfoNode(int port) {
 		try {
-			if (!Constants.linux) // Windows
+			if (!Constants.core) // Windows
 				socket = new DatagramSocket(port);
 			else
 				socket = new DatagramSocket();

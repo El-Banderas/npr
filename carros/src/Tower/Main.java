@@ -27,7 +27,7 @@ import static Common.Messages.SendMessages.towerHelloCloud;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		System.out.println("[TOWER] Is linux?: " + Constants.linux);
+		System.out.println("[TOWER] Is core?: " + Constants.core);
 		
 		String name = args[0];
 
@@ -35,7 +35,7 @@ public class Main {
 		InfoNode cloud;
 
 		TowerInfo thisTower ;
-		if (Constants.linux) {
+		if (Constants.core) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
@@ -50,12 +50,11 @@ public class Main {
 			cloud = new InfoNode(InetAddress.getByName("localhost"),CloudConstants.port, false );
 		}
 
-		byte[] buf = new byte[256];
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
 		DatagramSocket sendSocket = thisTower.sendSocket();
 		// Multicast sockets got the setTimeout when created
 
-		if (!Constants.linux){
+		if (!Constants.core){
 			receiveSocket.setSoTimeout(Constants.refreshRate);
 		}
 		//receiveSocket.setSoTimeout(Constants.refreshRate);
@@ -85,6 +84,7 @@ public class Main {
 			case MessagesConstants.HelloMessage:
 				System.out.println("Received Hello");
 				break;
+
 			default:
 				System.out.println("Received message, type unkown: " + message.type);
 

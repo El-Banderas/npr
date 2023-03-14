@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 public class SendMessages {
 
 	public static void carSendBreak(DatagramSocket sender){
-		if (Constants.linux){
+		if (Constants.core){
 			System.out.println("Send Break to everyone");
 			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.BreakMessage).array();
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
@@ -20,7 +20,7 @@ public class SendMessages {
 	}
 
 	public static void carHellos(DatagramSocket sender){
-		if (Constants.linux){
+		if (Constants.core){
 			System.out.println("Send hellos to everyone");
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
@@ -30,7 +30,7 @@ public class SendMessages {
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination){
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet;
-		if (Constants.linux){
+		if (Constants.core){
 			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		}
 		else {

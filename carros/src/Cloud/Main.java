@@ -2,8 +2,6 @@ package Cloud;
 
 import Common.*;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -25,10 +23,10 @@ import java.net.UnknownHostException;
 public class Main {
 	public static void main(String[] args) throws UnknownHostException, SocketException {
 
-		System.out.println("Is linux?: " + Constants.linux);
+		System.out.println("Is core?: " + Constants.core);
 
 		InfoNode cloudInfo;
-		if (Constants.linux) {
+		if (Constants.core) {
 			cloudInfo = new InfoNode(null, CloudConstants.port, true);
 
 		} else {

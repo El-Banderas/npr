@@ -45,11 +45,12 @@
       <recent name="C:\Users\35193\Desktop\npr\carros\src\Car" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Car.Terminal" />
       <recent name="Common" />
       <recent name="Cloud" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Car1">
+  <component name="RunManager" selected="Application.Tower1">
     <configuration name="Car1" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
