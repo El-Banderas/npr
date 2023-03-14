@@ -51,7 +51,6 @@ public class Main {
 		}
 
 		byte[] buf = new byte[256];
-		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
 		DatagramSocket sendSocket = thisTower.sendSocket();
 		receiveSocket.setSoTimeout(Constants.refreshRate);
@@ -66,7 +65,6 @@ public class Main {
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 				//receiveSocket.receive(packet);
 				handleMessage(message);
-				System.out.println("[TOWER] Message received: " + packet.getAddress() + " | " + packet.getPort());
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
 				//System.out.println("Receiving in: " +socketReceive.getLocalAddress());

@@ -45,16 +45,14 @@ public class CarMove {
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				//checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket );
-				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
+				MessageAndType message = null;
+					message = ReceiveMessages.receiveData(receiveSocket);
+
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				} catch (IOException e) {
-					System.out.println("[Car] Nothing received, linsteing on: " +
-							receiveSocket.getLocalAddress() + " | " + receiveSocket.getLocalPort()
-					);
-					System.out.println("[Car] Nothing received, linsteing on: " +
-							receiveSocket.getLocalSocketAddress() + " | " + receiveSocket.getLocalPort()
-					);
+					//System.out.println();
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -74,10 +72,12 @@ public class CarMove {
 		}
 	}
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
+		/*
 		if (message.ipSender.equals(InetAddress.getLocalHost()) ) {
 			System.out.println("Recebeu dele próprio");
 			return;
 		}
+		 */
 		System.out.println("IPs: " + message.ipSender);
 		System.out.println("IP2s: " + sendSocket.getLocalAddress());
 		System.out.println("IP3s: " + InetAddress.getLocalHost());
