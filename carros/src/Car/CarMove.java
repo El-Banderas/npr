@@ -77,7 +77,7 @@ public class CarMove {
 	}
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
 		if (message.ipSender.equals(myIp) ) {
-			System.out.println("Recebeu dele próprio");
+			//System.out.println("Received from himself");
 			return;
 		}
 		System.out.println("IPs: " + message.ipSender);
@@ -86,7 +86,7 @@ public class CarMove {
 
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
-				System.out.println("Received Hello");
+				System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			default:
 				System.out.println("Received message, type unkown: " + message.type);
