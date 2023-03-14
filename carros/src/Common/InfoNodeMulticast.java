@@ -27,6 +27,7 @@ public class InfoNodeMulticast extends InfoNode {
                 //multicastSocket.setInterface(Constants.MulticastGroup);
 
                 this.socket2 = multicastSocket;
+                this.socket = multicastSocket;
                 this.port = Constants.portMulticast;
                 this.ip =socket.getLocalAddress();
                 System.out.println("Add multicast: " + this.ip);
