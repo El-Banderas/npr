@@ -4,13 +4,13 @@ import Common.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * Windows: File path that stores the information about towers
@@ -19,8 +19,8 @@ import java.util.regex.Pattern;
  *
  */
 public class Main {
+	
 	// Parse file that contains information about the RSU's
-
 	public static List<TowerInfo> parseFile(String filePath){
 		try {
 			List<TowerInfo> res = new ArrayList<>();
@@ -88,7 +88,6 @@ public class Main {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
 			info = new CarInfo(pos, infoCarConnection);
-
 		}
 		else {
 			// Read node name

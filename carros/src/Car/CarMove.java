@@ -1,24 +1,27 @@
 package Car;
 
 import Common.Constants;
+import Common.Position;
+import Common.TowerInfo;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
-import Common.Position;
-import Common.TowerInfo;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
 
+
 public class CarMove {
+	
 	private CarInfo info;
 	private  List<TowerInfo> towers;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
-
+	
+	
 	public CarMove(CarInfo info, List<TowerInfo> towers) {
 		this.info = info;
 		this.towers = towers;
@@ -38,36 +41,30 @@ public class CarMove {
 				throw new RuntimeException(e);
 			}
 		}
-
-
 	}
 	
+	
 	public void run(){
-
-			while(true){
-				try {
-
+		while(true){
+			try {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.linux)
-				checkPossibleCommunication();
+					checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket );
-				MessageAndType message = null;
-					message = ReceiveMessages.receiveData(receiveSocket);
-
+				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
+		
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
-				} catch (IOException e) {
-					System.out.println("Timeout, nothing received");
-					//throw new RuntimeException(e);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
+			} catch (IOException e) {
+				System.out.println("Timeout, nothing received");
+				//throw new RuntimeException(e);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
 			}
-
-
+		}
 	}
 
 	/**
@@ -97,7 +94,6 @@ public class CarMove {
 				break;
 			default:
 				System.out.println("Received message, type unkown: " + message.type);
-
 		}
 	}
 }

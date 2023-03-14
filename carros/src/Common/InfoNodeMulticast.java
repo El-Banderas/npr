@@ -9,6 +9,28 @@ import java.net.SocketException;
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNodeMulticast extends InfoNode {
+	
+	public InfoNodeMulticast() {
+		super();
+		try {
+			MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
+			multicastSocket.joinGroup(Constants.MulticastGroup);
+			//multicastSocket.setInterface(Constants.MulticastGroup);
+			
+			this.socket = multicastSocket;
+			this.port = Constants.portMulticast;
+			this.ip = socket.getLocalAddress();
+			System.out.println("Add multicast: " + this.ip);
+			try {
+				multicastSocket.setSoTimeout(Constants.refreshRate);
+			} catch (SocketException e) {
+				throw new RuntimeException(e);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	@Override
 	public String toString() {
@@ -17,27 +39,4 @@ public class InfoNodeMulticast extends InfoNode {
 				", port=" + port +
 				'}';
 	}
-
-    public InfoNodeMulticast() {
-        super();
-        try {
-
-                MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
-                multicastSocket.joinGroup(Constants.MulticastGroup);
-                //multicastSocket.setInterface(Constants.MulticastGroup);
-
-                this.socket = multicastSocket;
-                this.port = Constants.portMulticast;
-                this.ip =socket.getLocalAddress();
-                System.out.println("Add multicast: " + this.ip);
-            try {
-                multicastSocket.setSoTimeout(Constants.refreshRate);
-            } catch (SocketException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-   }
+}

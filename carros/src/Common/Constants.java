@@ -9,13 +9,13 @@ import java.util.Enumeration;
 
 
 public final class Constants {
+	
 	public static boolean linux = false;
 	public static int refreshRate = 500;
 
 	/**
-	 * Connection's
+	 * Connections
 	 */
-
 	private static final String MCAST_ADDR = "FF7E:230::1234";
 	public static InetAddress MulticastGroup;
 
@@ -30,8 +30,9 @@ public final class Constants {
 	}
 	public static int portMulticast = 8000;
 
+	
 	/**
-	 * Map Constants, in Windows?
+	 * Map Constants in Windows?
 	 */
 	public static int minXmap = 0;
 	public static int maxXmap = 100;
@@ -46,17 +47,20 @@ public final class Constants {
 	// When in linux, port of tower:
 	public static int towerPort = 7000;
 
+	
 	/**
 	 * Car
 	 */
 	public static int carPort = 6000;
 
+	
 	/**
 	 * Tower
 	 */
 	// Used in Core
 	public static InetAddress CloudIP;
 
+	
 	static {
 		try {
 			CloudIP = InetAddress.getByName("2001:8::10");
@@ -74,9 +78,9 @@ public final class Constants {
 		}
 		for (NetworkInterface netint : Collections.list(nets)) {
 
-//			out.println();
-//			("Display name: %s\n", netint.getDisplayName());
-			//		out.printf("Name: %s\n", netint.getName());
+			//out.println();
+			//out.printf("Display name: %s\n", netint.getDisplayName());
+			//out.printf("Name: %s\n", netint.getName());
 			Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
@@ -88,10 +92,9 @@ public final class Constants {
 					//System.out.println("Encontrado + " + myIP);
 					//return myIp;
 				}
-				}
 			}
-			return null;
 		}
+		return null;
 	}
-
+}
 

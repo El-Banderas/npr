@@ -6,10 +6,11 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 
+import static Common.Messages.SendMessages.towerHelloCloud;
+
 import java.io.IOException;
 import java.net.*;
 
-import static Common.Messages.SendMessages.towerHelloCloud;
 
 /**
  * Arguments:
@@ -41,7 +42,6 @@ public class Main {
 			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 			cloud = new InfoNode(Constants.CloudIP, CloudConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
-
 		}
 		else {
 			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
@@ -50,7 +50,6 @@ public class Main {
 			cloud = new InfoNode(InetAddress.getByName("localhost"),CloudConstants.port, false );
 		}
 
-		byte[] buf = new byte[256];
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
 		DatagramSocket sendSocket = thisTower.sendSocket();
 		// Multicast sockets got the setTimeout when created
