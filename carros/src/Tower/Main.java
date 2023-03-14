@@ -27,7 +27,6 @@ import static Common.Messages.SendMessages.towerHelloCloud;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-
 		System.out.println("[TOWER] Is linux?: " + Constants.linux);
 		
 		String name = args[0];

@@ -3,7 +3,6 @@ package Common.Messages;
 import Common.Constants;
 import Common.InfoNode;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -11,12 +10,20 @@ import java.nio.ByteBuffer;
 
 public class SendMessages {
 
+	public static void carHellos(InfoNode sender){
+		if (Constants.linux){
+			System.out.println("Send hellos to everyone");
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(sender.socket, packet);
+		}
 
+	}
 	public static void carHelloTower(InfoNode sender, InfoNode destination){
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet;
 		if (Constants.linux){
-			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portCarsTowersLinux);
+			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		}
 		else {
 			packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);

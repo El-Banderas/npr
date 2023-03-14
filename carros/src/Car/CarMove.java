@@ -26,9 +26,7 @@ public class CarMove {
 	public void run(){
 		try {
 			info.receiveInfo.socket.setSoTimeout(Constants.refreshRate);
-		} catch (SocketException e) {
-			throw new RuntimeException(e);
-		}
+
 
 		while(true){
 				try {
@@ -36,7 +34,8 @@ public class CarMove {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				checkPossibleCommunication();
+				//checkPossibleCommunication();
+				SendMessages.carHellos(info.sendInfo );
 				MessageAndType message = ReceiveMessages.receiveData(info.receiveInfo.socket);
 				//receiveSocket.receive(packet);
 				handleMessage(message);
@@ -44,9 +43,18 @@ public class CarMove {
 					System.out.println("[Car] Nothing received.");
 				}
 			}
+		} catch (SocketException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			info.receiveInfo.socket.close();
+		}
 
 	}
 
+	/**
+	 * This function checks distance to towers. Now is not necessary, we send hellos to everyone
+	 */
 	private void checkPossibleCommunication() {
 		System.out.println("Check Possible communication");
 		for (TowerInfo tower : towers){
