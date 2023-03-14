@@ -125,7 +125,8 @@ public class Main {
 			info = new CarInfo(pos);
 		}
 		// Depois separar em 2 threads: comunicações e terminal
-		CarMove carMove = new CarMove(info, towers);
+		SharedClass shared = new SharedClass(info);
+		CarMove carMove = new CarMove(info, towers, shared);
 		carMove.run();
 	}
 }

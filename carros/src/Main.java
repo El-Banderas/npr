@@ -17,9 +17,6 @@ public class Main {
 	 * Tower arguments: t1 40 40
 	 * @param args
 	 */
-	static void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
-
-	}
 	public static void main(String[] args) throws IOException {
 
 		System.out.println("Local IP: " + Constants.getMyIp());

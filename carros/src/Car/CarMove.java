@@ -18,12 +18,14 @@ public class CarMove {
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
+	private SharedClass shared;
 
-	public CarMove(CarInfo info, List<TowerInfo> towers) {
+	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
 		this.info = info;
 		this.towers = towers;
-		receiveSocket = info.receiveSocket();
-		sendSocket = info.sendSocket();
+		this.receiveSocket = info.receiveSocket();
+		this.sendSocket = info.sendSocket();
+		this.shared = shared;
 		try {
 			System.out.println("My IP: "+ Constants.getMyIp());
 			myIp = Inet6Address.getByName(Constants.getMyIp());
@@ -51,8 +53,8 @@ public class CarMove {
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.linux)
-				checkPossibleCommunication();
-				SendMessages.carHellos(sendSocket );
+					checkPossibleCommunication();
+				SendMessages.carHellos(sendSocket);
 				MessageAndType message = null;
 					message = ReceiveMessages.receiveData(receiveSocket);
 
