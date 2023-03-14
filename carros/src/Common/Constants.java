@@ -82,7 +82,8 @@ public final class Constants {
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
 				System.out.println("InetAddress: " +  inetAddress);
 				if (inetAddress.toString().contains("2001:")){
-					System.out.println("Encontrado + " + inetAddress);}
+					String myIP = inetAddress.toString().split("%")[0];
+					System.out.println("Encontrado + " + myIP);}
 			}
 		}
 		return null;
