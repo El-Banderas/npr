@@ -53,6 +53,11 @@ public class Main {
 		byte[] buf = new byte[256];
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
 		DatagramSocket sendSocket = thisTower.sendSocket();
+		// Multicast sockets got the setTimeout when created
+
+		if (!Constants.linux){
+			receiveSocket.setSoTimeout(Constants.refreshRate);
+		}
 		//receiveSocket.setSoTimeout(Constants.refreshRate);
 		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
 		//socketReceive.joinGroup(Constants.MulticastGroup);

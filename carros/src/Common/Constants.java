@@ -9,8 +9,8 @@ import java.util.Enumeration;
 
 
 public final class Constants {
-	public static boolean linux = true;
-	public static int refreshRate = 5000;
+	public static boolean linux = false;
+	public static int refreshRate = 500;
 
 	/**
 	 * Connection's

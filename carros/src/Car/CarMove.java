@@ -30,7 +30,14 @@ public class CarMove {
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
-
+		// Multicast sockets got the setTimeout when created
+		if (!Constants.linux){
+			try {
+				receiveSocket.setSoTimeout(Constants.refreshRate);
+			} catch (SocketException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 
 	}
@@ -43,7 +50,8 @@ public class CarMove {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				//checkPossibleCommunication();
+				if (!Constants.linux)
+				checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket );
 				MessageAndType message = null;
 					message = ReceiveMessages.receiveData(receiveSocket);
@@ -52,8 +60,8 @@ public class CarMove {
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
 				} catch (IOException e) {
-					//System.out.println();
-					throw new RuntimeException(e);
+					System.out.println("Timeout, nothing received");
+					//throw new RuntimeException(e);
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
