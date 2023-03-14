@@ -56,6 +56,11 @@ public class CarMove {
 	}
 	private void handleMessage(MessageAndType message) {
 		if (message.ipSender.equals(this.info.sendInfo.socket.getLocalAddress()) ) return;
+		if (message.ipSender.equals(this.info.sendInfo.socket.getInetAddress()) ) return;
+		System.out.println("IPs: " + message.ipSender);
+		System.out.println("IP2s: " + this.info.sendInfo.socket.getLocalAddress());
+		System.out.println("IP3s: " + this.info.sendInfo.socket.getInetAddress());
+
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
 				System.out.println("Received Hello");
