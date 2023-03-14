@@ -40,7 +40,12 @@ public class CarMove {
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				} catch (IOException e) {
-					System.out.println("[Car] Nothing received.");
+					System.out.println("[Car] Nothing received, linsteing on: " +
+							info.receiveInfo.socket.getLocalAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+					);
+					System.out.println("[Car] Nothing received, linsteing on: " +
+							info.receiveInfo.socket.getLocalSocketAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+					);
 				}
 			}
 		} catch (SocketException e) {
