@@ -31,11 +31,7 @@ public class CarMove {
 			throw new RuntimeException(e);
 		}
 
-		try {
-			receiveSocket.setSoTimeout(100*Constants.refreshRate);
-		} catch (SocketException e) {
-			throw new RuntimeException(e);
-		}
+
 
 	}
 	

@@ -53,7 +53,7 @@ public class Main {
 		byte[] buf = new byte[256];
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
 		DatagramSocket sendSocket = thisTower.sendSocket();
-		receiveSocket.setSoTimeout(Constants.refreshRate);
+		//receiveSocket.setSoTimeout(Constants.refreshRate);
 		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
 		//socketReceive.joinGroup(Constants.MulticastGroup);
 		//socketReceive.setSoTimeout(Constants.refreshRate);

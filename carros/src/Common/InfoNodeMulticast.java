@@ -2,6 +2,7 @@ package Common;
 
 import java.io.IOException;
 import java.net.MulticastSocket;
+import java.net.SocketException;
 
 /**
  * Here we store the connection information about one node.
@@ -29,6 +30,11 @@ public class InfoNodeMulticast extends InfoNode {
                 this.port = Constants.portMulticast;
                 this.ip =socket.getLocalAddress();
                 System.out.println("Add multicast: " + this.ip);
+            try {
+                multicastSocket.setSoTimeout(Constants.refreshRate);
+            } catch (SocketException e) {
+                throw new RuntimeException(e);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

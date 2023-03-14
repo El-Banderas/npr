@@ -28,6 +28,7 @@ public class CarInfo {
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 
+
 	}
 
 	// Used in windows, later fix
