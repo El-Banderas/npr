@@ -27,8 +27,6 @@ public class SharedClass {
     }
 
     public void printMessagesInfo() {
-        System.out.println("Terminal: Received messages");
-        System.out.println(receivedMessages);
         for (MessageEntry message : receivedMessages.values()){
             System.out.println(message.toString());
         }
