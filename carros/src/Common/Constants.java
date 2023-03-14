@@ -5,7 +5,7 @@ import java.net.UnknownHostException;
 
 public final class Constants {
 	public static boolean linux = true;
-	public static int refreshRate = 500;
+	public static int refreshRate = 1500;
 
 	/**
 	 * Connection's
