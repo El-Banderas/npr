@@ -1,3 +1,5 @@
+import Common.Constants;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.Arrays;
@@ -16,19 +18,11 @@ public class Main {
 	 * @param args
 	 */
 	static void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
-		out.printf("Display name: %s\n", netint.getDisplayName());
-		out.printf("Name: %s\n", netint.getName());
-		Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
-		for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-			out.printf("InetAddress: %s\n", inetAddress);
-		}
 	}
 	public static void main(String[] args) throws IOException {
-		Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-		for (NetworkInterface netint : Collections.list(nets))
-			displayInterfaceInformation(netint);
-		//System.out.println("Local IP: " + Inet6Address.getLocalHost());
+
+		System.out.println("Local IP: " + Constants.getMyIp());
 		String[] restArguments = Arrays.copyOfRange(args, 1, args.length);
 		if (Integer.parseInt(args[0]) == 0){
 			System.out.println("Execute car");

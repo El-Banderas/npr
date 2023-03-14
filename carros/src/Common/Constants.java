@@ -1,7 +1,12 @@
 package Common;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.Enumeration;
+
 
 public final class Constants {
 	public static boolean linux = true;
@@ -58,6 +63,29 @@ public final class Constants {
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static InetAddress getMyIp() {
+		Enumeration<NetworkInterface> nets = null;
+		try {
+			nets = NetworkInterface.getNetworkInterfaces();
+		} catch (SocketException e) {
+			throw new RuntimeException(e);
+		}
+		for (NetworkInterface netint : Collections.list(nets)) {
+
+//			out.println();
+//			("Display name: %s\n", netint.getDisplayName());
+	//		out.printf("Name: %s\n", netint.getName());
+			Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+
+			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+				System.out.println("InetAddress: " +  inetAddress);
+				if (inetAddress.toString().contains("2001:")){
+					System.out.println("Encontrado + " + inetAddress);}
+			}
+		}
+		return null;
 	}
 
 }
