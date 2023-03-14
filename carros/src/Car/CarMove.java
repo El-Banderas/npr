@@ -17,12 +17,18 @@ public class CarMove {
 	private  List<TowerInfo> towers;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
+	private InetAddress myIp;
 
 	public CarMove(CarInfo info, List<TowerInfo> towers) {
 		this.info = info;
 		this.towers = towers;
 		receiveSocket = info.receiveSocket();
 		sendSocket = info.sendSocket();
+		try {
+			myIp = Inet6Address.getByName(Constants.getMyIp());
+		} catch (UnknownHostException e) {
+			throw new RuntimeException(e);
+		}
 
 		try {
 			receiveSocket.setSoTimeout(Constants.refreshRate);
@@ -69,7 +75,7 @@ public class CarMove {
 		}
 	}
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
-		if (message.ipSender.equals(Inet6Address.getLocalHost()) ) {
+		if (message.ipSender.equals(myIp) ) {
 			System.out.println("Recebeu dele próprio");
 			return;
 		}

@@ -65,7 +65,7 @@ public final class Constants {
 		}
 	}
 
-	public static InetAddress getMyIp() {
+	public static String getMyIp() {
 		Enumeration<NetworkInterface> nets = null;
 		try {
 			nets = NetworkInterface.getNetworkInterfaces();
@@ -76,17 +76,22 @@ public final class Constants {
 
 //			out.println();
 //			("Display name: %s\n", netint.getDisplayName());
-	//		out.printf("Name: %s\n", netint.getName());
+			//		out.printf("Name: %s\n", netint.getName());
 			Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-				System.out.println("InetAddress: " +  inetAddress);
-				if (inetAddress.toString().contains("2001:")){
-					String myIP = inetAddress.toString().split("%")[0];
-					System.out.println("Encontrado + " + myIP);}
+				System.out.println("InetAddress: " + inetAddress);
+				if (inetAddress.toString().contains("2001:")) {
+
+					//String myIP = inetAddress.toString().split("%")[0];
+					return inetAddress.toString().split("%")[0];
+					//System.out.println("Encontrado + " + myIP);
+					//return myIp;
+				}
+				}
 			}
+			return null;
 		}
-		return null;
 	}
 
-}
+
