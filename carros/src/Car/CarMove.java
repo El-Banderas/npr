@@ -62,7 +62,6 @@ public class CarMove {
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
 				} catch (IOException e) {
-					System.out.println("Adiciona Timeout");
 					shared.addEntryMessages(MessagesConstants.Timeout);
 
 					//System.out.println("Timeout, nothing received");
@@ -90,7 +89,9 @@ public class CarMove {
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
 		//System.out.println("Recebeu algo: " + message.type);
 		if (message.ipSender.equals(myIp) ) {
-			//System.out.println("Received from himself");
+			// There are no timeouts, because we receive always message from ourselves.
+			shared.addEntryMessages(MessagesConstants.Timeout);
+
 			return;
 		}
 		//System.out.println("IP2s: " + sendSocket.getLocalAddress());
