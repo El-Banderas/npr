@@ -57,9 +57,10 @@ public class CarMove {
 	private void handleMessage(MessageAndType message) {
 		if (message.ipSender.equals(this.info.sendInfo.socket.getLocalAddress()) ) return;
 		if (message.ipSender.equals(this.info.sendInfo.socket.getInetAddress()) ) return;
+		if (message.ipSender.equals(this.info.sendInfo.socket.getLocalSocketAddress()) ) return;
 		System.out.println("IPs: " + message.ipSender);
 		System.out.println("IP2s: " + this.info.sendInfo.socket.getLocalAddress());
-		System.out.println("IP3s: " + this.info.sendInfo.socket.getInetAddress());
+		System.out.println("IP3s: " + this.info.sendInfo.socket.getLocalSocketAddress());
 
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
