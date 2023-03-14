@@ -57,9 +57,10 @@ public class CarMove {
 		}
 	}
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
-		if (message.ipSender.equals(InetAddress.getLocalHost()) ) return;
-		if (message.ipSender.equals(info.sendInfo.socket.getInetAddress()) ) return;
-		if (message.ipSender.equals(info.sendInfo.socket.getLocalSocketAddress()) ) return;
+		if (message.ipSender.equals(InetAddress.getLocalHost()) ) {
+			System.out.println("Recebeu dele próprio");
+			return;
+		}
 		System.out.println("IPs: " + message.ipSender);
 		System.out.println("IP2s: " + info.sendInfo.socket.getLocalAddress());
 		System.out.println("IP3s: " + InetAddress.getLocalHost());
