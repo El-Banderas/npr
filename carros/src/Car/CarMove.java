@@ -9,6 +9,7 @@ import Common.Position;
 import Common.TowerInfo;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -17,6 +18,8 @@ import java.util.List;
 public class CarMove {
 	private CarInfo info;
 	private  List<TowerInfo> towers;
+	private DatagramSocket sendSocket;
+	private DatagramSocket receiveSocket;
 
 	public CarMove(CarInfo info, List<TowerInfo> towers) {
 		this.info = info;
@@ -25,34 +28,32 @@ public class CarMove {
 	
 	public void run(){
 		try {
-			info.receiveInfo.socket.setSoTimeout(Constants.refreshRate);
+			receiveSocket = info.receiveSocket();
+				receiveSocket.setSoTimeout(Constants.refreshRate);
+			sendSocket = info.sendSocket();
 
-
-		while(true){
+			while(true){
 				try {
 
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				//checkPossibleCommunication();
-				SendMessages.carHellos(info.sendInfo );
-				MessageAndType message = ReceiveMessages.receiveData(info.receiveInfo.socket);
+				SendMessages.carHellos(sendSocket );
+				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				} catch (IOException e) {
 					System.out.println("[Car] Nothing received, linsteing on: " +
-							info.receiveInfo.socket.getLocalAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+							receiveSocket.getLocalAddress() + " | " + receiveSocket.getLocalPort()
 					);
 					System.out.println("[Car] Nothing received, linsteing on: " +
-							info.receiveInfo.socket.getLocalSocketAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+							receiveSocket.getLocalSocketAddress() + " | " + receiveSocket.getLocalPort()
 					);
 				}
 			}
 		} catch (SocketException e) {
 			throw new RuntimeException(e);
-		}
-		finally {
-			info.receiveInfo.socket.close();
 		}
 
 	}
@@ -64,7 +65,7 @@ public class CarMove {
 		System.out.println("Check Possible communication");
 		for (TowerInfo tower : towers){
 			if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
-				SendMessages.carHelloTower(info.sendInfo, tower.connectionInfoWindowsReceive);
+				SendMessages.carHelloTower(info.sendSocket(), tower.connectionInfoWindowsReceive);
 				System.out.println("Send message");
 			}
 		}
@@ -75,7 +76,7 @@ public class CarMove {
 			return;
 		}
 		System.out.println("IPs: " + message.ipSender);
-		System.out.println("IP2s: " + info.sendInfo.socket.getLocalAddress());
+		System.out.println("IP2s: " + sendSocket.getLocalAddress());
 		System.out.println("IP3s: " + InetAddress.getLocalHost());
 
 		switch (message.type){
