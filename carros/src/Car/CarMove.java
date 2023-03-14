@@ -9,7 +9,9 @@ import Common.Position;
 import Common.TowerInfo;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 public class CarMove {
@@ -54,13 +56,13 @@ public class CarMove {
 			}
 		}
 	}
-	private void handleMessage(MessageAndType message) {
-		if (message.ipSender.equals(this.info.sendInfo.socket.getLocalAddress()) ) return;
-		if (message.ipSender.equals(this.info.sendInfo.socket.getInetAddress()) ) return;
-		if (message.ipSender.equals(this.info.sendInfo.socket.getLocalSocketAddress()) ) return;
+	private void handleMessage(MessageAndType message) throws UnknownHostException {
+		if (message.ipSender.equals(InetAddress.getLocalHost()) ) return;
+		if (message.ipSender.equals(info.sendInfo.socket.getInetAddress()) ) return;
+		if (message.ipSender.equals(info.sendInfo.socket.getLocalSocketAddress()) ) return;
 		System.out.println("IPs: " + message.ipSender);
-		System.out.println("IP2s: " + this.info.sendInfo.socket.getLocalAddress());
-		System.out.println("IP3s: " + this.info.sendInfo.socket.getLocalSocketAddress());
+		System.out.println("IP2s: " + info.sendInfo.socket.getLocalAddress());
+		System.out.println("IP3s: " + InetAddress.getLocalHost());
 
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
