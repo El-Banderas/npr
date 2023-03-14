@@ -50,8 +50,11 @@ public class CarMove {
 
 				//receiveSocket.receive(packet);
 				handleMessage(message);
+				Thread.sleep(Constants.refreshRate);
 				} catch (IOException e) {
 					//System.out.println();
+					throw new RuntimeException(e);
+				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
 			}
