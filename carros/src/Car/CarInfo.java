@@ -26,7 +26,7 @@ public class CarInfo {
 		this.pos = pos;
 		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
-		this.connectionInfoLinuxReceive = new InfoNodeMulticast(true);
+		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 
 	}
 

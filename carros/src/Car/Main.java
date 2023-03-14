@@ -122,10 +122,6 @@ public class Main {
 			}
 			pos = new PositionCarWindows(0,0);
 
-			InfoNode infoCarConnectionReceive;
-			// Isto vai partir coisas no windows :(
-			InfoNode socketSendMessages = new InfoNode(Constants.carPort);
-				infoCarConnectionReceive= new InfoNodeMulticast(true);
 			info = new CarInfo(pos);
 		}
 		// Depois separar em 2 threads: comunicações e terminal

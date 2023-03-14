@@ -17,10 +17,9 @@ public class InfoNodeMulticast extends InfoNode {
 				'}';
 	}
 
-    public InfoNodeMulticast(boolean createSocket) {
+    public InfoNodeMulticast() {
         super();
         try {
-            if (createSocket) {
 
                 MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
                 multicastSocket.joinGroup(Constants.MulticastGroup);
@@ -30,7 +29,6 @@ public class InfoNodeMulticast extends InfoNode {
                 this.port = Constants.portMulticast;
                 this.ip =socket.getLocalAddress();
                 System.out.println("Add multicast: " + this.ip);
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -23,7 +23,7 @@ public final class Constants {
 			System.out.println("Error creating multicast adress");
 		}
 	}
-	public static int portMulticast = 6000;
+	public static int portMulticast = 8000;
 
 	/**
 	 * Map Constants, in Windows?

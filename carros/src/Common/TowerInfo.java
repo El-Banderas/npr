@@ -33,7 +33,7 @@ public class TowerInfo {
 		this.name = name;
 		this.pos = pos;
 		this.connectionInfoWindowsReceive = null;
-		this.connectionInfoLinuxReceive = new InfoNodeMulticast(true);
+		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 		// Port doesn't matter to send.
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
 	}
