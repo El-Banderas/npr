@@ -15,7 +15,6 @@ public class CarInfo {
 	public InfoNode sendInfo;
 	public InfoNode receiveInfo;
 	//Depois mudar
-	public InfoNodeMulticast receiveInfo2;
 
 	public CarInfo(Position pos, InfoNode sendInfo, InfoNode receiveInfo) {
 		this.brand = "Mercedes";
@@ -25,15 +24,7 @@ public class CarInfo {
 		this.sendInfo = sendInfo;
 
 	}
-	public CarInfo(Position pos, InfoNode sendInfo, InfoNodeMulticast receiveInfo) {
-		this.brand = "Mercedes";
-		this.color = "Blue";
-		this.pos = pos;
-		this.receiveInfo = receiveInfo;
-		this.sendInfo = sendInfo;
-		this.receiveInfo2 = receiveInfo;
 
-	}
 	// Used in windows, later fix
 	public CarInfo(Position pos, InfoNode sendInfo) {
 		this.brand = "Mercedes";

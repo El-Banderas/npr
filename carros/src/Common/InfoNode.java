@@ -14,7 +14,6 @@ public class InfoNode {
 	public InetAddress ip;
 	public int port;
 	public DatagramSocket socket;
-	public MulticastSocket socket2;
 
 	@Override
 	public String toString() {

@@ -122,7 +122,7 @@ public class Main {
 			}
 			pos = new PositionCarWindows(0,0);
 
-			InfoNodeMulticast infoCarConnectionReceive;
+			InfoNode infoCarConnectionReceive;
 			// Isto vai partir coisas no windows :(
 			InfoNode socketSendMessages = new InfoNode(Constants.carPort);
 				infoCarConnectionReceive= new InfoNodeMulticast(true);
