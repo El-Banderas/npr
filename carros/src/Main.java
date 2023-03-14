@@ -1,48 +1,34 @@
-import java.util.Scanner;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import Common.Constants;
+
+import java.io.IOException;
+import java.net.*;
+import java.util.Arrays;
+
 
 public class Main {
-	public static void main(String[] args) {
-		// Test
-		while(true)
-		System.out.println(getChoiceWithTimeout(10));
-	}
 
-	static int getChoiceWithTimeout(int range) {
-		int seconds = 7;
-		Callable<Integer> k = () -> new Scanner(System.in).nextInt();
-		Long start = System.currentTimeMillis();
-		int choice = 0;
-		boolean valid;
-		ExecutorService l = Executors.newFixedThreadPool(1);
-		Future<Integer> g;
-		System.out.println("Enter your choice in "+seconds+" seconds :");
-		g = l.submit(k);
-		done: while (System.currentTimeMillis() - start < seconds * 1000) {
-			do {
-				valid = true;
-				if (g.isDone()) {
-					try {
-						choice = g.get();
-						if (choice >= 0 && choice <= range) {
-							break done;
-						} else {
-							throw new IllegalArgumentException();
-						}
-					} catch (InterruptedException | ExecutionException | IllegalArgumentException e) {
-						System.out.println("Wrong choice, you have to pick an integer between 0 - " + range);
-						g = l.submit(k);
-						valid = false;
-					}
-				}
-			} while (!valid);
+	/**
+	 * Generate executable for all applications to test in linux
+	 * First argument -> 0 -> Car
+	 * Car arguments (file): "src/Car/TowersPosWindows"
+	 * First argument -> 1 -> Tower
+	 * Tower arguments: t1 40 40
+	 * @param args
+	 */
+	public static void main(String[] args) throws IOException {
+
+		System.out.println("Local IP: " + Constants.getMyIp());
+		String[] restArguments = Arrays.copyOfRange(args, 1, args.length);
+		if (Integer.parseInt(args[0]) == 0){
+			System.out.println("Execute car");
+			Car.Main.main(restArguments);
+			return;
 		}
+		if (Integer.parseInt(args[0]) == 1){
+			System.out.println("Execute Tower");
 
-		g.cancel(true);
-		return choice;
+			Tower.Main.main(restArguments);
+			return;
+		}
 	}
 }
