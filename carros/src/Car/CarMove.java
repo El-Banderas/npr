@@ -80,7 +80,7 @@ public class CarMove {
 		 */
 		System.out.println("IPs: " + message.ipSender);
 		System.out.println("IP2s: " + sendSocket.getLocalAddress());
-		System.out.println("IP3s: " + InetAddress.getLocalHost());
+		//System.out.println("IP3s: " + InetAddress.getLocalHost());
 
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
