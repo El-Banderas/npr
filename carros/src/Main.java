@@ -1,9 +1,10 @@
 import java.io.IOException;
-import java.net.Inet6Address;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
 
+import static java.lang.System.out;
 public class Main {
 
 	/**
@@ -14,9 +15,20 @@ public class Main {
 	 * Tower arguments: t1 40 40
 	 * @param args
 	 */
+	static void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
+		out.printf("Display name: %s\n", netint.getDisplayName());
+		out.printf("Name: %s\n", netint.getName());
+		Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
 
+		for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+			out.printf("InetAddress: %s\n", inetAddress);
+		}
+	}
 	public static void main(String[] args) throws IOException {
-		System.out.println("Local IP: " + Inet6Address.getLocalHost());
+		Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+		for (NetworkInterface netint : Collections.list(nets))
+			displayInterfaceInformation(netint);
+		//System.out.println("Local IP: " + Inet6Address.getLocalHost());
 		String[] restArguments = Arrays.copyOfRange(args, 1, args.length);
 		if (Integer.parseInt(args[0]) == 0){
 			System.out.println("Execute car");
