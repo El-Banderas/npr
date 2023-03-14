@@ -26,6 +26,7 @@ public class CarMove {
 	public void run(){
 		try {
 			info.receiveInfo.socket.setSoTimeout(Constants.refreshRate);
+			info.receiveInfo.socket2.setSoTimeout(Constants.refreshRate);
 
 
 		while(true){
@@ -36,15 +37,15 @@ public class CarMove {
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				//checkPossibleCommunication();
 				SendMessages.carHellos(info.sendInfo );
-				MessageAndType message = ReceiveMessages.receiveData(info.receiveInfo.socket);
+				MessageAndType message = ReceiveMessages.receiveData(info.receiveInfo.socket2);
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				} catch (IOException e) {
 					System.out.println("[Car] Nothing received, linsteing on: " +
-							info.receiveInfo2.socket2.getInterface() + " | " + info.receiveInfo.socket.getLocalPort()
+							info.receiveInfo2.socket2.getInterface() + " | " + info.receiveInfo.socket2.getLocalPort()
 					);
 					System.out.println("[Car] Nothing received, linsteing on: " +
-							info.receiveInfo.socket.getLocalSocketAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+							info.receiveInfo.socket2.getLocalSocketAddress() + " | " + info.receiveInfo.socket2.getLocalPort()
 					);
 				}
 			}
