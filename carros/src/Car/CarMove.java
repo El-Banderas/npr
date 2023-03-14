@@ -41,7 +41,7 @@ public class CarMove {
 				handleMessage(message);
 				} catch (IOException e) {
 					System.out.println("[Car] Nothing received, linsteing on: " +
-							info.receiveInfo.socket.getLocalAddress() + " | " + info.receiveInfo.socket.getLocalPort()
+							info.receiveInfo2.socket2.getInterface() + " | " + info.receiveInfo.socket.getLocalPort()
 					);
 					System.out.println("[Car] Nothing received, linsteing on: " +
 							info.receiveInfo.socket.getLocalSocketAddress() + " | " + info.receiveInfo.socket.getLocalPort()
