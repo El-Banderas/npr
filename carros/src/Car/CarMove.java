@@ -62,7 +62,7 @@ public class CarMove {
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
 				} catch (IOException e) {
-					//System.out.println("Adiciona entrada");
+					System.out.println("Adiciona Timeout");
 					shared.addEntryMessages(MessagesConstants.Timeout);
 
 					//System.out.println("Timeout, nothing received");
