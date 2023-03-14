@@ -55,7 +55,7 @@ public class CarMove {
 				if (!Constants.core)
 					checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket);
-				MessageAndType message = null;
+				MessageAndType message;
 					message = ReceiveMessages.receiveData(receiveSocket);
 
 				//receiveSocket.receive(packet);

@@ -21,7 +21,7 @@ public class SendMessages {
 
 	public static void carHellos(DatagramSocket sender){
 		if (Constants.core){
-			System.out.println("Send hellos to everyone");
+			//System.out.println("Send hellos to everyone");
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, packet);
