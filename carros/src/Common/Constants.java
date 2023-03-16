@@ -10,7 +10,7 @@ import java.util.Enumeration;
 
 public final class Constants {
 	
-	public static boolean linux = false;
+	public static boolean core = false;
 	public static int refreshRate = 500;
 
 	/**
@@ -96,5 +96,15 @@ public final class Constants {
 		}
 		return null;
 	}
+	/**
+	 * Topologia atual:
+	 * Carros sem portas definidas, depois é preciso ver isso...
+	 *
+	 * T1 (8000) - S1 (9000)
+	 *         				\
+	 *         	 		      Cloud (5000)
+	 *                      /
+	 * T2 (8001) - S2 (9001)
+	 */
 }
 

@@ -30,7 +30,7 @@ public class Main {
 			Pattern pattern;
 			// Linux contains IPS; Windows contains PORTS
 
-			if (Constants.linux)
+			if (Constants.core)
 				pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 			else
 				pattern = Pattern.compile("(\\w+);(\\d+);(\\d+),(\\d+);");
@@ -46,7 +46,7 @@ public class Main {
 					// Position must be separated beacuse ip occupies 2 groups
 					Position pos = null;
 					// If is in linux, receives an IP
-					if (Constants.linux) {
+					if (Constants.core) {
 						infoNode = new InfoNode(Constants.MulticastGroup, Constants.towerPort, false);
 						pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 					}
@@ -77,14 +77,14 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		System.out.println("[CAR] Is linux?: " + Constants.linux);
+		System.out.println("[CAR] Is linux?: " + Constants.core);
 		
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);
 		System.out.println(towers);
 		Position pos;
 		CarInfo info;
-		if (!Constants.linux) {
+		if (!Constants.core) {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
 			info = new CarInfo(pos, infoCarConnection);

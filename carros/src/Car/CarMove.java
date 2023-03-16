@@ -34,7 +34,7 @@ public class CarMove {
 			throw new RuntimeException(e);
 		}
 		// Multicast sockets got the setTimeout when created
-		if (!Constants.linux){
+		if (!Constants.core){
 			try {
 				receiveSocket.setSoTimeout(Constants.refreshRate);
 			} catch (SocketException e) {
@@ -50,7 +50,7 @@ public class CarMove {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
 				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				if (!Constants.linux)
+				if (!Constants.core)
 					checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket );
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);

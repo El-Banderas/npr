@@ -33,14 +33,14 @@ public class TowerInfo {
 	
 	
 	public DatagramSocket receiveSocket(){
-		if (Constants.linux)
+		if (Constants.core)
 			return this.connectionInfoLinuxReceive.socket;
 		else
 			return this.connectionInfoWindowsReceive.socket;
 	}
 	
 	public DatagramSocket sendSocket(){
-		if (Constants.linux)
+		if (Constants.core)
 			return this.connectionInfoLinuxSend.socket;
 		else
 			return this.connectionInfoWindowsReceive.socket;
