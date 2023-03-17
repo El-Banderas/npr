@@ -2,26 +2,20 @@ package Common;
 
 import java.net.DatagramSocket;
 
+
 public class TowerInfo {
+	
 	public String name;
 	public InfoNode connectionInfoWindowsReceive;
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
 	public Position pos;
-
+	
+	
 	public TowerInfo(String name, InfoNode connectionInfo, Position pos) {
 		this.name = name;
 		this.connectionInfoWindowsReceive = connectionInfo;
 		this.pos = pos;
-	}
-
-	@Override
-	public String toString() {
-		return "TowerInfo{" +
-				"name='" + name + '\'' +
-				", Socket=" + connectionInfoWindowsReceive.socket +
-				", pos=" + pos +
-				'}';
 	}
 
 	/**
@@ -36,17 +30,29 @@ public class TowerInfo {
 		this.connectionInfoLinuxSend = new InfoNode(Constants.towerPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 	}
-
+	
+	
 	public DatagramSocket receiveSocket(){
 		if (Constants.core)
 			return this.connectionInfoLinuxReceive.socket;
 		else
 			return this.connectionInfoWindowsReceive.socket;
 	}
+	
 	public DatagramSocket sendSocket(){
 		if (Constants.core)
 			return this.connectionInfoLinuxSend.socket;
 		else
 			return this.connectionInfoWindowsReceive.socket;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "TowerInfo{" +
+				"name='" + name + '\'' +
+				", Socket=" + connectionInfoWindowsReceive.socket +
+				", pos=" + pos +
+				'}';
 	}
 }

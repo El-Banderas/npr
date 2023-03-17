@@ -1,12 +1,13 @@
 package Common;
 
-public class PositionCarWindows extends Position{
 
+public class PositionCarWindows extends Position{
 
 	public PositionCarWindows(int x, int y) {
 		super(x, y);
 	}
-
+	
+	
 	public void getPosition(){
 		x++;
 		y++;

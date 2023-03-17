@@ -1,6 +1,7 @@
 package Common.Messages;
 
 public class MessagesConstants {
+<<<<<<< HEAD
     public static final int HelloMessage = 1;
     public static final int BreakMessage = 2;
 
@@ -21,4 +22,8 @@ public class MessagesConstants {
         }
     }
     public static int sizeBufferMessages = 1000;
+=======
+	public static final int HelloMessage = 1;
+	public static int sizeBufferMessages = 1000;
+>>>>>>> main
 }

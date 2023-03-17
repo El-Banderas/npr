@@ -6,48 +6,48 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 
+import static Common.Messages.SendMessages.towerHelloServer;
+
 import java.io.IOException;
 import java.net.*;
 
-import static Common.Messages.SendMessages.towerHelloCloud;
 
 /**
  * Arguments:
  * Windows
  * The IP of the cloud isn't necessary, is a constant stored in the CloudConstants file.
- * Name (unecessary) | Port | PosX | PosY
+ * Name (unecessary) | This port | Port Server | PosX | PosY
  * The port must be the same as the file.
- * Example: "t1 8000 40 40"
+ * Example: "t1 8000 9000 40 40"
  *
  *
  * Linux, depois remover a posição, e acrescentar o IP da cloud, para saber a quem mandar mensagens
- * Name (unecessary) | PosX | PosY
+ * Name (unecessary) | IP Server |PosX | PosY
  * The port must be the same as the file.
  * Example: "t1 40 40"
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		System.out.println("[TOWER] Is core?: " + Constants.core);
-		
+
 		String name = args[0];
 
 		Position pos = null;
-		InfoNode cloud;
+		InfoNode thisServer;
 
 		TowerInfo thisTower ;
 		if (Constants.core) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
-			pos = new Position(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-			cloud = new InfoNode(Constants.CloudIP, CloudConstants.port, false);
+			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+			thisServer = new InfoNode(Constants.CloudIP, CloudConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
-
 		}
 		else {
-			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
 			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
 			thisTower = new TowerInfo(name, infoNodo, pos);
-			cloud = new InfoNode(InetAddress.getByName("localhost"),CloudConstants.port, false );
+			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false );
 		}
 
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
@@ -64,7 +64,7 @@ public class Main {
 
 		while(true){
 			try {
-				towerHelloCloud(sendSocket, cloud);
+				towerHelloServer(sendSocket, thisServer);
 				//socketReceive.receive(packet);
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 				//receiveSocket.receive(packet);

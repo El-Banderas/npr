@@ -1,27 +1,21 @@
 package Common;
 
-import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+
 
 /**
  * Here we store the connection information about one node.
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNode {
+	
 	public InetAddress ip;
 	public int port;
 	public DatagramSocket socket;
-
-	@Override
-	public String toString() {
-		return "InfoNode{" +
-				"ip=" + ip.toString() +
-				", port=" + port +
-				'}';
-	}
-
+	
+	
 	public InfoNode(InetAddress ip, int port, boolean createSocket) {
 		this.port = port;
 		this.ip = ip;
@@ -31,8 +25,6 @@ public class InfoNode {
 				this.ip = socket.getLocalAddress();
 			} catch (SocketException e) {
 				System.out.println("[Expetion] Error creating socket");
-				throw new RuntimeException(e);
-			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}
@@ -44,20 +36,25 @@ public class InfoNode {
 				socket = new DatagramSocket(port);
 			else
 				socket = new DatagramSocket();
-
 		} catch (SocketException e) {
 			System.out.println("[Expetion] Error creating socket");
 			throw new RuntimeException(e);
 		}
 		this.ip = socket.getLocalAddress();
-
 	}
-
-
-
+	
 	public InfoNode() {
 		this.socket = null;
 		this.ip	= null;
 		this.port = -1;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "InfoNode{" +
+				"ip=" + ip.toString() +
+				", port=" + port +
+				'}';
 	}
 }

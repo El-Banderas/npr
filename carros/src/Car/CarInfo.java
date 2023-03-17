@@ -7,19 +7,33 @@ import Common.Position;
 
 import java.net.DatagramSocket;
 
+
 /**
  * Esta classe pode ser melhorada, com um Hashmap que pode variar de carro para carro...
  * Vale a pena pensar nisso :)
  */
 public class CarInfo {
+	
 	public String brand;
 	public String color;
 	public Position pos;
+
+	public Position oldPos;
 	public InfoNode connectionInfoWindowsReceive;
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
-	//Depois mudar
 
+	public float getVelocity(){
+		// TODO:...
+		return 0;
+	}
+
+	public Position getDirection(){
+		// TODO: ...
+		return new Position(pos.x- oldPos.x,pos.y - oldPos.y);
+	}
+	
+	//Depois mudar
 	public CarInfo(Position pos) {
 		this.brand = "Mercedes";
 		this.color = "Blue";
@@ -27,8 +41,6 @@ public class CarInfo {
 		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
-
-
 	}
 
 	// Used in windows, later fix
@@ -38,12 +50,15 @@ public class CarInfo {
 		this.pos = pos;
 		this.connectionInfoWindowsReceive = sendInfo;
 	}
+	
+	
 	public DatagramSocket receiveSocket(){
 		if (Constants.core)
 			return this.connectionInfoLinuxReceive.socket;
 		else
 			return this.connectionInfoWindowsReceive.socket;
 	}
+	
 	public DatagramSocket sendSocket(){
 		if (Constants.core)
 			return this.connectionInfoLinuxSend.socket;
@@ -51,3 +66,4 @@ public class CarInfo {
 			return this.connectionInfoWindowsReceive.socket;
 	}
 }
+

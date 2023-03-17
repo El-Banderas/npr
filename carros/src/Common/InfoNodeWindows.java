@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+
 /**
  * Only used to initialize InfoNodes in Windows, where the IP is localhost.
  */
@@ -15,13 +16,12 @@ public class InfoNodeWindows extends InfoNode{
 	public InfoNodeWindows(int port, boolean createSocket) throws UnknownHostException {
 		super( InetAddress.getByName("localhost"), port, createSocket);
 	}
-// Used to create car, port can be random, ip is localhost
+	
+	// Used to create car, port can be random, ip is localhost
 	public InfoNodeWindows() {
-	   super();
-
+		super();
 		try {
 			InetAddress ip = InetAddress.getByName("localhost");
-
 			DatagramSocket socket= new DatagramSocket();
 			int port = socket.getLocalPort();
 			this.ip = ip;

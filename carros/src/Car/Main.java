@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * Windows: File path that stores the information about towers
  * Example: "src/Car/TowersPosWindows"
@@ -19,8 +20,8 @@ import java.util.regex.Pattern;
  *
  */
 public class Main {
+	
 	// Parse file that contains information about the RSU's
-
 	public static List<TowerInfo> parseFile(String filePath){
 		try {
 			List<TowerInfo> res = new ArrayList<>();
@@ -77,7 +78,11 @@ public class Main {
 
 	public static void main(String[] args) {
 
+<<<<<<< HEAD
 		System.out.println("[CAR] Is core?: " + Constants.core);
+=======
+		System.out.println("[CAR] Is linux?: " + Constants.core);
+>>>>>>> main
 		
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);
@@ -88,7 +93,6 @@ public class Main {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
 			info = new CarInfo(pos, infoCarConnection);
-
 		}
 		else {
 			// Read node name

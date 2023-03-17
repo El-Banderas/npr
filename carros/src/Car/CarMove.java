@@ -1,26 +1,34 @@
 package Car;
 
 import Common.Constants;
+import Common.Position;
+import Common.TowerInfo;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
-import Common.Position;
-import Common.TowerInfo;
 
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
 
+
 public class CarMove {
+	
 	private CarInfo info;
 	private  List<TowerInfo> towers;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
+<<<<<<< HEAD
 	private SharedClass shared;
 
 	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
+=======
+	
+	
+	public CarMove(CarInfo info, List<TowerInfo> towers) {
+>>>>>>> main
 		this.info = info;
 		this.towers = towers;
 		this.receiveSocket = info.receiveSocket();
@@ -40,17 +48,15 @@ public class CarMove {
 				throw new RuntimeException(e);
 			}
 		}
-
-
 	}
 	
+	
 	public void run(){
-
-			while(true){
-				try {
-
+		while(true){
+			try {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
+<<<<<<< HEAD
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.core)
 					checkPossibleCommunication();
@@ -69,9 +75,24 @@ public class CarMove {
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
+=======
+				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
+				if (!Constants.core)
+					checkPossibleCommunication();
+				SendMessages.carHellos(sendSocket );
+				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
+		
+				//receiveSocket.receive(packet);
+				handleMessage(message);
+				Thread.sleep(Constants.refreshRate);
+			} catch (IOException e) {
+				System.out.println("Timeout, nothing received");
+				//throw new RuntimeException(e);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+>>>>>>> main
 			}
-
-
+		}
 	}
 
 	/**
@@ -102,8 +123,12 @@ public class CarMove {
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			default:
+<<<<<<< HEAD
 				//System.out.println("Received message, type unkown: " + message.type);
 
+=======
+				System.out.println("Received message, type unkown: " + message.type);
+>>>>>>> main
 		}
 	}
 }
