@@ -85,51 +85,28 @@ public class Main {
 		System.out.println(towers);
 		Position pos;
 		CarInfo info;
+		
 		if (!Constants.core) {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
 			info = new CarInfo(pos, infoCarConnection);
 		}
 		else {
-			// Read node name
-			boolean getPositions = false;
-			if (getPositions) {
-				System.out.println("Working Directory = " + System.getProperty("user.dir"));
-				Pattern p = Pattern.compile("(\\/tmp\\/pycore\\.\\d+\\/)(\\w+)\\.conf");
-				Matcher m = p.matcher(System.getProperty("user.dir"));
-				m.find();
-				String parent_dir = m.group(1);
-				String node_name = m.group(2);
-
-				// Read xy contents
-				System.out.println("Node Coordinates file = " + parent_dir + node_name + ".xy");
-				String xy = "0.0 0.0";
-				try {
-					Scanner scanner = new Scanner(new File(parent_dir + node_name + ".xy"));
-					xy = scanner.nextLine();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-				Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
-				Matcher m1 = p1.matcher(xy);
-				m1.find();
-				int x = Integer.parseInt(m1.group(1));
-				int y = Integer.parseInt(m1.group(2));
-
-				System.out.println("Node Coordinates = " + x + " " + y);
-				//pos = new PositionCarWindows(x,y);
-
-			}
-			pos = new PositionCarWindows(0,0);
-
+			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+			pos = new Position();
+			//pos = new PositionCarWindows(0,0);
+			System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
+			
 			info = new CarInfo(pos);
 		}
+		
 		// Depois separar em 2 threads: comunicações e terminal
 		SharedClass shared = new SharedClass(info);
+		
 		CarTerminal carTerminal = new CarTerminal(shared);
 		Thread thread = new Thread(carTerminal);
 		thread.start();
-		//System.out.println("Aqui");
+		
 		CarMove carMove = new CarMove(info, towers, shared);
 		carMove.run();
 	}
