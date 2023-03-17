@@ -5,6 +5,7 @@ public class Position {
 	
 	public int x;
 	public int y;
+	public float timestamp;
 	
 	
 	public Position(int x, int y) {

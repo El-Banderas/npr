@@ -17,10 +17,21 @@ public class CarInfo {
 	public String brand;
 	public String color;
 	public Position pos;
+
+	public Position oldPos;
 	public InfoNode connectionInfoWindowsReceive;
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
-	
+
+	public float getVelocity(){
+		// TODO:...
+		return 0;
+	}
+
+	public Position getDirection(){
+		// TODO: ...
+		return new Position(pos.x- oldPos.x,pos.y - oldPos.y);
+	}
 	
 	//Depois mudar
 	public CarInfo(Position pos) {
