@@ -78,11 +78,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-<<<<<<< HEAD
 		System.out.println("[CAR] Is core?: " + Constants.core);
-=======
-		System.out.println("[CAR] Is linux?: " + Constants.core);
->>>>>>> main
 		
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);

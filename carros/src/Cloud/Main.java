@@ -23,11 +23,7 @@ import java.net.UnknownHostException;
 public class Main {
 	public static void main(String[] args) throws UnknownHostException, SocketException {
 
-<<<<<<< HEAD
 		System.out.println("Is core?: " + Constants.core);
-=======
-		System.out.println("Is linux?: " + Constants.core);
->>>>>>> main
 
 		InfoNode cloudInfo;
 		if (Constants.core) {

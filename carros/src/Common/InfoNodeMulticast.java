@@ -10,11 +10,12 @@ import java.net.SocketException;
  */
 public class InfoNodeMulticast extends InfoNode {
 	
+	@SuppressWarnings("deprecation")
 	public InfoNodeMulticast() {
 		super();
 		try {
 			MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
-			multicastSocket.joinGroup(Constants.MulticastGroup);
+			multicastSocket.joinGroup(Constants.MulticastGroup); //deprecated
 			//multicastSocket.setInterface(Constants.MulticastGroup);
 			
 			this.socket = multicastSocket;

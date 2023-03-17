@@ -1,6 +1,5 @@
 package Car.Terminal;
 
-import Car.CarInfo;
 
 import java.net.DatagramSocket;
 

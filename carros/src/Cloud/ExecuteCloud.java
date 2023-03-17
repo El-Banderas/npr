@@ -7,15 +7,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
 
-<<<<<<< HEAD
 
 public class ExecuteCloud {
-	private Common.InfoNode cloud;
-=======
->>>>>>> main
-
-public class ExecuteCloud {
-	
 	private Common.InfoNode cloud;
 	
 	
