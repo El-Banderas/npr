@@ -5,6 +5,7 @@ import Common.*;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+
 /**
  * Será que a cloud deve saber os ip's das torres? Porque podemos fazer de duas formas:
  * Quando recebe uma mensagem duma torre, passa a descobrir essa torre.
@@ -35,4 +36,4 @@ public class Main {
 		ExecuteCloud cloud = new ExecuteCloud(cloudInfo);
 		cloud.run();
 	}
-	}
+}

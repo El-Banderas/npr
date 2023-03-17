@@ -22,6 +22,7 @@ public class CarMove {
 	private InetAddress myIp;
 	private SharedClass shared;
 
+	
 	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
 		this.info = info;
 		this.towers = towers;
@@ -82,6 +83,7 @@ public class CarMove {
 			}
 		}
 	}
+	
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
 		//System.out.println("Recebeu algo: " + message.type);
 		if (message.ipSender.equals(myIp) ) {
