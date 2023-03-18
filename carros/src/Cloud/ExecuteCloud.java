@@ -10,11 +10,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
 
+
 public class ExecuteCloud {
-	
+
 	private Common.InfoNode cloud;
-	
-	
+
+
 	public ExecuteCloud(InfoNode cloud) {
 		this.cloud = cloud;
 	}

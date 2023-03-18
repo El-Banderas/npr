@@ -22,7 +22,6 @@ public class CarMove {
 	private InetAddress myIp;
 	private SharedClass shared;
 
-
 	
 	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
 		this.info = info;
@@ -56,21 +55,18 @@ public class CarMove {
 				if (!Constants.core)
 					checkPossibleCommunication();
 				SendMessages.carHellos(sendSocket);
-				MessageAndType message;
-					message = ReceiveMessages.receiveData(receiveSocket);
+				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 				Thread.sleep(Constants.refreshRate);
-				} catch (IOException e) {
-					shared.addEntryMessages(MessagesConstants.Timeout);
+			} catch (IOException e) {
+				shared.addEntryMessages(MessagesConstants.Timeout);
 
-					//System.out.println("Timeout, nothing received");
-					//throw new RuntimeException(e);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-
+				//System.out.println("Timeout, nothing received");
+				//throw new RuntimeException(e);
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
 			}
 		}
 
@@ -86,6 +82,7 @@ public class CarMove {
 			}
 		}
 	}
+	
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
 		//System.out.println("Recebeu algo: " + message.type);
 		if (message.ipSender.equals(myIp) ) {
@@ -102,7 +99,7 @@ public class CarMove {
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			default:
-				System.out.println("Received message, type unkown: " + message.type);
+				System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 }
