@@ -2,17 +2,13 @@ package Cloud;
 
 import Common.Constants;
 import Common.InfoNode;
+import Common.Messages.MessageAndType;
+import Common.Messages.MessagesConstants;
+import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
-
-<<<<<<< HEAD
-
-public class ExecuteCloud {
-	private Common.InfoNode cloud;
-=======
->>>>>>> main
 
 public class ExecuteCloud {
 	
@@ -30,12 +26,25 @@ public class ExecuteCloud {
 		cloud.socket.setSoTimeout(Constants.refreshRate);
 		while(true){
 			try {
-				cloud.socket.receive(packet);
-				System.out.println("[TOWER] Message received");
+				MessageAndType message = ReceiveMessages.receiveData(cloud.socket);
+				//receiveSocket.receive(packet);
+				handleMessage(message);
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received.");
 				System.out.println("Receiving in: "+cloud.socket.getLocalAddress() +" | "+  cloud.socket.getLocalPort() );
 			}
 		}
 	}
+	private static void handleMessage(MessageAndType message) {
+		switch (message.type){
+			case MessagesConstants.HelloMessage:
+				System.out.println("Received Hello");
+				break;
+
+			default:
+				System.out.println("Received message, type unkown: " + message.type);
+
+		}
+	}
+
 }

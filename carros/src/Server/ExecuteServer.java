@@ -2,6 +2,9 @@ package Server;
 
 import Common.Constants;
 import Common.InfoNode;
+import Common.Messages.MessageAndType;
+import Common.Messages.MessagesConstants;
+import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
 
 import java.io.IOException;
@@ -28,12 +31,20 @@ public class ExecuteServer {
 		while(true){
 			try {
 				SendMessages.serverHelloCloud(thisServer.socket, cloud);
-				thisServer.socket.receive(packet);
-				System.out.println("[Server] Message received");
+				MessageAndType message = ReceiveMessages.receiveData(thisServer.socket);
+				//receiveSocket.receive(packet);
+				handleMessage(message);
 			} catch (IOException e) {
 				System.out.println("[Server] Timeout passed. Nothing received.");
 				System.out.println("Receiving in: "+thisServer.socket.getLocalAddress() +" | "+  thisServer.socket.getLocalPort() );
 			}
 		}
 	}
+	private static void handleMessage(MessageAndType message) {
+		switch (message.type){
+			default:
+				System.out.println("Received message, type unkown: " + message.type);
+		}
+	}
+
 }

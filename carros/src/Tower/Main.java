@@ -5,6 +5,7 @@ import Common.*;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
+import Server.ServerConstants;
 
 import static Common.Messages.SendMessages.towerHelloServer;
 
@@ -22,9 +23,10 @@ import java.net.*;
  *
  *
  * Linux, depois remover a posição, e acrescentar o IP da cloud, para saber a quem mandar mensagens
- * Name (unecessary) | IP Server |PosX | PosY
+ * O server do lado direito é o "2001:9::20"
+ * Name (unecessary) | IP Server | PosX | PosY
  * The port must be the same as the file.
- * Example: "t1 40 40"
+ * Example: "t1 2001:9::20 40 40"
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -39,8 +41,9 @@ public class Main {
 		if (Constants.core) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
-			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-			thisServer = new InfoNode(Constants.CloudIP, CloudConstants.port, false);
+			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+			InetAddress ipServer = Inet6Address.getByName(args[2]);
+			thisServer = new InfoNode(ipServer, ServerConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
 		}
 		else {

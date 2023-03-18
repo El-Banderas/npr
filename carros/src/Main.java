@@ -13,6 +13,13 @@ public class Main {
 	 * Car arguments (file): "src/Car/TowersPosWindows"
 	 * First argument -> 1 -> Tower
 	 * Tower arguments: t1 40 40
+	 * First argument -> 2 -> Server
+	 * Tower arguments: t1 IP_Server 40 40
+	 *
+	 * First argument -> 3 -> Cloud
+	 * Tower arguments:
+	 *
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args) throws IOException {
@@ -28,6 +35,18 @@ public class Main {
 			System.out.println("Execute Tower");
 
 			Tower.Main.main(restArguments);
+			return;
+		}
+		if (Integer.parseInt(args[0]) == 2){
+			System.out.println("Execute Server");
+
+			Server.Main.main(restArguments);
+			return;
+		}
+		if (Integer.parseInt(args[0]) == 3){
+			System.out.println("Execute Cloud");
+
+			Cloud.Main.main(restArguments);
 			return;
 		}
 	}

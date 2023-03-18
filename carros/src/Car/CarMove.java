@@ -20,15 +20,11 @@ public class CarMove {
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
-<<<<<<< HEAD
 	private SharedClass shared;
 
+
+	
 	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
-=======
-	
-	
-	public CarMove(CarInfo info, List<TowerInfo> towers) {
->>>>>>> main
 		this.info = info;
 		this.towers = towers;
 		this.receiveSocket = info.receiveSocket();
@@ -56,7 +52,6 @@ public class CarMove {
 			try {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
-<<<<<<< HEAD
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.core)
 					checkPossibleCommunication();
@@ -75,25 +70,9 @@ public class CarMove {
 				} catch (InterruptedException e) {
 					throw new RuntimeException(e);
 				}
-=======
-				System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				if (!Constants.core)
-					checkPossibleCommunication();
-				SendMessages.carHellos(sendSocket );
-				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
-		
-				//receiveSocket.receive(packet);
-				handleMessage(message);
-				Thread.sleep(Constants.refreshRate);
-			} catch (IOException e) {
-				System.out.println("Timeout, nothing received");
-				//throw new RuntimeException(e);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
->>>>>>> main
+
 			}
 		}
-	}
 
 	/**
 	 * This function checks distance to towers. Now is not necessary, we send hellos to everyone
@@ -123,12 +102,7 @@ public class CarMove {
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			default:
-<<<<<<< HEAD
-				//System.out.println("Received message, type unkown: " + message.type);
-
-=======
 				System.out.println("Received message, type unkown: " + message.type);
->>>>>>> main
 		}
 	}
 }

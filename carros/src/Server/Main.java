@@ -33,7 +33,8 @@ public class Main {
 		InfoNode cloudInfo;
 		InfoNode thisServer = null;
 		if (Constants.core) {
-			cloudInfo = new InfoNode(null, ServerConstants.port, true);
+			cloudInfo = new InfoNode(CloudConstants.ip, CloudConstants.port, false);
+			thisServer = new InfoNode(null, ServerConstants.port, true);
 
 		} else {
 			thisServer = new InfoNodeWindows(Integer.parseInt(args[0]), true);
@@ -42,4 +43,4 @@ public class Main {
 		ExecuteServer server = new ExecuteServer(thisServer, cloudInfo);
 		server.run();
 	}
-	}
+}
