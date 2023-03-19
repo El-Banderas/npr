@@ -13,10 +13,10 @@ public class Main {
 	 * First argument -> 1 -> Tower
 	 * Tower arguments: t1 40 40
 	 * First argument -> 2 -> Server
-	 * Tower arguments: t1 IP_Server 40 40
+	 * Server arguments: t1 IP_Server 40 40
 	 *
 	 * First argument -> 3 -> Cloud
-	 * Tower arguments:
+	 * Cloud arguments:
 	 *
 	 *
 	 * @param args
