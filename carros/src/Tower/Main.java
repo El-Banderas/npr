@@ -41,8 +41,8 @@ public class Main {
 		if (Constants.core) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
-			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
-			InetAddress ipServer = Inet6Address.getByName(args[2]);
+			InetAddress ipServer = Inet6Address.getByName(args[1]);
+			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 			thisServer = new InfoNode(ipServer, ServerConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
 		}

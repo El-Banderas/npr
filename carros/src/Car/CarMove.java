@@ -46,8 +46,8 @@ public class CarMove {
 	}
 	
 	
-	public void run(){
-		while(true){
+	public void run() {
+		while (true) {
 			try {
 				// Depois meter um if aqui para que no linux não atualize a posição
 				info.pos.getPosition();
@@ -69,6 +69,7 @@ public class CarMove {
 				throw new RuntimeException(e);
 			}
 		}
+	}
 
 	/**
 	 * This function checks distance to towers. Now is not necessary, we send hellos to everyone
