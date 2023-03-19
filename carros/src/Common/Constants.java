@@ -11,7 +11,7 @@ import java.util.Enumeration;
 public final class Constants {
 
 	public static boolean core = true;
-	public static int refreshRate = 500;
+	public static int refreshRate = 1000;
 
 	/**
 	 * Connections

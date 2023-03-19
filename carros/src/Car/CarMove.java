@@ -11,6 +11,8 @@ import Common.Messages.SendMessages;
 import java.io.IOException;
 import java.net.*;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class CarMove {
@@ -47,6 +49,9 @@ public class CarMove {
 	
 	
 	public void run() {
+		TimerTask timerTask = new sendHellos(sendSocket);
+		Timer timer = new Timer(true);
+		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		while (true) {
 			try {
 				// Depois meter um if aqui para que no linux não atualize a posição
@@ -54,19 +59,13 @@ public class CarMove {
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.core)
 					checkPossibleCommunication();
-				SendMessages.carHellos(sendSocket);
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 
 				//receiveSocket.receive(packet);
 				handleMessage(message);
-				Thread.sleep(Constants.refreshRate);
 			} catch (IOException e) {
 				shared.addEntryMessages(MessagesConstants.Timeout);
 
-				//System.out.println("Timeout, nothing received");
-				//throw new RuntimeException(e);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
 			}
 		}
 	}
