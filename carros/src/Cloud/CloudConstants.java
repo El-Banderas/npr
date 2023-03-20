@@ -13,7 +13,7 @@ public class CloudConstants {
 
 	static {
 		try {
-			ip = InetAddress.getByName("2001:9::10");
+			ip = InetAddress.getByName("2001:8::10");
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
