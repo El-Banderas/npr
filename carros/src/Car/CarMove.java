@@ -85,14 +85,12 @@ public class CarMove {
 	
 	private void handleMessage(MessageAndType message) throws UnknownHostException {
 		//System.out.println("Recebeu algo: " + message.type);
-		System.out.println("Recebi algo: ");
 		if (message.ipSender.equals(myIp) ) {
 			// There are no timeouts, because we receive always message from ourselves.
 			shared.addEntryMessages(MessagesConstants.Timeout);
 
 			return;
 		}
-		System.out.println("Tipo: " + message.type);
 		//System.out.println("IP2s: " + sendSocket.getLocalAddress());
 		//System.out.println("IP3s: " + InetAddress.getLocalHost());
 		shared.addEntryMessages(message.type);
