@@ -6,7 +6,6 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
-import Server.sendHellos;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -31,12 +30,11 @@ public class ExecuteServer {
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		thisServer.socket.setSoTimeout(Constants.refreshRate);
-		TimerTask timerTask = new sendHellos(this.thisServer.socket, cloud);
+		TimerTask timerTask = new sendHellos(this.thisServer.socket);
 		Timer timer = new Timer(true);
 		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		while(true){
 			try {
-				SendMessages.serverHelloCloud(thisServer.socket, cloud);
 				MessageAndType message = ReceiveMessages.receiveData(thisServer.socket);
 				//receiveSocket.receive(packet);
 				handleMessage(message);

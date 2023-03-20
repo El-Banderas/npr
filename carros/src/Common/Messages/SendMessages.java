@@ -1,5 +1,6 @@
 package Common.Messages;
 
+import Cloud.CloudConstants;
 import Common.Constants;
 import Common.InfoNode;
 
@@ -49,10 +50,10 @@ public class SendMessages {
 		sendMessage(sender, packet);
 	}
 
-	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination){
+	public static void serverHelloCloud(DatagramSocket sender){
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.ServerHelloMessage).put("Hello".getBytes()).array();
 
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, CloudConstants.ip, CloudConstants.port);
 		sendMessage(sender, packet);
 	}
 

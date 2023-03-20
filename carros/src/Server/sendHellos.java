@@ -10,16 +10,14 @@ import static Common.Messages.SendMessages.towerHelloServer;
 
 public class sendHellos extends TimerTask {
     public DatagramSocket sendSocket;
-    public InfoNode thisServer;
 
-    public sendHellos(DatagramSocket sendSocket, InfoNode server) {
+    public sendHellos(DatagramSocket sendSocket) {
         this.sendSocket = sendSocket;
-        this.thisServer = server;
     }
 
     @Override
     public void run() {
-        serverHelloCloud(sendSocket, thisServer);
+        serverHelloCloud(sendSocket);
 
     }
 }
