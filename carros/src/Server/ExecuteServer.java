@@ -43,7 +43,10 @@ public class ExecuteServer {
 	private static void handleMessage(MessageAndType message) {
 		switch (message.type){
 			case MessagesConstants.CarHelloMessage:
-				System.out.println("Received Hello");
+				System.out.println("Received Hello from car");
+				break;
+			case MessagesConstants.TowerHelloMessage:
+				System.out.println("Received Hello from tower");
 				break;
 			case MessagesConstants.BreakMessage:
 				System.out.println("Received Break");
