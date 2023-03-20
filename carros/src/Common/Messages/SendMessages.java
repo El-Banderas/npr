@@ -64,6 +64,11 @@ public class SendMessages {
 			sendMessage(send, packet);
 		}
 	}
+	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer) {
+		DatagramPacket packet = new DatagramPacket(message.content, message.content.length, thisServer.ip, thisServer.port);
+		sendMessage(sendSocket, packet);
+	}
+
 	public static void sendMessage(DatagramSocket send, DatagramPacket packet){
 		try {
 			send.send(packet);
@@ -72,4 +77,5 @@ public class SendMessages {
 			System.out.println("[ERROR] in sending message");
 		}
 	}
+
 }

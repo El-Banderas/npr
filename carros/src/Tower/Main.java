@@ -1,5 +1,7 @@
 package Tower;
 
+import Common.Messages.SendMessages;
+import Tower.sendHellos;
 import Cloud.CloudConstants;
 import Common.*;
 import Common.Messages.MessageAndType;
@@ -11,6 +13,8 @@ import static Common.Messages.SendMessages.towerHelloServer;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -29,6 +33,7 @@ import java.net.*;
  * Example: "t1 2001:9::20 40 40"
  */
 public class Main {
+	private static DatagramSocket sendSocket;
 	public static void main(String[] args) throws IOException {
 		System.out.println("[TOWER] Is core?: " + Constants.core);
 
@@ -54,12 +59,15 @@ public class Main {
 		}
 
 		DatagramSocket receiveSocket = thisTower.receiveSocket();
-		DatagramSocket sendSocket = thisTower.sendSocket();
+		sendSocket = thisTower.sendSocket();
 		// Multicast sockets got the setTimeout when created
 
 		if (!Constants.core){
 			receiveSocket.setSoTimeout(Constants.refreshRate);
 		}
+		TimerTask timerTask = new sendHellos(sendSocket, thisServer);
+		Timer timer = new Timer(true);
+		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		//receiveSocket.setSoTimeout(Constants.refreshRate);
 		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
 		//socketReceive.joinGroup(Constants.MulticastGroup);
@@ -67,11 +75,10 @@ public class Main {
 
 		while(true){
 			try {
-				towerHelloServer(sendSocket, thisServer);
 				//socketReceive.receive(packet);
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 				//receiveSocket.receive(packet);
-				handleMessage(message);
+				handleMessage(message, thisServer);
 			} catch (IOException e) {
 				System.out.println("[TOWER] Timeout passed. Nothing received. " );
 				//System.out.println("Receiving in: " +socketReceive.getLocalAddress());
@@ -82,7 +89,8 @@ public class Main {
 		}
 	}
 
-	private static void handleMessage(MessageAndType message) {
+	private static void handleMessage(MessageAndType message, InfoNode thisServer) {
+		SendMessages.forwardMessage(message, sendSocket, thisServer);
 		switch (message.type){
 			case MessagesConstants.HelloMessage:
 				System.out.println("Received Hello");

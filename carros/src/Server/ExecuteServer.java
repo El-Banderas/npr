@@ -42,6 +42,18 @@ public class ExecuteServer {
 	}
 	private static void handleMessage(MessageAndType message) {
 		switch (message.type){
+			case MessagesConstants.HelloMessage:
+				System.out.println("Received Hello");
+				break;
+			case MessagesConstants.BreakMessage:
+				System.out.println("Received Break");
+				break;
+
+			case MessagesConstants.AccidentMessage:
+				System.out.println("Received Accident");
+				break;
+
+
 			default:
 				System.out.println("Received message, type unkown: " + message.type);
 		}
