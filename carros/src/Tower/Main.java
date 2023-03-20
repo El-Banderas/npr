@@ -1,15 +1,11 @@
 package Tower;
 
 import Common.Messages.SendMessages;
-import Tower.sendHellos;
-import Cloud.CloudConstants;
 import Common.*;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Server.ServerConstants;
-
-import static Common.Messages.SendMessages.towerHelloServer;
 
 import java.io.IOException;
 import java.net.*;
@@ -92,7 +88,7 @@ public class Main {
 	private static void handleMessage(MessageAndType message, InfoNode thisServer) {
 		SendMessages.forwardMessage(message, sendSocket, thisServer);
 		switch (message.type){
-			case MessagesConstants.HelloMessage:
+			case MessagesConstants.CarHelloMessage:
 				System.out.println("Received Hello");
 				break;
 

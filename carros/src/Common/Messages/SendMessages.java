@@ -23,7 +23,7 @@ public class SendMessages {
 	public static void carHellos(DatagramSocket sender){
 		if (Constants.core){
 			//System.out.println("Send hellos to everyone");
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.CarHelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, packet);
 
@@ -31,7 +31,7 @@ public class SendMessages {
 	}
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination){
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.CarHelloMessage).put("Hello".getBytes()).array();
 		DatagramPacket packet;
 		if (Constants.core){
 			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
@@ -43,7 +43,7 @@ public class SendMessages {
 	}
 
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination){
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.HelloMessage).put("Hello".getBytes()).array();
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.TowerHelloMessage).put("Hello".getBytes()).array();
 
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
 		sendMessage(sender, packet);

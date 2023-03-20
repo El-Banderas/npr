@@ -95,7 +95,7 @@ public class CarMove {
 		//System.out.println("IP3s: " + InetAddress.getLocalHost());
 		shared.addEntryMessages(message.type);
 		switch (message.type){
-			case MessagesConstants.HelloMessage:
+			case MessagesConstants.CarHelloMessage:
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
 			case MessagesConstants.BreakMessage:

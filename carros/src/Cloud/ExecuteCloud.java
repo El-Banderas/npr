@@ -38,7 +38,7 @@ public class ExecuteCloud {
 	}
 	private static void handleMessage(MessageAndType message) {
 		switch (message.type){
-			case MessagesConstants.HelloMessage:
+			case MessagesConstants.CarHelloMessage:
 				System.out.println("Received Hello");
 				break;
 

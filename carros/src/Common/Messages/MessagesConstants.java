@@ -1,7 +1,8 @@
 package Common.Messages;
 
 public class MessagesConstants {
-    public static final int HelloMessage = 1;
+    public static final int CarHelloMessage = 1;
+    public static final int TowerHelloMessage = 5;
     public static final int BreakMessage = 2;
     public static final int AccidentMessage = 4;
 
@@ -11,8 +12,10 @@ public class MessagesConstants {
 
     public static String convertTypeString(int type){
         switch (type){
-            case HelloMessage:
-                return "Hello Message";
+            case CarHelloMessage:
+                return "Hello Message from car";
+            case TowerHelloMessage:
+                return "Hello Message from Tower";
         case BreakMessage:
             return "Break Message"   ;
         case Timeout:
