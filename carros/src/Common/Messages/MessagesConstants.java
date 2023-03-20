@@ -3,6 +3,7 @@ package Common.Messages;
 public class MessagesConstants {
     public static final int CarHelloMessage = 1;
     public static final int TowerHelloMessage = 5;
+    public static final int ServerHelloMessage = 6;
     public static final int BreakMessage = 2;
     public static final int AccidentMessage = 4;
 

@@ -6,10 +6,13 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
+import Tower.sendHellos;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.SocketException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ExecuteServer {
@@ -28,6 +31,9 @@ public class ExecuteServer {
 		byte[] buf = new byte[256];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		thisServer.socket.setSoTimeout(Constants.refreshRate);
+		TimerTask timerTask = new sendHellos(this.thisServer.socket, cloud);
+		Timer timer = new Timer(true);
+		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		while(true){
 			try {
 				SendMessages.serverHelloCloud(thisServer.socket, cloud);

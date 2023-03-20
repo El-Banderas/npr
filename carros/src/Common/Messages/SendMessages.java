@@ -50,7 +50,8 @@ public class SendMessages {
 	}
 
 	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination){
-		byte[]  buf = "Hello".getBytes();
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.ServerHelloMessage).put("Hello".getBytes()).array();
+
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
 		sendMessage(sender, packet);
 	}

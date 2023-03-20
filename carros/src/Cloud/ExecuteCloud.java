@@ -31,15 +31,15 @@ public class ExecuteCloud {
 				//receiveSocket.receive(packet);
 				handleMessage(message);
 			} catch (IOException e) {
-				System.out.println("[TOWER] Timeout passed. Nothing received.");
-				System.out.println("Receiving in: "+cloud.socket.getLocalAddress() +" | "+  cloud.socket.getLocalPort() );
+				System.out.println("[Cloud] Timeout passed. Nothing received.");
+				//System.out.println("Receiving in: "+cloud.socket.getLocalAddress() +" | "+  cloud.socket.getLocalPort() );
 			}
 		}
 	}
 	private static void handleMessage(MessageAndType message) {
 		switch (message.type){
-			case MessagesConstants.CarHelloMessage:
-				System.out.println("Received Hello");
+			case MessagesConstants.ServerHelloMessage:
+				System.out.println("Received Hello form server");
 				break;
 
 			default:

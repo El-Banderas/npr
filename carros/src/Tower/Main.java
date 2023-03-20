@@ -86,6 +86,7 @@ public class Main {
 	}
 
 	private static void handleMessage(MessageAndType message, InfoNode thisServer) {
+		System.out.println("Receive message: " + message.type);
 		SendMessages.forwardMessage(message, sendSocket, thisServer);
 		switch (message.type){
 			case MessagesConstants.CarHelloMessage:
