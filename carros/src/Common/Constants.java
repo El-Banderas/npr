@@ -10,7 +10,7 @@ import java.util.Enumeration;
 
 public final class Constants {
 
-	public static boolean core = true;
+	public static boolean core = false;
 	public static int refreshRate = 1000;
 
 	/**

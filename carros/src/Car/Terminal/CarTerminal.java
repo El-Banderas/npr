@@ -21,6 +21,7 @@ public class CarTerminal implements Runnable {
 		this.options = new TreeMap<Integer, Option>();
 		options.put(TerminalConstants.BreakOption, new BreakOption());
 		options.put(TerminalConstants.Refresh, new RefreshOption());
+		options.put(TerminalConstants.AccidentOption, new AccidentOption());
 		Scanner scan = new Scanner(System.in);
 		while(true) {
 			System.out.println("################");

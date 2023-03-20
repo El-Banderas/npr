@@ -3,6 +3,8 @@ package Common.Messages;
 public class MessagesConstants {
     public static final int HelloMessage = 1;
     public static final int BreakMessage = 2;
+    public static final int AccidentMessage = 4;
+
 
     // There is no message, is to update car terminal
     public static final int Timeout = 3;
@@ -15,6 +17,8 @@ public class MessagesConstants {
             return "Break Message"   ;
         case Timeout:
                 return "Timeout triggered"   ;
+            case AccidentMessage:
+                return "Accident Happened"   ;
 
             default:
                 return "Type unkown";

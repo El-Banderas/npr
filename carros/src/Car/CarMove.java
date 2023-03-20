@@ -98,6 +98,13 @@ public class CarMove {
 			case MessagesConstants.HelloMessage:
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
+			case MessagesConstants.BreakMessage:
+				//System.out.println("Received Hello from: " + message.ipSender);
+				break;
+			case MessagesConstants.AccidentMessage:
+				//System.out.println("Received Hello from: " + message.ipSender);
+				break;
+
 			default:
 				System.out.println("Received message, type unknown: " + message.type);
 		}
