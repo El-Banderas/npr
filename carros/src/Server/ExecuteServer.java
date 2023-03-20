@@ -6,7 +6,7 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
-import Tower.sendHellos;
+import Server.sendHellos;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
