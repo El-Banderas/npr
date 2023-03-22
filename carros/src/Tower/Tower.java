@@ -80,7 +80,6 @@ public class Tower implements Runnable {
 			case MessagesConstants.CarHelloMessage:
 				System.out.println("Received Hello");
 				break;
-
 			default:
 				System.out.println("Received message, type unknown: " + message.type);
 		}

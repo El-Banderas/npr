@@ -15,13 +15,19 @@ public class InfoNodeMulticast extends InfoNode {
 		super();
 		try {
 			MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
-			multicastSocket.joinGroup(Constants.MulticastGroup); //deprecated
+			multicastSocket.joinGroup(Constants.MulticastGroup);
 			//multicastSocket.setInterface(Constants.MulticastGroup);
 			
 			this.socket = multicastSocket;
 			this.port = Constants.portMulticast;
 			this.ip = socket.getLocalAddress();
-			System.out.println("Add multicast: " + this.ip);
+			
+			System.out.println("IP: " + this.ip);
+			System.out.println("Remote Socket: " + multicastSocket.getRemoteSocketAddress());
+			System.out.println("Local Socket: " + multicastSocket.getLocalSocketAddress());
+			System.out.println("Interface: " + multicastSocket.getInterface());
+			System.out.println("Interface: " + multicastSocket.getNetworkInterface());
+			
 			try {
 				multicastSocket.setSoTimeout(Constants.refreshRate);
 			} catch (SocketException e) {
