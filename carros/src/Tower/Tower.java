@@ -66,6 +66,13 @@ public class Tower implements Runnable {
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)
 	{
+		if (message.ipSender.equals(info.sendSocket().getLocalSocketAddress())){
+			System.out.println("Recebeu próprio hello");
+		}
+		if (message.ipSender.equals(info.sendSocket().getInetAddress())){
+			System.out.println("[2] Recebeu próprio hello");
+		}
+
 		System.out.println("Receive message: " + message.type);
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
 		
@@ -73,6 +80,7 @@ public class Tower implements Runnable {
 			case MessagesConstants.CarHelloMessage:
 				System.out.println("Received Hello");
 				break;
+
 			default:
 				System.out.println("Received message, type unknown: " + message.type);
 		}
