@@ -17,13 +17,13 @@ import java.util.TimerTask;
 public class Server implements Runnable {
 	
 	private InfoNode thisServer;
-	private InfoNode cloud;
+	//private InfoNode cloud;
 	private List<String> carsInRange;
 	
 	
 	public Server(InfoNode thisServer, InfoNode cloud)
 	{
-		this.cloud = cloud;
+		//this.cloud = cloud;
 		this.thisServer = thisServer;
 		this.carsInRange = new ArrayList<String>();
 	}
