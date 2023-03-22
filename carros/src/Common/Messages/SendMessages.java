@@ -72,6 +72,15 @@ public class SendMessages {
 		sendMessage(sendSocket, packet);
 	}
 
+	public static void towerHelloCar(DatagramSocket sendSocket) {
+		if (Constants.core){
+			System.out.println("Send accident to everyone");
+			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.TowerHelloMessage).array();
+			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+			sendMessage(sendSocket, packet);
+		}
+	}
+
 	public static void sendMessage(DatagramSocket send, DatagramPacket packet){
 		try {
 			send.send(packet);

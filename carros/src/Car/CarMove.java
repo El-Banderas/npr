@@ -98,6 +98,9 @@ public class CarMove {
 			case MessagesConstants.CarHelloMessage:
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;
+			case MessagesConstants.TowerHelloMessage:
+				//System.out.println("Received Hello from: " + message.ipSender);
+				break;
 			case MessagesConstants.BreakMessage:
 				//System.out.println("Received Hello from: " + message.ipSender);
 				break;

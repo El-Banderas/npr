@@ -20,6 +20,7 @@ public class sendHellos extends TimerTask {
     @Override
     public void run() {
         towerHelloServer(sendSocket, thisServer);
+        SendMessages.towerHelloCar(sendSocket);
 
     }
 }
