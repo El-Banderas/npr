@@ -26,21 +26,21 @@ import java.net.UnknownHostException;
  * Example: ""
  */
 public class Main {
-	public static void main(String[] args) throws UnknownHostException, SocketException {
-
-		System.out.println("Is linux?: " + Constants.core);
-
+	
+	public static void main(String[] args) throws UnknownHostException, SocketException
+	{
 		InfoNode cloudInfo;
-		InfoNode thisServer = null;
+		InfoNode thisServer;
+		
 		if (Constants.core) {
 			cloudInfo = new InfoNode(CloudConstants.ip, CloudConstants.port, false);
 			thisServer = new InfoNode(null, ServerConstants.port, true);
-
 		} else {
-			thisServer = new InfoNodeWindows(Integer.parseInt(args[0]), true);
 			cloudInfo = new InfoNodeWindows(CloudConstants.port, false);
+			thisServer = new InfoNodeWindows(Integer.parseInt(args[0]), true);
 		}
-		ExecuteServer server = new ExecuteServer(thisServer, cloudInfo);
+		
+		Server server = new Server(thisServer, cloudInfo);
 		server.run();
 	}
 }
