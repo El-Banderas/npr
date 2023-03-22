@@ -45,7 +45,7 @@ public class InfoNode {
 	
 	public InfoNode() {
 		this.socket = null;
-		this.ip	= null;
+		this.ip = null;
 		this.port = -1;
 	}
 	
