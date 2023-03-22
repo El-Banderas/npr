@@ -22,18 +22,18 @@ import java.net.UnknownHostException;
  * Example: ""
  */
 public class Main {
-	public static void main(String[] args) throws UnknownHostException, SocketException {
-
-		System.out.println("Is core?: " + Constants.core);
-
+	
+	public static void main(String[] args) throws UnknownHostException, SocketException
+	{
 		InfoNode cloudInfo;
-		if (Constants.core) {
+		
+		if(Constants.core) {
 			cloudInfo = new InfoNode(null, CloudConstants.port, true);
-
 		} else {
 			cloudInfo = new InfoNodeWindows(CloudConstants.port, true);
 		}
-		ExecuteCloud cloud = new ExecuteCloud(cloudInfo);
+		
+		Cloud cloud = new Cloud(cloudInfo);
 		cloud.run();
 	}
 }
