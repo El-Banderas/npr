@@ -1,16 +1,10 @@
 package Tower;
 
-import Common.Messages.SendMessages;
 import Common.*;
-import Common.Messages.MessageAndType;
-import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
 import Server.ServerConstants;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -29,16 +23,14 @@ import java.util.TimerTask;
  * Example: "t1 2001:9::20 40 40"
  */
 public class Main {
-	private static DatagramSocket sendSocket;
-	public static void main(String[] args) throws IOException {
-		System.out.println("[TOWER] Is core?: " + Constants.core);
-
+	
+	public static void main(String[] args) throws IOException
+	{
 		String name = args[0];
-
-		Position pos = null;
+		Position pos;
 		InfoNode thisServer;
-
-		TowerInfo thisTower ;
+		TowerInfo thisTower;
+		
 		if (Constants.core) {
 			//towerIPInfo = new InfoNodeMulticast(true);
 			// TODO: Change position tower
@@ -46,56 +38,14 @@ public class Main {
 			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 			thisServer = new InfoNode(ipServer, ServerConstants.port, false);
 			thisTower = new TowerInfo(name, pos);
-		}
-		else {
+		} else {
 			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
 			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
 			thisTower = new TowerInfo(name, infoNodo, pos);
-			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false );
+			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false);
 		}
-
-		DatagramSocket receiveSocket = thisTower.receiveSocket();
-		sendSocket = thisTower.sendSocket();
-		// Multicast sockets got the setTimeout when created
-
-		if (!Constants.core){
-			receiveSocket.setSoTimeout(Constants.refreshRate);
-		}
-		TimerTask timerTask = new sendHellos(sendSocket, thisServer);
-		Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
-		//receiveSocket.setSoTimeout(Constants.refreshRate);
-		//MulticastSocket socketReceive = new MulticastSocket(Constants.portCarsTowersLinux);
-		//socketReceive.joinGroup(Constants.MulticastGroup);
-		//socketReceive.setSoTimeout(Constants.refreshRate);
-
-		while(true){
-			try {
-				//socketReceive.receive(packet);
-				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
-				//receiveSocket.receive(packet);
-				handleMessage(message, thisServer);
-			} catch (IOException e) {
-				System.out.println("[TOWER] Timeout passed. Nothing received. " );
-				//System.out.println("Receiving in: " +socketReceive.getLocalAddress());
-				//System.out.println("Receiving in: " +socketReceive.getInterface());
-
-			}
-
-		}
-	}
-
-	private static void handleMessage(MessageAndType message, InfoNode thisServer) {
-		System.out.println("Receive message: " + message.type);
-		SendMessages.forwardMessage(message, sendSocket, thisServer);
-		switch (message.type){
-			case MessagesConstants.CarHelloMessage:
-				System.out.println("Received Hello");
-				break;
-
-			default:
-				System.out.println("Received message, type unkown: " + message.type);
-
-		}
+		
+		Tower tower = new Tower(thisTower, thisServer);
+		tower.run();
 	}
 }
