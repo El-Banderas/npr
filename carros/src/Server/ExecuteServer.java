@@ -18,11 +18,13 @@ public class ExecuteServer {
 	
 	private InfoNode thisServer;
 	private InfoNode cloud;
+	private int howManyCars;
 
 	
 	public ExecuteServer(InfoNode thisServer, InfoNode cloud) {
 		this.cloud = cloud;
 		this.thisServer = thisServer;
+		this.howManyCars = 0;
 	}
 	
 	
@@ -44,10 +46,11 @@ public class ExecuteServer {
 			}
 		}
 	}
-	private static void handleMessage(MessageAndType message) {
+	private void handleMessage(MessageAndType message) {
 		switch (message.type){
 			case MessagesConstants.CarHelloMessage:
-				System.out.println("Received Hello from car");
+				this.howManyCars++;
+				System.out.println("Received "+this.howManyCars+" Hello from car");
 				break;
 			case MessagesConstants.TowerHelloMessage:
 				System.out.println("Received Hello from tower");
@@ -66,4 +69,7 @@ public class ExecuteServer {
 		}
 	}
 
+	public int getHowManyCars() {
+		return howManyCars;
+	}
 }
