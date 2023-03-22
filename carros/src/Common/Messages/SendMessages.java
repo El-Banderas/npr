@@ -66,7 +66,7 @@ public class SendMessages {
 
 	public static void carSendAccident(DatagramSocket send) {
 		if (Constants.core){
-			System.out.println("Send accident to everyone");
+			System.out.println("!!!!Send accident to everyone");
 			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.AccidentMessage).array();
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 			sendMessage(send, packet);
