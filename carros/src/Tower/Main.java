@@ -44,7 +44,7 @@ public class Main {
 			thisTower = new TowerInfo(name, infoNodo, pos);
 			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false);
 		}
-		
+		System.out.println("AQUI!!!");
 		Tower tower = new Tower(thisTower, thisServer);
 		tower.run();
 	}
