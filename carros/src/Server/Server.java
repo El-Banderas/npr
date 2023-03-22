@@ -42,7 +42,7 @@ public class Server implements Runnable {
 		Timer timer = new Timer(true);
 		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		
-		while(true){
+		while(true) {
 			try {
 				MessageAndType message = ReceiveMessages.receiveData(thisServer.socket);
 				handleMessage(message);

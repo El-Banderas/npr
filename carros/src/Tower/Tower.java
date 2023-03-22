@@ -35,7 +35,7 @@ public class Tower implements Runnable {
 		DatagramSocket sendSocket = info.sendSocket();
 		// Multicast sockets got the setTimeout when created
 
-		if (!Constants.core){
+		if(!Constants.core) {
 			try {
 				receiveSocket.setSoTimeout(Constants.refreshRate);
 			} catch (SocketException e) {
@@ -51,7 +51,7 @@ public class Tower implements Runnable {
 		//socketReceive.joinGroup(Constants.MulticastGroup);
 		//socketReceive.setSoTimeout(Constants.refreshRate);
 
-		while(true){
+		while(true) {
 			try {
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 				handleMessage(message, server);
@@ -72,7 +72,7 @@ public class Tower implements Runnable {
 		System.out.println("Receive message: " + message.type);
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
 		
-		switch (message.type){
+		switch(message.type) {
 			case MessagesConstants.CarHelloMessage:
 				System.out.println("Received Hello");
 				break;
