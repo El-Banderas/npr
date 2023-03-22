@@ -8,6 +8,8 @@ import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,13 +18,13 @@ public class ExecuteServer {
 	
 	private InfoNode thisServer;
 	private InfoNode cloud;
-	private int howManyCars;
+	private List<String> carsInRange;
 
 	
 	public ExecuteServer(InfoNode thisServer, InfoNode cloud) {
 		this.cloud = cloud;
 		this.thisServer = thisServer;
-		this.howManyCars = 0;
+		this.carsInRange = new ArrayList<String>();
 	}
 	
 	
@@ -46,8 +48,10 @@ public class ExecuteServer {
 	private void handleMessage(MessageAndType message) {
 		switch (message.type){
 			case MessagesConstants.CarHelloMessage:
-				this.howManyCars++;
-				System.out.println("Received "+this.howManyCars+" Hello from car");
+				String id = message.ipSender.toString(); //Usar ip em vez de id, para já
+				if (!this.carsInRange.contains(id))
+					this.carsInRange.add(id);
+				System.out.println("Received Hello from car");
 				break;
 			case MessagesConstants.TowerHelloMessage:
 				System.out.println("Received Hello from tower");
@@ -55,7 +59,6 @@ public class ExecuteServer {
 			case MessagesConstants.BreakMessage:
 				System.out.println("Received Break");
 				break;
-
 			case MessagesConstants.AccidentMessage:
 				System.out.println("Received Accident");
 				break;
@@ -67,6 +70,6 @@ public class ExecuteServer {
 	}
 
 	public int getHowManyCars() {
-		return howManyCars;
+		return this.carsInRange.size();
 	}
 }
