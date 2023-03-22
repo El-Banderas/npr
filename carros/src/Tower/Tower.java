@@ -69,6 +69,10 @@ public class Tower implements Runnable {
 		if (message.ipSender.equals(info.sendSocket().getLocalSocketAddress())){
 			System.out.println("Recebeu próprio hello");
 		}
+		if (message.ipSender.equals(info.sendSocket().getInetAddress())){
+			System.out.println("[2] Recebeu próprio hello");
+		}
+
 		System.out.println("Receive message: " + message.type);
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
 		
