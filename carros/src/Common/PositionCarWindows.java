@@ -8,7 +8,7 @@ public class PositionCarWindows extends Position{
 	}
 	
 	
-	public void getPosition(){
+	public void updatePosition(){
 		x++;
 		y++;
 		if (x > Constants.maxXmap) x = Constants.minXmap;

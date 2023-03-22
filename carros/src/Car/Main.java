@@ -94,7 +94,6 @@ public class Main {
 		else {
 			System.out.println("Working Directory = " + System.getProperty("user.dir"));
 			pos = new Position();
-			//pos = new PositionCarWindows(0,0);
 			System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
 			
 			info = new CarInfo(pos);

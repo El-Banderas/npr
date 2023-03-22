@@ -23,37 +23,36 @@ public class Position {
 	
 	public Position()
 	{
-		this.getPosition();
+		this.updatePosition();
 	}
 	
 	
-	public void getPosition()
+	public void updatePosition()
 	{
-		boolean readPosition = false;
-		if (readPosition) {
-			// Read node name
-			Pattern p = Pattern.compile("(\\/tmp\\/pycore\\.\\d+\\/)(\\w+)\\.conf");
-			Matcher m = p.matcher(System.getProperty("user.dir"));
-			m.find();
-			String parent_dir = m.group(1);
-			String node_name = m.group(2);
+		// TODO: Pode ser feito só na inicialização
+		
+		// Read node name
+		Pattern p = Pattern.compile("(\\/tmp\\/pycore\\.\\d+\\/)(\\w+)\\.conf");
+		Matcher m = p.matcher(System.getProperty("user.dir"));
+		m.find();
+		String parent_dir = m.group(1);
+		String node_name = m.group(2);
 
-			// Read xy contents
-			String xy = "0.0 0.0";
-			try {
-				Scanner scanner = new Scanner(new File(parent_dir + node_name + ".xy"));
-				xy = scanner.nextLine();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
-			Matcher m1 = p1.matcher(xy);
-			m1.find();
-
-			this.x = Integer.parseInt(m1.group(1));
-			this.y = Integer.parseInt(m1.group(2));
-			this.timestamp = System.nanoTime();
+		// Read xy contents
+		String xy = "0.0 0.0";
+		try {
+			Scanner scanner = new Scanner(new File(parent_dir + node_name + ".xy"));
+			xy = scanner.nextLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
+		Matcher m1 = p1.matcher(xy);
+		m1.find();
+
+		this.x = Integer.parseInt(m1.group(1));
+		this.y = Integer.parseInt(m1.group(2));
+		this.timestamp = System.nanoTime();
 	}
 	
 	public static double distance(Position p1, Position p2)

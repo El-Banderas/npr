@@ -5,10 +5,8 @@ import Common.InfoNode;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
-import Common.Messages.SendMessages;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,8 +27,6 @@ public class ExecuteServer {
 	
 	
 	public void run() throws SocketException {
-		byte[] buf = new byte[256];
-		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		thisServer.socket.setSoTimeout(Constants.refreshRate);
 		TimerTask timerTask = new sendHellos(this.thisServer.socket);
 		Timer timer = new Timer(true);
@@ -46,6 +42,7 @@ public class ExecuteServer {
 			}
 		}
 	}
+	
 	private void handleMessage(MessageAndType message) {
 		switch (message.type){
 			case MessagesConstants.CarHelloMessage:

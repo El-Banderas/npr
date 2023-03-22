@@ -7,7 +7,6 @@ import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.SocketException;
 
 
@@ -22,8 +21,6 @@ public class ExecuteCloud {
 	
 	
 	public void run() throws SocketException {
-		byte[] buf = new byte[256];
-		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		cloud.socket.setSoTimeout(Constants.refreshRate);
 		while(true){
 			try {

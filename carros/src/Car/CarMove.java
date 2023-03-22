@@ -54,8 +54,7 @@ public class CarMove {
 		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		while (true) {
 			try {
-				// Depois meter um if aqui para que no linux não atualize a posição
-				info.pos.getPosition();
+				info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				if (!Constants.core)
 					checkPossibleCommunication();
