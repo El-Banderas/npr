@@ -9,6 +9,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
 
+import Car.CarInfo;
+
 
 public class SendMessages {
 
@@ -21,13 +23,16 @@ public class SendMessages {
 		}
 	}
 
-	public static void carHellos(DatagramSocket sender){
+	public static void carHellos(DatagramSocket sender, CarInfo info){
 		if (Constants.core){
 			//System.out.println("Send hellos to everyone");
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages).putInt(MessagesConstants.CarHelloMessage).put("Hello".getBytes()).array();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
-
+			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+					.putInt(MessagesConstants.CarHelloMessage)
+					.put(info.id.getBytes())
+					.put("Hello".getBytes())
+					.array();
+			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+			sendMessage(sender, packet);
 		}
 	}
 	

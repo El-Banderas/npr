@@ -83,20 +83,22 @@ public class Main {
 		// Information about towers
 		List<TowerInfo> towers = parseFile(args[0]);
 		System.out.println(towers);
+		String id = idGenerator(8);
+		System.out.println("Id: " + id);
 		Position pos;
 		CarInfo info;
 		
 		if (!Constants.core) {
 			pos = new PositionCarWindows(0,0);
 			InfoNodeWindows infoCarConnection = new InfoNodeWindows();
-			info = new CarInfo(pos, infoCarConnection);
+			info = new CarInfo(pos, infoCarConnection, id);
 		}
 		else {
 			System.out.println("Working Directory = " + System.getProperty("user.dir"));
 			pos = new Position();
 			System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
 			
-			info = new CarInfo(pos);
+			info = new CarInfo(pos, id);
 		}
 		
 		// Depois separar em 2 threads: comunicações e terminal
@@ -108,5 +110,19 @@ public class Main {
 		
 		CarMove carMove = new CarMove(info, towers, shared);
 		carMove.run();
+	}
+
+
+	private static String idGenerator(int n) {
+		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
+
+		StringBuilder sb = new StringBuilder(n);
+		
+		for (int i = 0; i < n; i++) {
+			int index = (int)(alphaNumeric.length() * Math.random());
+			sb.append(alphaNumeric.charAt(index));
+		}
+
+		return sb.toString();
 	}
 }

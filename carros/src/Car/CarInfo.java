@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 
 public class CarInfo {
 
+	public String id;
 	public Position oldPos;
 	public Position pos;
 	public InfoNode connectionInfoWindowsReceive;
@@ -17,17 +18,19 @@ public class CarInfo {
 	public InfoNodeMulticast connectionInfoLinuxReceive;
 	
 	
-	public CarInfo(Position pos) {
+	public CarInfo(Position pos, String id) {
 		this.oldPos = pos;
 		this.pos = pos;
+		this.id = id;
 		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 	}
 
-	public CarInfo(Position pos, InfoNode sendInfo) {
+	public CarInfo(Position pos, InfoNode sendInfo, String id) {
 		this.oldPos = pos;
 		this.pos = pos;
+		this.id = id;
 		this.connectionInfoWindowsReceive = sendInfo;
 	}
 	

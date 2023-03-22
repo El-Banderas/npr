@@ -6,15 +6,19 @@ import java.net.DatagramSocket;
 import java.util.TimerTask;
 
 public class sendHellos extends TimerTask {
-    public DatagramSocket sendSocket;
-
-    public sendHellos(DatagramSocket sendSocket) {
-        this.sendSocket = sendSocket;
-    }
-
-    @Override
-    public void run() {
-        SendMessages.carHellos(sendSocket);
-
-    }
+	
+	public CarInfo info;
+	public DatagramSocket sendSocket;
+	
+	
+	public sendHellos(DatagramSocket sendSocket, CarInfo info) {
+		this.sendSocket = sendSocket;
+		this.info = info;
+	}
+	
+	
+	@Override
+	public void run() {
+		SendMessages.carHellos(sendSocket, info);
+	}
 }

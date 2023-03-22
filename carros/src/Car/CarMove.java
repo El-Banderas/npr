@@ -49,7 +49,7 @@ public class CarMove {
 	
 	
 	public void run() {
-		TimerTask timerTask = new sendHellos(sendSocket);
+		TimerTask timerTask = new sendHellos(sendSocket, this.info);
 		Timer timer = new Timer(true);
 		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
 		while (true) {
