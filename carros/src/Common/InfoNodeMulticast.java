@@ -1,7 +1,9 @@
 package Common;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 
 /**
@@ -10,13 +12,13 @@ import java.net.SocketException;
  */
 public class InfoNodeMulticast extends InfoNode {
 	
-	@SuppressWarnings("deprecation")
 	public InfoNodeMulticast() {
 		super();
 		try {
+			InetSocketAddress group = new InetSocketAddress(Constants.MulticastGroup, Constants.portMulticast);
+			NetworkInterface netIf = NetworkInterface.getByName("eth1");
 			MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
-			multicastSocket.joinGroup(Constants.MulticastGroup);
-			//multicastSocket.setInterface(Constants.MulticastGroup);
+			multicastSocket.joinGroup(group, netIf);
 			
 			this.socket = multicastSocket;
 			this.port = Constants.portMulticast;
@@ -25,7 +27,6 @@ public class InfoNodeMulticast extends InfoNode {
 			System.out.println("IP: " + this.ip);
 			System.out.println("Remote Socket: " + multicastSocket.getRemoteSocketAddress());
 			System.out.println("Local Socket: " + multicastSocket.getLocalSocketAddress());
-			System.out.println("Interface: " + multicastSocket.getInterface());
 			System.out.println("Interface: " + multicastSocket.getNetworkInterface());
 			
 			try {
