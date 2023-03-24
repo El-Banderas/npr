@@ -77,5 +77,10 @@ public class Server implements Runnable {
 	}
 	
 	
-	public int getHowManyCars() {return this.carsInRange.size();}
+	public int getHowManyCars()
+	{
+		int result = this.carsInRange.size();
+		this.carsInRange.clear();
+		return result;
+	}
 }

@@ -2,7 +2,6 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,14 +33,6 @@ public class Tower implements Runnable {
 		DatagramSocket receiveSocket = info.receiveSocket();
 		DatagramSocket sendSocket = info.sendSocket();
 		// Multicast sockets got the setTimeout when created
-
-		if(!Constants.core) {
-			try {
-				receiveSocket.setSoTimeout(Constants.refreshRate);
-			} catch (SocketException e) {
-				e.printStackTrace();
-			}
-		}
 		
 		TimerTask timerTask = new sendHellos(sendSocket, server);
 		Timer timer = new Timer(true);

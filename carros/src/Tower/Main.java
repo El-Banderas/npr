@@ -30,19 +30,12 @@ public class Main {
 		InfoNode thisServer;
 		TowerInfo thisTower;
 		
-		if (Constants.core) {
-			//towerIPInfo = new InfoNodeMulticast(true);
-			// TODO: Change position tower
-			InetAddress ipServer = Inet6Address.getByName(args[1]);
-			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-			thisServer = new InfoNode(ipServer, ServerConstants.port, false);
-			thisTower = new TowerInfo(name, pos);
-		} else {
-			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
-			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
-			thisTower = new TowerInfo(name, infoNodo, pos);
-			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false);
-		}
+		//towerIPInfo = new InfoNodeMulticast(true);
+		// TODO: Change position tower
+		InetAddress ipServer = Inet6Address.getByName(args[1]);
+		pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+		thisServer = new InfoNode(ipServer, ServerConstants.port, false);
+		thisTower = new TowerInfo(name, pos);
 		
 		Tower tower = new Tower(thisTower, thisServer);
 		tower.run();

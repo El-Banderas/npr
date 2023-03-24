@@ -1,16 +1,14 @@
 package Car;
 
 import Common.Constants;
-import Common.Position;
-import Common.TowerInfo;
+//import Common.TowerInfo;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
-import Common.Messages.SendMessages;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.List;
+//import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,16 +16,15 @@ import java.util.TimerTask;
 public class CarMove {
 	
 	private CarInfo info;
-	private  List<TowerInfo> towers;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
 	private SharedClass shared;
+	//private List<TowerInfo> towers;
 
 	
-	public CarMove(CarInfo info, List<TowerInfo> towers, SharedClass shared) {
+	public CarMove(CarInfo info, SharedClass shared/*, List<TowerInfo> towers*/) {
 		this.info = info;
-		this.towers = towers;
 		this.receiveSocket = info.receiveSocket();
 		this.sendSocket = info.sendSocket();
 		this.shared = shared;
@@ -37,14 +34,7 @@ public class CarMove {
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
-		// Multicast sockets got the setTimeout when created
-		if (!Constants.core){
-			try {
-				receiveSocket.setSoTimeout(Constants.refreshRate);
-			} catch (SocketException e) {
-				throw new RuntimeException(e);
-			}
-		}
+		//this.towers = towers;
 	}
 	
 	
@@ -56,8 +46,6 @@ public class CarMove {
 			try {
 				info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				if (!Constants.core)
-					checkPossibleCommunication();
 				MessageAndType message = ReceiveMessages.receiveData(receiveSocket);
 
 				//receiveSocket.receive(packet);
@@ -65,19 +53,6 @@ public class CarMove {
 			} catch (IOException e) {
 				shared.addEntryMessages(MessagesConstants.Timeout);
 
-			}
-		}
-	}
-
-	/**
-	 * This function checks distance to towers. Now is not necessary, we send hellos to everyone
-	 */
-	private void checkPossibleCommunication() {
-		//System.out.println("Check Possible communication");
-		for (TowerInfo tower : towers){
-			if (Position.distance(info.pos, tower.pos) < Constants.towerCommunicationRadius){
-				SendMessages.carHelloTower(info.sendSocket(), tower.connectionInfoWindowsReceive);
-				//System.out.println("Send message");
 			}
 		}
 	}

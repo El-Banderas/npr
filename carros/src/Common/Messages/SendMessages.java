@@ -16,32 +16,28 @@ public class SendMessages {
 
 	public static void carSendBreak(DatagramSocket sender)
 	{
-		if(Constants.core) {
-			System.out.println("Send Break to everyone");
-			
-			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-					.putInt(MessagesConstants.BreakMessage)
-					.array();
-			
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-			sendMessage(sender, packet);
-		}
+		System.out.println("Send Break to everyone");
+		
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(MessagesConstants.BreakMessage)
+				.array();
+		
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(sender, packet);
 	}
 	
 	public static void carHellos(DatagramSocket sender, CarInfo info)
 	{
-		if(Constants.core) {
-			//System.out.println("Send hellos to everyone");
-			
-			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-					.putInt(MessagesConstants.CarHelloMessage)
-					.put(info.id.getBytes())
-					.put("Hello".getBytes())
-					.array();
-			
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-			sendMessage(sender, packet);
-		}
+		//System.out.println("Send hellos to everyone");
+		
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(MessagesConstants.CarHelloMessage)
+				.put(info.id.getBytes())
+				.put("Hello".getBytes())
+				.array();
+		
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(sender, packet);
 	}
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
@@ -51,12 +47,7 @@ public class SendMessages {
 				.put("Hello".getBytes())
 				.array();
 		
-		DatagramPacket packet;
-		if(Constants.core) {
-			packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		} else {
-			packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
-		}
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, packet);
 	}
 	
@@ -84,16 +75,14 @@ public class SendMessages {
 	
 	public static void carSendAccident(DatagramSocket send)
 	{
-		if(Constants.core) {
-			System.out.println("!!!!Send accident to everyone");
-			
-			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-					.putInt(MessagesConstants.AccidentMessage)
-					.array();
-			
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-			sendMessage(send, packet);
-		}
+		System.out.println("!!!!Send accident to everyone");
+		
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(MessagesConstants.AccidentMessage)
+				.array();
+		
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(send, packet);
 	}
 	
 	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer)
@@ -104,16 +93,14 @@ public class SendMessages {
 	
 	public static void towerHelloCar(DatagramSocket sendSocket)
 	{
-		if(Constants.core) {
-			System.out.println("Send accident to everyone");
-			
-			byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-					.putInt(MessagesConstants.TowerHelloMessage)
-					.array();
-			
-			DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-			sendMessage(sendSocket, packet);
-		}
+		System.out.println("Send accident to everyone");
+		
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(MessagesConstants.TowerHelloMessage)
+				.array();
+		
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(sendSocket, packet);
 	}
 	
 	public static void sendMessage(DatagramSocket send, DatagramPacket packet)

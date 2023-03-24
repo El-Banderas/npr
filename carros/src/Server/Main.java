@@ -1,9 +1,7 @@
 package Server;
 
 import Cloud.CloudConstants;
-import Common.Constants;
 import Common.InfoNode;
-import Common.InfoNodeWindows;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -32,13 +30,8 @@ public class Main {
 		InfoNode cloudInfo;
 		InfoNode thisServer;
 		
-		if (Constants.core) {
-			cloudInfo = new InfoNode(CloudConstants.ip, CloudConstants.port, false);
-			thisServer = new InfoNode(null, ServerConstants.port, true);
-		} else {
-			cloudInfo = new InfoNodeWindows(CloudConstants.port, false);
-			thisServer = new InfoNodeWindows(Integer.parseInt(args[0]), true);
-		}
+		cloudInfo = new InfoNode(CloudConstants.ip, CloudConstants.port, false);
+		thisServer = new InfoNode(null, ServerConstants.port, true);
 		
 		Server server = new Server(thisServer, cloudInfo);
 		server.run();

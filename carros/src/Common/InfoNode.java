@@ -32,10 +32,7 @@ public class InfoNode {
 	
 	public InfoNode(int port) {
 		try {
-			if (!Constants.core) // Windows
-				socket = new DatagramSocket(port);
-			else
-				socket = new DatagramSocket();
+			socket = new DatagramSocket();
 		} catch (SocketException e) {
 			System.out.println("[Expetion] Error creating socket");
 			throw new RuntimeException(e);

@@ -24,11 +24,6 @@ public class InfoNodeMulticast extends InfoNode {
 			this.port = Constants.portMulticast;
 			this.ip = socket.getLocalAddress();
 			
-			System.out.println("IP: " + this.ip);
-			System.out.println("Remote Socket: " + multicastSocket.getRemoteSocketAddress());
-			System.out.println("Local Socket: " + multicastSocket.getLocalSocketAddress());
-			System.out.println("Interface: " + multicastSocket.getNetworkInterface());
-			
 			try {
 				multicastSocket.setSoTimeout(Constants.refreshRate);
 			} catch (SocketException e) {

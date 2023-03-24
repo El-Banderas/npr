@@ -13,7 +13,6 @@ public class CarInfo {
 	public String id;
 	public Position oldPos;
 	public Position pos;
-	public InfoNode connectionInfoWindowsReceive;
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
 	
@@ -22,31 +21,17 @@ public class CarInfo {
 		this.oldPos = pos;
 		this.pos = pos;
 		this.id = id;
-		this.connectionInfoWindowsReceive = null;
 		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
-	}
-
-	public CarInfo(Position pos, InfoNode sendInfo, String id) {
-		this.oldPos = pos;
-		this.pos = pos;
-		this.id = id;
-		this.connectionInfoWindowsReceive = sendInfo;
 	}
 	
 	
 	public DatagramSocket receiveSocket(){
-		if (Constants.core)
-			return this.connectionInfoLinuxReceive.socket;
-		else
-			return this.connectionInfoWindowsReceive.socket;
+		return this.connectionInfoLinuxReceive.socket;
 	}
 	
 	public DatagramSocket sendSocket(){
-		if (Constants.core)
-			return this.connectionInfoLinuxSend.socket;
-		else
-			return this.connectionInfoWindowsReceive.socket;
+		return this.connectionInfoLinuxSend.socket;
 	}
 
 	public float getVelocity(){
