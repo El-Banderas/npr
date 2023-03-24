@@ -1,47 +1,46 @@
 package Car.Terminal;
 
 import Car.SharedClass;
-
-import java.util.*;
+import Common.Messages.SendMessages;
 
 
 public class CarTerminal implements Runnable {
-
-	private TreeMap<Integer, Option> options;
+	
 	private SharedClass shared;
-
-
-	public CarTerminal(SharedClass shared) {
+	
+	
+	public CarTerminal(SharedClass shared)
+	{
 		this.shared = shared;
 	}
-
-
+	
+	
 	@Override
-	public void run() {
-		this.options = new TreeMap<Integer, Option>();
-		options.put(TerminalConstants.BreakOption, new BreakOption());
-		options.put(TerminalConstants.Refresh, new RefreshOption());
-		options.put(TerminalConstants.AccidentOption, new AccidentOption());
-		Scanner scan = new Scanner(System.in);
+	public void run()
+	{
+		Menu menu = new Menu(new String[] {
+			"Refresh Terminal",
+			"Press break and notify others",
+			"Accident happened"
+		});
+		
+		menu.setHandler(2, this::breakHandler);
+		menu.setHandler(3, this::accidentHandler);
+		
 		while(true) {
-			System.out.println("################");
 			shared.printMessagesInfo();
-			System.out.println("Introduza uma das opções");
-			for (Map.Entry<Integer, Option> entry : options.entrySet()) {
-				System.out.println("(" + entry.getKey() + ") " + entry.getValue().text);
-			}
-			System.out.println("################");
-
-			int option = scan.nextInt();
-			handleOption(option);
-
-			if(option < 0) break; //só para tirar o warning
+			menu.runOnce();
 		}
-		scan.close();
 	}
-
-	private void handleOption(int option) {
-		if (option == TerminalConstants.Refresh) return;
-		options.get(option).action(shared.info.sendSocket());
+	
+	
+	private void accidentHandler() {
+		System.out.println("Accident happened!");
+		SendMessages.carSendAccident(this.shared.info.sendSocket());
+	}
+	
+	private void breakHandler() {
+		System.out.println("Pressed Break!");
+		SendMessages.carSendBreak(this.shared.info.sendSocket());
 	}
 }

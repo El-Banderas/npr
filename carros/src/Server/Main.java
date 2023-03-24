@@ -1,6 +1,6 @@
 package Server;
 
-import Cloud.CloudConstants;
+import Common.Constants;
 import Common.InfoNode;
 
 import java.net.SocketException;
@@ -30,8 +30,8 @@ public class Main {
 		InfoNode cloudInfo;
 		InfoNode thisServer;
 		
-		cloudInfo = new InfoNode(CloudConstants.ip, CloudConstants.port, false);
-		thisServer = new InfoNode(null, ServerConstants.port, true);
+		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort, false);
+		thisServer = new InfoNode(null, Constants.serverPort, true);
 		
 		Server server = new Server(thisServer, cloudInfo);
 		server.run();

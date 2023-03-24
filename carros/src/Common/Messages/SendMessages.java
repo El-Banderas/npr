@@ -1,6 +1,6 @@
 package Common.Messages;
 
-import Cloud.CloudConstants;
+import Common.CarInfo;
 import Common.Constants;
 import Common.InfoNode;
 
@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
-
-import Car.CarInfo;
 
 
 public class SendMessages {
@@ -69,7 +67,7 @@ public class SendMessages {
 				.put("Hello".getBytes())
 				.array();
 
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, CloudConstants.ip, CloudConstants.port);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.CloudIP, Constants.cloudPort);
 		sendMessage(sender, packet);
 	}
 	

@@ -29,23 +29,21 @@ public class Main {
 		
 		//List<TowerInfo> towers = parseFile(args[0]);
 		
-		Position pos;
-		CarInfo info;
-		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		pos = new Position();
+		Position pos = new Position();
 		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		info = new CarInfo(pos, id);
+		CarInfo info = new CarInfo(pos, id);
 		
 		// 2 Threads: Terminal and Comms
 		SharedClass shared = new SharedClass(info);
 		
 		CarTerminal carTerminal = new CarTerminal(shared);
-		Thread thread = new Thread(carTerminal);
-		thread.start();
+		Thread thread_1 = new Thread(carTerminal);
+		thread_1.start();
 		
-		CarMove carMove = new CarMove(info, shared/*, towers*/);
-		carMove.run();
+		Car carMove = new Car(info, shared/*, towers*/);
+		Thread thread_2 = new Thread(carMove);
+		thread_2.start();
 	}
 	
 	/*

@@ -17,8 +17,6 @@ public final class Constants {
 	 */
 	private static final String MCAST_ADDR = "FF7E:230::1234";
 	public static InetAddress MulticastGroup;
-
-
 	static {
 		try {
 			MulticastGroup = InetAddress.getByName(MCAST_ADDR);
@@ -30,24 +28,28 @@ public final class Constants {
 	public static int portMulticast = 8000;
 
 
-	/**
-	 * Tower
-	 */
-	public static int towerPort = 7000;
-
 	
 	/**
 	 * Car
 	 */
 	public static int carPort = 6000;
 
+	/**
+	 * Tower
+	 */
+	public static int towerPort = 7000;
+
+	/**
+	 * Server
+	 */
+	public static int serverPort = 9000;
+
 	
 	/**
 	 * Cloud
 	 */
+	public static int cloudPort = 5000;
 	public static InetAddress CloudIP;
-
-	
 	static {
 		try {
 			CloudIP = InetAddress.getByName("2001:8::10");

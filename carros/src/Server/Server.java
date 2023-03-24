@@ -6,6 +6,8 @@ import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 
+import static Common.Messages.SendMessages.serverHelloCloud;
+
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -38,17 +40,27 @@ public class Server implements Runnable {
 			e1.printStackTrace();
 		}
 		
-		TimerTask timerTask = new sendHellos(this.thisServer.socket);
-		Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(timerTask, 0, Constants.refreshRate);
+		Timer timer_1 = new Timer(false);
+		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
 		
+		Thread thread_1 = new Thread(this::receiveMessages);
+		thread_1.start();
+	}
+	
+	
+	private void sendHellos()
+	{
+		serverHelloCloud(this.thisServer.socket);
+	}
+	
+	private void receiveMessages()
+	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(thisServer.socket);
+				MessageAndType message = ReceiveMessages.receiveData(this.thisServer.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				System.out.println("[Server] Timeout passed. Nothing received.");
-				System.out.println("Receiving in: " + thisServer.socket.getLocalAddress() + " | " + thisServer.socket.getLocalPort());
 			}
 		}
 	}
@@ -57,10 +69,10 @@ public class Server implements Runnable {
 	{
 		switch (message.type) {
 			case MessagesConstants.CarHelloMessage:
-				String id = message.ipSender.toString(); //Usar ip em vez de id, para já
+				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
 				if (!this.carsInRange.contains(id))
 					this.carsInRange.add(id);
-				System.out.println("Received Hello from car");
+				System.out.println("Received Hello from car: " + id);
 				break;
 			case MessagesConstants.TowerHelloMessage:
 				System.out.println("Received Hello from tower");
@@ -72,15 +84,23 @@ public class Server implements Runnable {
 				System.out.println("Received Accident");
 				break;
 			default:
-				System.out.println("Received message, type unkown: " + message.type);
+				System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
-	
 	
 	public int getHowManyCars()
 	{
 		int result = this.carsInRange.size();
 		this.carsInRange.clear();
 		return result;
+	}
+	
+	private static TimerTask wrap(Runnable r) {
+		return new TimerTask() {
+			@Override
+			public void run() {
+				r.run();
+			}
+		};
 	}
 }

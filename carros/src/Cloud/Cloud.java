@@ -12,9 +12,9 @@ import java.net.SocketException;
 
 public class Cloud implements Runnable {
 
-	private Common.InfoNode cloud;
-
-
+	private InfoNode cloud;
+	
+	
 	public Cloud(InfoNode cloud)
 	{
 		this.cloud = cloud;
@@ -27,17 +27,22 @@ public class Cloud implements Runnable {
 		try {
 			cloud.socket.setSoTimeout(Constants.refreshRate);
 		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
+		Thread thread_1 = new Thread(this::receiveMessages);
+		thread_1.start();
+	}
+	
+	
+	private void receiveMessages()
+	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(cloud.socket);
+				MessageAndType message = ReceiveMessages.receiveData(this.cloud.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				System.out.println("[Cloud] Timeout passed. Nothing received.");
-				//System.out.println("Receiving in: "+cloud.socket.getLocalAddress() +" | "+  cloud.socket.getLocalPort() );
 			}
 		}
 	}
@@ -46,10 +51,10 @@ public class Cloud implements Runnable {
 	{
 		switch(message.type) {
 			case MessagesConstants.ServerHelloMessage:
-				System.out.println("Received Hello form server");
+				System.out.println("Received Hello from server");
 				break;
 			default:
-				System.out.println("Received message, type unkown: " + message.type);
+				System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 }

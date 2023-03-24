@@ -1,9 +1,4 @@
-package Car;
-
-import Common.Constants;
-import Common.InfoNode;
-import Common.InfoNodeMulticast;
-import Common.Position;
+package Common;
 
 import java.net.DatagramSocket;
 

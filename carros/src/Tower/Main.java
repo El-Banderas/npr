@@ -1,7 +1,6 @@
 package Tower;
 
 import Common.*;
-import Server.ServerConstants;
 
 import java.io.IOException;
 import java.net.*;
@@ -34,7 +33,7 @@ public class Main {
 		// TODO: Change position tower
 		InetAddress ipServer = Inet6Address.getByName(args[1]);
 		pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-		thisServer = new InfoNode(ipServer, ServerConstants.port, false);
+		thisServer = new InfoNode(ipServer, Constants.serverPort, false);
 		thisTower = new TowerInfo(name, pos);
 		
 		Tower tower = new Tower(thisTower, thisServer);
