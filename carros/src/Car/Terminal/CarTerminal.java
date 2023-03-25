@@ -24,6 +24,7 @@ public class CarTerminal implements Runnable {
 			"Accident happened"
 		});
 		
+		menu.setHandler(1, ()->{});
 		menu.setHandler(2, this::breakHandler);
 		menu.setHandler(3, this::accidentHandler);
 		

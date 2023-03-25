@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.nio.ByteBuffer;
+import java.util.logging.Logger;
 
 
 public class SendMessages {
+	
+	private static Logger logger =  Logger.getLogger("npr.messages.sent");
 
 	public static void carSendBreak(DatagramSocket sender)
 	{
-		System.out.println("Send Break to everyone");
+		logger.info("Car Sends Break");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.BreakMessage)
@@ -26,7 +29,7 @@ public class SendMessages {
 	
 	public static void carHellos(DatagramSocket sender, CarInfo info)
 	{
-		//System.out.println("Send hellos to everyone");
+		logger.info("Car Sends Hello");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CarHelloMessage)
@@ -40,6 +43,8 @@ public class SendMessages {
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
 	{
+		logger.info("Cars Sends Hello to Tower");
+		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CarHelloMessage)
 				.put("Hello".getBytes())
@@ -51,17 +56,21 @@ public class SendMessages {
 	
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
 	{
+		logger.info("Tower Sends Hello to Server");
+		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.TowerHelloMessage)
 				.put("Hello".getBytes())
 				.array();
-
+		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
 		sendMessage(sender, packet);
 	}
 	
 	public static void serverHelloCloud(DatagramSocket sender)
 	{
+		logger.info("Server Sends Hello to Cloud");
+		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.ServerHelloMessage)
 				.put("Hello".getBytes())
@@ -73,7 +82,7 @@ public class SendMessages {
 	
 	public static void carSendAccident(DatagramSocket send)
 	{
-		System.out.println("!!!!Send accident to everyone");
+		logger.info("Car Sends Accident!");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.AccidentMessage)
@@ -85,13 +94,15 @@ public class SendMessages {
 	
 	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer)
 	{
+		logger.info("Message Forwarded to Server");
+		
 		DatagramPacket packet = new DatagramPacket(message.content, message.content.length, thisServer.ip, thisServer.port);
 		sendMessage(sendSocket, packet);
 	}
 	
 	public static void towerHelloCar(DatagramSocket sendSocket)
 	{
-		System.out.println("Send accident to everyone");
+		logger.info("Tower Sends Hello to Car");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.TowerHelloMessage)
@@ -106,8 +117,8 @@ public class SendMessages {
 		try {
 			send.send(packet);
 		} catch (IOException e) {
-			//throw new RuntimeException(e);
-			System.out.println("[ERROR] in sending message");
+			logger.severe("IOException when sending " + packet.toString() + " to " + send.toString());
+			logger.throwing("SendMessages", "sendMessage", e);
 		}
 	}
 }

@@ -15,10 +15,8 @@ import java.util.regex.Pattern;
 
 
 /**
- * Windows: File path that stores the information about towers
- * Example: "src/Car/TowersPosWindows"
- * Linux parece que é igual...
- *
+ * 	0: File path that stores the information about towers
+ * 	Example: "src/Car/TowersPosWindows"
  */
 public class Main {
 

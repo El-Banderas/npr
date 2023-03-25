@@ -14,4 +14,17 @@ public class MessageAndType {
 		this.content = content;
 		this.ipSender = ipSender;
 	}
+	
+	
+	@Override
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" from: " + ipSender.toString()
+			+	" ; type: " + type
+			+	" ; size: " + content.length
+			+	"}"
+			);
+	}
 }
