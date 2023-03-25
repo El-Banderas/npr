@@ -51,18 +51,13 @@ public class Tower implements Runnable {
 				MessageAndType message = ReceiveMessages.receiveData(this.info.receiveSocket());
 				handleMessage(message, this.server);
 			} catch (IOException e) {
-				System.out.println("[TOWER] Timeout passed. Nothing received.");
+				//System.out.println("[Tower] Timeout passed. Nothing received.");
 			}
 		}
 	}
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)
 	{
-		if (message.ipSender.equals(info.sendSocket().getInetAddress())){
-			System.out.println("Recebeu própria mensagem:");
-		}
-
-		System.out.println("Received message: " + message.type);
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
 	}
 	

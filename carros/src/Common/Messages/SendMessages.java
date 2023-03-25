@@ -17,7 +17,7 @@ public class SendMessages {
 
 	public static void carSendBreak(DatagramSocket sender)
 	{
-		logger.info("Car Sends Break");
+		//logger.info("Car Sends Break");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.BreakMessage)
@@ -29,7 +29,7 @@ public class SendMessages {
 	
 	public static void carHellos(DatagramSocket sender, CarInfo info)
 	{
-		logger.info("Car Sends Hello");
+		//logger.info("Car Sends Hello");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CarHelloMessage)
@@ -43,7 +43,7 @@ public class SendMessages {
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
 	{
-		logger.info("Cars Sends Hello to Tower");
+		//logger.info("Cars Sends Hello to Tower");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CarHelloMessage)
@@ -82,7 +82,7 @@ public class SendMessages {
 	
 	public static void carSendAccident(DatagramSocket send)
 	{
-		logger.info("Car Sends Accident!");
+		//logger.info("Car Sends Accident!");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.AccidentMessage)
@@ -94,7 +94,7 @@ public class SendMessages {
 	
 	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer)
 	{
-		logger.info("Message Forwarded to Server");
+		logger.info("Message Forwarded to Server: " + message.toString());
 		
 		DatagramPacket packet = new DatagramPacket(message.content, message.content.length, thisServer.ip, thisServer.port);
 		sendMessage(sendSocket, packet);
@@ -112,7 +112,7 @@ public class SendMessages {
 		sendMessage(sendSocket, packet);
 	}
 	
-	public static void sendMessage(DatagramSocket send, DatagramPacket packet)
+	private static void sendMessage(DatagramSocket send, DatagramPacket packet)
 	{
 		try {
 			send.send(packet);

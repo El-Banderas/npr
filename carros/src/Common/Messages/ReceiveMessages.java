@@ -25,7 +25,7 @@ public class ReceiveMessages {
 		
 		MessageAndType received = new MessageAndType(type, remaining, packet.getAddress());
 		
-		logger.fine("Received Message:\n" + received.toString());
+		logger.info("Received Message:\n" + received.toString());
 		
 		return received;
 	}

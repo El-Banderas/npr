@@ -24,7 +24,7 @@ public class InfoNode {
 				socket = new DatagramSocket(port);
 				this.ip = socket.getLocalAddress();
 			} catch (SocketException e) {
-				System.out.println("[Expetion] Error creating socket");
+				System.out.println("[ERROR] Error creating socket");
 				throw new RuntimeException(e);
 			}
 		}
@@ -34,7 +34,7 @@ public class InfoNode {
 		try {
 			socket = new DatagramSocket();
 		} catch (SocketException e) {
-			System.out.println("[Expetion] Error creating socket");
+			System.out.println("[ERROR] Error creating socket");
 			throw new RuntimeException(e);
 		}
 		this.ip = socket.getLocalAddress();

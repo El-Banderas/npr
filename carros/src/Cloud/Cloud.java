@@ -42,7 +42,7 @@ public class Cloud implements Runnable {
 				MessageAndType message = ReceiveMessages.receiveData(this.cloud.socket);
 				handleMessage(message);
 			} catch (IOException e) {
-				System.out.println("[Cloud] Timeout passed. Nothing received.");
+				//System.out.println("[Cloud] Timeout passed. Nothing received.");
 			}
 		}
 	}
@@ -51,10 +51,10 @@ public class Cloud implements Runnable {
 	{
 		switch(message.type) {
 			case MessagesConstants.ServerHelloMessage:
-				System.out.println("Received Hello from server");
+				//System.out.println("Received Hello from server");
 				break;
 			default:
-				System.out.println("Received message, type unknown: " + message.type);
+				//System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 }

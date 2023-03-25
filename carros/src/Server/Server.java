@@ -60,7 +60,7 @@ public class Server implements Runnable {
 				MessageAndType message = ReceiveMessages.receiveData(this.thisServer.socket);
 				handleMessage(message);
 			} catch (IOException e) {
-				System.out.println("[Server] Timeout passed. Nothing received.");
+				//System.out.println("[Server] Timeout passed. Nothing received.");
 			}
 		}
 	}
@@ -75,16 +75,16 @@ public class Server implements Runnable {
 				System.out.println("Received Hello from car: " + id);
 				break;
 			case MessagesConstants.TowerHelloMessage:
-				System.out.println("Received Hello from tower");
+				//System.out.println("Received Hello from tower");
 				break;
 			case MessagesConstants.BreakMessage:
-				System.out.println("Received Break");
+				//System.out.println("Received Break");
 				break;
 			case MessagesConstants.AccidentMessage:
-				System.out.println("Received Accident");
+				//System.out.println("Received Accident");
 				break;
 			default:
-				System.out.println("Received message, type unknown: " + message.type);
+				//System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 	
