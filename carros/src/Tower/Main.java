@@ -7,20 +7,16 @@ import java.net.*;
 
 
 /**
- * 	0: Name (unecessary)
  * 	1: IP Server
- * 	2: PosX
- * 	3: PosY
- * 	Example: "t1 2001:9::20 40 40"
+ * 	Example: "2001:9::20"
  */
 public class Main {
 	
 	public static void main(String[] args) throws IOException
 	{
-		String name = args[0];
+		String name = idGenerator(8);
 		
-		//towerIPInfo = new InfoNodeMulticast(true);
-		InetAddress ipServer = Inet6Address.getByName(args[1]);
+		InetAddress ipServer = Inet6Address.getByName(args[0]);
 		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
@@ -31,5 +27,19 @@ public class Main {
 		
 		Tower tower = new Tower(thisTower, thisServer);
 		tower.run();
+	}
+	
+	
+	private static String idGenerator(int n) {
+		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
+
+		StringBuilder sb = new StringBuilder(n);
+		
+		for (int i = 0; i < n; i++) {
+			int index = (int)(alphaNumeric.length() * Math.random());
+			sb.append(alphaNumeric.charAt(index));
+		}
+
+		return sb.toString();
 	}
 }
