@@ -59,7 +59,6 @@ public class Tower implements Runnable {
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)
 	{
-		System.out.println("Recebeu mensagem tipo: " + message.type);
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
 	}
 	
