@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) throws IOException
 	{
 		String name = idGenerator(8);
-		
+		System.out.println("AQUI!!!");
 		InetAddress ipServer = Inet6Address.getByName(args[0]);
 		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));

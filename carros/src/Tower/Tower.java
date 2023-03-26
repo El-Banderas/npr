@@ -12,6 +12,7 @@ import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
 
 
+
 public class Tower implements Runnable {
 	
 	private TowerInfo info;
