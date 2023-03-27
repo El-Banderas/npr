@@ -50,7 +50,7 @@ public class FWRInfo {
         else {
             return ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
                     .putInt(TTL) // TTL
-                    .putInt(-1) //  Dest X
+                    .putInt(69) //  Dest X
                     .putInt(seqNumber)  // Seq Num
                     .putInt(lengthContent)  // Length content message
                     .putInt(idSender.length)  // ID sender
@@ -69,7 +69,7 @@ public class FWRInfo {
         int TTL = bbuf.getInt();
         int maybeDestX = bbuf.getInt();
         // If destiny is defined
-        if (maybeDestX >= 0){
+        if (maybeDestX == 69){
             int destY = bbuf.getInt();
             int distance = bbuf.getInt();
             int seqNumber = bbuf.getInt();
