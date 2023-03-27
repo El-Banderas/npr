@@ -2,6 +2,7 @@ package Common.FWRMessages;
 
 import Common.Messages.MessagesConstants;
 import Common.Position;
+import org.w3c.dom.ls.LSOutput;
 
 import java.nio.ByteBuffer;
 
@@ -75,6 +76,10 @@ public class FWRInfo {
             int seqNumber = bbuf.getInt();
             int lengthContent = bbuf.getInt();
             int idLength = bbuf.getInt();
+            System.out.println("Coisas lidas: ");
+            System.out.println("TTL: " + TTL + " | pos: " + maybeDestX + ", " + destY + " |dist: " + distance);
+            System.out.println("seq num: " + seqNumber + " | len cont: " + lengthContent + " |id len: " + idLength);
+
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
             System.out.println("Info mensagem: " + TTL + " | " + maybeDestX + ", " + destY + " | " + idLength);
