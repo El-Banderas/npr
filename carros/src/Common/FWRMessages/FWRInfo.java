@@ -61,6 +61,7 @@ public class FWRInfo {
 
     public FWRInfo(byte[] message) {
         int sizeInt = 4;
+        this.content = new byte[MessagesConstants.sizeBufferMessages];
 
         ByteBuffer bbuf = ByteBuffer.wrap(message);
         int TTL = bbuf.getInt();
