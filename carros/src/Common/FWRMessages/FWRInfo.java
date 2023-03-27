@@ -72,6 +72,7 @@ public class FWRInfo {
         int maybeDestX = bbuf.getInt();
         // If destiny is defined
         if (maybeDestX != -1){
+            this.destiny = true;
             int destY = bbuf.getInt();
             this.dest = new Position(maybeDestX, destY);
             this.distDest = bbuf.getInt();
@@ -88,6 +89,8 @@ public class FWRInfo {
             System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 6 + idLength));
         }
         else {
+            this.destiny = false;
+
             this.seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
             //System.out.println("Coisas lidas: ");
@@ -112,7 +115,7 @@ public class FWRInfo {
     // We don't change seq number because the message is relative to the original car, not the cars that resend.
     public void updateInfo(CarInfo carInfo) {
         TTL = TTL-1;
-        distDest = (int) Position.distance(dest, carInfo.pos);
+        if (destiny) distDest = (int) Position.distance(dest, carInfo.pos);
         idSender = carInfo.id.getBytes();
     }
 }
