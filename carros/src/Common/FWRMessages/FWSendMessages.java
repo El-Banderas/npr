@@ -26,14 +26,15 @@ public class FWSendMessages {
     public static void sendFWRMessage(DatagramSocket send, DatagramPacket packet, FWRInfo fwrInfo)
     {
         byte[] content = packet.getData();
-        int aLen = content.length;
-        byte[] fwrInfoBytes = fwrInfo.toByteArray(aLen);
+        int contentLen = content.length;
+        byte[] fwrInfoBytes = fwrInfo.toByteArray(contentLen);
 
-        int bLen = fwrInfoBytes.length;
-        byte[] join = new byte[aLen + bLen];
+        int fwrLen = fwrInfoBytes.length;
+        byte[] join = new byte[contentLen + fwrLen];
 
-        System.arraycopy(content, 0, join, 0, aLen);
-        System.arraycopy(fwrInfoBytes, 0, join, aLen, bLen);
+        System.arraycopy(fwrInfoBytes, 0, join, 0, fwrLen);
+        System.arraycopy(content, 0, join, fwrLen, contentLen);
+
         DatagramPacket readyToSend = new DatagramPacket(join, join.length, packet.getAddress(), packet.getPort());
         System.out.println("Send message: ");
         System.out.println(fwrInfo);
