@@ -34,22 +34,23 @@ public class FWRInfo {
         this.content = new byte[MessagesConstants.sizeBufferMessages];
     }
 
-    public byte[] toByteArray(int lengthContent){
+    public byte[] toByteArray(){
         //  TTL | Pos Dest (x e y) | Dist Dest | Seq N | sizeContent | ID length | ID Sender |  Message
+        int sizeInt = 4;
+        int sizeID = idSender.length;
         if (destiny){
-            return ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+            return ByteBuffer.allocate(sizeInt * 6 + sizeID )
                     .putInt(TTL) // TTL
                     .putInt(dest.x) //  Dest X
                     .putInt(dest.y) // Dest Y
                     .putInt(distDest) // Dist Dest
                     .putInt(seqNumber)  // Seq Num
-                    .putInt(lengthContent)  // Length content message
                     .putInt(idSender.length)  // ID sender
                     .put(idSender)  // ID sender
                     .array();
         }
         else {
-            return ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+            return ByteBuffer.allocate(sizeInt * 4 + sizeID)
                     .putInt(TTL) // TTL
                     .putInt(-1) //  Dest X
                     .putInt(seqNumber)  // Seq Num

@@ -28,7 +28,7 @@ public class FWSendMessages {
         byte[] content = packet.getData();
         int contentLen = content.length;
         System.out.println("Content LENGTH : " + contentLen);
-        byte[] fwrInfoBytes = fwrInfo.toByteArray(contentLen);
+        byte[] fwrInfoBytes = fwrInfo.toByteArray();
 
         int fwrLen = fwrInfoBytes.length;
         byte[] join = new byte[contentLen + fwrLen];
