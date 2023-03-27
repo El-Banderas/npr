@@ -33,8 +33,8 @@ public class FWRInfo {
         this.content = new byte[MessagesConstants.sizeBufferMessages];
     }
 
-    public byte[] toByteArray(){
-        //  TTL | Pos Dest (x e y) | Dist Dest | Seq N | ID length | ID Sender |  Message
+    public byte[] toByteArray(int lengthContent){
+        //  TTL | Pos Dest (x e y) | Dist Dest | Seq N | sizeContent | ID length | ID Sender |  Message
         if (destiny){
             return ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
                     .putInt(TTL) // TTL
@@ -42,6 +42,7 @@ public class FWRInfo {
                     .putInt(dest.y) // Dest Y
                     .putInt(distDest) // Dist Dest
                     .putInt(seqNumber)  // Seq Num
+                    .putInt(lengthContent)  // Length content message
                     .putInt(idSender.length)  // ID sender
                     .put(idSender)  // ID sender
                     .array();
@@ -51,6 +52,7 @@ public class FWRInfo {
                     .putInt(TTL) // TTL
                     .putInt(-1) //  Dest X
                     .putInt(seqNumber)  // Seq Num
+                    .putInt(lengthContent)  // Length content message
                     .putInt(idSender.length)  // ID sender
                     .put(idSender)  // ID sender
                     .array();
@@ -71,22 +73,24 @@ public class FWRInfo {
             int destY = bbuf.getInt();
             int distance = bbuf.getInt();
             int seqNumber = bbuf.getInt();
+            int lengthContent = bbuf.getInt();
             int idLength = bbuf.getInt();
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
             System.out.println("Info mensagem: " + TTL + " | " + maybeDestX + ", " + destY + " | " + idLength);
 
-            System.arraycopy(message, sizeInt*6, idArray, 0, idLength);
-            System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , MessagesConstants.sizeBufferMessages);
+            System.arraycopy(message, sizeInt*7, idArray, 0, idLength);
+            System.arraycopy(message, sizeInt* 7 + idLength, content, 0 , lengthContent);
         }
         else {
             int seqNumber = bbuf.getInt();
+            int lengthContent = bbuf.getInt();
             int idLength = bbuf.getInt();
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
             System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
-            System.arraycopy(message, sizeInt*4, idArray, 0, idLength);
-            System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , MessagesConstants.sizeBufferMessages);
+            System.arraycopy(message, sizeInt*5, idArray, 0, idLength);
+            System.arraycopy(message, sizeInt* 5 + idLength, content, 0 , lengthContent);
         }
     }
 

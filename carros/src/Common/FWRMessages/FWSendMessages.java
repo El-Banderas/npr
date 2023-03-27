@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * TTL | -1 | ID Sender | Seq N | Message
  *
  * Redirect:
- * TTL | Pos Dest (x e y) | Dist Dest | ID Sender | Seq N | Message
+ * TTL | Pos Dest (x e y) | Dist Dest | Seq N | sizeContent | sizeID | ID Sender  | Message
  *
  * Messages that need forwarding are send by the Hello Message Threads
  */
@@ -26,8 +26,9 @@ public class FWSendMessages {
     public static void sendFWRMessage(DatagramSocket send, DatagramPacket packet, FWRInfo fwrInfo)
     {
         byte[] content = packet.getData();
-        byte[] fwrInfoBytes = fwrInfo.toByteArray();
         int aLen = content.length;
+        byte[] fwrInfoBytes = fwrInfo.toByteArray(aLen);
+
         int bLen = fwrInfoBytes.length;
         byte[] join = new byte[aLen + bLen];
 
