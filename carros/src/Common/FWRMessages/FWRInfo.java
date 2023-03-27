@@ -94,7 +94,7 @@ public class FWRInfo {
             // Cuidado com este 8, é o tamanho de 2 ints
            // System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
             System.arraycopy(message, sizeInt*4, idArray, 0, idLength);
-            System.out.println("ID: " + idArray.toString());
+            System.out.println("ID: " + new String(idArray));
 
             System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , message.length-(sizeInt* 5 + idLength));
         }
