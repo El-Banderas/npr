@@ -13,11 +13,13 @@ import java.net.SocketException;
 public class Cloud implements Runnable {
 
 	private InfoNode cloud;
+	private ArrayList<String> history;
 	
 	
 	public Cloud(InfoNode cloud)
 	{
 		this.cloud = cloud;
+		this.history = new ArrayList<String>();
 	}
 	
 	
@@ -53,8 +55,20 @@ public class Cloud implements Runnable {
 			case MessagesConstants.ServerHelloMessage:
 				//System.out.println("Received Hello from server");
 				break;
+			case MessagesConstants.CarInRangeMessage:
+				String id = new String(message.data);
+				history.add("Car in range: " + id);
+				break;
+			case MessagesConstants.AccidentMessage:
+				String location = new String(message.data);
+				history.add("Accident at location: " + location);
+				break;
 			default:
 				//System.out.println("Received message, type unknown: " + message.type);
 		}
+	}
+
+	public ArrayList<String> getHistory() {
+		return this.history;
 	}
 }

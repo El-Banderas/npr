@@ -17,12 +17,14 @@ public class Tower implements Runnable {
 	
 	private TowerInfo info;
 	private InfoNode server;
+
 	
 	
 	public Tower(TowerInfo info, InfoNode server)
 	{
 		this.info = info;
 		this.server = server;
+
 	}
 	
 	
@@ -41,8 +43,11 @@ public class Tower implements Runnable {
 	
 	private void sendHellos()
 	{
+		HashMap<String, Integer> message = new HashMap<>();
+		message.put(this.info.getId(), this.info.getHowManyCars());
 		SendMessages.towerHelloServer(this.info.sendSocket(), this.server);
 		SendMessages.towerHelloCar(this.info.sendSocket());
+		SendMessages.towerHelloCloud(this.info.sendSocket(), message);
 	}
 	
 	private void receiveMessages()
@@ -56,10 +61,18 @@ public class Tower implements Runnable {
 			}
 		}
 	}
+
+	private void sendToServer(MessageAndType message) {
+		SendMessages.towerHelloServer(this.info.sendSocket(), message);
+	}
+}
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)
 	{
 		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
+		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
+			sendToServer(message);
+		}
 	}
 	
 	private static TimerTask wrap(Runnable r) {
@@ -70,4 +83,5 @@ public class Tower implements Runnable {
 			}
 		};
 	}
-}
+
+

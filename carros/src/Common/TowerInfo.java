@@ -22,7 +22,11 @@ public class TowerInfo {
 		this.connectionInfoLinuxSend = new InfoNode(Constants.towerPort);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
 	
 	public DatagramSocket receiveSocket(){
 		return this.connectionInfoLinuxReceive.socket;
