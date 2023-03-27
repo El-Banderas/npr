@@ -7,7 +7,6 @@ import Common.FWRMessages.FWRInfo;
 import Common.FWRMessages.FWReceiveMessages;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class Car implements Runnable {
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
 	private SharedClass shared;
-	private FWRInfo fwrInfo;
+	private FWRInfo fwrInfoHelloCar;
 	//private List<TowerInfo> towers;
 
 	
@@ -33,7 +32,7 @@ public class Car implements Runnable {
 		this.receiveSocket = info.receiveSocket();
 		this.sendSocket = info.sendSocket();
 		this.shared = shared;
-		this.fwrInfo = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
+		this.fwrInfoHelloCar = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
 		try {
 			//System.out.println("My IP: "+ Constants.getMyIp());
 			myIp = Inet6Address.getByName(Constants.getMyIp());
@@ -57,7 +56,7 @@ public class Car implements Runnable {
 	
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.sendSocket, this.info, fwrInfo);
+		SendMessages.carHellos(this.sendSocket, this.info, fwrInfoHelloCar);
 	}
 	
 	private void receiveMessages()

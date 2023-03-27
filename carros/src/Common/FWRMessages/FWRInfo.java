@@ -18,7 +18,7 @@ public class FWRInfo {
 
     // Seq Number == -1 => Hellos
     public FWRInfo(int TTL, byte[] idSender, int seqNumber) {
-        this.TTL = 1;
+        this.TTL = TTL;
         this.destiny = false;
         this.idSender = idSender;
         this.seqNumber = seqNumber;
@@ -71,6 +71,8 @@ public class FWRInfo {
         int maybeDestX = bbuf.getInt();
         // If destiny is defined
         if (maybeDestX == -1){
+            boolean debug = maybeDestX == -1;
+            System.out.println("Tem destino? " + maybeDestX + "== " + -1 + " = " + debug);
             int destY = bbuf.getInt();
             int distance = bbuf.getInt();
             int seqNumber = bbuf.getInt();
