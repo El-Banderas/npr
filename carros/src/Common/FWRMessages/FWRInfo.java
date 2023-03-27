@@ -87,6 +87,8 @@ public class FWRInfo {
             int seqNumber = bbuf.getInt();
             int lengthContent = bbuf.getInt();
             int idLength = bbuf.getInt();
+            System.out.println("Coisas lidas: ");
+            System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " | len cont: " + lengthContent + " |id len: " + idLength);
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
             System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
