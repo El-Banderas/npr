@@ -6,17 +6,19 @@ import Common.Messages.MessagesConstants;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 public class FWReceiveMessages {
     private static Logger logger =  Logger.getLogger("npr.messages.received");
 
-    public static MessageAndType receiveDataFW(DatagramSocket socket) throws IOException{
+    public static MessageAndType receiveDataFW(DatagramSocket socket, InetAddress myIp) throws IOException{
 
     byte[] buf = new byte[MessagesConstants.sizeBufferMessages];
     DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		socket.receive(packet);
+        if (packet.getAddress().equals(myIp)) return null;
     FWRInfo fwrinfo = new FWRInfo(buf);
 
     ByteBuffer bbuf = ByteBuffer.wrap(fwrinfo.content);

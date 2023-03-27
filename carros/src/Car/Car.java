@@ -66,7 +66,7 @@ public class Car implements Runnable {
 			try {
 				this.info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = FWReceiveMessages.receiveDataFW(this.receiveSocket);
+				MessageAndType message = FWReceiveMessages.receiveDataFW(this.receiveSocket, myIp);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
@@ -76,7 +76,8 @@ public class Car implements Runnable {
 	
 	private void handleMessage(MessageAndType message) throws UnknownHostException
 	{
-		if (message.ipSender.equals(myIp) ) {
+		// Car receive it's timeout
+		if (message == null ) {
 			// There are no timeouts, because we always receive message from ourselves
 			shared.addEntryMessages(MessagesConstants.Timeout);
 			return;
