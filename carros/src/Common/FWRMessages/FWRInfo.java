@@ -82,19 +82,21 @@ public class FWRInfo {
             // Cuidado com este 8, é o tamanho de 2 ints
             System.out.println("Info mensagem: " + TTL + " | " + maybeDestX + ", " + destY + " | " + idLength);
 
-            System.arraycopy(message, sizeInt*7, idArray, 0, idLength);
-            System.arraycopy(message, sizeInt* 7 + idLength, content, 0 , message.length-(sizeInt* 7 + idLength));
+            System.arraycopy(message, sizeInt*6, idArray, 0, idLength);
+            System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 7 + idLength));
         }
         else {
             int seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
-            //System.out.println("Coisas lidas: ");
-            //System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " |id len: " + idLength);
+            System.out.println("Coisas lidas: ");
+            System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " |id len: " + idLength);
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
            // System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
-            System.arraycopy(message, sizeInt*5, idArray, 0, idLength);
-            System.arraycopy(message, sizeInt* 5 + idLength, content, 0 , message.length-(sizeInt* 5 + idLength));
+            System.arraycopy(message, sizeInt*4, idArray, 0, idLength);
+            System.out.println("ID: " + idArray.toString());
+
+            System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , message.length-(sizeInt* 5 + idLength));
         }
     }
 
