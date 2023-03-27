@@ -86,14 +86,13 @@ public class FWRInfo {
             System.arraycopy(message, sizeInt* 7 + idLength, content, 0 , message.length-(sizeInt* 7 + idLength));
         }
         else {
-            System.out.println("Mensagem sem destino");
             int seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
-            System.out.println("Coisas lidas: ");
-            System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " |id len: " + idLength);
+            //System.out.println("Coisas lidas: ");
+            //System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " |id len: " + idLength);
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
-            System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
+           // System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
             System.arraycopy(message, sizeInt*5, idArray, 0, idLength);
             System.arraycopy(message, sizeInt* 5 + idLength, content, 0 , message.length-(sizeInt* 5 + idLength));
         }

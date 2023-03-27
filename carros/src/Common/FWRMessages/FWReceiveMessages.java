@@ -30,8 +30,8 @@ public class FWReceiveMessages {
 		bbuf.get(remaining, 0 /*bbuf.position()*/, bbuf.remaining());
 
     MessageAndType received = new MessageAndType(type, remaining, packet.getAddress());
-
-		logger.info("Received Message:\n" + received.toString());
+        
+		//logger.info("Received Message:\n" + received.toString());
 
 		return received;
 }

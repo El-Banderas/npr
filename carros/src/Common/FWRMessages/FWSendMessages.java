@@ -36,8 +36,8 @@ public class FWSendMessages {
         System.arraycopy(content, 0, join, fwrLen, contentLen);
 
         DatagramPacket readyToSend = new DatagramPacket(join, join.length, packet.getAddress(), packet.getPort());
-        System.out.println("Send message: ");
-        System.out.println(fwrInfo);
+        //System.out.println("Send message: ");
+        //System.out.println(fwrInfo);
         try {
             send.send(readyToSend);
         } catch (IOException e) {
