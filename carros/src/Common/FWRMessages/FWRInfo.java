@@ -83,7 +83,7 @@ public class FWRInfo {
             System.out.println("Info mensagem: " + TTL + " | " + maybeDestX + ", " + destY + " | " + idLength);
 
             System.arraycopy(message, sizeInt*6, idArray, 0, idLength);
-            System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 7 + idLength));
+            System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 6 + idLength));
         }
         else {
             int seqNumber = bbuf.getInt();
@@ -96,7 +96,7 @@ public class FWRInfo {
             System.arraycopy(message, sizeInt*4, idArray, 0, idLength);
             System.out.println("ID: " + new String(idArray));
 
-            System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , message.length-(sizeInt* 5 + idLength));
+            System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , message.length-(sizeInt* 4 + idLength));
         }
     }
 
