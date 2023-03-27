@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * TTL | -1 | ID Sender | Seq N | Message
  *
  * Redirect:
- * TTL | Pos Dest (x e y) | Dist Dest | Seq N | sizeContent | sizeID | ID Sender  | Message
+ * TTL | Pos Dest (x e y) | Dist Dest | Seq N  | sizeID | ID Sender  | Message
  *
  * Messages that need forwarding are send by the Hello Message Threads
  */
