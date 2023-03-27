@@ -25,7 +25,6 @@ public class FWReceiveMessages {
 
         // After removing FW content
     int type = bbuf.getInt();
-        System.out.println("Type received: " + type);
     byte[] remaining = new byte[bbuf.remaining()];
 		bbuf.get(remaining, 0 /*bbuf.position()*/, bbuf.remaining());
 

@@ -75,13 +75,12 @@ public class FWRInfo {
             int distance = bbuf.getInt();
             int seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
-            System.out.println("Coisas lidas: ");
-            System.out.println("TTL: " + TTL + " | pos: " + maybeDestX + ", " + destY + " |dist: " + distance);
-            System.out.println("seq num: " + seqNumber +  " |id len: " + idLength);
+            //System.out.println("Coisas lidas: ");
+            //System.out.println("TTL: " + TTL + " | pos: " + maybeDestX + ", " + destY + " |dist: " + distance);
+            //System.out.println("seq num: " + seqNumber +  " |id len: " + idLength);
 
             byte[] idArray = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
-            System.out.println("Info mensagem: " + TTL + " | " + maybeDestX + ", " + destY + " | " + idLength);
 
             System.arraycopy(message, sizeInt*6, idArray, 0, idLength);
             System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 6 + idLength));
