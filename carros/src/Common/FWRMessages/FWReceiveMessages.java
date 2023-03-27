@@ -37,6 +37,7 @@ public class FWReceiveMessages {
         // Maybe forward message?
         // TODO: Check Distance and duplicate messages
         if (fwrinfo.TTL > 1) {
+            System.out.println("Vai fazer fwr");
             fwrinfo.updateInfo(carInfo);
             FWSendMessages.sendFWRMessage(sendSocket, fwrinfo);
         }
