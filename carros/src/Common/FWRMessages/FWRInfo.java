@@ -68,33 +68,34 @@ public class FWRInfo {
         this.content = new byte[MessagesConstants.sizeBufferMessages];
 
         ByteBuffer bbuf = ByteBuffer.wrap(message);
-        int TTL = bbuf.getInt();
+        this.TTL = bbuf.getInt();
         int maybeDestX = bbuf.getInt();
         // If destiny is defined
         if (maybeDestX != -1){
             int destY = bbuf.getInt();
-            int distance = bbuf.getInt();
-            int seqNumber = bbuf.getInt();
+            this.dest = new Position(maybeDestX, destY);
+            this.distDest = bbuf.getInt();
+            this.seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
             //System.out.println("Coisas lidas: ");
             //System.out.println("TTL: " + TTL + " | pos: " + maybeDestX + ", " + destY + " |dist: " + distance);
             //System.out.println("seq num: " + seqNumber +  " |id len: " + idLength);
 
-            byte[] idArray = new byte[idLength];
+            idSender = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
 
-            System.arraycopy(message, sizeInt*6, idArray, 0, idLength);
+            System.arraycopy(message, sizeInt*6, idSender, 0, idLength);
             System.arraycopy(message, sizeInt* 6 + idLength, content, 0 , message.length-(sizeInt* 6 + idLength));
         }
         else {
-            int seqNumber = bbuf.getInt();
+            this.seqNumber = bbuf.getInt();
             int idLength = bbuf.getInt();
             //System.out.println("Coisas lidas: ");
             //System.out.println("TTL: " + TTL + " | seq num: "+seqNumber + " |id len: " + idLength);
-            byte[] idArray = new byte[idLength];
+            idSender = new byte[idLength];
             // Cuidado com este 8, é o tamanho de 2 ints
            // System.out.println("Info mensagem: " + TTL + " | " + seqNumber + " | " + idLength);
-            System.arraycopy(message, sizeInt*4, idArray, 0, idLength);
+            System.arraycopy(message, sizeInt*4, idSender, 0, idLength);
            // System.out.println("ID: " + new String(idArray));
 
             System.arraycopy(message, sizeInt* 4 + idLength, content, 0 , message.length-(sizeInt* 4 + idLength));
