@@ -70,9 +70,7 @@ public class FWRInfo {
         int TTL = bbuf.getInt();
         int maybeDestX = bbuf.getInt();
         // If destiny is defined
-        if (maybeDestX == -1){
-            boolean debug = maybeDestX == -1;
-            System.out.println("Tem destino? " + maybeDestX + "== " + -1 + " = " + debug);
+        if (maybeDestX != -1){
             int destY = bbuf.getInt();
             int distance = bbuf.getInt();
             int seqNumber = bbuf.getInt();
