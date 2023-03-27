@@ -3,6 +3,14 @@ package Car;
 import Car.Terminal.CarTerminal;
 import Common.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +33,7 @@ public class Main {
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 		
-		//List<TowerInfo> towers = parseFile(args[0]);
+		List<TowerInfo> towers = parseFile(args[0]);
 		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
@@ -33,7 +41,7 @@ public class Main {
 		CarInfo info = new CarInfo(pos, id);
 		
 		// 2 Threads: Terminal and Comms
-		SharedClass shared = new SharedClass(info);
+		SharedClass shared = new SharedClass(info, towers);
 		
 		CarTerminal carTerminal = new CarTerminal(shared);
 		Thread thread_1 = new Thread(carTerminal);
@@ -44,7 +52,6 @@ public class Main {
 		thread_2.start();
 	}
 	
-	/*
 	// Parse file that contains information about the RSUs
 	private static List<TowerInfo> parseFile(String filePath)
 	{
@@ -75,8 +82,7 @@ public class Main {
 		}
 		return null;
 	}
-	*/
-	
+
 	
 	private static String idGenerator(int n) {
 		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";

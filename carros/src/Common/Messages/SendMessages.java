@@ -2,6 +2,8 @@ package Common.Messages;
 
 import Common.CarInfo;
 import Common.Constants;
+import Common.FWRMessages.FWRInfo;
+import Common.FWRMessages.FWSendMessages;
 import Common.InfoNode;
 
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class SendMessages {
 	
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
 
-	public static void carSendBreak(DatagramSocket sender)
+	public static void carSendBreak(DatagramSocket sender, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
@@ -24,10 +26,10 @@ public class SendMessages {
 				.array();
 		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
+		sendMessage(sender, packet, fwrInfo);
 	}
 	
-	public static void carHellos(DatagramSocket sender, CarInfo info)
+	public static void carHellos(DatagramSocket sender, CarInfo info, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Hello");
 		
@@ -38,7 +40,7 @@ public class SendMessages {
 				.array();
 		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
+		sendMessage(sender, packet, fwrInfo);
 	}
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
@@ -80,7 +82,7 @@ public class SendMessages {
 		sendMessage(sender, packet);
 	}
 	
-	public static void carSendAccident(DatagramSocket send)
+	public static void carSendAccident(DatagramSocket send, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Accident!");
 		
@@ -89,9 +91,9 @@ public class SendMessages {
 				.array();
 		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(send, packet);
+		sendMessage(send, packet, fwrInfo);
 	}
-	
+	// From RSU to Server
 	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer)
 	{
 		logger.info("Message Forwarded to Server: " + message.toString());
@@ -120,5 +122,10 @@ public class SendMessages {
 			logger.severe("IOException when sending " + packet.toString() + " to " + send.toString());
 			logger.throwing("SendMessages", "sendMessage", e);
 		}
+	}
+	// When forwarding is necessary
+	private static void sendMessage(DatagramSocket send, DatagramPacket packet, FWRInfo fwrInfo)
+	{
+			FWSendMessages.sendFWRMessage(send, packet, fwrInfo);
 	}
 }

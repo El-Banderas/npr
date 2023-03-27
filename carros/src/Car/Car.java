@@ -3,6 +3,8 @@ package Car;
 import Common.CarInfo;
 import Common.Constants;
 //import Common.TowerInfo;
+import Common.FWRMessages.FWRInfo;
+import Common.FWRMessages.FWReceiveMessages;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
@@ -22,6 +24,7 @@ public class Car implements Runnable {
 	private DatagramSocket receiveSocket;
 	private InetAddress myIp;
 	private SharedClass shared;
+	private FWRInfo fwrInfo;
 	//private List<TowerInfo> towers;
 
 	
@@ -30,6 +33,7 @@ public class Car implements Runnable {
 		this.receiveSocket = info.receiveSocket();
 		this.sendSocket = info.sendSocket();
 		this.shared = shared;
+		this.fwrInfo = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
 		try {
 			//System.out.println("My IP: "+ Constants.getMyIp());
 			myIp = Inet6Address.getByName(Constants.getMyIp());
@@ -53,7 +57,7 @@ public class Car implements Runnable {
 	
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.sendSocket, this.info);
+		SendMessages.carHellos(this.sendSocket, this.info, fwrInfo);
 	}
 	
 	private void receiveMessages()
@@ -62,7 +66,7 @@ public class Car implements Runnable {
 			try {
 				this.info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = ReceiveMessages.receiveData(this.receiveSocket);
+				MessageAndType message = FWReceiveMessages.receiveDataFW(this.receiveSocket);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
