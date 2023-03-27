@@ -25,12 +25,12 @@ public class FWReceiveMessages {
 
         // After removing FW content
     int type = bbuf.getInt();
-
+        System.out.println("Type received: " + type);
     byte[] remaining = new byte[bbuf.remaining()];
 		bbuf.get(remaining, 0 /*bbuf.position()*/, bbuf.remaining());
 
     MessageAndType received = new MessageAndType(type, remaining, packet.getAddress());
-        
+
 		//logger.info("Received Message:\n" + received.toString());
 
 		return received;
