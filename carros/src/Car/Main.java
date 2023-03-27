@@ -30,6 +30,7 @@ public class Main {
 
 	public static void main(String[] args)
 	{
+		System.out.println("Execute car");
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 		
