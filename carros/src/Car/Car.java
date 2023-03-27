@@ -65,7 +65,7 @@ public class Car implements Runnable {
 			try {
 				this.info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = FWReceiveMessages.receiveDataFW(this.receiveSocket, myIp);
+				MessageAndType message = FWReceiveMessages.forwardHandleMessage(this.receiveSocket, this.sendSocket, myIp, info);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);

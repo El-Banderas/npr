@@ -1,5 +1,6 @@
 package Common.FWRMessages;
 
+import Common.CarInfo;
 import Common.Messages.MessagesConstants;
 import Common.Position;
 import org.w3c.dom.ls.LSOutput;
@@ -106,5 +107,11 @@ public class FWRInfo {
                 "TTL=" + TTL +
                 ", seqNumber=" + seqNumber +
                 '}';
+    }
+    // We don't change seq number because the message is relative to the original car, not the cars that resend.
+    public void updateInfo(CarInfo carInfo) {
+        TTL = TTL-1;
+        distDest = (int) Position.distance(dest, carInfo.pos);
+        idSender = carInfo.id.getBytes();
     }
 }

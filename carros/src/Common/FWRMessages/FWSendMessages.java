@@ -1,5 +1,6 @@
 package Common.FWRMessages;
 
+import Common.Constants;
 import Common.Messages.MessagesConstants;
 
 import javax.xml.crypto.Data;
@@ -44,5 +45,28 @@ public class FWSendMessages {
             logger.severe("IOException when sending " + packet.toString() + " to " + send.toString());
             logger.throwing("SendMessages", "sendMessage", e);        }
     }
+
+    public static void sendFWRMessage(DatagramSocket send, FWRInfo fwrInfo)
+    {
+        byte[] content = fwrInfo.content;
+        int contentLen = content.length;
+        byte[] fwrInfoBytes = fwrInfo.toByteArray();
+
+        int fwrLen = fwrInfoBytes.length;
+        byte[] join = new byte[contentLen + fwrLen];
+
+        System.arraycopy(fwrInfoBytes, 0, join, 0, fwrLen);
+        System.arraycopy(content, 0, join, fwrLen, contentLen);
+
+        DatagramPacket readyToSend = new DatagramPacket(join, join.length, Constants.MulticastGroup, Constants.portMulticast);
+        //System.out.println("Send message: ");
+        //System.out.println(fwrInfo);
+        try {
+            send.send(readyToSend);
+        } catch (IOException e) {
+            logger.severe("IOException when sending " + readyToSend.toString() + " to " + send.toString());
+            logger.throwing("SendMessages", "sendMessage", e);        }
+    }
+
 
 }

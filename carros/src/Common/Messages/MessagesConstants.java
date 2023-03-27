@@ -5,7 +5,7 @@ public class MessagesConstants {
 	public static final int CarHelloMessage = 1;
 	public static final int TTLCarHelloMessage = 1;
 	public static final int BreakMessage = 2;
-	public static final int TTLBreakMessage = 2;
+	public static final int TTLBreakMessage = 3;
 	public static final int AccidentMessage = 4;
 	public static final int TTLAccidentMessage = 5;
 	public static final int TowerHelloMessage = 5;
