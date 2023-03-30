@@ -1,4 +1,4 @@
-package Common.Messages;
+package AWFullP;
 
 import Common.CarInfo;
 import Common.Constants;
@@ -113,7 +113,7 @@ public class SendMessages
 	}
 	
 	//TODO: temporary public
-	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, MessageAndType message)
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)
 	{
 		try {
 			DatagramPacket packet = new DatagramPacket(message.content, message.content.length, to, port);

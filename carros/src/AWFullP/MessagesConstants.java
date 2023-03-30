@@ -1,4 +1,4 @@
-package Common.Messages;
+package AWFullP;
 
 public class MessagesConstants
 {	

@@ -2,17 +2,17 @@ package Car;
 
 import Common.CarInfo;
 import Common.Constants;
-//import Common.TowerInfo;
-import Common.Messages.MessageAndType;
-import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
-import Common.Messages.SendMessages;
 
 import java.io.IOException;
 import java.net.*;
 //import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import AWFullP.AWFullPacket;
+import AWFullP.MessagesConstants;
+import AWFullP.ReceiveMessages;
+import AWFullP.SendMessages;
 
 
 public class Car implements Runnable
@@ -56,7 +56,7 @@ public class Car implements Runnable
 			try {
 				this.info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = ReceiveMessages.receiveData(this.socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
@@ -64,7 +64,7 @@ public class Car implements Runnable
 		}
 	}
 	
-	private void handleMessage(MessageAndType message) throws UnknownHostException
+	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
 		if (message.ipSender.equals(myIp) ) {
 			// There are no timeouts, because we always receive message from ourselves

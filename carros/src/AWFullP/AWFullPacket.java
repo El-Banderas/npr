@@ -1,25 +1,25 @@
-package Common.Messages;
+package AWFullP;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 
-public class MessageAndType
+public class AWFullPacket
 {
 	public int type;
 	public byte[] content;
 	public InetAddress ipSender;
 	
 	
-	public MessageAndType(int type, byte[] content, InetAddress ipSender)
+	public AWFullPacket(int type, byte[] content, InetAddress ipSender)
 	{
 		this.type = type;
 		this.content = content;
 		this.ipSender = ipSender;
 	}
 	
-	public MessageAndType(DatagramPacket packet)
+	public AWFullPacket(DatagramPacket packet)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(packet.getData());
 		

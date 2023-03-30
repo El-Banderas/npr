@@ -2,14 +2,15 @@ package Cloud;
 
 import Common.Constants;
 import Common.InfoNode;
-import Common.Messages.MessageAndType;
-import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.TimerTask;
+
+import AWFullP.MessagesConstants;
+import AWFullP.ReceiveMessages;
+import AWFullP.AWFullPacket;
 
 
 public class Cloud implements Runnable
@@ -43,7 +44,7 @@ public class Cloud implements Runnable
 	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(this.cloud.socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.cloud.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				//System.out.println("[Cloud] Timeout passed. Nothing received.");
@@ -51,7 +52,7 @@ public class Cloud implements Runnable
 		}
 	}
 	
-	private void handleMessage(MessageAndType message)
+	private void handleMessage(AWFullPacket message)
 	{
 		switch(message.type) {
 			case MessagesConstants.ServerHelloMessage:

@@ -2,9 +2,10 @@ package Car;
 
 import Car.Terminal.MessageEntry;
 import Common.CarInfo;
-import Common.Messages.MessagesConstants;
 
 import java.util.TreeMap;
+
+import AWFullP.MessagesConstants;
 
 
 public class SharedClass

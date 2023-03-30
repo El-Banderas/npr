@@ -7,28 +7,20 @@ import java.net.*;
 
 
 /**
- * Arguments:
- * Windows
- * The IP of the cloud isn't necessary, is a constant stored in the CloudConstants file.
- * Name (unecessary) | This port | Port Server | PosX | PosY
- * The port must be the same as the file.
- * Example: "t1 8000 9000 40 40"
- *
- *
- * Linux, depois remover a posição, e acrescentar o IP da cloud, para saber a quem mandar mensagens
- * O server do lado direito é o "2001:9::20"
- * Name (unecessary) | IP Server | PosX | PosY
- * Example: "t1 2001:9::20 40 40"
+ * 1: Name (TODO: temporary - vai ser gerado aleatoriamente ou lido do 'working directory')
+ * 2: IP Server
+ * 3: Posx (TODO: temporary - para coincidir com ficheiro; vai ser lido do .xy, e transmitido aos carros)
+ * 4: Posy (TODO: temporary - para coincidir com ficheiro; vai ser lido do .xy, e transmitido aos carros)
+ * 	Example: "t1 2001:9::20 40 40"
  */
-public class Main {
-	
+public class Main
+{
 	public static void main(String[] args) throws IOException
 	{
-		String name = args[0];
+		String name = args[0]; //TODO: gerado aleatoriamente ou lido do 'working directory'
 		
-		// TODO: Change position tower
 		InetAddress ipServer = Inet6Address.getByName(args[1]);
-		Position pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+		Position pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3])); // TODO: lido do .xy
 		InfoNode thisServer = new InfoNode(ipServer, Constants.serverPort);
 		TowerInfo thisTower = new TowerInfo(name, pos);
 		

@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.MessagesConstants;
+import AWFullP.ReceiveMessages;
+import AWFullP.SendMessages;
+import AWFullP.AWFullPacket;
 import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
-import Common.Messages.MessageAndType;
-import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
-import Common.Messages.SendMessages;
 
 
 public class Tower implements Runnable
@@ -49,7 +49,7 @@ public class Tower implements Runnable
 	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(this.info.outside_socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.info.outside_socket);
 				handleMessage(message);
 			} catch (IOException ignore) {
 				//System.out.println("[Tower] Timeout passed. Nothing received.");
@@ -57,14 +57,14 @@ public class Tower implements Runnable
 		}
 	}
 	
-	private void handleMessage(MessageAndType message)
+	private void handleMessage(AWFullPacket message)
 	{
 		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
 			sendToServer(message);
 		}
 	}
 
-	private void sendToServer(MessageAndType message)
+	private void sendToServer(AWFullPacket message)
 	{
 		SendMessages.sendMessage(this.info.inside_socket, this.server.ip, this.server.port, message);
 	}

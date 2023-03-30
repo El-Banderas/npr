@@ -3,9 +3,9 @@ package Car.Terminal;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.SendMessages;
 import Car.SharedClass;
 import Common.Constants;
-import Common.Messages.SendMessages;
 
 
 public class CarTerminal implements Runnable

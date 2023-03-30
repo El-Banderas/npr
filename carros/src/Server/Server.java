@@ -3,12 +3,8 @@ package Server;
 import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
-import Common.Messages.MessageAndType;
-import Common.Messages.MessagesConstants;
-import Common.Messages.ReceiveMessages;
-import Common.Messages.SendMessages;
 
-import static Common.Messages.SendMessages.serverHelloCloud;
+import static AWFullP.SendMessages.serverHelloCloud;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -20,9 +16,14 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.MessagesConstants;
+import AWFullP.ReceiveMessages;
+import AWFullP.SendMessages;
+import AWFullP.AWFullPacket;
 
-public class Server implements Runnable {
-	
+
+public class Server implements Runnable
+{
 	private InfoNode thisServer;
 	private List<String> carsInRange;
 	private InfoNode cloud;
@@ -59,7 +60,7 @@ public class Server implements Runnable {
 	
 	private void sendHellos()
 	{
-		MessageAndType message = new MessageAndType(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
+		AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
 		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
 	
@@ -67,7 +68,7 @@ public class Server implements Runnable {
 	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(this.thisServer.socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.thisServer.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				//System.out.println("[Server] Timeout passed. Nothing received.");
@@ -75,14 +76,14 @@ public class Server implements Runnable {
 		}
 	}
 	
-	private void handleMessage(MessageAndType message)
+	private void handleMessage(AWFullPacket message)
 	{
 		switch (message.type) {
 			case MessagesConstants.CarHelloMessage:
 				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
 				if (!this.carsInRange.contains(id)){
 					this.carsInRange.add(id);
-					sendToCloud(new MessageAndType(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender)); //TODO
+					sendToCloud(new AWFullPacket(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender)); //TODO
 				}
 				System.out.println("Received Hello from car: " + id);
 				break;
@@ -111,13 +112,13 @@ public class Server implements Runnable {
 	public int getHowManyCars()
 	{
 		int result = this.carsInRange.size();
-		MessageAndType message = new MessageAndType(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
+		AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
 		this.sendToCloud(message);
 		this.carsInRange.clear();
 		return result;
 	}
 	
-	private void sendToCloud(MessageAndType message)
+	private void sendToCloud(AWFullPacket message)
 	{
 		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
