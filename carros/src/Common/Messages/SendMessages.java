@@ -7,6 +7,7 @@ import Common.InfoNode;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
@@ -24,8 +25,18 @@ public class SendMessages
 				.putInt(MessagesConstants.BreakMessage)
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+	}
+	
+	public static void carSendAccident(DatagramSocket sender)
+	{
+		//logger.info("Car Sends Accident!");
+		
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(MessagesConstants.AccidentMessage)
+				.array();
+		
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
 	
 	public static void carHellos(DatagramSocket sender, CarInfo info)
@@ -38,8 +49,7 @@ public class SendMessages
 				.put("Hello".getBytes())
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
@@ -51,8 +61,7 @@ public class SendMessages
 				.put("Hello".getBytes())
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sender, packet);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
 	
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
@@ -64,11 +73,10 @@ public class SendMessages
 				.put("Hello".getBytes())
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, destination.ip, destination.port);
-		sendMessage(sender, packet);
+		sendMessage(sender, destination.ip, destination.port, buf);
 	}
 	
-	public static void serverHelloCloud(DatagramSocket sender)
+	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
 	{
 		logger.info("Server Sends Hello to Cloud");
 		
@@ -77,31 +85,10 @@ public class SendMessages
 				.put("Hello".getBytes())
 				.array();
 
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.CloudIP, Constants.cloudPort);
-		sendMessage(sender, packet);
+		sendMessage(sender, destination.ip, destination.port, buf);
 	}
 	
-	public static void carSendAccident(DatagramSocket send)
-	{
-		//logger.info("Car Sends Accident!");
-		
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.AccidentMessage)
-				.array();
-		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(send, packet);
-	}
-	
-	public static void forwardMessage(MessageAndType message, DatagramSocket sendSocket, InfoNode thisServer)
-	{
-		logger.info("Message Forwarded to Server: " + message.toString());
-		
-		DatagramPacket packet = new DatagramPacket(message.content, message.content.length, thisServer.ip, thisServer.port);
-		sendMessage(sendSocket, packet);
-	}
-	
-	public static void towerHelloCar(DatagramSocket sendSocket)
+	public static void towerHelloCar(DatagramSocket sender)
 	{
 		logger.info("Tower Sends Hello to Car");
 		
@@ -109,16 +96,30 @@ public class SendMessages
 				.putInt(MessagesConstants.TowerHelloMessage)
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
-		sendMessage(sendSocket, packet);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
 	
-	private static void sendMessage(DatagramSocket send, DatagramPacket packet)
+	
+	//TODO: temporary public
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content)
 	{
 		try {
-			send.send(packet);
+			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
+			sender.send(packet);
 		} catch (IOException e) {
-			logger.severe("IOException when sending " + packet.toString() + " to " + send.toString());
+			logger.severe("IOException when sending binary packet to " + to.toString() + ":" + port);
+			logger.throwing("SendMessages", "sendMessage", e);
+		}
+	}
+	
+	//TODO: temporary public
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, MessageAndType message)
+	{
+		try {
+			DatagramPacket packet = new DatagramPacket(message.content, message.content.length, to, port);
+			sender.send(packet);
+		} catch (IOException e) {
+			logger.severe("IOException when sending " + message.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
 		}
 	}

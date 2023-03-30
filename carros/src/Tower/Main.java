@@ -29,7 +29,7 @@ public class Main {
 		// TODO: Change position tower
 		InetAddress ipServer = Inet6Address.getByName(args[1]);
 		Position pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-		InfoNode thisServer = new InfoNode(ipServer, Constants.serverPort, false);
+		InfoNode thisServer = new InfoNode(ipServer, Constants.serverPort);
 		TowerInfo thisTower = new TowerInfo(name, pos);
 		
 		Tower tower = new Tower(thisTower, thisServer);

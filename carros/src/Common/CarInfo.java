@@ -1,4 +1,5 @@
 package Common;
+import java.io.IOException;
 import java.net.DatagramSocket;
 
 
@@ -7,28 +8,21 @@ public class CarInfo
 	public String id;
 	public Position oldPos;
 	public Position pos;
+	
 	public InfoNode connectionInfoLinuxSend;
 	public InfoNodeMulticast connectionInfoLinuxReceive;
+	public DatagramSocket socket;
 	
 	
-	public CarInfo(Position pos, String id)
+	public CarInfo(Position pos, String id) throws IOException
 	{
 		this.oldPos = pos;
 		this.pos = pos;
 		this.id = id;
-		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
+		this.socket = new DatagramSocket(Constants.carPort); //TODO: Multicast
+		this.connectionInfoLinuxSend = new InfoNode(socket);
 		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
-	}
-	
-	
-	public DatagramSocket receiveSocket()
-	{
-		return this.connectionInfoLinuxReceive.socket;
-	}
-	
-	public DatagramSocket sendSocket()
-	{
-		return this.connectionInfoLinuxSend.socket;
+		
 	}
 
 	public float getVelocity()

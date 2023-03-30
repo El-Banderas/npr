@@ -27,7 +27,7 @@ public class Server implements Runnable {
 	private List<String> carsInRange;
 	private InfoNode cloud;
 	private Map<String, TowerInfo> towersInfo;
-	DatagramSocket cloudSendSocket;
+	private DatagramSocket socket;
 	
 	
 	public Server(InfoNode thisServer, InfoNode cloud) throws SocketException
@@ -36,7 +36,7 @@ public class Server implements Runnable {
 		this.carsInRange = new ArrayList<String>();
 		this.towersInfo = new HashMap<>();
 		this.cloud = cloud;
-		this.cloudSendSocket = new DatagramSocket();
+		this.socket = new DatagramSocket(Constants.serverPort);
 	}
 	
 	
@@ -44,7 +44,7 @@ public class Server implements Runnable {
 	public void run()
 	{
 		try {
-			thisServer.socket.setSoTimeout(Constants.refreshRate);
+			socket.setSoTimeout(Constants.refreshRate);
 		} catch (SocketException e1) {
 			e1.printStackTrace();
 		}
@@ -59,9 +59,8 @@ public class Server implements Runnable {
 	
 	private void sendHellos()
 	{
-		serverHelloCloud(this.thisServer.socket);
-		MessageAndType message = new MessageAndType(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.cloud.ip); //TODO
-		SendMessages.sendMessage(message, this.info.sendSocket()); //TODO
+		MessageAndType message = new MessageAndType(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
+		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
 	
 	private void receiveMessages()
@@ -113,13 +112,14 @@ public class Server implements Runnable {
 	{
 		int result = this.carsInRange.size();
 		MessageAndType message = new MessageAndType(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
-		SendMessages.sendMessage(message, this.cloudSendSocket()); //TODO
+		this.sendToCloud(message);
 		this.carsInRange.clear();
 		return result;
 	}
 	
-	private void sendToCloud(MessageAndType message) {
-		SendMessages.serverMessageCloud(this.thisServer.socket, message); //TODO
+	private void sendToCloud(MessageAndType message)
+	{
+		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
 	
 	private static TimerTask wrap(Runnable r)

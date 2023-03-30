@@ -1,5 +1,7 @@
 package Car;
 
+import java.io.IOException;
+
 import Car.Terminal.CarTerminal;
 import Common.*;
 
@@ -30,7 +32,13 @@ public class Main
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
 		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		CarInfo info = new CarInfo(pos, id);
+		CarInfo info;
+		try {
+			info = new CarInfo(pos, id);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		}
 		
 		// 2 Threads: Terminal and Comms
 		SharedClass shared = new SharedClass(info);

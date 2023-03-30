@@ -17,8 +17,8 @@ public class Main {
 		InfoNode cloudInfo;
 		InfoNode thisServer;
 		
-		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort, false);
-		thisServer = new InfoNode(null, Constants.serverPort, true);
+		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort);
+		thisServer = new InfoNode(null, Constants.serverPort);
 		
 		Server server = new Server(thisServer, cloudInfo);
 		server.run();

@@ -24,6 +24,15 @@ public final class Constants
 	 */
 	
 	
+	/*	
+	 * +-------------------------+
+	 * |     FF7E:230::1234      |
+	 * +-------------------------+
+	 * | Car (6000) <-> (8000) Tower (7000)   <->   (9000) Server (9000)   <->   (5000) Cloud
+	 * +-------------------------+
+	 */
+	
+	
 	public static int cloudPort = 5000;
 	public static int carPort = 6000;
 	public static int towerPort = 7000;
@@ -53,7 +62,7 @@ public final class Constants
 	}
 	
 	
-	public static String getMyIp() {
+	public static InetAddress getMyIp() {
 		Enumeration<NetworkInterface> nets = null;
 		try {
 			nets = NetworkInterface.getNetworkInterfaces();
@@ -72,7 +81,8 @@ public final class Constants
 				if (inetAddress.toString().contains("2001:")) {
 
 					//String myIP = inetAddress.toString().split("%")[0];
-					return inetAddress.toString().substring(1).split("%")[0];
+					//return inetAddress.toString().substring(1).split("%")[0];
+					return inetAddress;
 					//System.out.println("Encontrado + " + myIP);
 					//return myIp;
 				}

@@ -10,35 +10,23 @@ import java.net.SocketException;
  * Can also store the socket, necessary to send messages.
  */
 public class InfoNode
-{	
-	public InetAddress ip;
-	public int port;
-	public DatagramSocket socket;
+{
+	public final DatagramSocket socket;
+	public final InetAddress ip;
+	public final int port;
 	
 	
-	public InfoNode(InetAddress ip, int port, boolean createSocket)
+	public InfoNode(InetAddress ip, int port) throws SocketException
 	{
+		this.socket = new DatagramSocket(port, ip);
 		this.port = port;
 		this.ip = ip;
-		if (createSocket) {
-			try {
-				socket = new DatagramSocket(port);
-				this.ip = socket.getLocalAddress();
-			} catch (SocketException e) {
-				System.out.println("[ERROR] Error creating socket");
-				throw new RuntimeException(e);
-			}
-		}
 	}
-	
-	public InfoNode(int port)
+
+	public InfoNode(DatagramSocket socket)
 	{
-		try {
-			socket = new DatagramSocket();
-		} catch (SocketException e) {
-			System.out.println("[ERROR] Error creating socket");
-			throw new RuntimeException(e);
-		}
+		this.socket = socket;
+		this.port = socket.getLocalPort();
 		this.ip = socket.getLocalAddress();
 	}
 	

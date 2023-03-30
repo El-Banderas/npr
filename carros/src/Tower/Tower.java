@@ -1,7 +1,6 @@
 package Tower;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,19 +13,16 @@ import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
 
 
-
-public class Tower implements Runnable {
-	
+public class Tower implements Runnable
+{
 	private TowerInfo info;
 	private InfoNode server;
-
 	
 	
 	public Tower(TowerInfo info, InfoNode server)
 	{
 		this.info = info;
 		this.server = server;
-
 	}
 	
 	
@@ -45,36 +41,32 @@ public class Tower implements Runnable {
 	
 	private void sendHellos()
 	{
-		HashMap<String, Integer> message = new HashMap<>();
-		message.put(this.info.getId(), this.info.getHowManyCars()); //TODO
-		SendMessages.towerHelloServer(this.info.sendSocket(), this.server);
-		SendMessages.towerHelloCar(this.info.sendSocket());
-		SendMessages.towerHelloCloud(this.info.sendSocket(), message); //TODO
+		SendMessages.towerHelloServer(this.info.inside_socket, this.server);
+		SendMessages.towerHelloCar(this.info.outside_socket);
 	}
 	
 	private void receiveMessages()
 	{
 		while(true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(this.info.receiveSocket());
-				handleMessage(message, this.server);
-			} catch (IOException e) {
+				MessageAndType message = ReceiveMessages.receiveData(this.info.outside_socket);
+				handleMessage(message);
+			} catch (IOException ignore) {
 				//System.out.println("[Tower] Timeout passed. Nothing received.");
 			}
+		}
+	}
+	
+	private void handleMessage(MessageAndType message)
+	{
+		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
+			sendToServer(message);
 		}
 	}
 
 	private void sendToServer(MessageAndType message)
 	{
-		SendMessages.towerHelloServer(this.info.sendSocket(), message); //TODO
-	}
-	
-	private void handleMessage(MessageAndType message, InfoNode thisServer)
-	{
-		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
-		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
-			sendToServer(message);
-		}
+		SendMessages.sendMessage(this.info.inside_socket, this.server.ip, this.server.port, message);
 	}
 	
 	private static TimerTask wrap(Runnable r)

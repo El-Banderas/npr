@@ -18,8 +18,7 @@ import java.util.TimerTask;
 public class Car implements Runnable
 {
 	private CarInfo info;
-	private DatagramSocket sendSocket;
-	private DatagramSocket receiveSocket;
+	private DatagramSocket socket;
 	private InetAddress myIp;
 	private SharedClass shared;
 	//private List<TowerInfo> towers;
@@ -28,15 +27,9 @@ public class Car implements Runnable
 	public Car(CarInfo info, SharedClass shared/*, List<TowerInfo> towers*/)
 	{
 		this.info = info;
-		this.receiveSocket = info.receiveSocket();
-		this.sendSocket = info.sendSocket();
+		this.socket = info.socket; //TODO: Multicast
 		this.shared = shared;
-		try {
-			//System.out.println("My IP: "+ Constants.getMyIp());
-			myIp = Inet6Address.getByName(Constants.getMyIp());
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		}
+		myIp = Constants.getMyIp();
 		//this.towers = towers;
 	}
 	
@@ -54,7 +47,7 @@ public class Car implements Runnable
 	
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.sendSocket, this.info);
+		SendMessages.carHellos(this.socket, this.info);
 	}
 	
 	private void receiveMessages()
@@ -63,7 +56,7 @@ public class Car implements Runnable
 			try {
 				this.info.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = ReceiveMessages.receiveData(this.receiveSocket);
+				MessageAndType message = ReceiveMessages.receiveData(this.socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);

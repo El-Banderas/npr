@@ -32,6 +32,16 @@ public class MessageAndType
 	}
 	
 	
+	public byte[] toBytes()
+	{
+		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+				.putInt(this.type)
+				.put(this.content)
+				.array();
+		
+		return buf;
+	}
+	
 	@Override
 	public String toString()
 	{
