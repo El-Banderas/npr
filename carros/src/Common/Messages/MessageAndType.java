@@ -1,6 +1,8 @@
 package Common.Messages;
 
+import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 
 
 public class MessageAndType
@@ -15,6 +17,18 @@ public class MessageAndType
 		this.type = type;
 		this.content = content;
 		this.ipSender = ipSender;
+	}
+	
+	public MessageAndType(DatagramPacket packet)
+	{
+		ByteBuffer buf = ByteBuffer.wrap(packet.getData());
+		
+		this.type = buf.getInt();
+		
+		this.content = new byte[buf.remaining()];
+		buf.get(this.content, 0 /*bbuf.position()*/, buf.remaining());
+		
+		this.ipSender = packet.getAddress();
 	}
 	
 	

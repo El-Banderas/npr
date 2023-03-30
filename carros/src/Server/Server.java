@@ -60,8 +60,8 @@ public class Server implements Runnable {
 	private void sendHellos()
 	{
 		serverHelloCloud(this.thisServer.socket);
-		MessageAndType message = new MessageAndType(this.cloud.ip, MessagesConstants.ServerInfoMessage, this.getAllTowersInfo());
-		SendMessages.sendMessage(message, this.info.sendSocket());
+		MessageAndType message = new MessageAndType(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.cloud.ip); //TODO
+		SendMessages.sendMessage(message, this.info.sendSocket()); //TODO
 	}
 	
 	private void receiveMessages()
@@ -83,13 +83,13 @@ public class Server implements Runnable {
 				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
 				if (!this.carsInRange.contains(id)){
 					this.carsInRange.add(id);
-					sendToCloud(new MessageAndType(MessagesConstants.CarInRangeMessage, id.getBytes()));
+					sendToCloud(new MessageAndType(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender)); //TODO
 				}
 				System.out.println("Received Hello from car: " + id);
 				break;
 			case MessagesConstants.TowerHelloMessage:
 				//System.out.println("Received Hello from tower");
-				TowerInfo towersInfo = (TowerInfo) message.message;
+				TowerInfo towersInfo = (TowerInfo) message.content; //TODO
 				this.towersInfo.put(towersInfo.getName(), towersInfo);
 				break;
 			case MessagesConstants.BreakMessage:
@@ -104,31 +104,29 @@ public class Server implements Runnable {
 				break;
 		}
 	}
-
+	
 	private Map<String, TowerInfo> getAllTowersInfo() {
 		return this.towersInfo;
 	}
-
+	
 	public int getHowManyCars()
 	{
 		int result = this.carsInRange.size();
-		MessageAndType message = new MessageAndType(cloud.ip, MessagesConstants.CarInRangeMessage, result);
-		SendMessages.sendMessage(message, this.cloudSendSocket());
+		MessageAndType message = new MessageAndType(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
+		SendMessages.sendMessage(message, this.cloudSendSocket()); //TODO
 		this.carsInRange.clear();
 		return result;
 	}
 	
-	private static TimerTask wrap(Runnable r) {
+	private void sendToCloud(MessageAndType message) {
+		SendMessages.serverMessageCloud(this.thisServer.socket, message); //TODO
+	}
+	
+	private static TimerTask wrap(Runnable r)
+	{
 		return new TimerTask() {
 			@Override
-			public void run() {
-				r.run();
-			}
+			public void run() {r.run();}
 		};
 	}
-
-	private void sendToCloud(MessageAndType message) {
-		SendMessages.serverMessageCloud(this.thisServer.socket, message);
-	}
-
 }

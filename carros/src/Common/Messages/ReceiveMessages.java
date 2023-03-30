@@ -18,13 +18,7 @@ public class ReceiveMessages
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		socket.receive(packet);
 		
-		ByteBuffer bbuf = ByteBuffer.wrap(buf);
-		int type = bbuf.getInt();
-		
-		byte[] remaining = new byte[bbuf.remaining()];
-		bbuf.get(remaining, 0 /*bbuf.position()*/, bbuf.remaining());
-		
-		MessageAndType received = new MessageAndType(type, remaining, packet.getAddress());
+		MessageAndType received = new MessageAndType(packet);
 		
 		logger.info("Received Message:\n" + received.toString());
 		

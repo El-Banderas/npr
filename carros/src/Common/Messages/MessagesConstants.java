@@ -8,6 +8,7 @@ public class MessagesConstants
 	public static final int TowerHelloMessage = 5;
 	public static final int ServerHelloMessage = 6;
 	public static final int CarInRangeMessage = 7;
+	public static final int ServerInfoMessage = 8;
 	
 	public static final int Timeout = 3; // No message. To update terminal
 	

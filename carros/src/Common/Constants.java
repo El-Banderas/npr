@@ -8,13 +8,29 @@ import java.util.Collections;
 import java.util.Enumeration;
 
 
-public final class Constants {
-
+public final class Constants
+{
 	public static int refreshRate = 1000;
-
+	
+	
 	/**
-	 * Connections
+	 * Topologia atual:
+	 *
+	 * T1 (8000) - S1 (9000)
+	 * 						\
+	 * 						Cloud (5000)
+	 * 						/
+	 * T2 (8001) - S2 (9001)
 	 */
+	
+	
+	public static int cloudPort = 5000;
+	public static int carPort = 6000;
+	public static int towerPort = 7000;
+	public static int portMulticast = 8000;
+	public static int serverPort = 9000;
+	
+	
 	private static final String MCAST_ADDR = "FF7E:230::1234";
 	public static InetAddress MulticastGroup;
 	static {
@@ -25,30 +41,8 @@ public final class Constants {
 			System.out.println("Error creating multicast adress");
 		}
 	}
-	public static int portMulticast = 8000;
-
-
 	
-	/**
-	 * Car
-	 */
-	public static int carPort = 6000;
-
-	/**
-	 * Tower
-	 */
-	public static int towerPort = 7000;
-
-	/**
-	 * Server
-	 */
-	public static int serverPort = 9000;
-
 	
-	/**
-	 * Cloud
-	 */
-	public static int cloudPort = 5000;
 	public static InetAddress CloudIP;
 	static {
 		try {
@@ -57,7 +51,8 @@ public final class Constants {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
+	
 	public static String getMyIp() {
 		Enumeration<NetworkInterface> nets = null;
 		try {
@@ -85,15 +80,4 @@ public final class Constants {
 		}
 		return null;
 	}
-	/**
-	 * Topologia atual:
-	 * Carros sem portas definidas, depois é preciso ver isso...
-	 *
-	 * T1 (8000) - S1 (9000)
-	 *         				\
-	 *         	 		      Cloud (5000)
-	 *                      /
-	 * T2 (8001) - S2 (9001)
-	 */
 }
-

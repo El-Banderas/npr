@@ -81,12 +81,11 @@ public class Car implements Runnable
 		shared.addEntryMessages(message.type);
 	}
 	
-	private static TimerTask wrap(Runnable r) {
+	private static TimerTask wrap(Runnable r)
+	{
 		return new TimerTask() {
 			@Override
-			public void run() {
-				r.run();
-			}
+			public void run() {r.run();}
 		};
 	}
 }

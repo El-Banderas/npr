@@ -46,10 +46,10 @@ public class Tower implements Runnable {
 	private void sendHellos()
 	{
 		HashMap<String, Integer> message = new HashMap<>();
-		message.put(this.info.getId(), this.info.getHowManyCars());
+		message.put(this.info.getId(), this.info.getHowManyCars()); //TODO
 		SendMessages.towerHelloServer(this.info.sendSocket(), this.server);
 		SendMessages.towerHelloCar(this.info.sendSocket());
-		SendMessages.towerHelloCloud(this.info.sendSocket(), message);
+		SendMessages.towerHelloCloud(this.info.sendSocket(), message); //TODO
 	}
 	
 	private void receiveMessages()
@@ -66,7 +66,7 @@ public class Tower implements Runnable {
 
 	private void sendToServer(MessageAndType message)
 	{
-		SendMessages.towerHelloServer(this.info.sendSocket(), message);
+		SendMessages.towerHelloServer(this.info.sendSocket(), message); //TODO
 	}
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)

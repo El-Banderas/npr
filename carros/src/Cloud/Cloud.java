@@ -9,6 +9,7 @@ import Common.Messages.ReceiveMessages;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 
 public class Cloud implements Runnable
@@ -72,5 +73,13 @@ public class Cloud implements Runnable
 	public ArrayList<String> getHistory()
 	{
 		return this.history;
+	}
+	
+	private static TimerTask wrap(Runnable r)
+	{
+		return new TimerTask() {
+			@Override
+			public void run() {r.run();}
+		};
 	}
 }
