@@ -10,7 +10,7 @@ import java.util.Enumeration;
 
 public final class Constants
 {
-	public static int refreshRate = 1000;
+	public static int refreshRate = 1000; //ms
 	
 	
 	/**
@@ -25,11 +25,11 @@ public final class Constants
 	
 	
 	/*	
-	 * +-------------------------+
-	 * |     FF7E:230::1234      |
-	 * +-------------------------+
-	 * | Car (6000) <-> (8000) Tower (7000)   <->   (9000) Server (9000)   <->   (5000) Cloud
-	 * +-------------------------+
+	 * +-------------------------+------------------------------------------------------------+
+	 * |     FF7E:230::1234      |                          Unicast                           |
+	 * +-------------------------+------------------------------------------------------------+
+	 * | Car (6000) <-> (8000) Tower (7000)   <->   (9000) Server (9000)   <->   (5000) Cloud |
+	 * +-------------------------+------------------------------------------------------------+
 	 */
 	
 	
@@ -46,8 +46,8 @@ public final class Constants
 		try {
 			MulticastGroup = InetAddress.getByName(MCAST_ADDR);
 		} catch (UnknownHostException e) {
-			//throw new RuntimeException(e);
-			System.out.println("Error creating multicast adress");
+			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 	
@@ -57,34 +57,40 @@ public final class Constants
 		try {
 			CloudIP = InetAddress.getByName("2001:8::10");
 		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 	
 	
-	public static InetAddress getMyIp() {
+	public static InetAddress getMyIp()
+	{
 		Enumeration<NetworkInterface> nets = null;
+		
 		try {
 			nets = NetworkInterface.getNetworkInterfaces();
 		} catch (SocketException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+			System.exit(-1);
 		}
+		
 		for (NetworkInterface netint : Collections.list(nets)) {
-
+			
 			//out.println();
 			//out.printf("Display name: %s\n", netint.getDisplayName());
 			//out.printf("Name: %s\n", netint.getName());
 			Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
-
+			
 			for (InetAddress inetAddress : Collections.list(inetAddresses)) {
 				//System.out.println("InetAddress: " + inetAddress);
 				if (inetAddress.toString().contains("2001:")) {
-
+					
 					//String myIP = inetAddress.toString().split("%")[0];
-					//return inetAddress.toString().substring(1).split("%")[0];
-					return inetAddress;
 					//System.out.println("Encontrado + " + myIP);
 					//return myIp;
+					
+					//return inetAddress.toString().substring(1).split("%")[0];
+					return inetAddress;
 				}
 			}
 		}

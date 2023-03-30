@@ -13,7 +13,6 @@ import java.net.NetworkInterface;
  */
 public class InfoNodeMulticast
 {
-
 	public final DatagramSocket socket;
 	public final InetAddress ip;
 	public final int port;

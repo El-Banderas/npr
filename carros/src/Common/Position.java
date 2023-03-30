@@ -45,6 +45,7 @@ public class Position
 			xy = scanner.nextLine();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
 		Pattern p1 = Pattern.compile("(\\d+)\\.\\d+ (\\d+)\\.\\d+");
 		Matcher m1 = p1.matcher(xy);

@@ -1,8 +1,8 @@
 package Car;
 
 import Car.Terminal.MessageEntry;
-import Common.CarInfo;
 
+import java.net.DatagramSocket;
 import java.util.TreeMap;
 
 import AWFullP.MessagesConstants;
@@ -10,13 +10,13 @@ import AWFullP.MessagesConstants;
 
 public class SharedClass
 {
-	public CarInfo info;
+	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
 	
 	
-	public SharedClass(CarInfo info)
+	public SharedClass(DatagramSocket socket)
 	{
-		this.info = info;
+		this.socket = socket;
 		receivedMessages = new TreeMap<>();
 	}
 	

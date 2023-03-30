@@ -50,7 +50,7 @@ public class CarTerminal implements Runnable
 	private void breakHandler()
 	{
 		System.out.println("Pressed Break!");
-		SendMessages.carSendBreak(this.shared.info.socket);
+		SendMessages.carSendBreak(this.shared.socket);
 	}
 	
 	private void accidentHandler()
@@ -61,7 +61,7 @@ public class CarTerminal implements Runnable
 		
 		accidentBroadcast.scheduleAtFixedRate(wrap(()->
 		{
-			SendMessages.carSendAccident(this.shared.info.socket);
+			SendMessages.carSendAccident(this.shared.socket);
 		}
 		), 0, Constants.refreshRate);
 	}

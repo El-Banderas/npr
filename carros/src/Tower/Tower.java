@@ -1,6 +1,8 @@
 package Tower;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,14 +17,25 @@ import Common.TowerInfo;
 
 public class Tower implements Runnable
 {
-	private TowerInfo info;
-	private InfoNode server;
+	// Node information
+	private TowerInfo me;
+	private InfoNode local_server;
+	
+	// Connection information
+	private DatagramSocket wlan_socket; // WLAN
+	private DatagramSocket vanet_socket; //TODO: Multicast
+	
+	// Others
+	//...
 	
 	
-	public Tower(TowerInfo info, InfoNode server)
+	public Tower(TowerInfo tower, InfoNode server) throws SocketException
 	{
-		this.info = info;
-		this.server = server;
+		this.me = tower;
+		this.local_server = server;
+		
+		this.wlan_socket = new DatagramSocket(Constants.towerPort);
+		this.vanet_socket = new DatagramSocket(Constants.portMulticast); //TODO: Multicast
 	}
 	
 	
@@ -41,17 +54,18 @@ public class Tower implements Runnable
 	
 	private void sendHellos()
 	{
-		SendMessages.towerHelloServer(this.info.inside_socket, this.server);
-		SendMessages.towerHelloCar(this.info.outside_socket);
+		SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
+		SendMessages.towerHelloCar(this.vanet_socket);
 	}
 	
 	private void receiveMessages()
 	{
 		while(true) {
 			try {
-				AWFullPacket message = ReceiveMessages.receiveData(this.info.outside_socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
 				handleMessage(message);
 			} catch (IOException ignore) {
+				// TIMEOUT
 				//System.out.println("[Tower] Timeout passed. Nothing received.");
 			}
 		}
@@ -63,10 +77,10 @@ public class Tower implements Runnable
 			sendToServer(message);
 		}
 	}
-
+	
 	private void sendToServer(AWFullPacket message)
 	{
-		SendMessages.sendMessage(this.info.inside_socket, this.server.ip, this.server.port, message);
+		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
 	
 	private static TimerTask wrap(Runnable r)

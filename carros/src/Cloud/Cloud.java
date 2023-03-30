@@ -4,6 +4,7 @@ import Common.Constants;
 import Common.InfoNode;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -15,13 +16,22 @@ import AWFullP.AWFullPacket;
 
 public class Cloud implements Runnable
 {
-	private InfoNode cloud;
+	// Node information
+	private InfoNode me;
+	
+	// Connection information
+	private DatagramSocket socket;
+	
+	// Others
 	private ArrayList<String> history;
 	
 	
-	public Cloud(InfoNode cloud)
+	public Cloud(InfoNode cloud) throws SocketException
 	{
-		this.cloud = cloud;
+		this.me = cloud;
+		
+		this.socket = new DatagramSocket(cloud.port, cloud.ip);
+		
 		this.history = new ArrayList<String>();
 	}
 	
@@ -30,9 +40,10 @@ public class Cloud implements Runnable
 	public void run()
 	{
 		try {
-			cloud.socket.setSoTimeout(Constants.refreshRate);
+			this.socket.setSoTimeout(Constants.refreshRate);
 		} catch (SocketException e1) {
 			e1.printStackTrace();
+			System.exit(-1);
 		}
 		
 		Thread thread_1 = new Thread(this::receiveMessages);
@@ -44,10 +55,11 @@ public class Cloud implements Runnable
 	{
 		while(true) {
 			try {
-				AWFullPacket message = ReceiveMessages.receiveData(this.cloud.socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.socket);
 				handleMessage(message);
-			} catch (IOException e) {
-				//System.out.println("[Cloud] Timeout passed. Nothing received.");
+			} catch (IOException ignore) {
+				// TIMEOUT
+				//System.out.println("Timeout passed. Nothing received.");
 			}
 		}
 	}

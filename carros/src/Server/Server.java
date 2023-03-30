@@ -24,20 +24,27 @@ import AWFullP.AWFullPacket;
 
 public class Server implements Runnable
 {
-	private InfoNode thisServer;
-	private List<String> carsInRange;
+	// Node information
+	private InfoNode me;
 	private InfoNode cloud;
 	private Map<String, TowerInfo> towersInfo;
+
+	// Connection information
 	private DatagramSocket socket;
 	
+	// Others
+	private List<String> carsInRange;
 	
-	public Server(InfoNode thisServer, InfoNode cloud) throws SocketException
+	
+	public Server(InfoNode server, InfoNode cloud) throws SocketException
 	{
-		this.thisServer = thisServer;
-		this.carsInRange = new ArrayList<String>();
-		this.towersInfo = new HashMap<>();
+		this.me = server;
 		this.cloud = cloud;
+		this.towersInfo = new HashMap<>();
+		
 		this.socket = new DatagramSocket(Constants.serverPort);
+		
+		this.carsInRange = new ArrayList<String>();
 	}
 	
 	
@@ -48,6 +55,7 @@ public class Server implements Runnable
 			socket.setSoTimeout(Constants.refreshRate);
 		} catch (SocketException e1) {
 			e1.printStackTrace();
+			System.exit(-1);
 		}
 		
 		Timer timer_1 = new Timer(false);
@@ -68,9 +76,10 @@ public class Server implements Runnable
 	{
 		while(true) {
 			try {
-				AWFullPacket message = ReceiveMessages.receiveData(this.thisServer.socket);
+				AWFullPacket message = ReceiveMessages.receiveData(this.socket);
 				handleMessage(message);
-			} catch (IOException e) {
+			} catch (IOException ignore) {
+				// TIMEOUT
 				//System.out.println("[Server] Timeout passed. Nothing received.");
 			}
 		}

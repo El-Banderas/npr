@@ -2,10 +2,8 @@ package Car;
 
 import java.io.IOException;
 
-import Car.Terminal.CarTerminal;
 import Common.*;
 
-/*
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-*/
 
 
 /**
@@ -27,32 +24,27 @@ public class Main
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 		
-		//List<TowerInfo> towers = parseFile(args[0]);
+		List<TowerInfo> towers = parseFile(args[0]);
 		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
 		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		CarInfo info;
+		
+		CarInfo info = null;
+		Car carMove = null;
 		try {
-			info = new CarInfo(pos, id);
+			info = new CarInfo(id, pos);
+			carMove = new Car(info, towers);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			System.exit(-1);
 		}
 		
-		// 2 Threads: Terminal and Comms
-		SharedClass shared = new SharedClass(info);
-		
-		CarTerminal carTerminal = new CarTerminal(shared);
-		Thread thread_1 = new Thread(carTerminal);
+		Thread thread_1 = new Thread(carMove);
 		thread_1.start();
-		
-		Car carMove = new Car(info, shared/*, towers*/);
-		Thread thread_2 = new Thread(carMove);
-		thread_2.start();
 	}
 	
-	/*
+	
 	// Parse file that contains information about the RSUs
 	private static List<TowerInfo> parseFile(String filePath)
 	{
@@ -61,9 +53,7 @@ public class Main
 			Scanner scanner = new Scanner(new File(filePath));
 			scanner.nextLine(); // Ignore first line, header
 			
-			Pattern pattern;
-			// Linux contains IPs; Windows contains Ports
-			pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
+			Pattern pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 			
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
@@ -79,12 +69,11 @@ public class Main
 			scanner.close();
 			return res;
 		} catch (FileNotFoundException e) {
-			System.out.println("[ERROR] File not found!");
+			e.printStackTrace();
+			System.exit(-1);
 		}
 		return null;
 	}
-	*/
-	
 	
 	private static String idGenerator(int n)
 	{
