@@ -1,6 +1,7 @@
 package Tower;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,6 +9,7 @@ import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
 import Common.Messages.MessageAndType;
+import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
 import Common.Messages.SendMessages;
 
@@ -62,10 +64,10 @@ public class Tower implements Runnable {
 		}
 	}
 
-	private void sendToServer(MessageAndType message) {
+	private void sendToServer(MessageAndType message)
+	{
 		SendMessages.towerHelloServer(this.info.sendSocket(), message);
 	}
-}
 	
 	private void handleMessage(MessageAndType message, InfoNode thisServer)
 	{
@@ -75,13 +77,11 @@ public class Tower implements Runnable {
 		}
 	}
 	
-	private static TimerTask wrap(Runnable r) {
+	private static TimerTask wrap(Runnable r)
+	{
 		return new TimerTask() {
 			@Override
-			public void run() {
-				r.run();
-			}
+			public void run() {r.run();}
 		};
 	}
-
-
+}

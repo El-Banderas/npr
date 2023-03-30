@@ -7,9 +7,10 @@ import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 
-public class ReceiveMessages {
-	
+public class ReceiveMessages
+{	
 	private static Logger logger =  Logger.getLogger("npr.messages.received");
+	
 	
 	public static MessageAndType receiveData(DatagramSocket socket) throws IOException
 	{

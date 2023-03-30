@@ -11,10 +11,11 @@ import java.nio.ByteBuffer;
 import java.util.logging.Logger;
 
 
-public class SendMessages {
-	
+public class SendMessages
+{
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
-
+	
+	
 	public static void carSendBreak(DatagramSocket sender)
 	{
 		//logger.info("Car Sends Break");

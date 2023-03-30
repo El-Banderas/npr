@@ -1,7 +1,6 @@
 package Tower;
 
 import Common.*;
-import Server.ServerConstants;
 
 import java.io.IOException;
 import java.net.*;
@@ -26,23 +25,12 @@ public class Main {
 	public static void main(String[] args) throws IOException
 	{
 		String name = args[0];
-		Position pos;
-		InfoNode thisServer;
-		TowerInfo thisTower;
 		
-		if (Constants.core) {
-			//towerIPInfo = new InfoNodeMulticast(true);
-			// TODO: Change position tower
-			InetAddress ipServer = Inet6Address.getByName(args[1]);
-			pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-			thisServer = new InfoNode(ipServer, ServerConstants.port, false);
-			thisTower = new TowerInfo(name, pos);
-		} else {
-			pos = new Position(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
-			InfoNode infoNodo = new InfoNodeWindows(Integer.parseInt(args[1]), true);
-			thisTower = new TowerInfo(name, infoNodo, pos);
-			thisServer = new InfoNode(InetAddress.getByName("localhost"),Integer.parseInt(args[2]), false);
-		}
+		// TODO: Change position tower
+		InetAddress ipServer = Inet6Address.getByName(args[1]);
+		Position pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3]));
+		InfoNode thisServer = new InfoNode(ipServer, Constants.serverPort, false);
+		TowerInfo thisTower = new TowerInfo(name, pos);
 		
 		Tower tower = new Tower(thisTower, thisServer);
 		tower.run();

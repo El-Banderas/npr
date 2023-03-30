@@ -3,36 +3,38 @@ package Common;
 import java.net.DatagramSocket;
 
 
-public class TowerInfo {
-	
+public class TowerInfo
+{	
 	public String name;
-	public InfoNode connectionInfoLinuxSend;
-	public InfoNodeMulticast connectionInfoLinuxReceive;
+	public InfoNode connectionInfoSend;
+	public InfoNodeMulticast connectionInfoReceive;
 	public Position pos;
 	
 	
 	/**
-	 * Used in linux, creates 2 sockets
 	 * @param name
 	 * @param pos
 	 */
-	public TowerInfo(String name, Position pos) {
+	public TowerInfo(String name, Position pos)
+	{
 		this.name = name;
 		this.pos = pos;
-		this.connectionInfoLinuxSend = new InfoNode(Constants.towerPort);
-		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
+		this.connectionInfoSend = new InfoNode(Constants.towerPort);
+		this.connectionInfoReceive = new InfoNodeMulticast();
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
-
 	
-	public DatagramSocket receiveSocket(){
-		return this.connectionInfoLinuxReceive.socket;
+	public DatagramSocket receiveSocket()
+	{
+		return this.connectionInfoReceive.socket;
 	}
 	
-	public DatagramSocket sendSocket(){
-		return this.connectionInfoLinuxSend.socket;
+	public DatagramSocket sendSocket()
+	{
+		return this.connectionInfoSend.socket;
 	}
 }

@@ -10,9 +10,10 @@ import java.net.SocketException;
  * Here we store the connection information about one node.
  * Can also store the socket, necessary to send messages.
  */
-public class InfoNodeMulticast extends InfoNode {
-	
-	public InfoNodeMulticast() {
+public class InfoNodeMulticast extends InfoNode
+{	
+	public InfoNodeMulticast()
+	{
 		super();
 		try {
 			InetSocketAddress group = new InetSocketAddress(Constants.MulticastGroup, Constants.portMulticast);
@@ -36,7 +37,8 @@ public class InfoNodeMulticast extends InfoNode {
 
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "InfoNode{" +
 				"ip=" + ip.toString() +
 				", port=" + port +

@@ -8,10 +8,11 @@ import Common.Messages.ReceiveMessages;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 
-public class Cloud implements Runnable {
-
+public class Cloud implements Runnable
+{
 	private InfoNode cloud;
 	private ArrayList<String> history;
 	
@@ -56,11 +57,11 @@ public class Cloud implements Runnable {
 				//System.out.println("Received Hello from server");
 				break;
 			case MessagesConstants.CarInRangeMessage:
-				String id = new String(message.data);
+				String id = new String(message.content); //TODO
 				history.add("Car in range: " + id);
 				break;
 			case MessagesConstants.AccidentMessage:
-				String location = new String(message.data);
+				String location = new String(message.content); //TODO
 				history.add("Accident at location: " + location);
 				break;
 			default:
@@ -68,7 +69,8 @@ public class Cloud implements Runnable {
 		}
 	}
 
-	public ArrayList<String> getHistory() {
+	public ArrayList<String> getHistory()
+	{
 		return this.history;
 	}
 }

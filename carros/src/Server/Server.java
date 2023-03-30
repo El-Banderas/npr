@@ -2,16 +2,21 @@ package Server;
 
 import Common.Constants;
 import Common.InfoNode;
+import Common.TowerInfo;
 import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.ReceiveMessages;
+import Common.Messages.SendMessages;
 
 import static Common.Messages.SendMessages.serverHelloCloud;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,21 +24,19 @@ import java.util.TimerTask;
 public class Server implements Runnable {
 	
 	private InfoNode thisServer;
-	//private InfoNode cloud;
 	private List<String> carsInRange;
 	private InfoNode cloud;
 	private Map<String, TowerInfo> towersInfo;
-	DatagramSocket cloudSendSocket = new DatagramSocket();
+	DatagramSocket cloudSendSocket;
 	
 	
-	public Server(InfoNode thisServer, List<String> carsInRange, InfoNode cloud,  Map<String, TowerInfo> towersInfo)
+	public Server(InfoNode thisServer, InfoNode cloud) throws SocketException
 	{
-		//this.cloud = cloud;
 		this.thisServer = thisServer;
 		this.carsInRange = new ArrayList<String>();
 		this.towersInfo = new HashMap<>();
 		this.cloud = cloud;
-		this.towersInfo = new HashMap<>();
+		this.cloudSendSocket = new DatagramSocket();
 	}
 	
 	

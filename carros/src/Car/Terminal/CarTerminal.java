@@ -4,8 +4,8 @@ import Car.SharedClass;
 import Common.Messages.SendMessages;
 
 
-public class CarTerminal implements Runnable {
-	
+public class CarTerminal implements Runnable
+{	
 	private SharedClass shared;
 	
 	
@@ -35,12 +35,14 @@ public class CarTerminal implements Runnable {
 	}
 	
 	
-	private void accidentHandler() {
+	private void accidentHandler()
+	{
 		System.out.println("Accident happened!");
 		SendMessages.carSendAccident(this.shared.info.sendSocket());
 	}
 	
-	private void breakHandler() {
+	private void breakHandler()
+	{
 		System.out.println("Pressed Break!");
 		SendMessages.carSendBreak(this.shared.info.sendSocket());
 	}

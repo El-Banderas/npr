@@ -18,8 +18,8 @@ import java.util.regex.Pattern;
  * 	0: File path that stores the information about towers
  * 	Example: "src/Car/TowersPosWindows"
  */
-public class Main {
-
+public class Main
+{
 	public static void main(String[] args)
 	{
 		String id = idGenerator(8);
@@ -78,7 +78,8 @@ public class Main {
 	*/
 	
 	
-	private static String idGenerator(int n) {
+	private static String idGenerator(int n)
+	{
 		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
 
 		StringBuilder sb = new StringBuilder(n);

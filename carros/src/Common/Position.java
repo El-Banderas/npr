@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Position {
-	
+public class Position
+{	
 	public int x;
 	public int y;
 	public long timestamp;

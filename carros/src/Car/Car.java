@@ -15,8 +15,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class Car implements Runnable {
-	
+public class Car implements Runnable
+{
 	private CarInfo info;
 	private DatagramSocket sendSocket;
 	private DatagramSocket receiveSocket;
@@ -25,7 +25,8 @@ public class Car implements Runnable {
 	//private List<TowerInfo> towers;
 
 	
-	public Car(CarInfo info, SharedClass shared/*, List<TowerInfo> towers*/) {
+	public Car(CarInfo info, SharedClass shared/*, List<TowerInfo> towers*/)
+	{
 		this.info = info;
 		this.receiveSocket = info.receiveSocket();
 		this.sendSocket = info.sendSocket();

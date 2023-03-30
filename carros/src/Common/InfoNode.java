@@ -9,14 +9,15 @@ import java.net.SocketException;
  * Here we store the connection information about one node.
  * Can also store the socket, necessary to send messages.
  */
-public class InfoNode {
-	
+public class InfoNode
+{	
 	public InetAddress ip;
 	public int port;
 	public DatagramSocket socket;
 	
 	
-	public InfoNode(InetAddress ip, int port, boolean createSocket) {
+	public InfoNode(InetAddress ip, int port, boolean createSocket)
+	{
 		this.port = port;
 		this.ip = ip;
 		if (createSocket) {
@@ -30,7 +31,8 @@ public class InfoNode {
 		}
 	}
 	
-	public InfoNode(int port) {
+	public InfoNode(int port)
+	{
 		try {
 			socket = new DatagramSocket();
 		} catch (SocketException e) {
@@ -40,7 +42,8 @@ public class InfoNode {
 		this.ip = socket.getLocalAddress();
 	}
 	
-	public InfoNode() {
+	public InfoNode()
+	{
 		this.socket = null;
 		this.ip = null;
 		this.port = -1;
@@ -48,7 +51,8 @@ public class InfoNode {
 	
 	
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "InfoNode{" +
 				"ip=" + ip.toString() +
 				", port=" + port +
