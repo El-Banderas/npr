@@ -13,6 +13,20 @@ public class MessagesConstants
 	 * char 	2 bytes 	Stores a single character
 	 */
 	
+	
+	
+	
+	/*
+	 * | TTL | PosX | PosY | Distancia ao destino | Num_seq | Source ID |	 * 
+	 * 
+	 * Broadcast -> Distancia maior ? discarta : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discarta : Broadcast
+	 * 
+	 * Destino envia ACK
+	 */
+	
+	
+	
+	
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+

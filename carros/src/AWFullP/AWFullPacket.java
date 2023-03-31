@@ -96,7 +96,7 @@ public class AWFullPacket
 				"{"
 			+	" from: " + ipSender.toString()
 			+	" ; type: " + type
-			+ " ; towerName: " + towerName
+			+	" ; towerName: " + towerName
 			+	" ; size: " + content.length
 			+	"}"
 			);
