@@ -2,13 +2,13 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import Common.Constants;
 import Common.InfoNode;
+import Common.InfoNodeMulticast;
 import Common.TowerInfo;
 
 import AWFullP.MessagesConstants;
@@ -32,13 +32,13 @@ public class Tower implements Runnable
 	//...
 
 
-	public Tower(TowerInfo tower, InfoNode server) throws SocketException
+	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
 		this.me = tower;
 		this.local_server = server;
-		
+
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
-		this.vanet_socket = new DatagramSocket(Constants.portMulticast); //TODO: Multicast
+		this.vanet_socket = new InfoNodeMulticast().socket;
 	}
 
 

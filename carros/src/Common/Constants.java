@@ -28,13 +28,12 @@ public final class Constants
 	 * +-------------------------+------------------------------------------------------------+
 	 * |     FF7E:230::1234      |                          Unicast                           |
 	 * +-------------------------+------------------------------------------------------------+
-	 * | Car (6000) <-> (8000) Tower (7000)   <->   (9000) Server (9000)   <->   (5000) Cloud |
+	 * | Car (8000) <-> (8000) Tower (7000)   <->   (9000) Server (9000)   <->   (5000) Cloud |
 	 * +-------------------------+------------------------------------------------------------+
 	 */
 	
 	
 	public static int cloudPort = 5000;
-	public static int carPort = 6000;
 	public static int towerPort = 7000;
 	public static int portMulticast = 8000;
 	public static int serverPort = 9000;

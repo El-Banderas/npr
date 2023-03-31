@@ -25,8 +25,7 @@ public class Car implements Runnable
 	private List<TowerInfo> towers;
 
 	// Connection information
-	public InfoNodeMulticast multicast_connection; //TODO: Temporary. will be socket
-	private DatagramSocket socket; //TODO: Multicast
+	private DatagramSocket socket;
 	private InetAddress myIp; //TODO: temporary. Use random string
 	
 	// Others
@@ -38,8 +37,7 @@ public class Car implements Runnable
 		this.me = info;
 		this.towers = towers;
 		
-		this.multicast_connection = new InfoNodeMulticast();
-		this.socket = this.multicast_connection.socket;
+		this.socket = new InfoNodeMulticast().socket;
 		this.myIp = Constants.getMyIp();
 		
 		this.shared = new SharedClass(this.socket);
