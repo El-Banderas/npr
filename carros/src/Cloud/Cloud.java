@@ -23,7 +23,9 @@ public class Cloud implements Runnable
 	private DatagramSocket socket;
 	
 	// Others
-	private ArrayList<String> history;
+
+
+	private Map<String, List<String>> towerEventMap;
 	
 	
 	public Cloud(InfoNode cloud) throws SocketException
@@ -31,8 +33,8 @@ public class Cloud implements Runnable
 		this.me = cloud;
 		
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
-		
-		this.history = new ArrayList<String>();
+		this.towerEventMap = new HashMap<>();
+
 	}
 	
 	
@@ -72,18 +74,18 @@ public class Cloud implements Runnable
 				break;
 			case MessagesConstants.CarInRangeMessage:
 				String id = new String(message.content); //TODO
-				history.add("Car in range: " + id);
+				towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Car in range: " + id);
 				break;
 			case MessagesConstants.AccidentMessage:
 				String location = new String(message.content); //TODO
-				history.add("Accident at location: " + location);
+				towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Accident at location: " + location);
 				break;
 			default:
 				//System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 
-	public ArrayList<String> getHistory()
+	//public ArrayList<String> getHistory()
 	{
 		return this.history;
 	}

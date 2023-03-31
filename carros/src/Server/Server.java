@@ -27,7 +27,9 @@ public class Server implements Runnable
 	// Node information
 	private InfoNode me;
 	private InfoNode cloud;
-	private Map<String, TowerInfo> towersInfo;
+	private String towerName;
+	private final int batchSize;
+
 
 	// Connection information
 	private DatagramSocket socket;
@@ -36,15 +38,16 @@ public class Server implements Runnable
 	private List<String> carsInRange;
 	
 	
-	public Server(InfoNode server, InfoNode cloud) throws SocketException
+	public Server(InfoNode server, InfoNode cloud,  int batchSize, String towerName) throws SocketException
 	{
 		this.me = server;
 		this.cloud = cloud;
-		this.towersInfo = new HashMap<>();
+		this.batchSize = batchSize;
 		
 		this.socket = new DatagramSocket(Constants.serverPort);
 		
 		this.carsInRange = new ArrayList<String>();
+		this.towerName = towerName;
 	}
 	
 	
@@ -71,7 +74,15 @@ public class Server implements Runnable
 		AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
 		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
-	
+
+	private void checkAndSendBatch() {
+		if (carsInRange.size() >= batchSize) {
+			AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(carsInRange.size()).getBytes(), cloud.ip, towerName);
+			sendToCloud(message);
+			carsInRange.clear();
+		}
+	}
+
 	private void receiveMessages()
 	{
 		while(true) {
@@ -92,7 +103,8 @@ public class Server implements Runnable
 				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
 				if (!this.carsInRange.contains(id)){
 					this.carsInRange.add(id);
-					sendToCloud(new AWFullPacket(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender)); //TODO
+					sendToCloud(new AWFullPacket(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender, towerName)); //TODO
+					checkAndSendBatch();
 				}
 				System.out.println("Received Hello from car: " + id);
 				break;
@@ -106,7 +118,7 @@ public class Server implements Runnable
 				break;
 			case MessagesConstants.AccidentMessage:
 				//System.out.println("Received Accident");
-				sendToCloud(message);
+				sendToCloud(new AWFullPacket(MessagesConstants.AccidentMessage, message.content, message.ipSender, towerName));
 				break;
 			default:
 				//System.out.println("Received message, type unknown: " + message.type);
@@ -114,9 +126,7 @@ public class Server implements Runnable
 		}
 	}
 	
-	private Map<String, TowerInfo> getAllTowersInfo() {
-		return this.towersInfo;
-	}
+
 	
 	public int getHowManyCars()
 	{
