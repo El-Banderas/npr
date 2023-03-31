@@ -44,7 +44,7 @@ public class SendMessages
 		//logger.info("Car Sends Hello");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.CarHelloMessage)
+				.putInt(MessagesConstants.CAR_HELLO)
 				.put(info.id.getBytes())
 				.put("Hello".getBytes())
 				.array();
@@ -57,7 +57,7 @@ public class SendMessages
 		//logger.info("Cars Sends Hello to Tower");
 		
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.CarHelloMessage)
+				.putInt(MessagesConstants.CAR_HELLO)
 				.put("Hello".getBytes())
 				.array();
 		

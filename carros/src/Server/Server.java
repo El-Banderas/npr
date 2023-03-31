@@ -88,7 +88,7 @@ public class Server implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		switch (message.type) {
-			case MessagesConstants.CarHelloMessage:
+			case MessagesConstants.CAR_HELLO:
 				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
 				if (!this.carsInRange.contains(id)){
 					this.carsInRange.add(id);
