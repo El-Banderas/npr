@@ -3,6 +3,7 @@ package Tower;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,35 +55,35 @@ public class Tower implements Runnable
 
 
 	private void sendHellos() {
-		/*HashMap<String, Integer> message = new HashMap<>();
-		message.put(this.info.getId(), this.info.getHowManyCars());
-		SendMessages.towerHelloServer(this.info.sendSocket(), this.server);
-		SendMessages.towerHelloCar(this.info.sendSocket());*/
+		//HashMap<String, Integer> message = new HashMap<>();
+		//message.put(this.me.getName(), this.me.getHowManyCars());
+		SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
+		SendMessages.towerHelloCar(this.vanet_socket);
 	}
 
 	private void receiveMessages() {
-		/*while (true) {
+		while (true) {
 			try {
-				MessageAndType message = ReceiveMessages.receiveData(this.info.receiveSocket());
-				handleMessage(message, this.server);
+				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
+				handleMessage(message);
 			} catch (IOException e) {
 				//System.out.println("[Tower] Timeout passed. Nothing received.");
 			}
-		}*/
+		}
 	}
-
-	/*private void sendToServer(MessageAndType message) {
-		SendMessages.towerHelloServer(this.info.sendSocket(), message);
-	}*/
-
-
-	/*private void handleMessage(MessageAndType message, InfoNode thisServer) {
-		SendMessages.forwardMessage(message, this.info.sendSocket(), thisServer);
+	
+	private void handleMessage(AWFullPacket message) {
+		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
 		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
 			sendToServer(message);
 		}
-	}*/
-
+	}
+	
+	private void sendToServer(AWFullPacket message) {
+		//SendMessages.towerHelloServer(this.wlan_socket, message);
+		SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message);
+	}
+	
 	private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {
