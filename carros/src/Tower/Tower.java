@@ -67,6 +67,7 @@ public class Tower implements Runnable
 				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
 				handleMessage(message);
 			} catch (IOException e) {
+				// TIMEOUT
 				//System.out.println("[Tower] Timeout passed. Nothing received.");
 			}
 		}
