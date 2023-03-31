@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimerTask;
 
 import AWFullP.MessagesConstants;
@@ -23,8 +26,6 @@ public class Cloud implements Runnable
 	private DatagramSocket socket;
 	
 	// Others
-
-
 	private Map<String, List<String>> towerEventMap;
 	
 	
@@ -33,8 +34,8 @@ public class Cloud implements Runnable
 		this.me = cloud;
 		
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
+		
 		this.towerEventMap = new HashMap<>();
-
 	}
 	
 	
@@ -74,21 +75,21 @@ public class Cloud implements Runnable
 				break;
 			case MessagesConstants.CarInRangeMessage:
 				String id = new String(message.content); //TODO
-				towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Car in range: " + id);
+				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Car in range: " + id); //TODO
 				break;
 			case MessagesConstants.AccidentMessage:
 				String location = new String(message.content); //TODO
-				towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Accident at location: " + location);
+				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Accident at location: " + location); //TODO
 				break;
 			default:
 				//System.out.println("Received message, type unknown: " + message.type);
 		}
 	}
 
-	//public ArrayList<String> getHistory()
+	/*public ArrayList<String> getHistory()
 	{
 		return this.history;
-	}
+	}*/
 	
 	private static TimerTask wrap(Runnable r)
 	{

@@ -29,8 +29,7 @@ public class Server implements Runnable
 	private InfoNode cloud;
 	private String towerName;
 	private final int batchSize;
-
-
+	
 	// Connection information
 	private DatagramSocket socket;
 	
@@ -71,8 +70,8 @@ public class Server implements Runnable
 	
 	private void sendHellos()
 	{
-		AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
-		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
+		//AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
+		//SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
 
 	private void checkAndSendBatch() {
@@ -110,8 +109,8 @@ public class Server implements Runnable
 				break;
 			case MessagesConstants.TowerHelloMessage:
 				//System.out.println("Received Hello from tower");
-				TowerInfo towersInfo = (TowerInfo) message.content; //TODO
-				this.towersInfo.put(towersInfo.getName(), towersInfo);
+				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
+				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;
 			case MessagesConstants.BreakMessage:
 				//System.out.println("Received Break");
@@ -131,8 +130,8 @@ public class Server implements Runnable
 	public int getHowManyCars()
 	{
 		int result = this.carsInRange.size();
-		AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
-		this.sendToCloud(message);
+		//AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
+		//this.sendToCloud(message); //TODO
 		this.carsInRange.clear();
 		return result;
 	}

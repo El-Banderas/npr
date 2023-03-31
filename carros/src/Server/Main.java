@@ -20,7 +20,7 @@ public class Main
 		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort);
 		thisServer = new InfoNode(null, Constants.serverPort);
 		
-		Server server = new Server(thisServer, cloudInfo);
+		Server server = new Server(thisServer, cloudInfo, 4, "t1"); //TODO
 		server.run();
 	}
 }

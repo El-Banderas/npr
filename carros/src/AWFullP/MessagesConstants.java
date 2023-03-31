@@ -35,8 +35,8 @@ public class MessagesConstants
 	public static final byte MINOR_TYPE = (byte) 0b00011111; // N = 32
 	
 	public static final byte V2V 		= (byte) 0b00000000; // (0 << 5) //AdHoc local broadcast within TTL
-		public static final byte PING 		= (byte) 0;
-		public static final byte PONG 		= (byte) 1;
+		//public static final byte PING 		= (byte) 0;
+		//public static final byte PONG 		= (byte) 1;
 	public static final byte V2I 		= (byte) 0b00100000; // (1 << 5) //AdHoc forwarding to RSU (at least until TTL)
 	public static final byte V2P 		= (byte) 0b01000000; // (2 << 5) //Not implemented!
 	public static final byte V2D 		= (byte) 0b01100000; // (3 << 5) //Not implemented!
@@ -94,4 +94,5 @@ public class MessagesConstants
 	}
 	
 	public static int sizeBufferMessages = 950;
+	public static final int maxSizeTowerName = 8;
 }
