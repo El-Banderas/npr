@@ -19,7 +19,7 @@ public class SharedClass
 	private int currentSeqNumberMessage;
 	public byte[] id;
 	private List<TowerInfo> towers;
-	private CarInfo info;
+	public CarInfo info;
 
 
 

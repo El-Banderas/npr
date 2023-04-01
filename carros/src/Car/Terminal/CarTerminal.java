@@ -55,9 +55,9 @@ public class CarTerminal implements Runnable
 	{
 		System.out.println("Pressed Break!");
 		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
-
-		SendMessages.carSendBreak(this.shared.info.sendSocket(), fwrInfo);
+		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
 	}
+
 	
 	private void accidentHandler()
 	{
@@ -71,7 +71,7 @@ public class CarTerminal implements Runnable
 		int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
 
 		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
-		SendMessages.carSendAccident(shared.info.sendSocket(), fwrInfo);
+		SendMessages.carSendAccident(shared.socket, fwrInfo);
 	
 
 

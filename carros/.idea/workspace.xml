@@ -118,11 +118,11 @@
     <list>
       <item itemvalue="Application.Car1" />
       <item itemvalue="Application.Cloud" />
-      <item itemvalue="Application.Mainzinha" />
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.Tower1" />
-      <item itemvalue="Application.UdpBroadcaster" />
       <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Mainzinha" />
+      <item itemvalue="Application.UdpBroadcaster" />
     </list>
     <recent_temporary>
       <list>

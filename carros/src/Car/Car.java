@@ -6,7 +6,6 @@ import Common.Constants;
 import Common.FWRMessages.FWRInfo;
 import Common.FWRMessages.FWReceiveMessages;
 import Common.Messages.MessagesConstants;
-import Common.Messages.SendMessages;
 import Common.InfoNodeMulticast;
 import Common.TowerInfo;
 

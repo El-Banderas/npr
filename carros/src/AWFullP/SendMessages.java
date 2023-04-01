@@ -30,7 +30,7 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	
-	public static void carSendAccident(DatagramSocket sender)
+	public static void carSendAccident(DatagramSocket sender,FWRInfo fwrInfo )
 	{
 		//logger.info("Car Sends Accident!");
 		
@@ -38,7 +38,7 @@ public class SendMessages
 				.putInt(MessagesConstants.AccidentMessage)
 				.array();
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	
 	public static void carHellos(DatagramSocket sender, CarInfo info, FWRInfo fwrInfo)
