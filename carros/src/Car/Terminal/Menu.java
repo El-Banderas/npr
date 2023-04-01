@@ -1,6 +1,9 @@
 package Car.Terminal;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class implements a menu in text mode.

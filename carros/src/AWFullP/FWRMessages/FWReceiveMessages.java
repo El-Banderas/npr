@@ -1,8 +1,4 @@
-package Common.FWRMessages;
-
-import AWFullP.AWFullPacket;
-import Common.CarInfo;
-import Common.Messages.MessagesConstants;
+package AWFullP.FWRMessages;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,6 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
+
+import AWFullP.AWFullPacket;
+import AWFullP.MessagesConstants;
+import Common.CarInfo;
 
 public class FWReceiveMessages {
     private static Logger logger = Logger.getLogger("npr.messages.received");

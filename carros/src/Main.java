@@ -1,7 +1,7 @@
-import Common.Constants;
-
 import java.io.IOException;
 import java.util.Arrays;
+
+import Common.Constants;
 
 
 public class Main {

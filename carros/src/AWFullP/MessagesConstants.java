@@ -74,9 +74,7 @@ public class MessagesConstants
 	
 	
 	
-	public static final int V2V_PING = V2V | PING;
-	public static final int CAR_HELLO = V2V | PING;
-	
+	public static final int CAR_HELLO = 1;
 	public static final int BreakMessage 		= (byte) 2;
 	public static final int Timeout 			= (byte) 3; // No message. To update terminal
 	public static final int AccidentMessage 	= (byte) 4;
@@ -84,6 +82,10 @@ public class MessagesConstants
 	public static final int ServerHelloMessage = (byte) 6;
 	public static final int CarInRangeMessage 	= (byte) 7;
 	public static final int ServerInfoMessage 	= (byte) 8;
+
+	public static final int TTLCarHelloMessage = 1;
+	public static final int TTLBreakMessage = 2;
+	public static final int TTLAccidentMessage = 3;
 	
 	
 	

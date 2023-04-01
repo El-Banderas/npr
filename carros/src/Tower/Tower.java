@@ -2,19 +2,17 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.AWFullPacket;
+import AWFullP.MessagesConstants;
+import AWFullP.ReceiveMessages;
+import AWFullP.SendMessages;
 import Common.Constants;
 import Common.InfoNode;
 import Common.InfoNodeMulticast;
 import Common.TowerInfo;
-
-import AWFullP.MessagesConstants;
-import AWFullP.ReceiveMessages;
-import AWFullP.SendMessages;
-import AWFullP.AWFullPacket;
 
 
 

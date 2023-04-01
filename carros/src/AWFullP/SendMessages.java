@@ -1,17 +1,17 @@
 package AWFullP;
 
-import Common.CarInfo;
-import Common.Constants;
-import Common.FWRMessages.FWRInfo;
-import Common.FWRMessages.FWSendMessages;
-import Common.InfoNode;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.logging.Logger;
+
+import AWFullP.FWRMessages.FWRInfo;
+import AWFullP.FWRMessages.FWSendMessages;
+import Common.CarInfo;
+import Common.Constants;
+import Common.InfoNode;
 
 
 public class SendMessages
@@ -26,7 +26,7 @@ public class SendMessages
 				.putInt(MessagesConstants.BreakMessage)
 				.array();
 		
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		//DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	

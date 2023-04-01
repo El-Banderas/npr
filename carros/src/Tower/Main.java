@@ -1,9 +1,13 @@
 package Tower;
 
-import Common.*;
-
 import java.io.IOException;
-import java.net.*;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+
+import Common.Constants;
+import Common.InfoNode;
+import Common.Position;
+import Common.TowerInfo;
 
 
 /**

@@ -1,11 +1,10 @@
-package Common.FWRMessages;
-
-import Common.CarInfo;
-import Common.Messages.MessagesConstants;
-import Common.Position;
-import org.w3c.dom.ls.LSOutput;
+package AWFullP.FWRMessages;
 
 import java.nio.ByteBuffer;
+
+import AWFullP.MessagesConstants;
+import Common.CarInfo;
+import Common.Position;
 
 public class FWRInfo {
     public boolean destiny;

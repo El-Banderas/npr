@@ -1,12 +1,11 @@
 package Car;
 
-import Car.Terminal.MessageEntry;
-
 import java.net.DatagramSocket;
 import java.util.List;
 import java.util.TreeMap;
 
 import AWFullP.MessagesConstants;
+import Car.Terminal.MessageEntry;
 import Common.CarInfo;
 import Common.Position;
 import Common.TowerInfo;

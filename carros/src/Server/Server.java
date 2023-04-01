@@ -1,25 +1,19 @@
 package Server;
 
-import Common.Constants;
-import Common.InfoNode;
-import Common.TowerInfo;
-
-import static AWFullP.SendMessages.serverHelloCloud;
-
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.AWFullPacket;
 import AWFullP.MessagesConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
-import AWFullP.AWFullPacket;
+import Common.Constants;
+import Common.InfoNode;
 
 
 public class Server implements Runnable

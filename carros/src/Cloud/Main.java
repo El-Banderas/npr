@@ -1,9 +1,10 @@
 package Cloud;
 
-import Common.*;
-
 import java.net.SocketException;
 import java.net.UnknownHostException;
+
+import Common.Constants;
+import Common.InfoNode;
 
 
 /**

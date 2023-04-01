@@ -3,11 +3,11 @@ package Car.Terminal;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.MessagesConstants;
 import AWFullP.SendMessages;
+import AWFullP.FWRMessages.FWRInfo;
 import Car.SharedClass;
 import Common.Constants;
-import Common.FWRMessages.FWRInfo;
-import Common.Messages.MessagesConstants;
 import Common.Position;
 import Common.TowerInfo;
 

@@ -1,14 +1,11 @@
-package Common.FWRMessages;
+package AWFullP.FWRMessages;
 
-import Common.Constants;
-import Common.Messages.MessagesConstants;
-
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.nio.ByteBuffer;
 import java.util.logging.Logger;
+
+import Common.Constants;
 
 /**
  * Scenarios of messages:
