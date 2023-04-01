@@ -10,17 +10,17 @@ import java.net.UnknownHostException;
 /**
  * 
  */
-public class Main {
-	
+public class Main
+{
 	public static void main(String[] args) throws UnknownHostException, SocketException
 	{
 		InfoNode cloudInfo;
 		InfoNode thisServer;
 		
-		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort, false);
-		thisServer = new InfoNode(null, Constants.serverPort, true);
+		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort);
+		thisServer = new InfoNode(null, Constants.serverPort);
 		
-		Server server = new Server(thisServer, cloudInfo);
+		Server server = new Server(thisServer, cloudInfo, 4, "t1"); //TODO
 		server.run();
 	}
 }

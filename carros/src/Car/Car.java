@@ -5,67 +5,77 @@ import Common.Constants;
 //import Common.TowerInfo;
 import Common.FWRMessages.FWRInfo;
 import Common.FWRMessages.FWReceiveMessages;
-import Common.Messages.MessageAndType;
 import Common.Messages.MessagesConstants;
 import Common.Messages.SendMessages;
+import Common.InfoNodeMulticast;
+import Common.TowerInfo;
 
 import java.io.IOException;
 import java.net.*;
-//import java.util.List;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AWFullP.AWFullPacket;
+import AWFullP.SendMessages;
+import Car.Terminal.CarTerminal;
 
-public class Car implements Runnable {
+
+public class Car implements Runnable
+{
+	// Node information
+	private CarInfo me;
+	private List<TowerInfo> towers;
+
+	// Connection information
+	private DatagramSocket socket;
+	private InetAddress myIp; //TODO: temporary. Use random string
 	
-	private CarInfo info;
-	private DatagramSocket sendSocket;
-	private DatagramSocket receiveSocket;
-	private InetAddress myIp;
-	private SharedClass shared;
+	// Others
+	private SharedClass shared; //for CLI
 	private FWRInfo fwrInfoHelloCar;
-	//private List<TowerInfo> towers;
 
 	
-	public Car(CarInfo info, SharedClass shared/*, List<TowerInfo> towers*/) {
-		this.info = info;
-		this.receiveSocket = info.receiveSocket();
-		this.sendSocket = info.sendSocket();
-		this.shared = shared;
+	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
+	{
+		this.me = info;
+		this.towers = towers;
 		this.fwrInfoHelloCar = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
-		try {
-			//System.out.println("My IP: "+ Constants.getMyIp());
-			myIp = Inet6Address.getByName(Constants.getMyIp());
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		}
-		//this.towers = towers;
+		
+		this.socket = new InfoNodeMulticast().socket;
+		this.myIp = Constants.getMyIp();
+		
+		this.shared = new SharedClass(me, this.socket, towers);
 	}
 	
 	
 	@Override
 	public void run()
 	{
+		CarTerminal carTerminal = new CarTerminal(shared);
+		Thread thread_1 = new Thread(carTerminal);
+		thread_1.start();
+		
 		Timer timer = new Timer(false);
 		timer.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
 		
-		Thread thread_1 = new Thread(this::receiveMessages);
-		thread_1.start();
+		Thread thread_2 = new Thread(this::receiveMessages);
+		thread_2.start();
 	}
 	
 	
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.sendSocket, this.info, fwrInfoHelloCar);
+		SendMessages.carHellos(this.socket, this.me, fwrInfoHelloCar);
 	}
 	
 	private void receiveMessages()
 	{
 		while (true) {
 			try {
-				this.info.pos.updatePosition();
+				this.me.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				MessageAndType message = FWReceiveMessages.forwardHandleMessage(this.receiveSocket, this.sendSocket, myIp, info);
+				AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
@@ -73,23 +83,21 @@ public class Car implements Runnable {
 		}
 	}
 	
-	private void handleMessage(MessageAndType message) throws UnknownHostException
+	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-		// Car receive it's timeout
-		if (message == null ) {
-			// There are no timeouts, because we always receive message from ourselves
+		if (message.ipSender.equals(myIp) ) {
+			// There are no timeouts - we always receive message from ourselves
 			shared.addEntryMessages(MessagesConstants.Timeout);
 			return;
 		}
 		shared.addEntryMessages(message.type);
 	}
 	
-	private static TimerTask wrap(Runnable r) {
+	private static TimerTask wrap(Runnable r)
+	{
 		return new TimerTask() {
 			@Override
-			public void run() {
-				r.run();
-			}
+			public void run() {r.run();}
 		};
 	}
 }

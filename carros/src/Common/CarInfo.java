@@ -1,39 +1,30 @@
 package Common;
-import java.net.DatagramSocket;
+
+import java.io.IOException;
 
 
-public class CarInfo {
-
+public class CarInfo
+{
 	public String id;
-	public Position oldPos;
 	public Position pos;
-	public InfoNode connectionInfoLinuxSend;
-	public InfoNodeMulticast connectionInfoLinuxReceive;
+	public Position oldPos;
 	
 	
-	public CarInfo(Position pos, String id) {
-		this.oldPos = pos;
-		this.pos = pos;
+	public CarInfo(String id, Position pos) throws IOException
+	{
 		this.id = id;
-		this.connectionInfoLinuxSend = new InfoNode(Constants.carPort);
-		this.connectionInfoLinuxReceive = new InfoNodeMulticast();
-	}
-	
-	
-	public DatagramSocket receiveSocket(){
-		return this.connectionInfoLinuxReceive.socket;
-	}
-	
-	public DatagramSocket sendSocket(){
-		return this.connectionInfoLinuxSend.socket;
+		this.pos = pos;
+		this.oldPos = pos;
 	}
 
-	public float getVelocity(){
+	public float getVelocity()
+	{
 		// TODO:...
 		return 0;
 	}
 
-	public Position getDirection(){
+	public Position getDirection()
+	{
 		// TODO: ...
 		return new Position(pos.x- oldPos.x,pos.y - oldPos.y);
 	}

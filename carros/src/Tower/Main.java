@@ -7,38 +7,27 @@ import java.net.*;
 
 
 /**
- * 	1: IP Server
- * 	Example: "2001:9::20"
+ * 0: Name (TODO: temporary - vai ser gerado aleatoriamente ou lido do 'working directory')
+ * 1: IP Server
+ * 2: Posx (TODO: temporary - para coincidir com ficheiro; vai ser lido do .xy, e transmitido aos carros)
+ * 3: Posy (TODO: temporary - para coincidir com ficheiro; vai ser lido do .xy, e transmitido aos carros)
+ * 	Example: "t1 2001:9::20 40 40"
  */
-public class Main {
-	
+public class Main
+{
 	public static void main(String[] args) throws IOException
 	{
-		String name = idGenerator(8);
-		InetAddress ipServer = Inet6Address.getByName(args[0]);
+		// Gather server info
+		InetAddress server_ip = Inet6Address.getByName(args[1]);
+		InfoNode server_info = new InfoNode(server_ip, Constants.serverPort);
+
+		// Gather tower info
+		String tower_name = args[0]; //TODO: gerado aleatoriamente ou lido do 'working directory'
+		Position tower_pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3])); // TODO: lido do .xy
+		TowerInfo tower_info = new TowerInfo(tower_name, tower_pos);
 		
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		Position pos = new Position();
-		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		
-		InfoNode thisServer = new InfoNode(ipServer, Constants.serverPort, false);
-		TowerInfo thisTower = new TowerInfo(name, pos);
-		
-		Tower tower = new Tower(thisTower, thisServer);
+		// Instanciate and run tower
+		Tower tower = new Tower(tower_info, server_info);
 		tower.run();
-	}
-	
-	
-	private static String idGenerator(int n) {
-		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
-
-		StringBuilder sb = new StringBuilder(n);
-		
-		for (int i = 0; i < n; i++) {
-			int index = (int)(alphaNumeric.length() * Math.random());
-			sb.append(alphaNumeric.charAt(index));
-		}
-
-		return sb.toString();
 	}
 }

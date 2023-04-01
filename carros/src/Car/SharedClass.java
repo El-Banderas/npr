@@ -1,34 +1,39 @@
 package Car;
 
 import Car.Terminal.MessageEntry;
-import Common.CarInfo;
-import Common.Messages.MessagesConstants;
-import Common.Position;
-import Common.TowerInfo;
 
+import java.net.DatagramSocket;
 import java.util.List;
 import java.util.TreeMap;
 
+import AWFullP.MessagesConstants;
+import Common.CarInfo;
+import Common.Position;
+import Common.TowerInfo;
 
-public class SharedClass {
-	
-	public CarInfo info;
+
+public class SharedClass
+{
+	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
 	private int currentSeqNumberMessage;
-	private List<TowerInfo> towers;
 	public byte[] id;
+	private List<TowerInfo> towers;
+	private CarInfo info;
 
 
 
-	public SharedClass(CarInfo info, List<TowerInfo> towers)
+	public SharedClass(CarInfo info, DatagramSocket socket, List<TowerInfo> towers)
 	{
-		this.info = info;
+		this.socket = socket;
 		receivedMessages = new TreeMap<>();
 		this.currentSeqNumberMessage = 0;
 		this.towers = towers;
 		id = info.id.getBytes();
+		this.info = info;
 	}
-
+	
+	
 	public void addEntryMessages(Integer typeMessage)
 	{
 		if (receivedMessages.containsKey(typeMessage)) {
@@ -38,7 +43,7 @@ public class SharedClass {
 			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
 		}
 	}
-
+	
 	public void printMessagesInfo()
 	{
 		for (MessageEntry message : receivedMessages.values()) {

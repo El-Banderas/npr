@@ -9,11 +9,11 @@ import java.net.UnknownHostException;
 /**
  * 
  */
-public class Main {
-	
+public class Main
+{	
 	public static void main(String[] args) throws UnknownHostException, SocketException
 	{
-		InfoNode cloudInfo = new InfoNode(null, Constants.cloudPort, true);
+		InfoNode cloudInfo = new InfoNode(Constants.getMyIp(), Constants.cloudPort);
 		Cloud cloud = new Cloud(cloudInfo);
 		cloud.run();
 	}

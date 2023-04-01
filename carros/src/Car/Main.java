@@ -1,6 +1,7 @@
 package Car;
 
-import Car.Terminal.CarTerminal;
+import java.io.IOException;
+
 import Common.*;
 
 import java.io.File;
@@ -11,23 +12,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-*/
-
 
 /**
  * 	0: File path that stores the information about towers
  * 	Example: "src/Car/TowersPosWindows"
  */
-public class Main {
-
+public class Main
+{
 	public static void main(String[] args)
 	{
 		System.out.println(" ----  > Execute car");
@@ -39,18 +30,19 @@ public class Main {
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
 		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		CarInfo info = new CarInfo(pos, id);
 		
-		// 2 Threads: Terminal and Comms
-		SharedClass shared = new SharedClass(info, towers);
+		CarInfo info = null;
+		Car carMove = null;
+		try {
+			info = new CarInfo(id, pos);
+			carMove = new Car(info, towers);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 		
-		CarTerminal carTerminal = new CarTerminal(shared);
-		Thread thread_1 = new Thread(carTerminal);
+		Thread thread_1 = new Thread(carMove);
 		thread_1.start();
-		
-		Car carMove = new Car(info, shared/*, towers*/);
-		Thread thread_2 = new Thread(carMove);
-		thread_2.start();
 	}
 	
 	// Parse file that contains information about the RSUs
@@ -61,9 +53,7 @@ public class Main {
 			Scanner scanner = new Scanner(new File(filePath));
 			scanner.nextLine(); // Ignore first line, header
 			
-			Pattern pattern;
-			// Linux contains IPs; Windows contains Ports
-			pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
+			Pattern pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 			
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
@@ -79,13 +69,14 @@ public class Main {
 			scanner.close();
 			return res;
 		} catch (FileNotFoundException e) {
-			System.out.println("[ERROR] File not found!");
+			e.printStackTrace();
+			System.exit(-1);
 		}
 		return null;
 	}
-
 	
-	private static String idGenerator(int n) {
+	private static String idGenerator(int n)
+	{
 		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
 
 		StringBuilder sb = new StringBuilder(n);
