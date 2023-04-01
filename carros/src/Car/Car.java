@@ -2,6 +2,11 @@ package Car;
 
 import Common.CarInfo;
 import Common.Constants;
+//import Common.TowerInfo;
+import Common.FWRMessages.FWRInfo;
+import Common.FWRMessages.FWReceiveMessages;
+import Common.FWRMessages.SelfCarMessage;
+import Common.Messages.MessagesConstants;
 import Common.InfoNodeMulticast;
 import Common.TowerInfo;
 
@@ -12,8 +17,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
-import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
 import Car.Terminal.CarTerminal;
 
@@ -30,19 +33,22 @@ public class Car implements Runnable
 	
 	// Others
 	private SharedClass shared; //for CLI
+	private FWRInfo fwrInfoHelloCar;
 
 	
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
 	{
 		this.me = info;
 		this.towers = towers;
-		
 		this.socket = new InfoNodeMulticast().socket;
+		this.shared = new SharedClass(me, this.socket, towers);
+
+		this.fwrInfoHelloCar = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
+		
 		this.myIp = Constants.getMyIp();
 		
-		this.shared = new SharedClass(this.socket);
 	}
-	
+
 	
 	@Override
 	public void run()
@@ -61,7 +67,7 @@ public class Car implements Runnable
 	
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.socket, this.me);
+		SendMessages.carHellos(this.socket, this.me, fwrInfoHelloCar);
 	}
 	
 	private void receiveMessages()
@@ -70,22 +76,19 @@ public class Car implements Runnable
 			try {
 				this.me.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.receiveData(this.socket);
+				AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
+			} catch (SelfCarMessage e) {
+
 			}
 		}
 	}
 	
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-		if (message.ipSender.equals(myIp) ) {
-			// There are no timeouts - we always receive message from ourselves
-			shared.addEntryMessages(MessagesConstants.Timeout);
-			return;
-		}
-		shared.addEntryMessages(message.type);
+			shared.addEntryMessages(message.type);
 	}
 	
 	private static TimerTask wrap(Runnable r)

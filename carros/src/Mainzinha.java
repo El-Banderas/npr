@@ -2,15 +2,20 @@ import java.net.InetAddress;
 
 public class Mainzinha {
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-        InetAddress ca = InetAddress.getByName("127.0.0.10");
-        InetAddress com = InetAddress.getByName("127.0.0.10");
-        if (ca.equals(com)) {
-            System.out.println("same");
-        } else {
-            System.out.println("not the same");
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                System.out.println("Shutdown Hook is running !");
+            }
+        });
+        System.out.println("Application Terminating ...");
+
+        while (true) {
+            System.out.println("Olá");
+            Thread.sleep(1000);
         }
-    }
 
+
+    }
 }

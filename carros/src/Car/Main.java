@@ -21,6 +21,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
+		System.out.println(" ----  > Execute car");
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 		
@@ -43,7 +44,6 @@ public class Main
 		Thread thread_1 = new Thread(carMove);
 		thread_1.start();
 	}
-	
 	
 	// Parse file that contains information about the RSUs
 	private static List<TowerInfo> parseFile(String filePath)

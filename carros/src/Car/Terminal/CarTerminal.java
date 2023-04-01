@@ -6,6 +6,10 @@ import java.util.TimerTask;
 import AWFullP.SendMessages;
 import Car.SharedClass;
 import Common.Constants;
+import Common.FWRMessages.FWRInfo;
+import Common.Messages.MessagesConstants;
+import Common.Position;
+import Common.TowerInfo;
 
 
 public class CarTerminal implements Runnable
@@ -50,8 +54,10 @@ public class CarTerminal implements Runnable
 	private void breakHandler()
 	{
 		System.out.println("Pressed Break!");
-		SendMessages.carSendBreak(this.shared.socket);
+		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
+		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
 	}
+
 	
 	private void accidentHandler()
 	{
@@ -61,7 +67,14 @@ public class CarTerminal implements Runnable
 		
 		accidentBroadcast.scheduleAtFixedRate(wrap(()->
 		{
-			SendMessages.carSendAccident(this.shared.socket);
+	TowerInfo getNearestTower = shared.getNearestTower();
+		int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
+
+		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
+		SendMessages.carSendAccident(shared.socket, fwrInfo);
+	
+
+
 		}
 		), 0, Constants.refreshRate);
 	}
@@ -82,4 +95,6 @@ public class CarTerminal implements Runnable
 			public void run() {r.run();}
 		};
 	}
+
+
 }

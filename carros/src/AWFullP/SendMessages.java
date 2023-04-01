@@ -2,6 +2,8 @@ package AWFullP;
 
 import Common.CarInfo;
 import Common.Constants;
+import Common.FWRMessages.FWRInfo;
+import Common.FWRMessages.FWSendMessages;
 import Common.InfoNode;
 
 import java.io.IOException;
@@ -15,9 +17,8 @@ import java.util.logging.Logger;
 public class SendMessages
 {
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
-	
-	
-	public static void carSendBreak(DatagramSocket sender)
+
+	public static void carSendBreak(DatagramSocket sender, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
@@ -25,10 +26,11 @@ public class SendMessages
 				.putInt(MessagesConstants.BreakMessage)
 				.array();
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	
-	public static void carSendAccident(DatagramSocket sender)
+	public static void carSendAccident(DatagramSocket sender,FWRInfo fwrInfo )
 	{
 		//logger.info("Car Sends Accident!");
 		
@@ -36,10 +38,10 @@ public class SendMessages
 				.putInt(MessagesConstants.AccidentMessage)
 				.array();
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	
-	public static void carHellos(DatagramSocket sender, CarInfo info)
+	public static void carHellos(DatagramSocket sender, CarInfo info, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Hello");
 		
@@ -49,7 +51,7 @@ public class SendMessages
 				.put("Hello".getBytes())
 				.array();
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 	
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
@@ -98,9 +100,7 @@ public class SendMessages
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
-	
-	
-	//TODO: temporary public
+
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content)
 	{
 		try {
@@ -111,16 +111,36 @@ public class SendMessages
 			logger.throwing("SendMessages", "sendMessage", e);
 		}
 	}
-	
+
+	//TODO: temporary public
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content, FWRInfo fwrInfo)
+	{
+			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
+			//sender.send(packet);
+			FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
+	}
+
 	//TODO: temporary public
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)
 	{
+		DatagramPacket packet = new DatagramPacket(message.content, message.content.length, to, port);
 		try {
-			DatagramPacket packet = new DatagramPacket(message.content, message.content.length, to, port);
 			sender.send(packet);
 		} catch (IOException e) {
-			logger.severe("IOException when sending " + message.toString() + " to " + to.toString() + ":" + port);
+			logger.severe("IOException when sending binary packet to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
 		}
+	}
+	//TODO: temporary public
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message, FWRInfo fwrInfo)
+	{
+			DatagramPacket packet = new DatagramPacket(message.content, message.content.length, to, port);
+	//		sender.send(packet);
+			FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
+	}
+	// When forwarding is necessary
+	private static void sendMessage(DatagramSocket send, DatagramPacket packet, FWRInfo fwrInfo)
+	{
+			FWSendMessages.sendFWRMessage(send, packet, fwrInfo);
 	}
 }
