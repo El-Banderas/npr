@@ -25,13 +25,13 @@ public class Main
 		System.out.println(" ----  > Execute car");
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
-		
+
 		List<TowerInfo> towers = parseFile(args[0]);
-		
+
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
 		System.out.println("Node Coordinates = " + pos.x + " " + pos.y);
-		
+
 		CarInfo info = null;
 		Car carMove = null;
 		try {
@@ -41,11 +41,11 @@ public class Main
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		
+
 		Thread thread_1 = new Thread(carMove);
 		thread_1.start();
 	}
-	
+
 	// Parse file that contains information about the RSUs
 	private static List<TowerInfo> parseFile(String filePath)
 	{
@@ -53,9 +53,9 @@ public class Main
 		try {
 			Scanner scanner = new Scanner(new File(filePath));
 			scanner.nextLine(); // Ignore first line, header
-			
+
 			Pattern pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
-			
+
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
 				Matcher matcher = pattern.matcher(fileLine);
@@ -66,7 +66,7 @@ public class Main
 				} else
 					System.out.println("Invalid line in tower info file");
 			}
-			
+
 			scanner.close();
 			return res;
 		} catch (FileNotFoundException e) {
@@ -75,13 +75,13 @@ public class Main
 		}
 		return null;
 	}
-	
+
 	private static String idGenerator(int n)
 	{
 		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
 
 		StringBuilder sb = new StringBuilder(n);
-		
+
 		for (int i = 0; i < n; i++) {
 			int index = (int)(alphaNumeric.length() * Math.random());
 			sb.append(alphaNumeric.charAt(index));

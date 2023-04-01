@@ -21,67 +21,67 @@ public class SendMessages
 	public static void carSendBreak(DatagramSocket sender, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Break");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.BreakMessage)
 				.array();
-		
+
 		//DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
-	
+
 	public static void carSendAccident(DatagramSocket sender,FWRInfo fwrInfo )
 	{
 		//logger.info("Car Sends Accident!");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.AccidentMessage)
 				.array();
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
-	
+
 	public static void carHellos(DatagramSocket sender, CarInfo info, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Hello");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CAR_HELLO)
 				.put(info.id.getBytes())
 				.put("Hello".getBytes())
 				.array();
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
-	
+
 	public static void carHelloTower(DatagramSocket sender, InfoNode destination)
 	{
 		//logger.info("Cars Sends Hello to Tower");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.CAR_HELLO)
 				.put("Hello".getBytes())
 				.array();
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
-	
+
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
 	{
 		logger.info("Tower Sends Hello to Server");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.TowerHelloMessage)
 				.put("Hello".getBytes())
 				.array();
-		
+
 		sendMessage(sender, destination.ip, destination.port, buf);
 	}
-	
+
 	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
 	{
 		logger.info("Server Sends Hello to Cloud");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.ServerHelloMessage)
 				.put("Hello".getBytes())
@@ -89,15 +89,15 @@ public class SendMessages
 
 		sendMessage(sender, destination.ip, destination.port, buf);
 	}
-	
+
 	public static void towerHelloCar(DatagramSocket sender)
 	{
 		logger.info("Tower Sends Hello to Car");
-		
+
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
 				.putInt(MessagesConstants.TowerHelloMessage)
 				.array();
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
 	}
 

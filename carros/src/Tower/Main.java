@@ -1,7 +1,6 @@
 package Tower;
 
 import java.io.IOException;
-import java.net.Inet6Address;
 import java.net.InetAddress;
 
 import Common.Constants;
@@ -22,14 +21,14 @@ public class Main
 	public static void main(String[] args) throws IOException
 	{
 		// Gather server info
-		InetAddress server_ip = Inet6Address.getByName(args[1]);
+		InetAddress server_ip = InetAddress.getByName(args[1]);
 		InfoNode server_info = new InfoNode(server_ip, Constants.serverPort);
 
 		// Gather tower info
 		String tower_name = args[0]; //TODO: gerado aleatoriamente ou lido do 'working directory'
 		Position tower_pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3])); // TODO: lido do .xy
 		TowerInfo tower_info = new TowerInfo(tower_name, tower_pos);
-		
+
 		// Instanciate and run tower
 		Tower tower = new Tower(tower_info, server_info);
 		tower.run();

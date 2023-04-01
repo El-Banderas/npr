@@ -21,11 +21,11 @@ public class Tower implements Runnable
 	// Node information
 	private TowerInfo me;
 	private InfoNode local_server;
-	
+
 	// Connection information
 	private DatagramSocket wlan_socket; // WLAN
 	private DatagramSocket vanet_socket; //TODO: Multicast
-	
+
 	// Others
 	//...
 
@@ -70,19 +70,19 @@ public class Tower implements Runnable
 			}
 		}
 	}
-	
+
 	private void handleMessage(AWFullPacket message) {
 		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
 		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.AccidentMessage) {
 			sendToServer(message);
 		}
 	}
-	
+
 	private void sendToServer(AWFullPacket message) {
 		//SendMessages.towerHelloServer(this.wlan_socket, message);
 		SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
-	
+
 	private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {

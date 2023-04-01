@@ -8,8 +8,8 @@ public class CarInfo
 	public String id;
 	public Position pos;
 	public Position oldPos;
-	
-	
+
+
 	public CarInfo(String id, Position pos) throws IOException
 	{
 		this.id = id;

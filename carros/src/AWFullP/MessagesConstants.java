@@ -12,21 +12,21 @@ public class MessagesConstants
 	 * boolean 	1 bit 		Stores true or false values
 	 * char 	2 bytes 	Stores a single character
 	 */
-	
-	
-	
-	
+
+
+
+
 	/*
-	 * | TTL | PosX | PosY | Distancia ao destino | Num_seq | Source ID |	 * 
-	 * 
+	 * | TTL | PosX | PosY | Distancia ao destino | Num_seq | Source ID |	 *
+	 *
 	 * Broadcast -> Distancia maior ? discarta : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discarta : Broadcast
-	 * 
+	 *
 	 * Destino envia ACK
 	 */
-	
-	
-	
-	
+
+
+
+
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -34,20 +34,20 @@ public class MessagesConstants
 	 * +--------------------+-------------------+---------------------------------------+
 	 * |
 	 * +--------------------------------------------------------------------------------+
-	 * 
+	 *
 	 */
-	
-	public static final int PROTOCOL_FIELD 	= (int) ((2^8 -1) << 8*3);
-	public static final int TYPE_FIELD 		= (int) ((2^16-1) << 8*1);
-	public static final int TTL_FIELD 		= (int) ((2^8 -1) << 8*0);
-	
+
+	public static final int PROTOCOL_FIELD 	= (2^8 -1) << 8*3;
+	public static final int TYPE_FIELD 		= (2^16-1) << 8*1;
+	public static final int TTL_FIELD 		= (2^8 -1) << 8*0;
+
 	public static final byte PROTOCOL_MAJOR_VERSION = (byte) (1 << 5);
 	public static final byte PROTOCOL_MINOR_VERSION = (byte) 1;
 	public static final byte PROTOCOL_VERSION = PROTOCOL_MAJOR_VERSION | PROTOCOL_MINOR_VERSION;
-	
+
 	public static final byte MAJOR_TYPE = (byte) 0b11100000; // N = 8
 	public static final byte MINOR_TYPE = (byte) 0b00011111; // N = 32
-	
+
 	public static final byte V2V 		= (byte) 0b00000000; // (0 << 5) //AdHoc local broadcast within TTL
 		//public static final byte PING 		= (byte) 0;
 		//public static final byte PONG 		= (byte) 1;
@@ -58,9 +58,9 @@ public class MessagesConstants
 	public static final byte U5 		= (byte) 0b10100000; // (5 << 5) //Undefined
 	public static final byte U6 		= (byte) 0b11000000; // (6 << 5) //Undefined
 	public static final byte U7 		= (byte) 0b11100000; // (7 << 5) //Undefined
-	
-	
-	
+
+
+
 	// Still-Alive messages (CBOR encoded payload for QoS statistics and announcements)
 	public static final byte PING 		= (byte) 0;
 	public static final byte PONG 		= (byte) 1;
@@ -71,9 +71,9 @@ public class MessagesConstants
 	// Reply messages with (REPLY) or without (ACK) CBOR encoded payload
 	public static final byte REPLY 		= (byte) 3;
 	public static final byte ACK 		= (byte) 3;
-	
-	
-	
+
+
+
 	public static final int CAR_HELLO = 1;
 	public static final int BreakMessage 		= (byte) 2;
 	public static final int Timeout 			= (byte) 3; // No message. To update terminal
@@ -86,9 +86,9 @@ public class MessagesConstants
 	public static final int TTLCarHelloMessage = 1;
 	public static final int TTLBreakMessage = 2;
 	public static final int TTLAccidentMessage = 3;
-	
-	
-	
+
+
+
 	public static String convertTypeString(int type)
 	{
 		switch(type) {
@@ -108,7 +108,7 @@ public class MessagesConstants
 				return "Type unknown";
 		}
 	}
-	
+
 	public static int sizeBufferMessages = 950;
 	public static final int maxSizeTowerName = 8;
 }

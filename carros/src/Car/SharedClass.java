@@ -31,8 +31,8 @@ public class SharedClass
 		id = info.id.getBytes();
 		this.info = info;
 	}
-	
-	
+
+
 	public void addEntryMessages(Integer typeMessage)
 	{
 		if (receivedMessages.containsKey(typeMessage)) {
@@ -42,7 +42,7 @@ public class SharedClass
 			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
 		}
 	}
-	
+
 	public void printMessagesInfo()
 	{
 		for (MessageEntry message : receivedMessages.values()) {

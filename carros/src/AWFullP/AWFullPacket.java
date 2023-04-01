@@ -11,12 +11,12 @@ public class AWFullPacket
 	public byte[] content;
 	public InetAddress ipSender;
 	public String towerName;
-	
-	
+
+
 	/**
 	 * Constructor for objects of class AWFullPacket.
 	 *
-	 * Creates a AWFullProtocol general packet. 
+	 * Creates a AWFullProtocol general packet.
 	 *
 	 * @param type Packet type
 	 * @param content Array of bytes to be sent in packet
@@ -29,11 +29,11 @@ public class AWFullPacket
 		this.ipSender = ipSender;
 		this.towerName = towerName;
 	}
-	
+
 	/**
 	 * Constructor for objects of class AWFullPacket.
 	 *
-	 * Creates a AWFullProtocol general packet. 
+	 * Creates a AWFullProtocol general packet.
 	 *
 	 * @param type Packet type
 	 * @param content Array of bytes to be sent in packet
@@ -48,27 +48,27 @@ public class AWFullPacket
 	/**
 	 * Constructor for objects of class AWFullPacket.
 	 *
-	 * Creates a AWFullProtocol general packet by decapsulating a DatagramPacket. 
+	 * Creates a AWFullProtocol general packet by decapsulating a DatagramPacket.
 	 *
 	 * @param packet DatagramPacket to decapsulate
 	 */
 	public AWFullPacket(DatagramPacket packet)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(packet.getData());
-		
+
 		this.type = buf.getInt();
 
 		byte[] towerNameBytes = new byte[MessagesConstants.maxSizeTowerName];
 		buf.get(towerNameBytes, 0, MessagesConstants.maxSizeTowerName);
 		this.towerName = new String(towerNameBytes).trim();
-		
+
 		this.content = new byte[buf.remaining()];
 		buf.get(this.content, 0 /*bbuf.position()*/, buf.remaining());
-		
+
 		this.ipSender = packet.getAddress();
 	}
-	
-	
+
+
 	/**
 	 * Returns packet in byte array form, to be sent through a DatagramPacket.
 	 *
@@ -85,10 +85,10 @@ public class AWFullPacket
 				.put(towerNameBytes)
 				.put(this.content)
 				.array();
-		
+
 		return buf;
 	}
-	
+
 	@Override
 	public String toString()
 	{

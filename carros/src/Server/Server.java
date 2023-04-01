@@ -23,27 +23,27 @@ public class Server implements Runnable
 	private InfoNode cloud;
 	private String towerName;
 	private final int batchSize;
-	
+
 	// Connection information
 	private DatagramSocket socket;
-	
+
 	// Others
 	private List<String> carsInRange;
-	
-	
+
+
 	public Server(InfoNode server, InfoNode cloud,  int batchSize, String towerName) throws SocketException
 	{
 		this.me = server;
 		this.cloud = cloud;
 		this.batchSize = batchSize;
-		
+
 		this.socket = new DatagramSocket(Constants.serverPort);
-		
-		this.carsInRange = new ArrayList<String>();
+
+		this.carsInRange = new ArrayList<>();
 		this.towerName = towerName;
 	}
-	
-	
+
+
 	@Override
 	public void run()
 	{
@@ -53,15 +53,15 @@ public class Server implements Runnable
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-		
+
 		Timer timer_1 = new Timer(false);
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
-		
+
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
 	}
-	
-	
+
+
 	private void sendHellos()
 	{
 		//AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
@@ -88,7 +88,7 @@ public class Server implements Runnable
 			}
 		}
 	}
-	
+
 	private void handleMessage(AWFullPacket message)
 	{
 		switch (message.type) {
@@ -118,9 +118,9 @@ public class Server implements Runnable
 				break;
 		}
 	}
-	
 
-	
+
+
 	public int getHowManyCars()
 	{
 		int result = this.carsInRange.size();
@@ -129,12 +129,12 @@ public class Server implements Runnable
 		this.carsInRange.clear();
 		return result;
 	}
-	
+
 	private void sendToCloud(AWFullPacket message)
 	{
 		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
-	
+
 	private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {

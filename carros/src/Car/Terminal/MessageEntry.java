@@ -2,7 +2,7 @@ package Car.Terminal;
 
 
 public class MessageEntry
-{	
+{
 	public String text;
 	public int numberEntryes;
 

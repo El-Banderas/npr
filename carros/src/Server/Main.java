@@ -8,7 +8,7 @@ import Common.InfoNode;
 
 
 /**
- * 
+ *
  */
 public class Main
 {
@@ -16,10 +16,10 @@ public class Main
 	{
 		InfoNode cloudInfo;
 		InfoNode thisServer;
-		
+
 		cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort);
 		thisServer = new InfoNode(null, Constants.serverPort);
-		
+
 		Server server = new Server(thisServer, cloudInfo, 4, "t1"); //TODO
 		server.run();
 	}

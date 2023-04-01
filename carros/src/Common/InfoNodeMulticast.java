@@ -16,22 +16,22 @@ public class InfoNodeMulticast
 	public final DatagramSocket socket;
 	public final InetAddress ip;
 	public final int port;
-	
+
 	public InfoNodeMulticast() throws IOException
 	{
 		InetSocketAddress group = new InetSocketAddress(Constants.MulticastGroup, Constants.portMulticast);
 		NetworkInterface netIf = NetworkInterface.getByName("eth1");
 		MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
-		
+
 		multicastSocket.joinGroup(group, netIf);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
-		
+
 		this.socket = multicastSocket;
 		this.port = Constants.portMulticast;
 		this.ip = Constants.MulticastGroup;
 	}
-	
-	
+
+
 	@Override
 	public String toString()
 	{

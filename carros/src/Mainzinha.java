@@ -5,7 +5,8 @@ public class Mainzinha {
     public static void main(String[] args) throws Exception {
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
+            @Override
+			public void run() {
                 System.out.println("Shutdown Hook is running !");
             }
         });

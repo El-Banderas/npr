@@ -19,24 +19,24 @@ public class Cloud implements Runnable
 {
 	// Node information
 	private InfoNode me;
-	
+
 	// Connection information
 	private DatagramSocket socket;
-	
+
 	// Others
 	private Map<String, List<String>> towerEventMap;
-	
-	
+
+
 	public Cloud(InfoNode cloud) throws SocketException
 	{
 		this.me = cloud;
-		
+
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
-		
+
 		this.towerEventMap = new HashMap<>();
 	}
-	
-	
+
+
 	@Override
 	public void run()
 	{
@@ -46,12 +46,12 @@ public class Cloud implements Runnable
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-		
+
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
 	}
-	
-	
+
+
 	private void receiveMessages()
 	{
 		while(true) {
@@ -64,7 +64,7 @@ public class Cloud implements Runnable
 			}
 		}
 	}
-	
+
 	private void handleMessage(AWFullPacket message)
 	{
 		switch(message.type) {
@@ -88,7 +88,7 @@ public class Cloud implements Runnable
 	{
 		return this.history;
 	}*/
-	
+
 	private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {

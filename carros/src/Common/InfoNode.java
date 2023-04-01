@@ -13,8 +13,8 @@ public class InfoNode
 {
 	public final InetAddress ip;
 	public final int port;
-	
-	
+
+
 	public InfoNode(InetAddress ip, int port) throws SocketException
 	{
 		this.port = port;
@@ -26,8 +26,8 @@ public class InfoNode
 		this.port = socket.getLocalPort();
 		this.ip = socket.getLocalAddress();
 	}
-	
-	
+
+
 	@Override
 	public String toString()
 	{

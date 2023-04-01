@@ -206,7 +206,7 @@ public class Menu {
 	public static Float promptFloat(String field) {
 		return Float.parseFloat(prompt(field));
 	}
-	
+
 	public interface ConditionStr {boolean validate(String response);}
 	public interface ConditionInt {boolean validate(Integer response);}
 	public interface ConditionFlt {boolean validate(Float response);}
