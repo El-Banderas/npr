@@ -39,14 +39,15 @@ public class Car implements Runnable
 	{
 		this.me = info;
 		this.towers = towers;
+		this.socket = new InfoNodeMulticast().socket;
+		this.shared = new SharedClass(me, this.socket, towers);
+
 		this.fwrInfoHelloCar = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
 		
-		this.socket = new InfoNodeMulticast().socket;
 		this.myIp = Constants.getMyIp();
 		
-		this.shared = new SharedClass(me, this.socket, towers);
 	}
-	
+
 	
 	@Override
 	public void run()
