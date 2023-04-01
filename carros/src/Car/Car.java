@@ -81,7 +81,7 @@ public class Car implements Runnable
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
 			} catch (SelfCarMessage e) {
-				
+
 			}
 		}
 	}
