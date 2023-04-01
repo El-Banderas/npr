@@ -85,6 +85,7 @@ public class Car implements Runnable
 	
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
+		System.out.println("Acho que o destratre é aqui");
 		if (message.ipSender.equals(myIp) ) {
 			// There are no timeouts - we always receive message from ourselves
 			shared.addEntryMessages(MessagesConstants.Timeout);
