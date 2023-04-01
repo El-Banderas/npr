@@ -115,13 +115,9 @@ public class SendMessages
 	//TODO: temporary public
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content, FWRInfo fwrInfo)
 	{
-		try {
 			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
-			sender.send(packet);
-		} catch (IOException e) {
-			logger.severe("IOException when sending binary packet to " + to.toString() + ":" + port);
-			logger.throwing("SendMessages", "sendMessage", e);
-		}
+			//sender.send(packet);
+			FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
 	}
 
 	//TODO: temporary public
