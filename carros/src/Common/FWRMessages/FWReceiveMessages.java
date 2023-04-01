@@ -24,13 +24,13 @@ public class FWReceiveMessages {
      * @return
      * @throws IOException
      */
-    public static AWFullPacket forwardHandleMessage(DatagramSocket receiveSocket, DatagramSocket sendSocket, InetAddress myIp, CarInfo carInfo) throws IOException {
+    public static AWFullPacket forwardHandleMessage(DatagramSocket receiveSocket, DatagramSocket sendSocket, InetAddress myIp, CarInfo carInfo) throws IOException, SelfCarMessage {
 
         byte[] buf = new byte[MessagesConstants.sizeBufferMessages];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         receiveSocket.receive(packet);
-        if (packet.getAddress().equals(myIp)) 
-            throw new IOException();
+        if (packet.getAddress().equals(myIp))
+            throw new SelfCarMessage();
         FWRInfo fwrinfo = new FWRInfo(buf);
 
 

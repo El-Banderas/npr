@@ -5,6 +5,7 @@ import Common.Constants;
 //import Common.TowerInfo;
 import Common.FWRMessages.FWRInfo;
 import Common.FWRMessages.FWReceiveMessages;
+import Common.FWRMessages.SelfCarMessage;
 import Common.Messages.MessagesConstants;
 import Common.InfoNodeMulticast;
 import Common.TowerInfo;
@@ -79,6 +80,8 @@ public class Car implements Runnable
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessagesConstants.Timeout);
+			} catch (SelfCarMessage e) {
+				
 			}
 		}
 	}
