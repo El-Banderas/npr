@@ -85,12 +85,7 @@ public class Car implements Runnable
 	
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-		if (message != null && message.ipSender.equals(myIp) ) {
-			// There are no timeouts - we always receive message from ourselves
 			shared.addEntryMessages(MessagesConstants.Timeout);
-			return;
-		}
-		shared.addEntryMessages(message.type);
 	}
 	
 	private static TimerTask wrap(Runnable r)
