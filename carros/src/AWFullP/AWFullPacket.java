@@ -18,8 +18,8 @@ public class AWFullPacket
 	 *
 	 * Creates a AWFullProtocol general packet.
 	 *
-	 * @param type Packet type
-	 * @param content Array of bytes to be sent in packet
+	 * @param type     Packet type
+	 * @param content  Array of bytes to be sent in packet
 	 * @param ipSender IP of the sender
 	 */
 	public AWFullPacket(int type, byte[] content, InetAddress ipSender, String towerName)
@@ -35,7 +35,7 @@ public class AWFullPacket
 	 *
 	 * Creates a AWFullProtocol general packet.
 	 *
-	 * @param type Packet type
+	 * @param type    Packet type
 	 * @param content Array of bytes to be sent in packet
 	 */
 	public AWFullPacket(int type, byte[] content)
