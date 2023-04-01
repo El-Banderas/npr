@@ -85,6 +85,7 @@ public class Car implements Runnable
 	
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
+		System.out.println("Recebi " + message.type);
 			shared.addEntryMessages(MessagesConstants.Timeout);
 	}
 	
