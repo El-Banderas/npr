@@ -29,7 +29,10 @@ public class FWReceiveMessages {
         byte[] buf = new byte[MessagesConstants.sizeBufferMessages];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         receiveSocket.receive(packet);
-        if (packet.getAddress().equals(myIp)) throw new IOException();
+        if (packet.getAddress().equals(myIp)) {
+            System.out.println("Aposto que vem para aqui...");
+            throw new IOException();
+        }
         FWRInfo fwrinfo = new FWRInfo(buf);
 
 
