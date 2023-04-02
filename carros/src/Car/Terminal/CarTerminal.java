@@ -17,7 +17,7 @@ public class CarTerminal implements Runnable
 	private SharedClass shared;
 
 	private boolean inAccident = false;
-	private Timer accidentBroadcast = new Timer(false);
+	private Timer accidentBroadcast;
 
 
 	public CarTerminal(SharedClass shared)
@@ -63,8 +63,7 @@ public class CarTerminal implements Runnable
 	{
 		System.out.println("Accident happened!");
 
-		this.inAccident = true;
-
+		this.accidentBroadcast = new Timer(false);
 		accidentBroadcast.scheduleAtFixedRate(wrap(()->
 		{
 			TowerInfo getNearestTower = shared.getNearestTower();
@@ -74,6 +73,8 @@ public class CarTerminal implements Runnable
 			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
 		}
 		), 0, Constants.refreshRate);
+		
+		this.inAccident = true;
 	}
 
 	private void stopAccidentHandler()

@@ -109,6 +109,10 @@ public class Menu {
 		int op;
 		show();
 		op = readOption();
+		
+		if (op == 0)
+			System.exit(0);
+		
 		// test pre-condition
 		if (op>0 && !this.available.get(op-1).validate()) {
 			System.out.println("Option unavailable!");
