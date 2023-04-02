@@ -69,5 +69,4 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 		
 		return buf;
 	}
-	
 }

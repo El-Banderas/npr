@@ -1,4 +1,4 @@
-package AWFullP.FWRMessages;
+package AWFullP.FwdLayer;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -55,4 +55,25 @@ public class FWReceiveMessages
 		
 		return received;
 	}
+	
+	/*public static AWFullPacket forwardHandleMessage1(DatagramSocket receiveSocket, DatagramSocket sendSocket, InetAddress myIp, CarInfo carInfo) throws IOException, SelfCarMessage
+	{
+		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
+		DatagramPacket packet = new DatagramPacket(buf, buf.length);
+		receiveSocket.receive(packet);
+		
+		if (packet.getAddress().equals(myIp))
+			throw new SelfCarMessage();
+		
+		AWFullPacket aw = new AWFullPacket(buf);
+		
+		// Maybe forward message?
+		// TODO: Check Distance and duplicate messages
+		if (aw.forwardInfo.getTTL() > 1) {
+			aw.forwardInfo.updateInfo(carInfo);
+			FWSendMessages.sendFWRMessage(sendSocket, aw);
+		}
+		
+		return aw;
+	}*/
 }

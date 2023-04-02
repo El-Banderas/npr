@@ -39,6 +39,7 @@ public class MessageConstants
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
 	 */
+	public static final int FWD_HEADER_SIZE = 28;
 	public static final int ID_SIZE = 8;
 	
 	

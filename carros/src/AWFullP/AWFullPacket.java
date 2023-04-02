@@ -3,13 +3,14 @@ package AWFullP;
 import java.net.DatagramPacket;
 
 import AWFullP.AppLayer.AWFullPAppLayer;
-//import AWFullP.FWRMessages.FWRInfo;
 import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.FwdLayer.AWFullPFwdLayer;
+import AWFullP.FwdLayer.FWRInfo;
 
 
 public class AWFullPacket
 {
-	//public FWRInfo forwardInfo; //TODO
+	public AWFullPFwdLayer forwardInfo;
 	public AWFullPAppLayer appLayer;
 	
 	
@@ -72,7 +73,7 @@ public class AWFullPacket
 	
 	public byte[] toBytes()
 	{
-		return appLayer.toBytes();
+		return this.appLayer.toBytes();
 	}
 	
 	@Override

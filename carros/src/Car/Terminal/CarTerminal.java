@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
-import AWFullP.FWRMessages.FWRInfo;
+import AWFullP.FwdLayer.FWRInfo;
 import Car.SharedClass;
 import Common.Constants;
 import Common.Position;
