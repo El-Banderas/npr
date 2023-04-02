@@ -1,7 +1,6 @@
 package AWFullP;
 
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 
 import AWFullP.AppLayer.AWFullPAppLayer;
 //import AWFullP.FWRMessages.FWRInfo;
@@ -10,15 +9,12 @@ import AWFullP.AppLayer.AWFullPCarHello;
 
 public class AWFullPacket
 {
-	private InetAddress ipSender; //TODO:temporary
 	//public FWRInfo forwardInfo; //TODO
 	public AWFullPAppLayer appLayer;
 	
 	
-	public AWFullPacket(int type, byte[] content, InetAddress ipSender)
+	private AWFullPacket(int type, byte[] content)
 	{
-		this.ipSender = ipSender;
-		
 		switch(type) {
 		
 			case MessageConstants.CAR_HELLO:
@@ -51,19 +47,23 @@ public class AWFullPacket
 		}
 	}
 	
+	public AWFullPacket(byte[] content)
+	{
+		this(AWFullPAppLayer.getType(content), content);
+	}
+	
 	public AWFullPacket(DatagramPacket packet)
 	{
-		this(AWFullPAppLayer.getType(packet), packet.getData(), packet.getAddress());
+		this(AWFullPAppLayer.getType(packet), packet.getData());
 	}
 	
 	public AWFullPacket(AWFullPAppLayer appLayer)
 	{
-		this.appLayer = appLayer;
+		this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
 	}
 	
 	
 	public int getType() {return this.appLayer.getType();}
-	public InetAddress getIPSender() {return this.ipSender;}
 	public byte[] getContent() {return this.appLayer.toBytes();}
 	
 	public byte[] toBytes()

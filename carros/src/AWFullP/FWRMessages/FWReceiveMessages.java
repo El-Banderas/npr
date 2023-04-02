@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.nio.ByteBuffer;
 //import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
@@ -41,16 +40,9 @@ public class FWReceiveMessages
 			fwrinfo.updateInfo(carInfo);
 			FWSendMessages.sendFWRMessage(sendSocket, fwrinfo);
 		}
+		
 		// Return content of message
-		
-		ByteBuffer bbuf = ByteBuffer.wrap(fwrinfo.content);
-		
-		// After removing FW content
-		int type = bbuf.getInt();
-		byte[] remaining = new byte[bbuf.remaining()];
-		bbuf.get(remaining, 0 /* bbuf.position() */, bbuf.remaining());
-		
-		AWFullPacket received = new AWFullPacket(type, remaining, packet.getAddress());
+		AWFullPacket received = new AWFullPacket(fwrinfo.content);
 		
 		// logger.info("Received Message:\n" + received.toString());
 		

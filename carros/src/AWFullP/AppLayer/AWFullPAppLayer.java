@@ -13,7 +13,7 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	private int type;
 	
 	
-	public AWFullPAppLayer(int type)
+	protected AWFullPAppLayer(int type)
 	{
 		this.type = type;
 	}
@@ -33,10 +33,15 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	
 	public int getType() {return this.type;}
 
+	public static int getType(byte[] arr)
+	{
+		ByteBuffer buf = ByteBuffer.wrap(arr);
+		return buf.getInt();
+	}
+
 	public static int getType(DatagramPacket packet)
 	{
-		ByteBuffer buf = ByteBuffer.wrap(packet.getData());
-		return buf.getInt();
+		return getType(packet.getData());
 	}
 	
 	public byte[] toBytes()
