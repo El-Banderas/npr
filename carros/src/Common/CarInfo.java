@@ -19,7 +19,7 @@ public class CarInfo
 
 	public float getVelocity()
 	{
-		// TODO:...
+		// TODO: ...
 		return 0;
 	}
 

@@ -2,7 +2,7 @@ package AWFullP.FWRMessages;
 
 import java.nio.ByteBuffer;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import Common.CarInfo;
 import Common.Position;
 
@@ -25,7 +25,7 @@ public class FWRInfo
 		this.destiny = false;
 		this.idSender = idSender;
 		this.seqNumber = seqNumber;
-		this.content = new byte[MessagesConstants.sizeBufferMessages];
+		this.content = new byte[MessageConstants.sizeBufferMessages];
 	}
 	
 	public FWRInfo(int TTL, Position dest, int distDest, byte[] idSender, int seqNumber)
@@ -35,7 +35,7 @@ public class FWRInfo
 		this.distDest = distDest;
 		this.idSender = idSender;
 		this.seqNumber = seqNumber;
-		this.content = new byte[MessagesConstants.sizeBufferMessages];
+		this.content = new byte[MessageConstants.sizeBufferMessages];
 	}
 	
 	
@@ -69,7 +69,7 @@ public class FWRInfo
 	public FWRInfo(byte[] message)
 	{
 		int sizeInt = 4;
-		this.content = new byte[MessagesConstants.sizeBufferMessages];
+		this.content = new byte[MessageConstants.sizeBufferMessages];
 		
 		ByteBuffer bbuf = ByteBuffer.wrap(message);
 		this.TTL = bbuf.getInt();

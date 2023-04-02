@@ -1,6 +1,6 @@
 package AWFullP.AppLayer;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 
 public class AWFullPServerHello extends AWFullPAppLayer
 {
@@ -8,7 +8,7 @@ public class AWFullPServerHello extends AWFullPAppLayer
 	
 	public AWFullPServerHello()
 	{
-		super(MessagesConstants.SERVER_HELLO);
+		super(MessageConstants.SERVER_HELLO);
 	}
 	
 	

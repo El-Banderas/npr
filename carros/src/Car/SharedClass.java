@@ -4,7 +4,7 @@ import java.net.DatagramSocket;
 import java.util.List;
 import java.util.TreeMap;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import Car.Terminal.MessageEntry;
 import Common.CarInfo;
 import Common.Position;
@@ -38,7 +38,7 @@ public class SharedClass
 		if (receivedMessages.containsKey(typeMessage)) {
 			receivedMessages.get(typeMessage).addEntry();
 		} else {
-			String textMessage = "Type " + MessagesConstants.convertTypeString(typeMessage);
+			String textMessage = "Type " + MessageConstants.convertTypeString(typeMessage);
 			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
 		}
 	}

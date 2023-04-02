@@ -3,7 +3,7 @@ package Car.Terminal;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
 import AWFullP.FWRMessages.FWRInfo;
 import Car.SharedClass;
@@ -54,7 +54,7 @@ public class CarTerminal implements Runnable
 	private void breakHandler()
 	{
 		System.out.println("Pressed Break!");
-		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
+		FWRInfo fwrInfo = new FWRInfo(MessageConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
 		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
 	}
 
@@ -67,14 +67,11 @@ public class CarTerminal implements Runnable
 
 		accidentBroadcast.scheduleAtFixedRate(wrap(()->
 		{
-	TowerInfo getNearestTower = shared.getNearestTower();
-		int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
-
-		FWRInfo fwrInfo = new FWRInfo(MessagesConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
-		SendMessages.carSendAccident(shared.socket, fwrInfo);
-
-
-
+			TowerInfo getNearestTower = shared.getNearestTower();
+			int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
+			
+			FWRInfo fwrInfo = new FWRInfo(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
+			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
 		}
 		), 0, Constants.refreshRate);
 	}

@@ -1,12 +1,12 @@
 package AWFullP.AppLayer;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+//import java.net.DatagramSocket;
+//import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 
 public class AWFullPAppLayer implements IAWFullPAppLayer
 {
@@ -32,20 +32,28 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	
 	
 	public int getType() {return this.type;}
+
+	public static int getType(DatagramPacket packet)
+	{
+		ByteBuffer buf = ByteBuffer.wrap(packet.getData());
+		return buf.getInt();
+	}
 	
 	public byte[] toBytes()
 	{
-		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.sizeBufferMessages)
 				.putInt(this.type)
 				.array();
 		
 		return buf;
 	}
 	
+	/*
 	public void sendTo(DatagramSocket from, InetAddress to, int port) throws IOException
 	{
 		byte[] content = this.toBytes();
 		DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
 		from.send(packet);
 	}
+	*/
 }

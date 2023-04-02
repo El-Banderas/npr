@@ -5,15 +5,15 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import Common.CarInfo;
 
 public class FWReceiveMessages
 {
-	private static Logger logger = Logger.getLogger("npr.messages.received");
+	//private static Logger logger = Logger.getLogger("npr.messages.received");
 	
 	
 	/**
@@ -28,7 +28,7 @@ public class FWReceiveMessages
 	 */
 	public static AWFullPacket forwardHandleMessage(DatagramSocket receiveSocket, DatagramSocket sendSocket, InetAddress myIp, CarInfo carInfo) throws IOException, SelfCarMessage
 	{
-		byte[] buf = new byte[MessagesConstants.sizeBufferMessages];
+		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		receiveSocket.receive(packet);
 		if (packet.getAddress().equals(myIp))
@@ -50,7 +50,7 @@ public class FWReceiveMessages
 		byte[] remaining = new byte[bbuf.remaining()];
 		bbuf.get(remaining, 0 /* bbuf.position() */, bbuf.remaining());
 		
-		AWFullPacket received = new AWFullPacket(type, remaining, packet.getAddress(), "Indefinido?");
+		AWFullPacket received = new AWFullPacket(type, remaining, packet.getAddress());
 		
 		// logger.info("Received Message:\n" + received.toString());
 		

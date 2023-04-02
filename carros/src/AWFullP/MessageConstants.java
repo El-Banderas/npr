@@ -1,6 +1,6 @@
 package AWFullP;
 
-public class MessagesConstants
+public class MessageConstants
 {
 	/*
 	 * byte 	1 byte 		Stores whole numbers from -128 to 127
@@ -15,7 +15,7 @@ public class MessagesConstants
 	
 	
 	/*
-	 * Broadcast -> Distancia maior ? discarta : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discarta : Broadcast
+	 * Broadcast -> Distancia maior ? discard : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discard : Broadcast
 	 * Destino envia ACK
 	 */
 	
@@ -54,10 +54,11 @@ public class MessagesConstants
 	 * +--------------------------------------------------------------------------------+
 	 *
 	 */
+	public static final int APP_HEADER_SIZE = 4;
+	
 	
 	public static final int CAR_HELLO 			= (int) 1;
 	public static final byte TTLCarHelloMessage = (byte) 1;
-	public static final int CAR_ID_SIZE = 8;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -73,17 +74,24 @@ public class MessagesConstants
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
 	
-	public static final int TIMEOUT 			= (int) 3; // No message. To update terminal
-	/*
-	 * |		byte		|		byte		|		byte		|		byte		|
-	 * +--------------------+-------------------+-------------------+-------------------+
-	 */
+	public static final int TIMEOUT 			= (int) 3;
+	// No message. To update terminal
 	
 	public static final int CAR_ACCIDENT 		= (int) 4;
 	public static final byte TTLAccidentMessage = (byte) 3;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									Tower ID									|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									 Car ID										|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y										|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	
 	public static final int TOWER_HELLO 		= (int) 5;
@@ -102,6 +110,12 @@ public class MessagesConstants
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									Tower ID									|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									 Car ID										|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	
 	public static final int ServerInfoMessage 	= (int) 8;
@@ -132,6 +146,6 @@ public class MessagesConstants
 		}
 	}
 
-	public static int sizeBufferMessages = 950;
-	public static final int maxSizeTowerName = 8;
+	public static final int sizeBufferMessages = 950;
+	public static final int BATCH_SIZE = 4;
 }

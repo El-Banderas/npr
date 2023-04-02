@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
 import Common.Constants;
@@ -19,7 +19,7 @@ import Common.TowerInfo;
 public class Tower implements Runnable
 {
 	// Node information
-	private TowerInfo me;
+	//private TowerInfo me;
 	private InfoNode local_server;
 
 	// Connection information
@@ -32,7 +32,7 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
-		this.me = tower;
+		//this.me = tower;
 		this.local_server = server;
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
@@ -73,14 +73,14 @@ public class Tower implements Runnable
 
 	private void handleMessage(AWFullPacket message) {
 		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
-		if (message.type == MessagesConstants.CarInRangeMessage || message.type == MessagesConstants.CAR_ACCIDENT) {
+		if (message.getType() == MessageConstants.CarInRangeMessage || message.getType() == MessageConstants.CAR_ACCIDENT) {
 			sendToServer(message);
 		}
 	}
 
 	private void sendToServer(AWFullPacket message) {
 		//SendMessages.towerHelloServer(this.wlan_socket, message);
-		SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message);
+		//SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message); //TODO
 	}
 
 	private static TimerTask wrap(Runnable r)

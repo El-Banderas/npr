@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
 import AWFullP.FWRMessages.FWRInfo;
 import AWFullP.FWRMessages.FWReceiveMessages;
@@ -25,7 +25,7 @@ public class Car implements Runnable
 {
 	// Node information
 	private CarInfo me;
-	private List<TowerInfo> towers;
+	//private List<TowerInfo> towers;
 
 	// Connection information
 	private DatagramSocket socket;
@@ -39,11 +39,11 @@ public class Car implements Runnable
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
 	{
 		this.me = info;
-		this.towers = towers;
+		//this.towers = towers;
 		this.socket = new InfoNodeMulticast().socket;
 		this.shared = new SharedClass(me, this.socket, towers);
 
-		this.fwrInfoHelloCar = new FWRInfo(MessagesConstants.TTLCarHelloMessage, shared.id, -1);
+		this.fwrInfoHelloCar = new FWRInfo(MessageConstants.TTLCarHelloMessage, shared.id, -1);
 
 		this.myIp = Constants.getMyIp();
 
@@ -67,7 +67,7 @@ public class Car implements Runnable
 
 	private void sendHellos()
 	{
-		SendMessages.carHellos(this.socket, this.me, fwrInfoHelloCar);
+		SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
 	}
 
 	private void receiveMessages()
@@ -79,7 +79,7 @@ public class Car implements Runnable
 				AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
 				handleMessage(message);
 			} catch (IOException e) {
-				this.shared.addEntryMessages(MessagesConstants.TIMEOUT);
+				this.shared.addEntryMessages(MessageConstants.TIMEOUT);
 			} catch (SelfCarMessage e) {
 
 			}
@@ -88,7 +88,7 @@ public class Car implements Runnable
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-			shared.addEntryMessages(message.type);
+			shared.addEntryMessages(message.getType());
 	}
 
 	private static TimerTask wrap(Runnable r)

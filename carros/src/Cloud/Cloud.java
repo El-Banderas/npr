@@ -3,22 +3,28 @@ package Cloud;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
+import AWFullP.AppLayer.AWFullPCarAccident;
+import AWFullP.AppLayer.AWFullPCarInRange;
 import Common.Constants;
 import Common.InfoNode;
+import Common.Position;
 
 
 public class Cloud implements Runnable
 {
+	private static Logger logger =  Logger.getLogger("npr.cloud");
+	
 	// Node information
-	private InfoNode me;
+	//private InfoNode me;
 
 	// Connection information
 	private DatagramSocket socket;
@@ -29,7 +35,7 @@ public class Cloud implements Runnable
 
 	public Cloud(InfoNode cloud) throws SocketException
 	{
-		this.me = cloud;
+		//this.me = cloud;
 
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
 
@@ -60,40 +66,43 @@ public class Cloud implements Runnable
 				handleMessage(message);
 			} catch (IOException ignore) {
 				// TIMEOUT
-				//System.out.println("Timeout passed. Nothing received.");
+				//logger.info("Timeout passed. Nothing received.");
 			}
 		}
 	}
 
 	private void handleMessage(AWFullPacket message)
 	{
-		switch(message.type) {
-			case MessagesConstants.SERVER_HELLO:
-				//System.out.println("Received Hello from server");
+		switch(message.getType()) {
+		
+			case MessageConstants.SERVER_HELLO:
+				logger.info("Received Hello from server");
 				break;
-			case MessagesConstants.CarInRangeMessage:
-				String id = new String(message.content); //TODO
-				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Car in range: " + id); //TODO
+				
+			case MessageConstants.CarInRangeMessage:
+				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
+				String towerID_cir = aw_cir.getTowerID();
+				String carID_cir = aw_cir.getCarID();
+				towerEventMap.computeIfAbsent(towerID_cir, k -> new ArrayList<>()).add("Car in range: " + carID_cir);
 				break;
-			case MessagesConstants.CAR_ACCIDENT:
-				String location = new String(message.content); //TODO
-				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Accident at location: " + location); //TODO
+				
+			case MessageConstants.CAR_ACCIDENT:
+				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
+				String towerID_ca = aw_ca.getTowerID();
+				Position location_ca = aw_ca.getLocation();
+				towerEventMap.computeIfAbsent(towerID_ca, k -> new ArrayList<>()).add("Accident at location: " + location_ca.toString());
 				break;
+				
 			default:
-				//System.out.println("Received message, type unknown: " + message.type);
+				logger.info("Received unknown message: " + message.toString());
 		}
 	}
 
-	/*public ArrayList<String> getHistory()
-	{
-		return this.history;
-	}*/
-
-	private static TimerTask wrap(Runnable r)
+	/*private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {
 			@Override
 			public void run() {r.run();}
 		};
-	}
+	}*/
 }

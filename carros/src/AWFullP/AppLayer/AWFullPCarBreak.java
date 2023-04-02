@@ -1,6 +1,6 @@
 package AWFullP.AppLayer;
 
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 
 public class AWFullPCarBreak extends AWFullPAppLayer
 {
@@ -8,7 +8,7 @@ public class AWFullPCarBreak extends AWFullPAppLayer
 	
 	public AWFullPCarBreak()
 	{
-		super(MessagesConstants.CAR_BREAK);
+		super(MessageConstants.CAR_BREAK);
 	}
 	
 	

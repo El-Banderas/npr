@@ -7,43 +7,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
-import AWFullP.MessagesConstants;
+import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
+import AWFullP.AppLayer.AWFullPCarAccident;
+import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.AppLayer.AWFullPCarInRange;
+//import AWFullP.SendMessages;
 import Common.Constants;
 import Common.InfoNode;
+import Common.TowerInfo;
 
 
 public class Server implements Runnable
 {
+	private static Logger logger =  Logger.getLogger("npr.server");
+	
 	// Node information
-	private InfoNode me;
+	//private InfoNode me;
 	private InfoNode cloud;
-	private String towerName;
-	private final int batchSize;
+	private TowerInfo tower;
 
 	// Connection information
 	private DatagramSocket socket;
 
 	// Others
 	private List<String> carsInRange;
-
-
-	public Server(InfoNode server, InfoNode cloud,  int batchSize, String towerName) throws SocketException
+	
+	
+	public Server(InfoNode server, InfoNode cloud, TowerInfo tower) throws SocketException
 	{
-		this.me = server;
+		//this.me = server;
 		this.cloud = cloud;
-		this.batchSize = batchSize;
+		this.tower = tower;
 
 		this.socket = new DatagramSocket(Constants.serverPort);
 
 		this.carsInRange = new ArrayList<>();
-		this.towerName = towerName;
 	}
-
-
+	
+	
 	@Override
 	public void run()
 	{
@@ -53,29 +59,22 @@ public class Server implements Runnable
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-
+		
 		Timer timer_1 = new Timer(false);
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
-
+		
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
 	}
-
-
+	
+	
 	private void sendHellos()
 	{
+		SendMessages.serverHelloCloud(socket, cloud);
 		//AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
 		//SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
-
-	private void checkAndSendBatch() {
-		if (carsInRange.size() >= batchSize) {
-			AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(carsInRange.size()).getBytes(), cloud.ip, towerName);
-			sendToCloud(message);
-			carsInRange.clear();
-		}
-	}
-
+	
 	private void receiveMessages()
 	{
 		while(true) {
@@ -84,57 +83,65 @@ public class Server implements Runnable
 				handleMessage(message);
 			} catch (IOException ignore) {
 				// TIMEOUT
-				//System.out.println("[Server] Timeout passed. Nothing received.");
+				//logger.info("Timeout passed. Nothing received.");
 			}
 		}
 	}
-
+	
 	private void handleMessage(AWFullPacket message)
 	{
-		switch (message.type) {
-			case MessagesConstants.CAR_HELLO:
-				String id = message.ipSender.toString(); //Usar ip em vez de id, para já (TODO)
-				if (!this.carsInRange.contains(id)){
-					this.carsInRange.add(id);
-					sendToCloud(new AWFullPacket(MessagesConstants.CarInRangeMessage, id.getBytes(), message.ipSender, towerName)); //TODO
+		switch (message.getType()) {
+		
+			case MessageConstants.CAR_HELLO:
+				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
+				String carID_ch = aw_ch.getCarID();
+				if (!this.carsInRange.contains(carID_ch)){
+					this.carsInRange.add(carID_ch);
+					//TODO: Se está a enviar em batches então não fazer isto sempre:
+					//AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.tower.getName(), carID_ch);
+					//sendToCloud(new AWFullPacket(aw_cir));
 					checkAndSendBatch();
 				}
-				System.out.println("Received Hello from car: " + id);
+				logger.info("Received Hello from car: " + carID_ch);
 				break;
-			case MessagesConstants.TOWER_HELLO:
-				//System.out.println("Received Hello from tower");
+				
+			case MessageConstants.TOWER_HELLO:
+				logger.info("Received Hello from tower");
 				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
 				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;
-			case MessagesConstants.CAR_BREAK:
-				//System.out.println("Received Break");
+				
+			case MessageConstants.CAR_BREAK:
+				logger.info("Received Break");
 				break;
-			case MessagesConstants.CAR_ACCIDENT:
-				//System.out.println("Received Accident");
-				sendToCloud(new AWFullPacket(MessagesConstants.CAR_ACCIDENT, message.content, message.ipSender, towerName));
+				
+			case MessageConstants.CAR_ACCIDENT:
+				logger.info("Received Accident");
+				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
+				sendToCloud(new AWFullPacket(aw_ca));
 				break;
+				
 			default:
-				//System.out.println("Received message, type unknown: " + message.type);
-				break;
+				logger.info("Received unknown message: " + message.toString());
 		}
 	}
-
-
-
-	public int getHowManyCars()
-	{
-		int result = this.carsInRange.size();
-		//AWFullPacket message = new AWFullPacket(MessagesConstants.CarInRangeMessage, Integer.toString(result).getBytes(), cloud.ip); //TODO
-		//this.sendToCloud(message); //TODO
-		this.carsInRange.clear();
-		return result;
+	
+	//TODO: Assim está a enviar um a um, e não um batch. Vai ser preciso criar um novo tipo de pacote para batches
+	private void checkAndSendBatch() {
+		if (carsInRange.size() >= MessageConstants.BATCH_SIZE) {
+			for(String carID : carsInRange) {
+				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.tower.getName(), carID);
+				sendToCloud(new AWFullPacket(aw_cir));
+			}
+			carsInRange.clear();
+		}
 	}
-
+	
 	private void sendToCloud(AWFullPacket message)
 	{
 		SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
 	}
-
+	
 	private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {
