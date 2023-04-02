@@ -46,7 +46,7 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	
 	public byte[] toBytes()
 	{
-		byte[] buf = ByteBuffer.allocate(MessageConstants.sizeBufferMessages)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.APP_HEADER_SIZE)
 				.putInt(this.type)
 				.array();
 		

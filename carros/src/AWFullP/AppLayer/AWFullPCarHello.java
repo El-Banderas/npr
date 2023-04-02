@@ -43,7 +43,7 @@ public class AWFullPCarHello extends AWFullPAppLayer
 	{
 		byte[] carID_bytes = Arrays.copyOf(this.carID.getBytes(), MessageConstants.ID_SIZE);
 		
-		byte[] buf = ByteBuffer.allocate(MessageConstants.sizeBufferMessages)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.CAR_HELLO_SIZE)
 				.put(super.toBytes())
 				.put(carID_bytes)
 				.array();

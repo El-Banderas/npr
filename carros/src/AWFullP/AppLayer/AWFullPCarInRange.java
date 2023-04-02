@@ -14,7 +14,7 @@ public class AWFullPCarInRange extends AWFullPAppLayer
 	
 	public AWFullPCarInRange(String towerID, String carID)
 	{
-		super(MessageConstants.CarInRangeMessage);
+		super(MessageConstants.CAR_IN_RANGE);
 		
 		this.towerID = towerID;
 		this.carID = carID;
@@ -51,7 +51,7 @@ public class AWFullPCarInRange extends AWFullPAppLayer
 		byte[] towerID_bytes = Arrays.copyOf(this.towerID.getBytes(), MessageConstants.ID_SIZE);
 		byte[] carID_bytes = Arrays.copyOf(this.carID.getBytes(), MessageConstants.ID_SIZE);
 		
-		byte[] buf = ByteBuffer.allocate(MessageConstants.sizeBufferMessages)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.CAR_IN_RANGE_SIZE)
 				.put(super.toBytes())
 				.put(towerID_bytes)
 				.put(carID_bytes)

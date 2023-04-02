@@ -59,7 +59,7 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 		byte[] towerID_bytes = Arrays.copyOf(this.towerID.getBytes(), MessageConstants.ID_SIZE);
 		byte[] carID_bytes = Arrays.copyOf(this.carID.getBytes(), MessageConstants.ID_SIZE);
 		
-		byte[] buf = ByteBuffer.allocate(MessageConstants.sizeBufferMessages)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.CAR_ACCIDENT_SIZE)
 				.put(super.toBytes())
 				.put(towerID_bytes)
 				.put(carID_bytes)

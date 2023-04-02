@@ -79,7 +79,7 @@ public class Cloud implements Runnable
 				logger.info("Received Hello from server");
 				break;
 				
-			case MessageConstants.CarInRangeMessage:
+			case MessageConstants.CAR_IN_RANGE:
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
 				String towerID_cir = aw_cir.getTowerID();
 				String carID_cir = aw_cir.getCarID();

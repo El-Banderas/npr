@@ -37,11 +37,11 @@ public class AWFullPacket
 				this.appLayer = new AWFullPCarHello(content);
 				break;
 		
-			case MessageConstants.CarInRangeMessage:
+			case MessageConstants.CAR_IN_RANGE:
 				this.appLayer = new AWFullPCarHello(content);
 				break;
 		
-			case MessageConstants.ServerInfoMessage:
+			case MessageConstants.SERVER_INFO:
 				this.appLayer = new AWFullPCarHello(content);
 				break;
 		}

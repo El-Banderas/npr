@@ -57,11 +57,11 @@ public class Car implements Runnable
 		Thread thread_1 = new Thread(carTerminal);
 		thread_1.start();
 
-		Timer timer = new Timer(false);
-		timer.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
-
 		Thread thread_2 = new Thread(this::receiveMessages);
 		thread_2.start();
+
+		Timer timer_1 = new Timer(false);
+		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
 	}
 
 

@@ -73,7 +73,7 @@ public class Tower implements Runnable
 
 	private void handleMessage(AWFullPacket message) {
 		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
-		if (message.getType() == MessageConstants.CarInRangeMessage || message.getType() == MessageConstants.CAR_ACCIDENT) {
+		if (message.getType() == MessageConstants.CAR_IN_RANGE || message.getType() == MessageConstants.CAR_ACCIDENT) {
 			sendToServer(message);
 		}
 	}

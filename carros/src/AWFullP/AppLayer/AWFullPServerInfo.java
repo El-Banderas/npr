@@ -8,7 +8,7 @@ public class AWFullPServerInfo extends AWFullPAppLayer
 	
 	public AWFullPServerInfo()
 	{
-		super(MessageConstants.ServerInfoMessage);
+		super(MessageConstants.SERVER_INFO);
 	}
 	
 	

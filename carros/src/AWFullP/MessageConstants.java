@@ -58,6 +58,7 @@ public class MessageConstants
 	
 	
 	public static final int CAR_HELLO 			= (int) 1;
+	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 8;
 	public static final byte TTLCarHelloMessage = (byte) 1;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
@@ -68,6 +69,7 @@ public class MessageConstants
 	 */
 	
 	public static final int CAR_BREAK 			= (int) 2;
+	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 0;
 	public static final byte TTLBreakMessage 	= (byte) 2;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
@@ -78,6 +80,7 @@ public class MessageConstants
 	// No message. To update terminal
 	
 	public static final int CAR_ACCIDENT 		= (int) 4;
+	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 24;
 	public static final byte TTLAccidentMessage = (byte) 3;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
@@ -95,18 +98,21 @@ public class MessageConstants
 	 */
 	
 	public static final int TOWER_HELLO 		= (int) 5;
+	public static final int TOWER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
 	
 	public static final int SERVER_HELLO 		= (int) 6;
+	public static final int SERVER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
 	
-	public static final int CarInRangeMessage 	= (int) 7;
+	public static final int CAR_IN_RANGE 		= (int) 7;
+	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 16;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -118,7 +124,8 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	
-	public static final int ServerInfoMessage 	= (int) 8;
+	public static final int SERVER_INFO 		= (int) 8;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 0;
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -139,7 +146,7 @@ public class MessageConstants
 				return "Timeout triggered";
 			case CAR_ACCIDENT:
 				return "Accident Happened";
-			case CarInRangeMessage:
+			case CAR_IN_RANGE:
 				return "Cars in Range";
 			default:
 				return "Type unknown";
