@@ -44,6 +44,10 @@ public class AWFullPacket
 			case MessageConstants.SERVER_INFO:
 				this.appLayer = new AWFullPCarHello(content);
 				break;
+		
+			default:
+				System.out.println("Type unknown: " + type);
+				this.appLayer = new AWFullPAppLayer(content); //do this anyway lmao
 		}
 	}
 	
