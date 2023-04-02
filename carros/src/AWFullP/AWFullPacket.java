@@ -4,6 +4,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
+import AWFullP.AppLayer.AWFullPAppLayer;
+import AWFullP.FWRMessages.FWRInfo;
+
 
 public class AWFullPacket
 {
@@ -11,6 +14,10 @@ public class AWFullPacket
 	public byte[] content;
 	public InetAddress ipSender;
 	public String towerName;
+	
+	//Só vamos precisar disto:
+	private FWRInfo forwardInfo;
+	private AWFullPAppLayer appLayer;
 
 
 	/**
