@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 //import java.util.logging.Logger;
+import java.nio.ByteBuffer;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
@@ -42,7 +43,13 @@ public class FWReceiveMessages
 		}
 		
 		// Return content of message
-		AWFullPacket received = new AWFullPacket(fwrinfo.content);
+		// (after removing FW content?)
+		ByteBuffer bbuf = ByteBuffer.wrap(fwrinfo.content);
+		bbuf.getInt(); //<- where the fuck did this come from? TODO
+		byte[] remaining = new byte[bbuf.remaining()];
+		bbuf.get(remaining);
+		
+		AWFullPacket received = new AWFullPacket(remaining);
 		
 		// logger.info("Received Message:\n" + received.toString());
 		
