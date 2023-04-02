@@ -23,19 +23,19 @@ public class SendMessages
 		//logger.info("Car Sends Break");
 
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.BreakMessage)
+				.putInt(MessagesConstants.CAR_BREAK)
 				.array();
 
 		//DatagramPacket packet = new DatagramPacket(buf, buf.length, Constants.MulticastGroup, Constants.portMulticast);
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
 	}
 
-	public static void carSendAccident(DatagramSocket sender,FWRInfo fwrInfo )
+	public static void carSendAccident(DatagramSocket sender, FWRInfo fwrInfo )
 	{
 		//logger.info("Car Sends Accident!");
 
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.AccidentMessage)
+				.putInt(MessagesConstants.CAR_ACCIDENT)
 				.array();
 
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
@@ -71,7 +71,7 @@ public class SendMessages
 		logger.info("Tower Sends Hello to Server");
 
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.TowerHelloMessage)
+				.putInt(MessagesConstants.TOWER_HELLO)
 				.put("Hello".getBytes())
 				.array();
 
@@ -83,7 +83,7 @@ public class SendMessages
 		logger.info("Server Sends Hello to Cloud");
 
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.ServerHelloMessage)
+				.putInt(MessagesConstants.SERVER_HELLO)
 				.put("Hello".getBytes())
 				.array();
 
@@ -95,7 +95,7 @@ public class SendMessages
 		logger.info("Tower Sends Hello to Car");
 
 		byte[] buf = ByteBuffer.allocate(MessagesConstants.sizeBufferMessages)
-				.putInt(MessagesConstants.TowerHelloMessage)
+				.putInt(MessagesConstants.TOWER_HELLO)
 				.array();
 
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);

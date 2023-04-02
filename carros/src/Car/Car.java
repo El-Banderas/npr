@@ -79,7 +79,7 @@ public class Car implements Runnable
 				AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
 				handleMessage(message);
 			} catch (IOException e) {
-				this.shared.addEntryMessages(MessagesConstants.Timeout);
+				this.shared.addEntryMessages(MessagesConstants.TIMEOUT);
 			} catch (SelfCarMessage e) {
 
 			}

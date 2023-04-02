@@ -12,95 +12,118 @@ public class MessagesConstants
 	 * boolean 	1 bit 		Stores true or false values
 	 * char 	2 bytes 	Stores a single character
 	 */
-
-
-
-
+	
+	
 	/*
-	 * | TTL | PosX | PosY | Distancia ao destino | Num_seq | Source ID |	 *
-	 *
 	 * Broadcast -> Distancia maior ? discarta : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discarta : Broadcast
-	 *
 	 * Destino envia ACK
 	 */
-
-
-
-
+	
+	
 	/*
+	 * General Header & Forward Info
+	 * 
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |  PROTOCOL_VERSION	|				   TYPE					|		 TTL		|
-	 * +--------------------+-------------------+---------------------------------------+
-	 * |
+	 * +--------------------+---------------------------------------+-------------------+
+	 * |									  Pos X										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos Y										|
+	 * +--------------------------------------------------------------------------------+
+	 * |							 Distance to Destination							|
+	 * +--------------------------------------------------------------------------------+
+	 * |								 Sequence Number								|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Sender ID									|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 */
+	public static final int ID_SIZE = 8;
+	
+	
+	
+	/*
+	 * Application Layer
+	 * 
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									   TYPE										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									   ...										|
 	 * +--------------------------------------------------------------------------------+
 	 *
 	 */
-
-	public static final int PROTOCOL_FIELD 	= (2^8 -1) << 8*3;
-	public static final int TYPE_FIELD 		= (2^16-1) << 8*1;
-	public static final int TTL_FIELD 		= (2^8 -1) << 8*0;
-
-	public static final byte PROTOCOL_MAJOR_VERSION = (byte) (1 << 5);
-	public static final byte PROTOCOL_MINOR_VERSION = (byte) 1;
-	public static final byte PROTOCOL_VERSION = PROTOCOL_MAJOR_VERSION | PROTOCOL_MINOR_VERSION;
-
-	public static final byte MAJOR_TYPE = (byte) 0b11100000; // N = 8
-	public static final byte MINOR_TYPE = (byte) 0b00011111; // N = 32
-
-	public static final byte V2V 		= (byte) 0b00000000; // (0 << 5) //AdHoc local broadcast within TTL
-		//public static final byte PING 		= (byte) 0;
-		//public static final byte PONG 		= (byte) 1;
-	public static final byte V2I 		= (byte) 0b00100000; // (1 << 5) //AdHoc forwarding to RSU (at least until TTL)
-	public static final byte V2P 		= (byte) 0b01000000; // (2 << 5) //Not implemented!
-	public static final byte V2D 		= (byte) 0b01100000; // (3 << 5) //Not implemented!
-	public static final byte U4 		= (byte) 0b10000000; // (4 << 5) //Undefined
-	public static final byte U5 		= (byte) 0b10100000; // (5 << 5) //Undefined
-	public static final byte U6 		= (byte) 0b11000000; // (6 << 5) //Undefined
-	public static final byte U7 		= (byte) 0b11100000; // (7 << 5) //Undefined
-
-
-
-	// Still-Alive messages (CBOR encoded payload for QoS statistics and announcements)
-	public static final byte PING 		= (byte) 0;
-	public static final byte PONG 		= (byte) 1;
-	// Usual REST methods with URL + payload
-	public static final byte GET 		= (byte) 2;
-	public static final byte POST 		= (byte) 4;
-	public static final byte PUT 		= (byte) 5;
-	// Reply messages with (REPLY) or without (ACK) CBOR encoded payload
-	public static final byte REPLY 		= (byte) 3;
-	public static final byte ACK 		= (byte) 3;
-
-
-
-	public static final int CAR_HELLO = 1;
-	public static final int BreakMessage 		= (byte) 2;
-	public static final int Timeout 			= (byte) 3; // No message. To update terminal
-	public static final int AccidentMessage 	= (byte) 4;
-	public static final int TowerHelloMessage 	= (byte) 5;
-	public static final int ServerHelloMessage = (byte) 6;
-	public static final int CarInRangeMessage 	= (byte) 7;
-	public static final int ServerInfoMessage 	= (byte) 8;
-
-	public static final int TTLCarHelloMessage = 1;
-	public static final int TTLBreakMessage = 2;
-	public static final int TTLAccidentMessage = 3;
-
-
-
+	
+	public static final int CAR_HELLO 			= (int) 1;
+	public static final byte TTLCarHelloMessage = (byte) 1;
+	public static final int CAR_ID_SIZE = 8;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									 Car ID										|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 */
+	
+	public static final int CAR_BREAK 			= (int) 2;
+	public static final byte TTLBreakMessage 	= (byte) 2;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int TIMEOUT 			= (int) 3; // No message. To update terminal
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int CAR_ACCIDENT 		= (int) 4;
+	public static final byte TTLAccidentMessage = (byte) 3;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int TOWER_HELLO 		= (int) 5;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int SERVER_HELLO 		= (int) 6;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int CarInRangeMessage 	= (int) 7;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	public static final int ServerInfoMessage 	= (int) 8;
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
+	
+	
+	
 	public static String convertTypeString(int type)
 	{
 		switch(type) {
 			case CAR_HELLO:
 				return "Hello Message from Car";
-			case TowerHelloMessage:
+			case TOWER_HELLO:
 				return "Hello Message from Tower";
-			case BreakMessage:
+			case CAR_BREAK:
 				return "Break Message";
-			case Timeout:
+			case TIMEOUT:
 				return "Timeout triggered";
-			case AccidentMessage:
+			case CAR_ACCIDENT:
 				return "Accident Happened";
 			case CarInRangeMessage:
 				return "Cars in Range";

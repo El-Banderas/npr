@@ -101,17 +101,17 @@ public class Server implements Runnable
 				}
 				System.out.println("Received Hello from car: " + id);
 				break;
-			case MessagesConstants.TowerHelloMessage:
+			case MessagesConstants.TOWER_HELLO:
 				//System.out.println("Received Hello from tower");
 				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
 				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;
-			case MessagesConstants.BreakMessage:
+			case MessagesConstants.CAR_BREAK:
 				//System.out.println("Received Break");
 				break;
-			case MessagesConstants.AccidentMessage:
+			case MessagesConstants.CAR_ACCIDENT:
 				//System.out.println("Received Accident");
-				sendToCloud(new AWFullPacket(MessagesConstants.AccidentMessage, message.content, message.ipSender, towerName));
+				sendToCloud(new AWFullPacket(MessagesConstants.CAR_ACCIDENT, message.content, message.ipSender, towerName));
 				break;
 			default:
 				//System.out.println("Received message, type unknown: " + message.type);

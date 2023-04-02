@@ -68,14 +68,14 @@ public class Cloud implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		switch(message.type) {
-			case MessagesConstants.ServerHelloMessage:
+			case MessagesConstants.SERVER_HELLO:
 				//System.out.println("Received Hello from server");
 				break;
 			case MessagesConstants.CarInRangeMessage:
 				String id = new String(message.content); //TODO
 				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Car in range: " + id); //TODO
 				break;
-			case MessagesConstants.AccidentMessage:
+			case MessagesConstants.CAR_ACCIDENT:
 				String location = new String(message.content); //TODO
 				//towerEventMap.computeIfAbsent(towerName, k -> new ArrayList<>()).add("Accident at location: " + location); //TODO
 				break;
