@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
+import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
 import AWFullP.FWRMessages.FWRInfo;
 import AWFullP.FWRMessages.FWReceiveMessages;
@@ -76,13 +77,12 @@ public class Car implements Runnable
 			try {
 				this.me.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
+				//AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
+				AWFullPacket message = ReceiveMessages.receiveData(socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessageConstants.TIMEOUT);
-			} catch (SelfCarMessage e) {
-
-			}
+			} //catch (SelfCarMessage ignore) {}
 		}
 	}
 

@@ -99,8 +99,13 @@ public class SendMessages
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content, FWRInfo fwrInfo)
 	{
 			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
-			//sender.send(packet);
-			FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
+			try {
+				sender.send(packet);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
 	}
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)
@@ -116,14 +121,25 @@ public class SendMessages
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message, FWRInfo fwrInfo)
 	{
-			DatagramPacket packet = new DatagramPacket(message.getContent(), message.getContent().length, to, port);
-	//		sender.send(packet);
-			FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
+		DatagramPacket packet = new DatagramPacket(message.getContent(), message.getContent().length, to, port);
+		try {
+			sender.send(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
 	}
 	
 	// When forwarding is necessary
 	public static void sendMessage(DatagramSocket send, DatagramPacket packet, FWRInfo fwrInfo)
 	{
-			FWSendMessages.sendFWRMessage(send, packet, fwrInfo);
+		try {
+			send.send(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//FWSendMessages.sendFWRMessage(send, packet, fwrInfo);
 	}
 }
