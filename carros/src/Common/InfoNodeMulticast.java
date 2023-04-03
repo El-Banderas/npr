@@ -17,14 +17,13 @@ public class InfoNodeMulticast
 	public final InetAddress ip;
 	public final int port;
 
-	public InfoNodeMulticast() throws IOException
+	public InfoNodeMulticast(String interfaceName) throws IOException
 	{
 		InetSocketAddress group = new InetSocketAddress(Constants.MulticastGroup, Constants.portMulticast);
-		//NetworkInterface netIf = NetworkInterface.getByName("eth1");
+		NetworkInterface netIf = NetworkInterface.getByName(interfaceName);
 		MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
 
-		//multicastSocket.joinGroup(group, netIf);
-		multicastSocket.joinGroup(Constants.MulticastGroup);
+		multicastSocket.joinGroup(group, netIf);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
 
 		this.socket = multicastSocket;

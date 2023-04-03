@@ -40,7 +40,7 @@ public class Car implements Runnable
 	{
 		this.me = info;
 		//this.towers = towers;
-		this.socket = new InfoNodeMulticast().socket;
+		this.socket = new InfoNodeMulticast("eth0").socket;
 		this.shared = new SharedClass(me, this.socket, towers);
 
 		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.id, -1);

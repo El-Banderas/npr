@@ -37,7 +37,7 @@ public class Tower implements Runnable
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
 		
-		this.vanet_socket = new InfoNodeMulticast().socket;
+		this.vanet_socket = new InfoNodeMulticast("eth1").socket;
 	}
 
 
