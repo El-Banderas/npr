@@ -4,7 +4,13 @@ import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 
 import AWFullP.AppLayer.AWFullPAppLayer;
+import AWFullP.AppLayer.AWFullPCarAccident;
+import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.AppLayer.AWFullPCarInRange;
+import AWFullP.AppLayer.AWFullPServerHello;
+import AWFullP.AppLayer.AWFullPServerInfo;
+import AWFullP.AppLayer.AWFullPTowerHello;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 
 
@@ -24,27 +30,27 @@ public class AWFullPacket
 				break;
 		
 			case MessageConstants.CAR_BREAK:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPCarBreak(content);
 				break;
 		
 			case MessageConstants.CAR_ACCIDENT:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPCarAccident(content);
 				break;
 		
 			case MessageConstants.TOWER_HELLO:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPTowerHello(content);
 				break;
 		
 			case MessageConstants.SERVER_HELLO:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPServerHello(content);
 				break;
 		
 			case MessageConstants.CAR_IN_RANGE:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPCarInRange(content);
 				break;
 		
 			case MessageConstants.SERVER_INFO:
-				this.appLayer = new AWFullPCarHello(content);
+				this.appLayer = new AWFullPServerInfo(content);
 				break;
 		
 			default:
