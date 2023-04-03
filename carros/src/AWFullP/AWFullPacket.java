@@ -58,7 +58,7 @@ public class AWFullPacket
 		this(AWFullPAppLayer.getType(content), content);
 		
 		ByteBuffer buf = ByteBuffer.wrap(content);
-		this.isForwarded = buf.getInt() == 1;
+		this.isForwarded = buf.get() == 1;
 		
 		this.forwardInfo = new AWFullPFwdLayer(content);
 	}
