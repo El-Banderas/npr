@@ -12,7 +12,6 @@ import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.AppLayer.AWFullPServerHello;
 import AWFullP.AppLayer.AWFullPTowerHello;
 import AWFullP.FwdLayer.FWRInfo;
-import AWFullP.FwdLayer.FWSendMessages;
 import Common.CarInfo;
 import Common.Constants;
 import Common.InfoNode;
@@ -28,84 +27,61 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Hello");
 		
-		AWFullPCarHello awpacket = new AWFullPCarHello(info.id);
-		byte[] buf = awpacket.toBytes();
+		AWFullPCarHello aw_app = new AWFullPCarHello(info.id);
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
 	public static void carSendBreak(DatagramSocket sender, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
-		AWFullPCarBreak awpacket = new AWFullPCarBreak();
-		byte[] buf = awpacket.toBytes();
+		AWFullPCarBreak aw_app = new AWFullPCarBreak();
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	public static void carSendAccident(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, FWRInfo fwrInfo )
+	public static void carSendAccident(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, FWRInfo fwrInfo)
 	{
 		//logger.info("Car Sends Accident!");
 		
-		AWFullPCarAccident awpacket = new AWFullPCarAccident(towerInfo.getName(), carInfo.id, carInfo.pos);
-		byte[] buf = awpacket.toBytes();
+		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo.id, carInfo.pos);
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf, fwrInfo);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	//TODO: Juntar ao TowerHelloServer ou assim
+	//TODO: FWRInfo?
 	public static void towerHelloCar(DatagramSocket sender)
 	{
 		logger.info("Tower Sends Hello to Car");
 		
-		AWFullPTowerHello awpacket = new AWFullPTowerHello();
-		byte[] buf = awpacket.toBytes();
+		AWFullPTowerHello aw_app = new AWFullPTowerHello();
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, buf);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
 	}
 	
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
 	{
 		logger.info("Tower Sends Hello to Server");
 		
-		AWFullPTowerHello awpacket = new AWFullPTowerHello();
-		byte[] buf = awpacket.toBytes();
+		AWFullPTowerHello aw_app = new AWFullPTowerHello();
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, destination.ip, destination.port, buf);
+		sendMessage(sender, destination.ip, destination.port, awpacket);
 	}
 	
 	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
 	{
 		logger.info("Server Sends Hello to Cloud");
 		
-		AWFullPServerHello awpacket = new AWFullPServerHello();
-		byte[] buf = awpacket.toBytes();
+		AWFullPServerHello aw_app = new AWFullPServerHello();
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, destination.ip, destination.port, buf);
-	}
-	
-	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content)
-	{
-		try {
-			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
-			sender.send(packet);
-		} catch (IOException e) {
-			logger.severe("IOException when sending binary packet to " + to.toString() + ":" + port);
-			logger.throwing("SendMessages", "sendMessage", e);
-		}
-	}
-	
-	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, byte[] content, FWRInfo fwrInfo)
-	{
-			DatagramPacket packet = new DatagramPacket(content, content.length, to, port);
-			try {
-				sender.send(packet);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//FWSendMessages.sendFWRMessage(sender, packet, fwrInfo);
+		sendMessage(sender, destination.ip, destination.port, awpacket);
 	}
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)

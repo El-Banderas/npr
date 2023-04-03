@@ -9,6 +9,7 @@ import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
+import AWFullP.FwdLayer.FWRInfo;
 import Common.Constants;
 import Common.InfoNode;
 import Common.InfoNodeMulticast;
