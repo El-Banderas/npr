@@ -102,21 +102,17 @@ public class Server implements Runnable
 					//sendToCloud(new AWFullPacket(aw_cir));
 					checkAndSendBatch();
 				}
-				logger.info("Received Hello from car: " + carID_ch);
 				break;
 				
 			case MessageConstants.TOWER_HELLO:
-				logger.info("Received Hello from tower");
 				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
 				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;
 				
 			case MessageConstants.CAR_BREAK:
-				logger.info("Received Break");
 				break;
 				
 			case MessageConstants.CAR_ACCIDENT:
-				logger.info("Received Accident");
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;

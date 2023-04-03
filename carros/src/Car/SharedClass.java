@@ -16,7 +16,7 @@ public class SharedClass
 	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
 	private int currentSeqNumberMessage;
-	public byte[] id;
+	public String id;
 	private List<TowerInfo> towers;
 	public CarInfo info;
 
@@ -28,7 +28,7 @@ public class SharedClass
 		receivedMessages = new TreeMap<>();
 		this.currentSeqNumberMessage = 0;
 		this.towers = towers;
-		id = info.id.getBytes();
+		id = info.id;
 		this.info = info;
 	}
 

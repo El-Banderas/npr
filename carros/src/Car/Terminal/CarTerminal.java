@@ -1,11 +1,12 @@
 package Car.Terminal;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
-import AWFullP.FwdLayer.FWRInfo;
+import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Car.SharedClass;
 import Common.Constants;
 import Common.Position;
@@ -54,8 +55,13 @@ public class CarTerminal implements Runnable
 	private void breakHandler()
 	{
 		System.out.println("Pressed Break!");
-		FWRInfo fwrInfo = new FWRInfo(MessageConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
-		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
+		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
+		try {
+			SendMessages.carSendBreak(this.shared.socket, fwrInfo);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 
@@ -69,8 +75,13 @@ public class CarTerminal implements Runnable
 			TowerInfo getNearestTower = shared.getNearestTower();
 			int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
 			
-			FWRInfo fwrInfo = new FWRInfo(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
-			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
+			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
+			try {
+				SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
 		}
 		), 0, Constants.refreshRate);
 		

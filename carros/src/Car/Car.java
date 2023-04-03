@@ -12,8 +12,7 @@ import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
-import AWFullP.FwdLayer.FWRInfo;
-import AWFullP.FwdLayer.FWReceiveMessages;
+import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.FwdLayer.SelfCarMessage;
 import Car.Terminal.CarTerminal;
 import Common.CarInfo;
@@ -34,7 +33,7 @@ public class Car implements Runnable
 
 	// Others
 	private SharedClass shared; //for CLI
-	private FWRInfo fwrInfoHelloCar;
+	private AWFullPFwdLayer fwrInfoHelloCar;
 
 
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
@@ -44,10 +43,9 @@ public class Car implements Runnable
 		this.socket = new InfoNodeMulticast().socket;
 		this.shared = new SharedClass(me, this.socket, towers);
 
-		this.fwrInfoHelloCar = new FWRInfo(MessageConstants.TTLCarHelloMessage, shared.id, -1);
+		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.id, -1);
 
 		this.myIp = Constants.getMyIp();
-
 	}
 
 
@@ -68,7 +66,12 @@ public class Car implements Runnable
 
 	private void sendHellos()
 	{
-		SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
+		try {
+			SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
 	}
 
 	private void receiveMessages()
@@ -77,18 +80,18 @@ public class Car implements Runnable
 			try {
 				this.me.pos.updatePosition();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				//AWFullPacket message = FWReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
-				AWFullPacket message = ReceiveMessages.receiveData(socket);
+				AWFullPacket message = ReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
+				//AWFullPacket message = ReceiveMessages.receiveData(socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessageConstants.TIMEOUT);
-			} //catch (SelfCarMessage ignore) {}
+			} catch (SelfCarMessage ignore) {}
 		}
 	}
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-			shared.addEntryMessages(message.appLayer.getType());
+		shared.addEntryMessages(message.appLayer.getType());
 	}
 
 	private static TimerTask wrap(Runnable r)
