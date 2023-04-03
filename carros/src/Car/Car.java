@@ -66,12 +66,7 @@ public class Car implements Runnable
 
 	private void sendHellos()
 	{
-		try {
-			SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
 	}
 
 	private void receiveMessages()

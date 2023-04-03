@@ -1,6 +1,5 @@
 package Car.Terminal;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,12 +55,7 @@ public class CarTerminal implements Runnable
 	{
 		System.out.println("Pressed Break!");
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
-		try {
-			SendMessages.carSendBreak(this.shared.socket, fwrInfo);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
-		}
+		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
 	}
 
 
@@ -76,12 +70,7 @@ public class CarTerminal implements Runnable
 			int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
 			
 			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
-			try {
-				SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(-1);
-			}
+			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
 		}
 		), 0, Constants.refreshRate);
 		

@@ -24,7 +24,7 @@ public class ReceiveMessages
 
 		AWFullPacket received = new AWFullPacket(packet);
 
-		logger.info("Received Message:\n" + received.toString());
+		logger.info("\nReceived packet " + received.toString() + " from " + packet.getAddress().toString() + ":" + packet.getPort());
 
 		return received;
 	}
@@ -46,15 +46,20 @@ public class ReceiveMessages
 		receiveSocket.receive(packet);
 		
 		if (packet.getAddress().equals(myIp))
-			throw new SelfCarMessage();
+			logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ")\n"); //throw new SelfCarMessage();
 		
 		AWFullPacket aw = new AWFullPacket(buf);
+
+		String before = aw.toString();
 		
 		// Maybe forward message?
 		// TODO: Check Distance and duplicate messages
 		if (aw.forwardInfo.getTTL() > 1) {
 			aw.forwardInfo.updateInfo(carInfo);
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
+			logger.info("\nForwarding packet " + before + " ---> " + aw + " from " + packet.getAddress().toString() + ":" + packet.getPort() + " to " + Constants.MulticastGroup.toString() + ":" + Constants.portMulticast + "\n");
+		} else {
+			logger.info("\nDiscarding packet " + before + " from " + packet.getAddress().toString() + ":" + packet.getPort() + " to " + Constants.MulticastGroup.toString() + ":" + Constants.portMulticast + "\n");
 		}
 		
 		return aw;

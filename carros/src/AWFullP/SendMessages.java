@@ -23,7 +23,7 @@ public class SendMessages
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
 	
 	
-	public static void carHello(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo) throws IOException
+	public static void carHello(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)
 	{
 		//logger.info("Car Sends Hello");
 		
@@ -33,7 +33,7 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	public static void carSendBreak(DatagramSocket sender, AWFullPFwdLayer fwrInfo) throws IOException
+	public static void carSendBreak(DatagramSocket sender, AWFullPFwdLayer fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
@@ -43,7 +43,7 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	public static void carSendAccident(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, AWFullPFwdLayer fwrInfo ) throws IOException
+	public static void carSendAccident(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, AWFullPFwdLayer fwrInfo )
 	{
 		//logger.info("Car Sends Accident!");
 		
@@ -56,7 +56,7 @@ public class SendMessages
 	//TODO: FWRInfo?
 	public static void towerHelloCar(DatagramSocket sender)
 	{
-		logger.info("Tower Sends Hello to Car");
+		//logger.info("Tower Sends Hello to Car");
 		
 		AWFullPTowerHello aw_app = new AWFullPTowerHello();
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
@@ -66,7 +66,7 @@ public class SendMessages
 	
 	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
 	{
-		logger.info("Tower Sends Hello to Server");
+		//logger.info("Tower Sends Hello to Server");
 		
 		AWFullPTowerHello aw_app = new AWFullPTowerHello();
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
@@ -76,7 +76,7 @@ public class SendMessages
 	
 	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
 	{
-		logger.info("Server Sends Hello to Cloud");
+		//logger.info("Server Sends Hello to Cloud");
 		
 		AWFullPServerHello aw_app = new AWFullPServerHello();
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
@@ -92,14 +92,14 @@ public class SendMessages
 		
 		try {
 			sender.send(packet);
-			logger.info("Sent packet " + message.toString() + " to " + to.toString() + ":" + port);
+			logger.info("\nSent packet " + message.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + message.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
 		}
 	}
 	
-	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket before, AWFullPFwdLayer fwrInfo) throws IOException
+	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket before, AWFullPFwdLayer fwrInfo)
 	{
 		AWFullPacket after = new AWFullPacket(before.appLayer, fwrInfo);
 		
@@ -107,7 +107,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.info("Sent packet " + after.toString() + " to " + to.toString() + ":" + port);
+			logger.info("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
@@ -115,7 +115,7 @@ public class SendMessages
 	}
 	
 	// When forwarding is necessary
-	public static void sendMessage(DatagramSocket sender, DatagramPacket packet, AWFullPFwdLayer fwrInfo) throws IOException
+	public static void sendMessage(DatagramSocket sender, DatagramPacket packet, AWFullPFwdLayer fwrInfo)
 	{
 		AWFullPacket before = new AWFullPacket(packet);
 		AWFullPacket after = new AWFullPacket(before.appLayer, fwrInfo);
@@ -124,7 +124,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.info("Sent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort());
+			logger.info("\nSent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort() + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort());
 			logger.throwing("SendMessages", "sendMessage", e);

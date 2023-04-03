@@ -76,7 +76,7 @@ public class Cloud implements Runnable
 		switch(message.appLayer.getType()) {
 		
 			case MessageConstants.SERVER_HELLO:
-				logger.info("Received Hello from server");
+				//logger.info("Received Hello from server");
 				break;
 				
 			case MessageConstants.CAR_IN_RANGE:
