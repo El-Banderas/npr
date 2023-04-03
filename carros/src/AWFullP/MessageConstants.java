@@ -61,6 +61,26 @@ public class MessageConstants
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									   TYPE										|
 	 * +--------------------------------------------------------------------------------+
+	 * 
+	 * 
+	 * CAM - Veiculo -> Veiculos e Torre (com TTL) (rate variável)
+	 * 		Posição
+	 * 		Velocidade
+	 * 		Direção
+	 * 
+	 * DENM - Veiculo -> Veiculos e Torre
+	 * 		Travão (local) (+ frequente que CAM)
+	 * 		Acidente (cloud) (contínua até ser resolvido)
+	 * 
+	 * Torre -> Veiculo
+	 * 		Excesso de velocidade
+	 * 
+	 * Server:
+	 * 		Contar carros
+	 * 
+	 * Cloud:
+	 * 		Atribui ids?
+	 * 		Guardar histórico de estatisticas (contagem de carros e assim)
 	 */
 	public static final int APP_HEADER_SIZE 	= (int) 4;
 	
@@ -72,9 +92,21 @@ public class MessageConstants
 	 * |									 Car ID										|
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Speed										|
+	 * +--------------------------------------------------------------------------------+
+	 * |								   Acceleration									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Direction x									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Direction y									|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_HELLO 			= (int) 1;
-	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 8;
+	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 32;
 	public static final byte TTLCarHelloMessage = (byte) 1;
 	
 	
@@ -82,9 +114,20 @@ public class MessageConstants
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									 Car ID										|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Direction x									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Direction y									|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_BREAK 			= (int) 2;
-	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 0;
+	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 24;
 	public static final byte TTLBreakMessage 	= (byte) 2;
 	
 	
@@ -107,19 +150,30 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos y										|
 	 * +--------------------------------------------------------------------------------+
+	 * |									Direction x									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Direction y									|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_ACCIDENT 		= (int) 4;
-	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 24;
+	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 32;
 	public static final byte TTLAccidentMessage = (byte) 3;
 	
 	
-	//== Tower Hello ==//
+	//== Tower Announce ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									Tower ID									|
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x										|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y										|
+	 * +--------------------------------------------------------------------------------+
 	 */
-	public static final int TOWER_HELLO 		= (int) 5;
-	public static final int TOWER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
+	public static final int TOWER_ANNOUNCE 		= (int) 5;
+	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 16;
 	
 	
 	//== Server Hello ==//
@@ -161,7 +215,7 @@ public class MessageConstants
 		switch(type) {
 			case CAR_HELLO:
 				return "Hello Message from Car";
-			case TOWER_HELLO:
+			case TOWER_ANNOUNCE:
 				return "Hello Message from Tower";
 			case CAR_BREAK:
 				return "Break Message";

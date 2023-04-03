@@ -10,7 +10,7 @@ import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.AppLayer.AWFullPServerHello;
-import AWFullP.AppLayer.AWFullPTowerHello;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Common.CarInfo;
 import Common.Constants;
@@ -54,24 +54,14 @@ public class SendMessages
 	}
 	
 	//TODO: FWRInfo?
-	public static void towerHelloCar(DatagramSocket sender)
+	public static void towerAnnouncement(DatagramSocket sender)
 	{
 		//logger.info("Tower Sends Hello to Car");
 		
-		AWFullPTowerHello aw_app = new AWFullPTowerHello();
+		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce();
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
-	}
-	
-	public static void towerHelloServer(DatagramSocket sender, InfoNode destination)
-	{
-		//logger.info("Tower Sends Hello to Server");
-		
-		AWFullPTowerHello aw_app = new AWFullPTowerHello();
-		AWFullPacket awpacket = new AWFullPacket(aw_app);
-		
-		sendMessage(sender, destination.ip, destination.port, awpacket);
 	}
 	
 	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)

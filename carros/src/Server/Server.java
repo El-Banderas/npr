@@ -104,7 +104,7 @@ public class Server implements Runnable
 				}
 				break;
 				
-			case MessageConstants.TOWER_HELLO:
+			case MessageConstants.TOWER_ANNOUNCE:
 				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
 				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;

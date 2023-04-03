@@ -56,8 +56,8 @@ public class Tower implements Runnable
 	private void sendHellos() {
 		//HashMap<String, Integer> message = new HashMap<>();
 		//message.put(this.me.getName(), this.me.getHowManyCars());
-		SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
-		SendMessages.towerHelloCar(this.vanet_socket);
+		//SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
+		SendMessages.towerAnnouncement(this.vanet_socket);
 	}
 
 	private void receiveMessages() {

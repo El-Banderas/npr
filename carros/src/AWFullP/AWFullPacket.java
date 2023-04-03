@@ -10,7 +10,7 @@ import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.AppLayer.AWFullPCarInRange;
 import AWFullP.AppLayer.AWFullPServerHello;
 import AWFullP.AppLayer.AWFullPServerInfo;
-import AWFullP.AppLayer.AWFullPTowerHello;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 
 
@@ -37,8 +37,8 @@ public class AWFullPacket
 				this.appLayer = new AWFullPCarAccident(content);
 				break;
 		
-			case MessageConstants.TOWER_HELLO:
-				this.appLayer = new AWFullPTowerHello(content);
+			case MessageConstants.TOWER_ANNOUNCE:
+				this.appLayer = new AWFullPTowerAnnounce(content);
 				break;
 		
 			case MessageConstants.SERVER_HELLO:
