@@ -90,7 +90,7 @@ public class Server implements Runnable
 	
 	private void handleMessage(AWFullPacket message)
 	{
-		switch (message.getType()) {
+		switch (message.appLayer.getType()) {
 		
 			case MessageConstants.CAR_HELLO:
 				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;

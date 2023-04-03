@@ -12,41 +12,57 @@ import Common.Position;
 //import java.net.DatagramSocket;
 //import java.net.InetAddress;
 
-public class AWFullPFwdLayer implements IAWFullPFwdLayer
+public class AWFullPFwdLayer
 {
-	private 	byte 	protocolVersion 	= (byte) 0;
-	private 	char 	type 				= (char) 0;
-	private 	byte 	ttl 				= (byte) 1;
-	private 	int 	posX 				= (int) -1;
-	private 	int 	posY 				= (int) -1;
-	private 	int 	dist 				= (int) -1;
-	private 	int 	seq 				= (int) -1;
-	private 	String 	senderID 			= "";
+	private 	byte 	ttl 		= (byte) 1;
+	private 	int 	posX 		= (int) -1;
+	private 	int 	posY 		= (int) -1;
+	private 	int 	dist 		= (int) -1;
+	private 	int 	seq 		= (int) -1;
+	private 	String 	senderID 	= "";
 	
 	
-	public AWFullPFwdLayer(byte protocolVersion, char type, byte ttl, int posX, int posY, int dist, int seq, String senderID)
+	public AWFullPFwdLayer()
 	{
-		this.protocolVersion = protocolVersion;
-		this.type = type;
+	}
+	
+	public AWFullPFwdLayer(byte ttl, String senderID, int seq)
+	{
 		this.ttl = ttl;
-		this.posX = posX;
-		this.posY = posY;
-		this.dist = dist;
-		this.seq = seq;
 		this.senderID = senderID;
+		this.seq = seq;
+	}
+	
+	public AWFullPFwdLayer(byte ttl, Position pos, int distance, String id, int seq)
+	{
+		this.ttl = ttl;
+		this.posX = pos.x;
+		this.posY = pos.y;
+		this.dist = distance;
+		this.senderID = id;
+		this.seq = seq;
+	}
+	
+	public AWFullPFwdLayer(byte ttl, int posX, int posY, int dist, int seq, String senderID)
+	{
+		this.ttl 		= ttl;
+		this.posX 		= posX;
+		this.posY 		= posY;
+		this.dist 		= dist;
+		this.seq 		= seq;
+		this.senderID 	= senderID;
 	}
 	
 	public AWFullPFwdLayer(byte[] arr)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(arr);
+		buf.position(MessageConstants.AWFULLP_HEADER_SIZE);
 		
-		this.protocolVersion 	= buf.get();
-		this.type 				= buf.getChar();
-		this.ttl 				= buf.get();
-		this.posX 				= buf.getInt();
-		this.posY 				= buf.getInt();
-		this.dist 				= buf.getInt();
-		this.seq 				= buf.getInt();
+		this.ttl 	= buf.get();
+		this.posX 	= buf.getInt();
+		this.posY 	= buf.getInt();
+		this.dist 	= buf.getInt();
+		this.seq 	= buf.getInt();
 		
 		byte[] senderID_bytes = new byte[MessageConstants.ID_SIZE];
 		buf.get(senderID_bytes, 0, MessageConstants.ID_SIZE);
@@ -59,22 +75,18 @@ public class AWFullPFwdLayer implements IAWFullPFwdLayer
 	}
 	
 	
-	public byte getProtocolVersion() {return this.protocolVersion;}
-	public int getType() {return this.type;}
 	public byte getTTL() {return this.ttl;}
 	public int getPosX() {return this.posX;}
 	public int getPosY() {return this.posY;}
 	public int getDist() {return this.dist;}
-	public int getSeq() {return this.seq;}
+	public int getSeq()  {return this.seq;}
 	public String getSenderID() {return this.senderID;}
 	
 	public byte[] toBytes()
 	{
 		byte[] senderID_bytes = Arrays.copyOf(this.senderID.getBytes(), MessageConstants.ID_SIZE);
 		
-		byte[] buf = ByteBuffer.allocate(MessageConstants.FWD_HEADER_SIZE)
-				.put 	(this.protocolVersion)
-				.putChar(this.type)
+		byte[] buf = ByteBuffer.allocate(MessageConstants.GEO_HEADER_SIZE)
 				.put 	(this.ttl)
 				.putInt (this.posX)
 				.putInt (this.posY)

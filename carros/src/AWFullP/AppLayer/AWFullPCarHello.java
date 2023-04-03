@@ -23,7 +23,11 @@ public class AWFullPCarHello extends AWFullPAppLayer
 		super(arr);
 		
 		ByteBuffer buf = ByteBuffer.wrap(arr);
-		buf.position(MessageConstants.APP_HEADER_SIZE); //skip super
+		buf.position(
+				MessageConstants.AWFULLP_HEADER_SIZE +
+				MessageConstants.GEO_HEADER_SIZE +
+				MessageConstants.APP_HEADER_SIZE
+				);
 
 		byte[] carID_bytes = new byte[MessageConstants.ID_SIZE];
 		buf.get(carID_bytes, 0, MessageConstants.ID_SIZE);

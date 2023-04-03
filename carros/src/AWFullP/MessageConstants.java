@@ -14,19 +14,25 @@ public class MessageConstants
 	 */
 	
 	
-	/*
-	 * Broadcast -> Distancia maior ? discard : Espera delay baseado em distância -> Recebeu pacote repetido (alguem já enviou) ? discard : Broadcast
-	 * Destino envia ACK
-	 */
 	
-	
+	//=== AWFullP Layer ===//
 	/*
-	 * General Header & Forward Info
 	 * 
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
-	 * |  PROTOCOL_VERSION	|				   TYPE					|		 TTL		|
-	 * +--------------------+---------------------------------------+-------------------+
+	 * | 	Is Forwarded?	|
+	 * +--------------------+
+	 */
+	public static final byte AWFULLP_HEADER_SIZE = (byte) 1;
+	
+	
+	//=== Geo Forwarding Layer ===//
+	/*
+	 * 
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									   TTL										|
+	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos X										|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos Y										|
@@ -38,29 +44,28 @@ public class MessageConstants
 	 * |									Sender ID									|
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
-	 */
-	public static final int FWD_HEADER_SIZE = 28;
-	public static final int ID_SIZE = 8;
-	
-	
-	
-	/*
-	 * Application Layer
 	 * 
+	 * 1. Broadcast
+	 * 2. Distancia maior ? discard : Espera delay baseado em distância
+	 * 3. Recebeu pacote repetido (alguem já enviou) ? discard : Broadcast
+	 * 4. Destino envia ACK
+	 */
+	public static final int GEO_HEADER_SIZE 	= (int) 28;
+	public static final int ID_SIZE 			= (int) 8;
+	
+	
+	
+	//=== Application Layer ===//
+	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									   TYPE										|
 	 * +--------------------------------------------------------------------------------+
-	 * |									   ...										|
-	 * +--------------------------------------------------------------------------------+
-	 *
 	 */
-	public static final int APP_HEADER_SIZE = 4;
+	public static final int APP_HEADER_SIZE 	= (int) 4;
 	
 	
-	public static final int CAR_HELLO 			= (int) 1;
-	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 8;
-	public static final byte TTLCarHelloMessage = (byte) 1;
+	//== Car Hello ==/
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -68,21 +73,27 @@ public class MessageConstants
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
 	 */
+	public static final int CAR_HELLO 			= (int) 1;
+	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 8;
+	public static final byte TTLCarHelloMessage = (byte) 1;
 	
-	public static final int CAR_BREAK 			= (int) 2;
-	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 0;
-	public static final byte TTLBreakMessage 	= (byte) 2;
+	
+	//== Car Break ==/
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
+	public static final int CAR_BREAK 			= (int) 2;
+	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 0;
+	public static final byte TTLBreakMessage 	= (byte) 2;
 	
+	
+	//== Timeout ==//
+	// Not a message. To update terminal
 	public static final int TIMEOUT 			= (int) 3;
-	// No message. To update terminal
 	
-	public static final int CAR_ACCIDENT 		= (int) 4;
-	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 24;
-	public static final byte TTLAccidentMessage = (byte) 3;
+	
+	//== Car accident ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -97,23 +108,30 @@ public class MessageConstants
 	 * |									  Pos y										|
 	 * +--------------------------------------------------------------------------------+
 	 */
+	public static final int CAR_ACCIDENT 		= (int) 4;
+	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 24;
+	public static final byte TTLAccidentMessage = (byte) 3;
 	
+	
+	//== Tower Hello ==//
+	/*
+	 * |		byte		|		byte		|		byte		|		byte		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 */
 	public static final int TOWER_HELLO 		= (int) 5;
 	public static final int TOWER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
+	
+	
+	//== Server Hello ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
-	
 	public static final int SERVER_HELLO 		= (int) 6;
 	public static final int SERVER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
-	/*
-	 * |		byte		|		byte		|		byte		|		byte		|
-	 * +--------------------+-------------------+-------------------+-------------------+
-	 */
 	
-	public static final int CAR_IN_RANGE 		= (int) 7;
-	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 16;
+	
+	//== Car in Range ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -124,13 +142,17 @@ public class MessageConstants
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
 	 */
+	public static final int CAR_IN_RANGE 		= (int) 7;
+	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 16;
 	
-	public static final int SERVER_INFO 		= (int) 8;
-	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 0;
+	
+	//== Server Info ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 */
+	public static final int SERVER_INFO 		= (int) 8;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 0;
 	
 	
 	

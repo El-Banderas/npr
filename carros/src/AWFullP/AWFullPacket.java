@@ -1,22 +1,23 @@
 package AWFullP;
 
 import java.net.DatagramPacket;
+import java.nio.ByteBuffer;
 
 import AWFullP.AppLayer.AWFullPAppLayer;
 import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
-import AWFullP.FwdLayer.FWRInfo;
 
 
 public class AWFullPacket
 {
+	private boolean isForwarded;
 	public AWFullPFwdLayer forwardInfo;
 	public AWFullPAppLayer appLayer;
 	
 	
-	private AWFullPacket(int type, byte[] content)
+	private AWFullPacket(int appType, byte[] content)
 	{
-		switch(type) {
+		switch(appType) {
 		
 			case MessageConstants.CAR_HELLO:
 				this.appLayer = new AWFullPCarHello(content);
@@ -47,7 +48,7 @@ public class AWFullPacket
 				break;
 		
 			default:
-				System.out.println("Type unknown: " + type);
+				System.out.println("Type unknown: " + appType);
 				this.appLayer = new AWFullPAppLayer(content); //do this anyway lmao
 		}
 	}
@@ -55,25 +56,48 @@ public class AWFullPacket
 	public AWFullPacket(byte[] content)
 	{
 		this(AWFullPAppLayer.getType(content), content);
+		
+		ByteBuffer buf = ByteBuffer.wrap(content);
+		this.isForwarded = buf.getInt() == 1;
+		
+		this.forwardInfo = new AWFullPFwdLayer(content);
 	}
 	
 	public AWFullPacket(DatagramPacket packet)
 	{
-		this(AWFullPAppLayer.getType(packet), packet.getData());
+		this(packet.getData());
 	}
 	
 	public AWFullPacket(AWFullPAppLayer appLayer)
 	{
 		this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		this.forwardInfo = new AWFullPFwdLayer();
+		this.isForwarded = false;
+	}
+	
+	public AWFullPacket(AWFullPAppLayer appLayer, AWFullPFwdLayer forwardInfo)
+	{
+		this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		this.forwardInfo = forwardInfo;
+		this.isForwarded = true;
 	}
 	
 	
-	public int getType() {return this.appLayer.getType();}
-	public byte[] getContent() {return this.appLayer.toBytes();}
+	public boolean isForwarded() {return this.isForwarded;}
 	
 	public byte[] toBytes()
 	{
-		return this.appLayer.toBytes();
+		int isForwarded_int = this.isForwarded ? 1 : 0;
+		byte[] forwardInfo_bytes = this.forwardInfo.toBytes();
+		byte[] appLayer_bytes = this.appLayer.toBytes();
+		
+		byte[] buf = ByteBuffer.allocate(MessageConstants.AWFULLP_HEADER_SIZE + MessageConstants.GEO_HEADER_SIZE + appLayer_bytes.length)
+				.putInt(isForwarded_int)
+				.put(forwardInfo_bytes)
+				.put(appLayer_bytes)
+				.array();
+		
+		return buf;
 	}
 	
 	@Override
@@ -81,8 +105,8 @@ public class AWFullPacket
 	{
 		return new String(
 				"{"
-			+	" ; type: " + this.getType()
-			+	" ; size: " + this.getContent().length
+			+	" ; type: " + this.appLayer.getType()
+			+	" ; size: " + this.toBytes().length
 			+	"}"
 			);
 	}

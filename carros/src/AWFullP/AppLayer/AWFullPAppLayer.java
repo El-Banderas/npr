@@ -21,6 +21,10 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	public AWFullPAppLayer(byte[] arr)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(arr);
+		buf.position(
+				MessageConstants.AWFULLP_HEADER_SIZE +
+				MessageConstants.GEO_HEADER_SIZE
+				);
 		
 		this.type = buf.getInt();
 	}
@@ -36,6 +40,10 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 	public static int getType(byte[] arr)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(arr);
+		buf.position(
+				MessageConstants.AWFULLP_HEADER_SIZE +
+				MessageConstants.GEO_HEADER_SIZE
+				);
 		return buf.getInt();
 	}
 

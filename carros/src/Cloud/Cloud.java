@@ -73,7 +73,7 @@ public class Cloud implements Runnable
 
 	private void handleMessage(AWFullPacket message)
 	{
-		switch(message.getType()) {
+		switch(message.appLayer.getType()) {
 		
 			case MessageConstants.SERVER_HELLO:
 				logger.info("Received Hello from server");
