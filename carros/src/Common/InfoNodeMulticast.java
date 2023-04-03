@@ -13,8 +13,7 @@ import java.net.NetworkInterface;
  */
 public class InfoNodeMulticast
 {
-	public final DatagramSocket recv_socket;
-	public final DatagramSocket send_socket;
+	public final DatagramSocket socket;
 	public final InetAddress ip;
 	public final int port;
 
@@ -25,10 +24,21 @@ public class InfoNodeMulticast
 		MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
 
 		multicastSocket.joinGroup(group, netIf);
+		//multicastSocket.joinGroup(Constants.MulticastGroup);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
+		
+		System.out.println(
+				"Group Sock: " + group.toString() + "\n"
+				+ "Interfaces: " + NetworkInterface.getNetworkInterfaces() + "\n"
+				+ "Int DName: " + netIf.getDisplayName() + "\n"
+				+ "Int Name: " + netIf.getName() + "\n"
+				+ "Int idx: " + netIf.getIndex() + "\n"
+				+ "Int Addr: " + netIf.getInetAddresses() + "\n"
+				+ "Int Multi: " + netIf.supportsMulticast() + "\n"
+				+ "Multi Int: " + multicastSocket.getNetworkInterface()
+				);
 
-		this.recv_socket = multicastSocket;
-		this.send_socket = new DatagramSocket(Constants.portMulticast-1); //idk
+		this.socket = multicastSocket;
 		this.port = Constants.portMulticast;
 		this.ip = Constants.MulticastGroup;
 	}
