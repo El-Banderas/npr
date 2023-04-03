@@ -87,12 +87,12 @@ public class AWFullPacket
 	
 	public byte[] toBytes()
 	{
-		int isForwarded_int = this.isForwarded ? 1 : 0;
+		byte isForwarded_byte = (byte) (this.isForwarded ? 1 : 0);
 		byte[] forwardInfo_bytes = this.forwardInfo.toBytes();
 		byte[] appLayer_bytes = this.appLayer.toBytes();
 		
 		byte[] buf = ByteBuffer.allocate(MessageConstants.AWFULLP_HEADER_SIZE + MessageConstants.GEO_HEADER_SIZE + appLayer_bytes.length)
-				.putInt(isForwarded_int)
+				.put(isForwarded_byte)
 				.put(forwardInfo_bytes)
 				.put(appLayer_bytes)
 				.array();

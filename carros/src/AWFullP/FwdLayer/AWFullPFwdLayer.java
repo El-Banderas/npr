@@ -14,7 +14,7 @@ import Common.Position;
 
 public class AWFullPFwdLayer
 {
-	private 	byte 	ttl 		= (byte) 1;
+	private 	int 	ttl 		= (int) 1;
 	private 	int 	posX 		= (int) -1;
 	private 	int 	posY 		= (int) -1;
 	private 	int 	dist 		= (int) -1;
@@ -26,24 +26,24 @@ public class AWFullPFwdLayer
 	{
 	}
 	
-	public AWFullPFwdLayer(byte ttl, String senderID, int seq)
+	public AWFullPFwdLayer(int ttl, String senderID, int seq)
 	{
-		this.ttl = ttl;
-		this.senderID = senderID;
-		this.seq = seq;
+		this.ttl 		= ttl;
+		this.senderID 	= senderID;
+		this.seq 		= seq;
 	}
 	
-	public AWFullPFwdLayer(byte ttl, Position pos, int distance, String id, int seq)
+	public AWFullPFwdLayer(int ttl, Position pos, int distance, String id, int seq)
 	{
-		this.ttl = ttl;
-		this.posX = pos.x;
-		this.posY = pos.y;
-		this.dist = distance;
-		this.senderID = id;
-		this.seq = seq;
+		this.ttl 		= ttl;
+		this.posX 		= pos.x;
+		this.posY 		= pos.y;
+		this.dist 		= distance;
+		this.senderID 	= id;
+		this.seq 		= seq;
 	}
 	
-	public AWFullPFwdLayer(byte ttl, int posX, int posY, int dist, int seq, String senderID)
+	public AWFullPFwdLayer(int ttl, int posX, int posY, int dist, int seq, String senderID)
 	{
 		this.ttl 		= ttl;
 		this.posX 		= posX;
@@ -58,7 +58,7 @@ public class AWFullPFwdLayer
 		ByteBuffer buf = ByteBuffer.wrap(arr);
 		buf.position(MessageConstants.AWFULLP_HEADER_SIZE);
 		
-		this.ttl 	= buf.get();
+		this.ttl 	= buf.getInt();
 		this.posX 	= buf.getInt();
 		this.posY 	= buf.getInt();
 		this.dist 	= buf.getInt();
@@ -75,7 +75,7 @@ public class AWFullPFwdLayer
 	}
 	
 	
-	public byte getTTL() {return this.ttl;}
+	public int getTTL() {return this.ttl;}
 	public int getPosX() {return this.posX;}
 	public int getPosY() {return this.posY;}
 	public int getDist() {return this.dist;}
@@ -87,7 +87,7 @@ public class AWFullPFwdLayer
 		byte[] senderID_bytes = Arrays.copyOf(this.senderID.getBytes(), MessageConstants.ID_SIZE);
 		
 		byte[] buf = ByteBuffer.allocate(MessageConstants.GEO_HEADER_SIZE)
-				.put 	(this.ttl)
+				.putInt (this.ttl)
 				.putInt (this.posX)
 				.putInt (this.posY)
 				.putInt (this.dist)
