@@ -16,7 +16,6 @@ public class SharedClass
 	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
 	private int currentSeqNumberMessage;
-	public String id;
 	private List<TowerInfo> towers;
 	public CarInfo info;
 
@@ -28,7 +27,6 @@ public class SharedClass
 		receivedMessages = new TreeMap<>();
 		this.currentSeqNumberMessage = 0;
 		this.towers = towers;
-		id = info.id;
 		this.info = info;
 	}
 
@@ -55,7 +53,7 @@ public class SharedClass
 	}
 
 	public TowerInfo getNearestTower(){
-		Position carPos = info.pos;
+		Position carPos = info.getPosition();
 		double minDist = Double.MAX_VALUE;
 		TowerInfo closestTower = null;
 		for (TowerInfo oneTower : towers){

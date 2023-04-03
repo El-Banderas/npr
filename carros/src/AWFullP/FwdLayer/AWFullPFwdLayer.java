@@ -15,9 +15,9 @@ import Common.Position;
 public class AWFullPFwdLayer
 {
 	private 	int 	ttl 		= (int) 1;
-	private 	int 	posX 		= (int) -1;
-	private 	int 	posY 		= (int) -1;
-	private 	int 	dist 		= (int) -1;
+	private 	float 	posX 		= (int) -1;
+	private 	float 	posY 		= (int) -1;
+	private 	float 	dist 		= (int) -1;
 	private 	int 	seq 		= (int) -1;
 	private 	String 	senderID 	= "";
 	
@@ -33,7 +33,7 @@ public class AWFullPFwdLayer
 		this.seq 		= seq;
 	}
 	
-	public AWFullPFwdLayer(int ttl, Position pos, int distance, String id, int seq)
+	public AWFullPFwdLayer(int ttl, Position pos, float distance, String id, int seq)
 	{
 		this.ttl 		= ttl;
 		this.posX 		= pos.x;
@@ -43,7 +43,7 @@ public class AWFullPFwdLayer
 		this.seq 		= seq;
 	}
 	
-	public AWFullPFwdLayer(int ttl, int posX, int posY, int dist, int seq, String senderID)
+	public AWFullPFwdLayer(int ttl, float posX, float posY, float dist, int seq, String senderID)
 	{
 		this.ttl 		= ttl;
 		this.posX 		= posX;
@@ -59,9 +59,9 @@ public class AWFullPFwdLayer
 		buf.position(MessageConstants.AWFULLP_HEADER_SIZE);
 		
 		this.ttl 	= buf.getInt();
-		this.posX 	= buf.getInt();
-		this.posY 	= buf.getInt();
-		this.dist 	= buf.getInt();
+		this.posX 	= buf.getFloat();
+		this.posY 	= buf.getFloat();
+		this.dist 	= buf.getFloat();
 		this.seq 	= buf.getInt();
 		
 		byte[] senderID_bytes = new byte[MessageConstants.ID_SIZE];
@@ -76,9 +76,9 @@ public class AWFullPFwdLayer
 	
 	
 	public int getTTL() {return this.ttl;}
-	public int getPosX() {return this.posX;}
-	public int getPosY() {return this.posY;}
-	public int getDist() {return this.dist;}
+	public float getPosX() {return this.posX;}
+	public float getPosY() {return this.posY;}
+	public float getDist() {return this.dist;}
 	public int getSeq()  {return this.seq;}
 	public String getSenderID() {return this.senderID;}
 	
@@ -87,12 +87,12 @@ public class AWFullPFwdLayer
 		byte[] senderID_bytes = Arrays.copyOf(this.senderID.getBytes(), MessageConstants.ID_SIZE);
 		
 		byte[] buf = ByteBuffer.allocate(MessageConstants.GEO_HEADER_SIZE)
-				.putInt (this.ttl)
-				.putInt (this.posX)
-				.putInt (this.posY)
-				.putInt (this.dist)
-				.putInt (this.seq)
-				.put 	(senderID_bytes)
+				.putInt(this.ttl)
+				.putFloat(this.posX)
+				.putFloat(this.posY)
+				.putFloat(this.dist)
+				.putInt(this.seq)
+				.put(senderID_bytes)
 				.array();
 		
 		return buf;
@@ -102,8 +102,8 @@ public class AWFullPFwdLayer
 	public void updateInfo(CarInfo carInfo)
 	{
 		this.ttl -= 1;
-		this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.pos);
-		this.senderID = carInfo.id;
+		this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.getPosition());
+		this.senderID = carInfo.getID();
 	}
 	
 	public String toString()

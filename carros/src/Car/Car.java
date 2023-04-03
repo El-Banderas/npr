@@ -43,7 +43,7 @@ public class Car implements Runnable
 		this.socket = new InfoNodeMulticast("eth0").socket;
 		this.shared = new SharedClass(me, this.socket, towers);
 
-		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.id, -1);
+		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.info.getID(), -1);
 
 		this.myIp = Constants.getMyIp();
 	}
@@ -73,7 +73,7 @@ public class Car implements Runnable
 	{
 		while (true) {
 			try {
-				this.me.pos.updatePosition();
+				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
 				AWFullPacket message = ReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);

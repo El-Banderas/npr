@@ -54,7 +54,7 @@ public class CarTerminal implements Runnable
 	private void breakHandler()
 	{
 		System.out.println("Pressed Break!");
-		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.id, shared.getAndIncrementSeqNumber());
+		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.info.getID(), shared.getAndIncrementSeqNumber());
 		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
 	}
 
@@ -67,9 +67,9 @@ public class CarTerminal implements Runnable
 		accidentBroadcast.scheduleAtFixedRate(wrap(()->
 		{
 			TowerInfo getNearestTower = shared.getNearestTower();
-			int distance = (int) Position.distance(shared.info.pos, getNearestTower.pos);
+			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.pos);
 			
-			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.id, shared.getAndIncrementSeqNumber());
+			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
 			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
 		}
 		), 0, Constants.refreshRate);

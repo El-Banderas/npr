@@ -9,25 +9,37 @@ import java.util.regex.Pattern;
 
 public class Position
 {
-	public int x;
-	public int y;
+	public float x;
+	public float y;
 	public long timestamp;
 
 
-	public Position(int x, int y)
+	public Position(float x, float y)
 	{
 		this.x = x;
 		this.y = y;
 		this.timestamp = System.nanoTime();
 	}
+	
+	public Position(double x, double y)
+	{
+		this((float)x, (float) y);
+	}
 
 	public Position()
 	{
-		this.updatePosition();
+		this.readPosition();
+	}
+	
+	public Position(Position other)
+	{
+		this.x = other.x;
+		this.y = other.y;
+		this.timestamp = other.timestamp;
 	}
 
 
-	public void updatePosition()
+	private void readPosition()
 	{
 		// TODO: Pode ser feito só na inicialização
 
@@ -59,6 +71,11 @@ public class Position
 	public static double distance(Position p1, Position p2)
 	{
 		return Math.sqrt(Math.pow(p2.x-p1.x, 2) +  Math.pow(p2.y-p1.y, 2));
+	}
+	
+	public void apply(Vector v) {
+		this.x += v.x;
+		this.y += v.y;
 	}
 	
 	public String toString()

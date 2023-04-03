@@ -42,8 +42,8 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 		buf.get(carID_bytes, 0, MessageConstants.ID_SIZE);
 		this.carID = new String(carID_bytes).trim();
 		
-		int x = buf.getInt();
-		int y = buf.getInt();
+		float x = buf.getFloat();
+		float y = buf.getFloat();
 		this.location = new Position(x,y);
 	}
 	
@@ -67,8 +67,8 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 				.put(super.toBytes())
 				.put(towerID_bytes)
 				.put(carID_bytes)
-				.putInt(this.location.x)
-				.putInt(this.location.y)
+				.putFloat(this.location.x)
+				.putFloat(this.location.y)
 				.array();
 		
 		return buf;

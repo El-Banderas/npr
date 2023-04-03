@@ -27,7 +27,7 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Hello");
 		
-		AWFullPCarHello aw_app = new AWFullPCarHello(info.id);
+		AWFullPCarHello aw_app = new AWFullPCarHello(info.getID());
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
@@ -47,7 +47,7 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Accident!");
 		
-		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo.id, carInfo.pos);
+		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo.getID(), carInfo.getPosition());
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
