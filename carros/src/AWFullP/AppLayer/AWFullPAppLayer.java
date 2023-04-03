@@ -69,4 +69,13 @@ public class AWFullPAppLayer implements IAWFullPAppLayer
 		from.send(packet);
 	}
 	*/
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; type: " + this.type
+			+	"}"
+			);
+	}
 }

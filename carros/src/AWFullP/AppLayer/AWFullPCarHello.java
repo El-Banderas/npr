@@ -54,4 +54,14 @@ public class AWFullPCarHello extends AWFullPAppLayer
 		
 		return buf;
 	}
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; super: " + super.toString()
+			+	" ; car: " + this.carID
+			+	"}"
+			);
+	}
 }

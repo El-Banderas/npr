@@ -63,4 +63,15 @@ public class AWFullPCarInRange extends AWFullPAppLayer
 		
 		return buf;
 	}
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; super: " + super.toString()
+			+	" ; tower: " + this.towerID
+			+	" ; car: " + this.carID
+			+	"}"
+			);
+	}
 }

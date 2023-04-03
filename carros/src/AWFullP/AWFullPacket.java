@@ -107,8 +107,8 @@ public class AWFullPacket
 	{
 		return new String(
 				"{"
-			+	" ; type: " + this.appLayer.getType()
-			+	" ; size: " + this.toBytes().length
+			+	" ; fwd: " + this.forwardInfo.toString()
+			+	" ; app: " + this.appLayer.toString()
 			+	"}"
 			);
 	}

@@ -73,4 +73,16 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 		
 		return buf;
 	}
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; super: " + super.toString()
+			+	" ; tower: " + this.towerID
+			+	" ; car: " + this.carID
+			+	" ; pos: " + this.location.toString()
+			+	"}"
+			);
+	}
 }

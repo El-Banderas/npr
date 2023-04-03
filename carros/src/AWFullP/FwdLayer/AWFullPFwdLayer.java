@@ -105,4 +105,18 @@ public class AWFullPFwdLayer
 		this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.pos);
 		this.senderID = carInfo.id;
 	}
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; ttl: " + this.ttl
+			+	" ; posX: " + this.posX
+			+	" ; posY: " + this.posY
+			+	" ; dist: " + this.dist
+			+	" ; seq: " + this.seq
+			+	" ; senderID: " + this.senderID
+			+	"}"
+			);
+	}
 }
