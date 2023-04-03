@@ -20,23 +20,12 @@ public class InfoNodeMulticast
 	public InfoNodeMulticast() throws IOException
 	{
 		InetSocketAddress group = new InetSocketAddress(Constants.MulticastGroup, Constants.portMulticast);
-		NetworkInterface netIf = NetworkInterface.getByName("eth1");
+		//NetworkInterface netIf = NetworkInterface.getByName("eth1");
 		MulticastSocket multicastSocket = new MulticastSocket(Constants.portMulticast);
 
-		multicastSocket.joinGroup(group, netIf);
-		//multicastSocket.joinGroup(Constants.MulticastGroup);
+		//multicastSocket.joinGroup(group, netIf);
+		multicastSocket.joinGroup(Constants.MulticastGroup);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
-		
-		System.out.println(
-				"Group Sock: " + group.toString() + "\n"
-				+ "Interfaces: " + NetworkInterface.getNetworkInterfaces() + "\n"
-				+ "Int DName: " + netIf.getDisplayName() + "\n"
-				+ "Int Name: " + netIf.getName() + "\n"
-				+ "Int idx: " + netIf.getIndex() + "\n"
-				+ "Int Addr: " + netIf.getInetAddresses() + "\n"
-				+ "Int Multi: " + netIf.supportsMulticast() + "\n"
-				+ "Multi Int: " + multicastSocket.getNetworkInterface()
-				);
 
 		this.socket = multicastSocket;
 		this.port = Constants.portMulticast;
