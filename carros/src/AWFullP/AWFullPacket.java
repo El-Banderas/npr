@@ -70,14 +70,16 @@ public class AWFullPacket
 	
 	public AWFullPacket(AWFullPAppLayer appLayer)
 	{
-		this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		//this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		this.appLayer = appLayer;
 		this.forwardInfo = new AWFullPFwdLayer();
 		this.isForwarded = false;
 	}
 	
 	public AWFullPacket(AWFullPAppLayer appLayer, AWFullPFwdLayer forwardInfo)
 	{
-		this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		//this(appLayer.getType(), appLayer.toBytes()); //instead of direct attribution, to validate contents
+		this.appLayer = appLayer;
 		this.forwardInfo = forwardInfo;
 		this.isForwarded = true;
 	}
