@@ -110,7 +110,7 @@ public class SendMessages
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)
 	{
-		DatagramPacket packet = new DatagramPacket(message.getContent(), message.getContent().length, to, port);
+		DatagramPacket packet = new DatagramPacket(message.toBytes(), message.toBytes().length, to, port);
 		try {
 			sender.send(packet);
 		} catch (IOException e) {
@@ -121,7 +121,7 @@ public class SendMessages
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message, FWRInfo fwrInfo)
 	{
-		DatagramPacket packet = new DatagramPacket(message.getContent(), message.getContent().length, to, port);
+		DatagramPacket packet = new DatagramPacket(message.toBytes(), message.toBytes().length, to, port);
 		try {
 			sender.send(packet);
 		} catch (IOException e) {

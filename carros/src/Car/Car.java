@@ -88,7 +88,7 @@ public class Car implements Runnable
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-			shared.addEntryMessages(message.getType());
+			shared.addEntryMessages(message.appLayer.getType());
 	}
 
 	private static TimerTask wrap(Runnable r)
