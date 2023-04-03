@@ -25,6 +25,7 @@ public class Tower implements Runnable
 	// Connection information
 	private DatagramSocket wlan_socket; // WLAN
 	private DatagramSocket vanet_socket; //TODO: Multicast
+	private DatagramSocket vanet_socket_send;
 
 	// Others
 	//...
@@ -36,7 +37,10 @@ public class Tower implements Runnable
 		this.local_server = server;
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
-		this.vanet_socket = new InfoNodeMulticast().socket;
+		
+		InfoNodeMulticast inm = new InfoNodeMulticast();
+		this.vanet_socket = inm.recv_socket;
+		this.vanet_socket_send = inm.send_socket;
 	}
 
 
@@ -56,7 +60,7 @@ public class Tower implements Runnable
 		//HashMap<String, Integer> message = new HashMap<>();
 		//message.put(this.me.getName(), this.me.getHowManyCars());
 		SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
-		SendMessages.towerHelloCar(this.vanet_socket);
+		SendMessages.towerHelloCar(this.vanet_socket_send);
 	}
 
 	private void receiveMessages() {

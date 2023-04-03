@@ -45,12 +45,14 @@ public class ReceiveMessages
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		receiveSocket.receive(packet);
 		
-		if (packet.getAddress().equals(myIp))
-			logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ")\n"); //throw new SelfCarMessage();
-		
 		AWFullPacket aw = new AWFullPacket(buf);
 
 		String before = aw.toString();
+		
+		if (packet.getAddress().equals(myIp)) {
+			logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ", message: " + before + ")\n");
+			throw new SelfCarMessage();
+		}
 		
 		// Maybe forward message?
 		// TODO: Check Distance and duplicate messages

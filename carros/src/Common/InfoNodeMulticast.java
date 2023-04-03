@@ -13,7 +13,8 @@ import java.net.NetworkInterface;
  */
 public class InfoNodeMulticast
 {
-	public final DatagramSocket socket;
+	public final DatagramSocket recv_socket;
+	public final DatagramSocket send_socket;
 	public final InetAddress ip;
 	public final int port;
 
@@ -26,7 +27,8 @@ public class InfoNodeMulticast
 		multicastSocket.joinGroup(group, netIf);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
 
-		this.socket = multicastSocket;
+		this.recv_socket = multicastSocket;
+		this.send_socket = new DatagramSocket(Constants.portMulticast-1); //idk
 		this.port = Constants.portMulticast;
 		this.ip = Constants.MulticastGroup;
 	}
