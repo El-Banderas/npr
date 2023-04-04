@@ -38,7 +38,7 @@ public class ReceiveMessages
 	 * @return
 	 * @throws IOException
 	 */
-	public static AWFullPacket parseMessageCar(DatagramSocket receiveSocket, InetAddress myIp) throws IOException, SelfCarMessage
+	public static AWFullPacket parseMessageCar(DatagramSocket receiveSocket, InetAddress myIp, String myID) throws IOException, SelfCarMessage
 	{
 		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -48,7 +48,7 @@ public class ReceiveMessages
 
 		String before = aw.toString();
 		
-		if (packet.getAddress().equals(myIp)) {
+		if (packet.getAddress().equals(myIp) || aw.forwardInfo.getSenderID().equals(myID)) {
 			if (debug) logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ", message: " + before + ")\n");
 			throw new SelfCarMessage();
 		}

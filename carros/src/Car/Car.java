@@ -81,7 +81,7 @@ public class Car implements Runnable
 			try {
 				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp);
+				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);
 				handleMessage(message);
 			} catch (IOException e) {
