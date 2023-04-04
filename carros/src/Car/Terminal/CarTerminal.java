@@ -62,19 +62,19 @@ public class CarTerminal implements Runnable
 	private void accidentHandler()
 	{
 		System.out.println("Accident happened!");
-
-		this.accidentBroadcast = new Timer(false);
-		accidentBroadcast.scheduleAtFixedRate(wrap(()->
-		{
+// Meti em comentário porque é mais fácil para ver a implementação
+	//	this.accidentBroadcast = new Timer(false);
+	//	accidentBroadcast.scheduleAtFixedRate(wrap(()->
+//		{
 			TowerInfo getNearestTower = shared.getNearestTower();
 			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.pos);
 			
 			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
 			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
-		}
-		), 0, Constants.refreshRate);
+//		}
+//		), 0, Constants.refreshRate);
 		
-		this.inAccident = true;
+//		this.inAccident = true;
 	}
 
 	private void stopAccidentHandler()
