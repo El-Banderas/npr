@@ -101,9 +101,13 @@ public class Car implements Runnable
 
 				boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 				if (storeUntilConfirmed) {
+					System.out.println("1 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+
 					queueToResendMessages.put(message.forwardInfo, message);
 				}
 				else {
+					System.out.println("2 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+
 					messagesAlreadyReceived.add(message.forwardInfo);
 				}
 			}
@@ -113,7 +117,10 @@ public class Car implements Runnable
 	}
 
 	private boolean alreadyReceivedMessage(AWFullPacket message){
-
+/*for (AWFullPFwdLayer x :messagesAlreadyReceived ){
+	System.out.println(x);
+}*/
+		System.out.println("Contêm mensagem? " + messagesAlreadyReceived.contains(message));
 		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
 	}
 
