@@ -124,10 +124,17 @@ public class AWFullPFwdLayer
 	// Necessary methods to use this class as key in MAPS.
 	@Override
 	public boolean equals(Object o) {
+		/*
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		AWFullPFwdLayer that = (AWFullPFwdLayer) o;
 		return seq == that.seq && Objects.equals(senderID, that.senderID);
+		 */
+		AWFullPFwdLayer that = (AWFullPFwdLayer) o;
+
+		int hash1 = Objects.hash(that.seq, that.senderID);
+		int hash2 = Objects.hash(this.seq, this.senderID);
+		return hash1 == hash2;
 	}
 
 	@Override
