@@ -38,7 +38,7 @@ public class ReceiveMessages
 	 * @return
 	 * @throws IOException
 	 */
-	public static AWFullPacket receiveMessageCar(DatagramSocket receiveSocket, InetAddress myIp) throws IOException, SelfCarMessage
+	public static AWFullPacket parseMessageCar(DatagramSocket receiveSocket, InetAddress myIp) throws IOException, SelfCarMessage
 	{
 		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -69,14 +69,11 @@ public class ReceiveMessages
 		String before = aw.toString();
 
 		// TODO: Check Distance and duplicate messages
-		if (aw.forwardInfo.getTTL() > 1) {
 			aw.forwardInfo.updateInfo(carInfo);
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
 
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
-		} else {
-			if (debug) logger.info("\nDiscarding packet " + before );
-		}
+
 		// TODO: Depois verificar se mensagem é do tipo de esperar ou não.
 		// Se calhar, se tiver destino é para reencaminhar.
 		return false;

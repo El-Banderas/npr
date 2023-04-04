@@ -80,7 +80,7 @@ public class Car implements Runnable
 			try {
 				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.receiveMessageCar(this.socket, myIp);
+				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp);
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);
 				handleMessage(message);
 			} catch (IOException e) {
@@ -93,16 +93,28 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		if (!alreadyReceivedMessage(message)) {
-			boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-			if (storeUntilConfirmed) queueToResendMessages.put(message.forwardInfo, message);
-			else messagesAlreadyReceived.add(message.forwardInfo);
+
 			shared.addEntryMessages(message.appLayer.getType());
+
+			if (message.forwardInfo.getTTL() > 1){
+				boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+				if (storeUntilConfirmed) {
+					queueToResendMessages.put(message.forwardInfo, message);
+				}
+				else {
+					System.out.println("Armazena mensagem com: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+					messagesAlreadyReceived.add(message.forwardInfo);
+				}
+			}
 
 		}
 		else System.out.println("Received duplicate message");
 	}
 
 	private boolean alreadyReceivedMessage(AWFullPacket message){
+		for (AWFullPFwdLayer x : messagesAlreadyReceived){
+			System.out.println(x);
+		}
 		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
 	}
 
