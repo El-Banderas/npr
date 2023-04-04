@@ -93,7 +93,7 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		// TODO: O forward message devia estar fora dos ifs, é para testar
-		if (!alreadyReceivedMessage(message)) {
+		if (!alreadyReceivedMessage(message) || message.getType() == MessageConstants.CAR_HELLO ) {
 			// Only store new messages if they are hello.
 			// Otherwise, maybe was already received
 			shared.addEntryMessages(message.appLayer.getType());
@@ -146,7 +146,7 @@ public class Car implements Runnable
 	 */
 	private boolean alreadyReceivedMessage(AWFullPacket message){
 
-		return message.getType() != MessageConstants.CAR_HELLO || queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
+		return queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 
 	private static TimerTask wrap(Runnable r)
