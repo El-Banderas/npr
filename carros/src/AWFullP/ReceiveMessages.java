@@ -66,9 +66,6 @@ public class ReceiveMessages
 		// TODO: Check Distance and duplicate messages
 			aw.forwardInfo.updateInfo(carInfo);
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
-			if (aw.appLayer.getType() != CAR_HELLO ) {
-				System.out.println("Send message type: " +aw.appLayer.getType() );
-			}
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
 
 	}
