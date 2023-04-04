@@ -107,13 +107,11 @@ public class Car implements Runnable
 
 					queueToResendMessages.put(message.forwardInfo, message);
 					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-					shared.addEntryMessages(message.appLayer.getType());
 				}
 				else {
 					if (!messagesAlreadyReceived.contains(message.forwardInfo)){
 						messagesAlreadyReceived.add(message.forwardInfo);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-						shared.addEntryMessages(message.appLayer.getType());
 
 					}
 					else {
