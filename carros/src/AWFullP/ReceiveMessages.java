@@ -52,8 +52,8 @@ public class ReceiveMessages
 			if (debug) logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ", message: " + before + ")\n");
 			throw new SelfCarMessage();
 		}
-		
 
+		System.out.println("Recebeu de : " + aw.forwardInfo.getSenderID());
 		
 		return aw;
 	}
@@ -70,6 +70,7 @@ public class ReceiveMessages
 
 		// TODO: Check Distance and duplicate messages
 			aw.forwardInfo.updateInfo(carInfo);
+		System.out.println("Envia mensagem com id: " + aw.forwardInfo.getSenderID());
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
 
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
