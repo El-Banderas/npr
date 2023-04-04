@@ -93,22 +93,30 @@ public class Car implements Runnable
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
+		// TODO: O forward message devia estar fora dos ifs, é para testar
 		if (!alreadyReceivedMessage(message)) {
 			shared.addEntryMessages(message.appLayer.getType());
 
 			if (message.forwardInfo.getTTL() > 1){
 				System.out.println("New message: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 
-				boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-				if (storeUntilConfirmed) {
+				// Check if we should hold or just send message.
+				// So, we could store in map or set.
+				if (message.holdUntilConfirmation()) {
 					System.out.println("1 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 
 					queueToResendMessages.put(message.forwardInfo, message);
+					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+
 				}
 				else {
 					System.out.println("2 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
-
+					int oldSize = messagesAlreadyReceived.size();
 					messagesAlreadyReceived.add(message.forwardInfo);
+					int newSize = messagesAlreadyReceived.size();
+					if (newSize > oldSize)
+						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+
 				}
 			}
 

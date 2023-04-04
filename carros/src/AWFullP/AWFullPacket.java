@@ -107,6 +107,11 @@ public class AWFullPacket
 		
 		return buf;
 	}
+
+	public boolean holdUntilConfirmation(){
+		if (forwardInfo.getDist() <= 0) return false;
+		return true;
+	}
 	
 	@Override
 	public String toString()
