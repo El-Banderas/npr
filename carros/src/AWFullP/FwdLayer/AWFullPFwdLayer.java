@@ -32,6 +32,10 @@ public class AWFullPFwdLayer
 		this.ttl 		= ttl;
 		this.senderID 	= senderID;
 		this.seq 		= seq;
+		this.dist 		= -1;
+		this.posX 		= -1;
+		this.posY 		= -1;
+
 	}
 	
 	public AWFullPFwdLayer(int ttl, Position pos, float distance, String id, int seq)
