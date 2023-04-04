@@ -128,7 +128,7 @@ public class MessageConstants
 	 */
 	public static final int CAR_BREAK 			= (int) 2;
 	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 24;
-	public static final byte TTLBreakMessage 	= (byte) 2;
+	public static final byte TTLBreakMessage 	= (byte) 6;
 	
 	
 	//== Timeout ==//
