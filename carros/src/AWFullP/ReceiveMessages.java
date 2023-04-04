@@ -47,7 +47,7 @@ public class ReceiveMessages
 		AWFullPacket aw = new AWFullPacket(buf);
 
 		String before = aw.toString();
-		System.out.println("Recebeu mensagem de: " + packet.getAddress());
+		System.out.println("Recebeu mensagem de próprio: "+packet.getAddress().equals(myIp) + " Pacote: " + packet.getAddress() + " EU:  " + myIp.toString());
 		if (packet.getAddress().equals(myIp) || aw.forwardInfo.getSenderID().equals(myID)) {
 			if (debug) logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ", message: " + before + ")\n");
 			throw new SelfCarMessage();
