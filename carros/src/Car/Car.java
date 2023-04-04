@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 import AWFullP.AWFullPacket;
@@ -93,16 +94,16 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		if (!alreadyReceivedMessage(message)) {
-
 			shared.addEntryMessages(message.appLayer.getType());
 
 			if (message.forwardInfo.getTTL() > 1){
+				System.out.println("New message: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+
 				boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 				if (storeUntilConfirmed) {
 					queueToResendMessages.put(message.forwardInfo, message);
 				}
 				else {
-					System.out.println("Armazena mensagem com: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 					messagesAlreadyReceived.add(message.forwardInfo);
 				}
 			}
