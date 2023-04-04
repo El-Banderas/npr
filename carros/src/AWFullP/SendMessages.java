@@ -21,6 +21,7 @@ import Common.TowerInfo;
 public class SendMessages
 {
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
+	private static boolean debug = false;
 	
 	
 	public static void carHello(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)
@@ -82,7 +83,7 @@ public class SendMessages
 		
 		try {
 			sender.send(packet);
-			logger.info("\nSent packet " + message.toString() + " to " + to.toString() + ":" + port + "\n");
+			if (debug) logger.info("\nSent packet " + message.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + message.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
@@ -97,7 +98,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.info("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");
+			if (debug) logger.info("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage", e);
@@ -114,7 +115,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.info("\nSent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort() + "\n");
+			if (debug) logger.info("\nSent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort() + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort());
 			logger.throwing("SendMessages", "sendMessage", e);
