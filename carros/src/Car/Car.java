@@ -96,13 +96,12 @@ public class Car implements Runnable
 			shared.addEntryMessages(message.appLayer.getType());
 
 			if (message.forwardInfo.getTTL() > 1){
-				System.out.println("New message: " + message.getType() + " de " + message.forwardInfo.getSenderID());
 
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
 				try {
 					if (message.hasDestinationPosition(me.getPosition())) {
-	
+
 						queueToResendMessages.put(message.forwardInfo, message);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					}
@@ -117,6 +116,7 @@ public class Car implements Runnable
 						}
 					}
 				} catch (DontForward e) {
+					System.out.println("Não vou reencaminhar");
 					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
 
 				}
