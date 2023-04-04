@@ -117,9 +117,9 @@ public class Car implements Runnable
 	}
 
 	private boolean alreadyReceivedMessage(AWFullPacket message){
-/*for (AWFullPFwdLayer x :messagesAlreadyReceived ){
+for (AWFullPFwdLayer x :messagesAlreadyReceived ){
 	System.out.println(x);
-}*/
+}
 		System.out.println("Contêm mensagem? " + messagesAlreadyReceived.contains(message));
 		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
 	}
