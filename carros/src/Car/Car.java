@@ -133,7 +133,6 @@ public class Car implements Runnable
 			}
 
 		}
-		else System.out.println("Received duplicate message");
 	}
 
 	/**
@@ -144,7 +143,7 @@ public class Car implements Runnable
 	 */
 	private boolean alreadyReceivedMessage(AWFullPacket message){
 
-		return message.getType() == MessageConstants.CAR_HELLO || queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
+		return message.getType() != MessageConstants.CAR_HELLO || queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 
 	private static TimerTask wrap(Runnable r)
