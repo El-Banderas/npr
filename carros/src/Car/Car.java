@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import AWFullP.AWFullPacket;
@@ -105,8 +104,7 @@ public class Car implements Runnable
 
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
-				if (message.holdUntilConfirmation()) {
-					System.out.println("1 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+				if (message.hasDestinationPosition()) {
 
 					queueToResendMessages.put(message.forwardInfo, message);
 					ReceiveMessages.maybeForwardMessage(message, this.socket, me);

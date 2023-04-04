@@ -111,7 +111,7 @@ public class AWFullPacket
 	public int getType(){
 		return appLayer.getType();
 	}
-	public boolean holdUntilConfirmation(){
+	public boolean hasDestinationPosition(){
 		if (forwardInfo.getDist() <= 0) return false;
 		return true;
 	}

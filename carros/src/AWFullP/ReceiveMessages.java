@@ -64,7 +64,10 @@ public class ReceiveMessages
 		String before = aw.toString();
 
 		// TODO: Check Distance and duplicate messages
+		System.out.println("Old TTL: " + aw.forwardInfo.getTTL());
 			aw.forwardInfo.updateInfo(carInfo);
+		System.out.println("New TTL: " + aw.forwardInfo.getTTL());
+
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
 
