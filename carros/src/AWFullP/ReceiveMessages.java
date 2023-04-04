@@ -34,13 +34,11 @@ public class ReceiveMessages
 	 * Receives and forwards, when in case, received messages.
 	 *
 	 * @param receiveSocket - To receive messages.
-	 * @param sendSocket    - To resend messages, with TTL and positions changed.
 	 * @param myIp          - To filter messages send from the same car.
-	 * @param carInfo       - To update messages that are send, with position and ID of car.
 	 * @return
 	 * @throws IOException
 	 */
-	public static AWFullPacket forwardHandleMessage(DatagramSocket receiveSocket, DatagramSocket sendSocket, InetAddress myIp, CarInfo carInfo) throws IOException, SelfCarMessage
+	public static AWFullPacket receiveMessageCar(DatagramSocket receiveSocket, InetAddress myIp) throws IOException, SelfCarMessage
 	{
 		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
@@ -55,16 +53,22 @@ public class ReceiveMessages
 			throw new SelfCarMessage();
 		}
 		
-		// Maybe forward message?
+
+		
+		return aw;
+	}
+
+	public static void maybeForwardMessage(AWFullPacket aw, DatagramSocket sendSocket, CarInfo carInfo){
+		String before = aw.toString();
+
 		// TODO: Check Distance and duplicate messages
 		if (aw.forwardInfo.getTTL() > 1) {
 			aw.forwardInfo.updateInfo(carInfo);
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
-			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw + " from " + packet.getAddress().toString() + ":" + packet.getPort() + " to " + Constants.MulticastGroup.toString() + ":" + Constants.portMulticast + "\n");
+
+			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
 		} else {
-			if (debug) logger.info("\nDiscarding packet " + before + " from " + packet.getAddress().toString() + ":" + packet.getPort() + " to " + Constants.MulticastGroup.toString() + ":" + Constants.portMulticast + "\n");
+			if (debug) logger.info("\nDiscarding packet " + before );
 		}
-		
-		return aw;
 	}
 }

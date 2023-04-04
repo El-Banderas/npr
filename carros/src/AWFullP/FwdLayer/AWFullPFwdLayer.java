@@ -3,6 +3,7 @@ package AWFullP.FwdLayer;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.Objects;
 
 import AWFullP.MessageConstants;
 import Common.CarInfo;
@@ -118,5 +119,18 @@ public class AWFullPFwdLayer
 			+	" ; senderID: " + this.senderID
 			+	"}"
 			);
+	}
+	// Necessary methods to use this class as key in MAPS.
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		AWFullPFwdLayer that = (AWFullPFwdLayer) o;
+		return seq == that.seq && Objects.equals(senderID, that.senderID);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(seq, senderID);
 	}
 }

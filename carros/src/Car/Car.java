@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
@@ -34,6 +32,11 @@ public class Car implements Runnable
 	// Others
 	private SharedClass shared; //for CLI
 	private AWFullPFwdLayer fwrInfoHelloCar;
+	// This map is used to resend messages that are not confirmed
+	private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages;
+	// This map is to store already received messages
+	// TODO: Se calhar depois apagar mensagens mais antigas? Para não acumular imensas
+	private Set<AWFullPFwdLayer> messagesAlreadyReceived;
 
 
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
@@ -75,7 +78,7 @@ public class Car implements Runnable
 			try {
 				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.forwardHandleMessage(this.socket, this.socket, myIp, me);
+				AWFullPacket message = ReceiveMessages.receiveMessageCar(this.socket, myIp);
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);
 				handleMessage(message);
 			} catch (IOException e) {
@@ -86,7 +89,16 @@ public class Car implements Runnable
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-		shared.addEntryMessages(message.appLayer.getType());
+		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
+		if (!alreadyReceivedMessage(message)) {
+			ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+			shared.addEntryMessages(message.appLayer.getType());
+		}
+		else System.out.println("Received duplicate message");
+	}
+
+	private boolean alreadyReceivedMessage(AWFullPacket message){
+		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
 	}
 
 	private static TimerTask wrap(Runnable r)
