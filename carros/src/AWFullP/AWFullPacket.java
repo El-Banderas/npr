@@ -114,12 +114,10 @@ public class AWFullPacket
 	}
 	public boolean hasDestinationPosition(Position currentPosition) throws DontForward {
 		if (forwardInfo.getDist() <= 0)
-		{
-			Position destiny = forwardInfo.getPosition();
-			double currentDistance = Position.distance(currentPosition, destiny);
-			if (currentDistance > forwardInfo.getDist()) throw new DontForward();
 			return false;
-		}
+		Position destiny = forwardInfo.getPosition();
+		double currentDistance = Position.distance(currentPosition, destiny);
+		if (currentDistance > forwardInfo.getDist()) throw new DontForward();
 		return true;
 	}
 	
