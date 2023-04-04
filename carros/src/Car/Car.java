@@ -96,8 +96,7 @@ public class Car implements Runnable
 		if (!alreadyReceivedMessage(message)) {
 			// Only store new messages if they are hello.
 			// Otherwise, maybe was already received
-			if (message.getType() == MessageConstants.CAR_HELLO)
-				shared.addEntryMessages(message.appLayer.getType());
+			shared.addEntryMessages(message.appLayer.getType());
 
 			if (message.forwardInfo.getTTL() > 1){
 				//System.out.println("New message: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
@@ -117,6 +116,9 @@ public class Car implements Runnable
 						shared.addEntryMessages(message.appLayer.getType());
 
 					}
+					else {
+						System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
+					}
 					/*
 					int oldSize = messagesAlreadyReceived.size();
 					messagesAlreadyReceived.add(message.forwardInfo);
@@ -134,14 +136,15 @@ public class Car implements Runnable
 		else System.out.println("Received duplicate message");
 	}
 
+	/**
+	 * Here we check if a message has been received before. It can be stored in two places, or be a Hello Message.
+	 * Hellos message are not stored.
+	 * @param message
+	 * @return If the message is new or not to this car.
+	 */
 	private boolean alreadyReceivedMessage(AWFullPacket message){
-		/*
-for (AWFullPFwdLayer x :messagesAlreadyReceived ){
-	System.out.println(x);
-}
-		System.out.println("Contêm mensagem? " + messagesAlreadyReceived.contains(message));
-		 */
-		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
+
+		return message.getType() == MessageConstants.CAR_HELLO || queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 
 	private static TimerTask wrap(Runnable r)
