@@ -110,12 +110,14 @@ public class Car implements Runnable
 
 				}
 				else {
-					System.out.println("2 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 					int oldSize = messagesAlreadyReceived.size();
 					messagesAlreadyReceived.add(message.forwardInfo);
 					int newSize = messagesAlreadyReceived.size();
-					if (newSize > oldSize)
+					if (newSize > oldSize){
+						System.out.println("2 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+
+					}
 
 				}
 			}
