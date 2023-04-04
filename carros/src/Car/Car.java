@@ -114,7 +114,7 @@ public class Car implements Runnable
 					messagesAlreadyReceived.add(message.forwardInfo);
 					int newSize = messagesAlreadyReceived.size();
 					if (newSize > oldSize){
-						
+
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 
 					}
