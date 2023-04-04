@@ -58,7 +58,14 @@ public class ReceiveMessages
 		return aw;
 	}
 
-	public static void maybeForwardMessage(AWFullPacket aw, DatagramSocket sendSocket, CarInfo carInfo){
+	/**
+	 * Checks if the packet should be forwarded, and says if we should resend in until confirmation received.
+	 * @param aw Packet to resend with old information
+	 * @param sendSocket Socket to send message
+	 * @param carInfo Information necessary to update the packet
+	 * @return If we should resend the message until receive confirmation.
+	 */
+	public static boolean maybeForwardMessage(AWFullPacket aw, DatagramSocket sendSocket, CarInfo carInfo){
 		String before = aw.toString();
 
 		// TODO: Check Distance and duplicate messages
@@ -70,5 +77,8 @@ public class ReceiveMessages
 		} else {
 			if (debug) logger.info("\nDiscarding packet " + before );
 		}
+		// TODO: Depois verificar se mensagem é do tipo de esperar ou não.
+		// Se calhar, se tiver destino é para reencaminhar.
+		return true;
 	}
 }

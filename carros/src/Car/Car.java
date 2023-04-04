@@ -93,8 +93,11 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		if (!alreadyReceivedMessage(message)) {
-			ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+			boolean storeUntilConfirmed = ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+			if (storeUntilConfirmed) queueToResendMessages.put(message.forwardInfo, message);
+			else messagesAlreadyReceived.add(message.forwardInfo);
 			shared.addEntryMessages(message.appLayer.getType());
+
 		}
 		else System.out.println("Received duplicate message");
 	}
