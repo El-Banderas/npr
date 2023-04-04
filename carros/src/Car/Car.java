@@ -115,6 +115,9 @@ public class Car implements Runnable
 					int newSize = messagesAlreadyReceived.size();
 					if (newSize > oldSize){
 						System.out.println("2 Adiciona: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+						for (AWFullPFwdLayer x :messagesAlreadyReceived ){
+							System.out.println(x);
+						}
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 
 					}
