@@ -49,6 +49,8 @@ public class Car implements Runnable
 		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.info.getID(), -1);
 
 		this.myIp = Constants.getMyIp();
+		this.queueToResendMessages = new HashMap<>();
+		this.messagesAlreadyReceived = new HashSet<>();
 	}
 
 
