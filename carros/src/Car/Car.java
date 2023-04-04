@@ -98,7 +98,7 @@ public class Car implements Runnable
 			shared.addEntryMessages(message.appLayer.getType());
 
 			if (message.forwardInfo.getTTL() > 1){
-				System.out.println("New message: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
+				//System.out.println("New message: " + message.forwardInfo.getSeq() + " de " + message.forwardInfo.getSenderID());
 
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
@@ -127,10 +127,12 @@ public class Car implements Runnable
 	}
 
 	private boolean alreadyReceivedMessage(AWFullPacket message){
+		/*
 for (AWFullPFwdLayer x :messagesAlreadyReceived ){
 	System.out.println(x);
 }
 		System.out.println("Contêm mensagem? " + messagesAlreadyReceived.contains(message));
+		 */
 		return queueToResendMessages.containsKey(message) || messagesAlreadyReceived.contains(message);
 	}
 
