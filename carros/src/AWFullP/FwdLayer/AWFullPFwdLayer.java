@@ -100,11 +100,12 @@ public class AWFullPFwdLayer
 	}
 	
 	// We don't change seq number because the message is relative to the original car, not the cars that resend.
+	// And we don't change id
 	public void updateInfo(CarInfo carInfo)
 	{
 		this.ttl -= 1;
 		this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.getPosition());
-		this.senderID = carInfo.getID();
+		//this.senderID = carInfo.getID();
 	}
 	
 	public String toString()
