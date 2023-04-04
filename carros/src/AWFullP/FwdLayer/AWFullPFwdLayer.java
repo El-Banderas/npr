@@ -108,7 +108,8 @@ public class AWFullPFwdLayer
 	public void updateInfo(CarInfo carInfo)
 	{
 		this.ttl -= 1;
-		this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.getPosition());
+		if (this.dist >= 0)
+			this.dist = (int) Position.distance(new Position(this.posX, this.posY), carInfo.getPosition());
 		//this.senderID = carInfo.getID();
 	}
 	
