@@ -79,6 +79,6 @@ public class ReceiveMessages
 		}
 		// TODO: Depois verificar se mensagem é do tipo de esperar ou não.
 		// Se calhar, se tiver destino é para reencaminhar.
-		return true;
+		return false;
 	}
 }
