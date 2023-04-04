@@ -108,8 +108,10 @@ public class AWFullPacket
 		return buf;
 	}
 
+	public int getType(){
+		return appLayer.getType();
+	}
 	public boolean holdUntilConfirmation(){
-		System.out.println("DistÂncia: "+ forwardInfo.getDist());
 		if (forwardInfo.getDist() <= 0) return false;
 		return true;
 	}
