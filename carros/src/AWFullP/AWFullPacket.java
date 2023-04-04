@@ -109,6 +109,7 @@ public class AWFullPacket
 	}
 
 	public boolean holdUntilConfirmation(){
+		System.out.println("DistÂncia: "+ forwardInfo.getDist());
 		if (forwardInfo.getDist() <= 0) return false;
 		return true;
 	}
