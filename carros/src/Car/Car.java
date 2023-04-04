@@ -6,10 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import AWFullP.AWFullPacket;
-import AWFullP.MessageConstants;
-import AWFullP.ReceiveMessages;
-import AWFullP.SendMessages;
+import AWFullP.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.FwdLayer.SelfCarMessage;
 import Car.Terminal.CarTerminal;
@@ -103,29 +100,24 @@ public class Car implements Runnable
 
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
-				if (message.hasDestinationPosition()) {
-
-					queueToResendMessages.put(message.forwardInfo, message);
-					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-				}
-				else {
-					if (!messagesAlreadyReceived.contains(message.forwardInfo)){
-						messagesAlreadyReceived.add(message.forwardInfo);
+				try {
+					if (message.hasDestinationPosition(me.getPosition())) {
+	
+						queueToResendMessages.put(message.forwardInfo, message);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-
 					}
 					else {
-						System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
-					}
-					/*
-					int oldSize = messagesAlreadyReceived.size();
-					messagesAlreadyReceived.add(message.forwardInfo);
-					int newSize = messagesAlreadyReceived.size();
-					if (newSize > oldSize){
-						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+						if (!messagesAlreadyReceived.contains(message.forwardInfo)){
+							messagesAlreadyReceived.add(message.forwardInfo);
+							ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 
+						}
+						else {
+							System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
+						}
 					}
-					 */
+				} catch (DontForward e) {
+					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
 
 				}
 			}

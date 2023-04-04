@@ -207,9 +207,10 @@ public class MessageConstants
 	 */
 	public static final int SERVER_INFO 		= (int) 8;
 	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 0;
-	
-	
-	
+
+
+	public static final int IGNORED_MESSAGE_DISTANCE = (int) 9;
+
 	public static String convertTypeString(int type)
 	{
 		switch(type) {
@@ -225,6 +226,8 @@ public class MessageConstants
 				return "Accident Happened";
 			case CAR_IN_RANGE:
 				return "Cars in Range";
+			case IGNORED_MESSAGE_DISTANCE:
+				return "Ignored message because distance";
 			default:
 				return "Type unknown";
 		}

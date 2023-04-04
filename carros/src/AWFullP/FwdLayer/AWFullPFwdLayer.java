@@ -81,8 +81,9 @@ public class AWFullPFwdLayer
 	
 	
 	public int getTTL() {return this.ttl;}
-	public float getPosX() {return this.posX;}
-	public float getPosY() {return this.posY;}
+	public Position getPosition() {
+		return new Position(this.posX, this.posY);
+	}
 	public float getDist() {return this.dist;}
 	public int getSeq()  {return this.seq;}
 	public String getSenderID() {return this.senderID;}

@@ -12,6 +12,7 @@ import AWFullP.AppLayer.AWFullPServerHello;
 import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
+import Common.Position;
 
 
 public class AWFullPacket
@@ -111,8 +112,14 @@ public class AWFullPacket
 	public int getType(){
 		return appLayer.getType();
 	}
-	public boolean hasDestinationPosition(){
-		if (forwardInfo.getDist() <= 0) return false;
+	public boolean hasDestinationPosition(Position currentPosition) throws DontForward {
+		if (forwardInfo.getDist() <= 0)
+		{
+			Position destiny = forwardInfo.getPosition();
+			double currentDistance = Position.distance(currentPosition, destiny);
+			if (currentDistance > forwardInfo.getDist()) throw new DontForward();
+			return false;
+		}
 		return true;
 	}
 	
