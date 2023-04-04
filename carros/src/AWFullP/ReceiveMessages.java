@@ -10,6 +10,8 @@ import AWFullP.FwdLayer.SelfCarMessage;
 import Common.CarInfo;
 import Common.Constants;
 
+import static AWFullP.MessageConstants.CAR_HELLO;
+
 
 public class ReceiveMessages
 {
@@ -47,7 +49,7 @@ public class ReceiveMessages
 		AWFullPacket aw = new AWFullPacket(buf);
 
 		String before = aw.toString();
-		System.out.println("Recebeu mensagem de próprio: "+packet.getAddress().equals(myIp) + " Pacote: " + packet.getAddress() + " EU:  " + myIp.toString());
+		//System.out.println("Recebeu mensagem de próprio: "+packet.getAddress().equals(myIp) + " Pacote: " + packet.getAddress() + " EU:  " + myIp.toString());
 		if (packet.getAddress().equals(myIp) || aw.forwardInfo.getSenderID().equals(myID)) {
 			if (debug) logger.info("\nPossible self message (me: " + myIp + ", other: " + packet.getAddress() + ", message: " + before + ")\n");
 			throw new SelfCarMessage();
@@ -64,7 +66,9 @@ public class ReceiveMessages
 		// TODO: Check Distance and duplicate messages
 			aw.forwardInfo.updateInfo(carInfo);
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
-
+			if (aw.appLayer.getType() != CAR_HELLO ) {
+				System.out.println("Send message type: " +aw.appLayer.getType() );
+			}
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
 
 	}
