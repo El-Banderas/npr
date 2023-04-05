@@ -42,7 +42,8 @@ public class Tower implements Runnable
 
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		// Send Hellos
 		Timer timer_1 = new Timer(false);
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
@@ -53,14 +54,13 @@ public class Tower implements Runnable
 	}
 
 
-	private void sendHellos() {
-		//HashMap<String, Integer> message = new HashMap<>();
-		//message.put(this.me.getName(), this.me.getHowManyCars());
-		//SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
+	private void sendHellos()
+	{
 		SendMessages.towerAnnouncement(this.vanet_socket);
 	}
 
-	private void receiveMessages() {
+	private void receiveMessages()
+	{
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
@@ -72,16 +72,16 @@ public class Tower implements Runnable
 		}
 	}
 
-	private void handleMessage(AWFullPacket message) {
-		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
+	private void handleMessage(AWFullPacket message)
+	{
 		if (message.appLayer.getType() == MessageConstants.CAR_IN_RANGE || message.appLayer.getType() == MessageConstants.CAR_ACCIDENT) {
 			sendToServer(message);
 		}
 	}
 
-	private void sendToServer(AWFullPacket message) {
-		//SendMessages.towerHelloServer(this.wlan_socket, message);
-		//SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message); //TODO
+	private void sendToServer(AWFullPacket message)
+	{
+		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
 
 	private static TimerTask wrap(Runnable r)

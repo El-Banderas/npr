@@ -171,9 +171,11 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos y										|
 	 * +--------------------------------------------------------------------------------+
+	 * |									Max Speed									|
+	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int TOWER_ANNOUNCE 		= (int) 5;
-	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 16;
+	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 20;
 	
 	
 	//== Server Hello ==//
