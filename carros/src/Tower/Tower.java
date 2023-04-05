@@ -19,7 +19,7 @@ import Common.TowerInfo;
 public class Tower implements Runnable
 {
 	// Node information
-	//private TowerInfo me;
+	private TowerInfo me;
 	private InfoNode local_server;
 
 	// Connection information
@@ -32,7 +32,7 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
-		//this.me = tower;
+		this.me = tower;
 		this.local_server = server;
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
@@ -56,7 +56,7 @@ public class Tower implements Runnable
 
 	private void sendHellos()
 	{
-		SendMessages.towerAnnouncement(this.vanet_socket);
+		SendMessages.towerAnnouncement(this.vanet_socket, this.me);
 	}
 
 	private void receiveMessages()

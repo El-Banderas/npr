@@ -55,11 +55,11 @@ public class SendMessages
 	}
 	
 	//TODO: FWRInfo?
-	public static void towerAnnouncement(DatagramSocket sender)
+	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower)
 	{
 		//logger.info("Tower Sends Hello to Car");
 		
-		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce();
+		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(tower);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);

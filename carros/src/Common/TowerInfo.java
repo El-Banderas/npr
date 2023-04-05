@@ -3,7 +3,8 @@ package Common;
 public class TowerInfo
 {
 	private String name;
-	public Position pos;
+	private Position pos;
+	private float max_speed;
 
 
 	/**
@@ -14,8 +15,20 @@ public class TowerInfo
 	{
 		this.name = name;
 		this.pos = pos;
+		this.max_speed = 120;
+	}
+	
+	public TowerInfo(String name, Position pos, float max_speed)
+	{
+		this.name = name;
+		this.pos = pos;
+		this.max_speed = max_speed;
 	}
 
 
-	public String getName(){return name;}
+	public String getName() {return this.name;}
+	public Position getPosition() {return this.pos;}
+	public float getMaxSpeed() {return this.max_speed;}
+	
+	public void setMaxSpeed(float max_speed) {this.max_speed = max_speed;}
 }
