@@ -7,7 +7,6 @@ import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Car.SharedClass;
-import Common.Constants;
 import Common.Position;
 import Common.TowerInfo;
 

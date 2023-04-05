@@ -10,8 +10,6 @@ import AWFullP.FwdLayer.SelfCarMessage;
 import Common.CarInfo;
 import Common.Constants;
 
-import static AWFullP.MessageConstants.CAR_HELLO;
-
 
 public class ReceiveMessages
 {
