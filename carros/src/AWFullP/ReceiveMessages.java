@@ -19,7 +19,7 @@ public class ReceiveMessages
 
 	public static AWFullPacket receiveData(DatagramSocket socket) throws IOException
 	{
-		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
+		byte[] buf = new byte[MessageConstants.BUFFER_SIZE];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		socket.receive(packet);
 
@@ -40,7 +40,7 @@ public class ReceiveMessages
 	 */
 	public static AWFullPacket parseMessageCar(DatagramSocket receiveSocket, InetAddress myIp, String myID) throws IOException, SelfCarMessage
 	{
-		byte[] buf = new byte[MessageConstants.sizeBufferMessages];
+		byte[] buf = new byte[MessageConstants.BUFFER_SIZE];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		receiveSocket.receive(packet);
 		

@@ -3,7 +3,9 @@ package AWFullP;
 public class MessageConstants
 {
 
-	public static final int sizeBufferMessages = 950;
+	public static final int BUFFER_SIZE = 950;
+	public static final int BATCH_SIZE = 4;
+	public static final int ID_SIZE 			= (int) 8;
 	
 	
 	
@@ -28,7 +30,7 @@ public class MessageConstants
 	 * | 	Is Forwarded?	|
 	 * +--------------------+
 	 */
-	public static final byte AWFULLP_HEADER_SIZE = (byte) 1;
+	public static final byte AWFULLP_HEADER_SIZE = (byte) Byte.BYTES;
 	
 	
 	//=== Geo Forwarding Layer ===//
@@ -47,7 +49,7 @@ public class MessageConstants
 	 * |								 Sequence Number								|
 	 * +--------------------------------------------------------------------------------+
 	 * |									Sender ID									|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * 
 	 * 1. Broadcast
@@ -55,8 +57,7 @@ public class MessageConstants
 	 * 3. Recebeu pacote repetido (alguem já enviou) ? discard : Broadcast
 	 * 4. Destino envia ACK
 	 */
-	public static final int GEO_HEADER_SIZE 	= (int) 28;
-	public static final int ID_SIZE 			= (int) 8;
+	public static final int GEO_HEADER_SIZE 	= (int) 2 * Integer.BYTES + 3 * Float.BYTES + 1 * ID_SIZE;
 	
 	
 	
@@ -87,7 +88,7 @@ public class MessageConstants
 	 * 		Atribui ids?
 	 * 		Guardar histórico de estatisticas (contagem de carros e assim)
 	 */
-	public static final int APP_HEADER_SIZE 	= (int) 4;
+	public static final int APP_HEADER_SIZE 	= (int) 1 * Integer.BYTES;
 	
 	
 	//== Car Hello ==/
@@ -95,7 +96,7 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									 Car ID										|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos x										|
 	 * +--------------------------------------------------------------------------------+
@@ -111,7 +112,7 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_HELLO 			= (int) 1;
-	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 32;
+	public static final int CAR_HELLO_SIZE 		= (int) APP_HEADER_SIZE + 1 * ID_SIZE + 6 * Float.BYTES;
 	public static final byte TTLCarHelloMessage = (byte) 1;
 	
 	
@@ -120,7 +121,7 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									 Car ID										|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos x										|
 	 * +--------------------------------------------------------------------------------+
@@ -132,7 +133,7 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_BREAK 			= (int) 2;
-	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 24;
+	public static final int CAR_BREAK_SIZE 		= (int) APP_HEADER_SIZE + 1 * ID_SIZE + 4 * Float.BYTES;
 	public static final byte TTLBreakMessage 	= (byte) 6;
 	
 	
@@ -146,10 +147,10 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									Tower ID									|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									 Car ID										|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos x										|
 	 * +--------------------------------------------------------------------------------+
@@ -161,7 +162,7 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_ACCIDENT 		= (int) 4;
-	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 32;
+	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
 	public static final byte TTLAccidentMessage = (byte) 3;
 	
 	
@@ -170,7 +171,7 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									Tower ID									|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos x										|
 	 * +--------------------------------------------------------------------------------+
@@ -180,7 +181,7 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int TOWER_ANNOUNCE 		= (int) 5;
-	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 20;
+	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 1 * ID_SIZE + 3 * Float.BYTES;
 	
 	
 	//== Server Info ==//
@@ -188,15 +189,14 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									Tower ID									|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |								   Cars In Range								|
 	 * |									   ...										|
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int SERVER_INFO 		= (int) 6;
-	public static final int BATCH_SIZE = 4;
-	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 8 + ID_SIZE * BATCH_SIZE;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + ID_SIZE + ID_SIZE * BATCH_SIZE;
 	
 	
 	//== Car in Range ==//
@@ -204,14 +204,14 @@ public class MessageConstants
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
 	 * |									Tower ID									|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									 Car ID										|
-	 * |									(8 bytes)									|
+	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CAR_IN_RANGE 		= (int) 7;
-	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 16;
+	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE;
 
 
 	public static final int IGNORED_MESSAGE_DISTANCE = (int) 9;
