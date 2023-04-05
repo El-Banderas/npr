@@ -46,7 +46,7 @@ public class CarInfo
 		this.velocity_1 = this.velocity_2;
 		this.velocity_2 = new Vector(pos_2, pos_3);
 		
-		this.acceleration = Vector.sum(velocity_1, velocity_2);
+		this.acceleration = Vector.sub(velocity_2, velocity_1);
 	}
 	
 	public void update(Position newPos) {
@@ -57,6 +57,6 @@ public class CarInfo
 		this.velocity_1 = this.velocity_2;
 		this.velocity_2 = new Vector(pos_2, pos_3);
 		
-		this.acceleration = Vector.sum(velocity_1, velocity_2);
+		this.acceleration = Vector.sub(velocity_2, velocity_1);
 	}
 }
