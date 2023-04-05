@@ -8,7 +8,6 @@ import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.AppLayer.AWFullPCarInRange;
-import AWFullP.AppLayer.AWFullPServerHello;
 import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
@@ -43,20 +42,16 @@ public class AWFullPacket
 				this.appLayer = new AWFullPTowerAnnounce(content);
 				break;
 		
-			case MessageConstants.SERVER_HELLO:
-				this.appLayer = new AWFullPServerHello(content);
+			case MessageConstants.SERVER_INFO:
+				this.appLayer = new AWFullPServerInfo(content);
 				break;
 		
 			case MessageConstants.CAR_IN_RANGE:
 				this.appLayer = new AWFullPCarInRange(content);
 				break;
 		
-			case MessageConstants.SERVER_INFO:
-				this.appLayer = new AWFullPServerInfo(content);
-				break;
-		
 			default:
-				System.out.println("Type unknown: " + appType);
+				System.out.println("Unexpected type: " + appType);
 				this.appLayer = new AWFullPAppLayer(content); //do this anyway lmao
 		}
 	}

@@ -2,6 +2,11 @@ package AWFullP;
 
 public class MessageConstants
 {
+
+	public static final int sizeBufferMessages = 950;
+	
+	
+	
 	/*
 	 * byte 	1 byte 		Stores whole numbers from -128 to 127
 	 * short 	2 bytes 	Stores whole numbers from -32,768 to 32,767
@@ -178,13 +183,21 @@ public class MessageConstants
 	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 20;
 	
 	
-	//== Server Hello ==//
+	//== Server Info ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									Tower ID									| //TODO: Temporary. Iria na payload, codificado em JSON? :eyes:
+	 * |									(8 bytes)									|
+	 * +--------------------------------------------------------------------------------+
+	 * |								 Payload Length									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									Payload										|
+	 * |									   ...										|
+	 * +--------------------------------------------------------------------------------+
 	 */
-	public static final int SERVER_HELLO 		= (int) 6;
-	public static final int SERVER_HELLO_SIZE 	= (int) APP_HEADER_SIZE + 0;
+	public static final int SERVER_INFO 		= (int) 6;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 12 + sizeBufferMessages; //TODO: Overkill
 	
 	
 	//== Car in Range ==//
@@ -200,19 +213,13 @@ public class MessageConstants
 	 */
 	public static final int CAR_IN_RANGE 		= (int) 7;
 	public static final int CAR_IN_RANGE_SIZE 	= (int) APP_HEADER_SIZE + 16;
-	
-	
-	//== Server Info ==//
-	/*
-	 * |		byte		|		byte		|		byte		|		byte		|
-	 * +--------------------+-------------------+-------------------+-------------------+
-	 */
-	public static final int SERVER_INFO 		= (int) 8;
-	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 0;
 
 
 	public static final int IGNORED_MESSAGE_DISTANCE = (int) 9;
 
+	
+	
+	
 	public static String convertTypeString(int type)
 	{
 		switch(type) {
@@ -231,10 +238,8 @@ public class MessageConstants
 			case IGNORED_MESSAGE_DISTANCE:
 				return "Ignored message because distance";
 			default:
-				return "Type unknown";
+				return "Unexpected (" + type + ")";
 		}
 	}
-
-	public static final int sizeBufferMessages = 950;
 	public static final int BATCH_SIZE = 4;
 }

@@ -14,6 +14,7 @@ import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarInRange;
+import AWFullP.AppLayer.AWFullPServerInfo;
 import Common.Constants;
 import Common.InfoNode;
 import Common.Position;
@@ -75,8 +76,10 @@ public class Cloud implements Runnable
 	{
 		switch(message.appLayer.getType()) {
 		
-			case MessageConstants.SERVER_HELLO:
-				//logger.info("Received Hello from server");
+			case MessageConstants.SERVER_INFO:
+				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
+				String towerID_si = aw_si.getTowerID();
+				towerEventMap.computeIfAbsent(towerID_si, k -> new ArrayList<>()).add("Info: " + aw_si.getPayload().toString()); //TODO
 				break;
 				
 			case MessageConstants.CAR_IN_RANGE:

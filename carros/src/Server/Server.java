@@ -70,9 +70,7 @@ public class Server implements Runnable
 	
 	private void sendHellos()
 	{
-		SendMessages.serverHelloCloud(socket, cloud);
-		//AWFullPacket message = new AWFullPacket(MessagesConstants.ServerInfoMessage, this.getAllTowersInfo().toString().getBytes(), this.socket.getLocalAddress()); //TODO
-		//SendMessages.sendMessage(this.socket, this.cloud.ip, this.cloud.port, message);
+		SendMessages.serverHelloCloud(socket, this.tower, this.cloud);
 	}
 	
 	private void receiveMessages()
@@ -97,16 +95,8 @@ public class Server implements Runnable
 				String carID_ch = aw_ch.getCarID();
 				if (!this.carsInRange.contains(carID_ch)){
 					this.carsInRange.add(carID_ch);
-					//TODO: Se está a enviar em batches então não fazer isto sempre:
-					//AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.tower.getName(), carID_ch);
-					//sendToCloud(new AWFullPacket(aw_cir));
 					checkAndSendBatch();
 				}
-				break;
-				
-			case MessageConstants.TOWER_ANNOUNCE:
-				//TowerInfo towersInfo = (TowerInfo) message.content; //TODO
-				//this.towersInfo.put(towersInfo.getName(), towersInfo); //TODO
 				break;
 				
 			case MessageConstants.CAR_BREAK:
@@ -118,7 +108,7 @@ public class Server implements Runnable
 				break;
 				
 			default:
-				logger.info("Received unknown message: " + message.toString());
+				logger.info("Received unexpected message: " + message.toString());
 		}
 	}
 	

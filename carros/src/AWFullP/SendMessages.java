@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
-import AWFullP.AppLayer.AWFullPServerHello;
+import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Common.CarInfo;
@@ -65,11 +65,11 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
 	}
 	
-	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
+	public static void serverHelloCloud(DatagramSocket sender, TowerInfo towerInfo, InfoNode destination)
 	{
 		//logger.info("Server Sends Hello to Cloud");
 		
-		AWFullPServerHello aw_app = new AWFullPServerHello();
+		AWFullPServerInfo aw_app = new AWFullPServerInfo(towerInfo.getName(), "Hello".getBytes());
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, destination.ip, destination.port, awpacket);
