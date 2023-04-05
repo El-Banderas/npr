@@ -48,7 +48,7 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Accident!");
 		
-		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo.getID(), carInfo.getPosition());
+		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
