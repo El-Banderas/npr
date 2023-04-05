@@ -59,7 +59,7 @@ public class Server implements Runnable
 		}
 		
 		Timer timer_1 = new Timer(false);
-		timer_1.scheduleAtFixedRate(wrap(this::sendBatch), 0, Constants.refreshRate);
+		timer_1.scheduleAtFixedRate(wrap(this::sendBatch), 0, Constants.refreshRate); //fazer flush regularmente
 		
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
@@ -105,14 +105,21 @@ public class Server implements Runnable
 		}
 	}
 	
-	private void checkAndSendBatch() {
-		if (carsInRange.size() >= MessageConstants.BATCH_SIZE)
+	private void checkAndSendBatch()
+	{
+		if (carsInRange.size() >= MessageConstants.MAX_BATCH_SIZE)
 			this.sendBatch();
 	}
 	
-	private void sendBatch() {
-		SendMessages.serverInfoBatchCloud(socket, tower, carsInRange, cloud);
-		carsInRange.clear();
+	private void sendBatch()
+	{
+		List<String> batch = new ArrayList<String>(MessageConstants.MAX_BATCH_SIZE);
+		for(int i = 0; i < MessageConstants.MAX_BATCH_SIZE && i < carsInRange.size(); i++) {
+			batch.add(carsInRange.get(0));
+			carsInRange.remove(0);
+		}
+		
+		SendMessages.serverInfoBatchCloud(socket, tower, batch, cloud);
 	}
 	
 	private void sendToCloud(AWFullPacket message)

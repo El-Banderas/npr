@@ -17,6 +17,8 @@ public class AWFullPServerInfo extends AWFullPAppLayer
 	public AWFullPServerInfo(String towerID, List<String> cars)
 	{
 		super(MessageConstants.SERVER_INFO);
+		
+		assert(cars.size() <= MessageConstants.MAX_BATCH_SIZE);
 
 		this.towerID = towerID;
 		this.cars = cars;
@@ -37,11 +39,13 @@ public class AWFullPServerInfo extends AWFullPAppLayer
 		buf.get(towerID_bytes, 0, MessageConstants.ID_SIZE);
 		this.towerID = new String(towerID_bytes).trim();
 		
-		this.cars = new ArrayList<>(MessageConstants.BATCH_SIZE);
-		for(int i = 0; i < MessageConstants.BATCH_SIZE; i++) {
+		int batch_size = buf.getInt();
+		
+		this.cars = new ArrayList<>(batch_size);
+		for(int i = 0; i < batch_size; i++) {
 			byte[] carID_bytes = new byte[MessageConstants.ID_SIZE];
 			buf.get(carID_bytes, 0, MessageConstants.ID_SIZE);
-			this.cars.add(new String(towerID_bytes).trim());
+			this.cars.add(new String(carID_bytes).trim());
 		}
 	}
 	
@@ -63,6 +67,7 @@ public class AWFullPServerInfo extends AWFullPAppLayer
 		ByteBuffer bbuf = ByteBuffer.wrap(buf);
 		bbuf.put(super.toBytes());
 		bbuf.put(towerID_bytes);
+		bbuf.putInt(this.cars.size());
 		for(String carID : this.cars) {
 			byte[] carID_bytes = Arrays.copyOf(carID.getBytes(), MessageConstants.ID_SIZE);
 			bbuf.put(carID_bytes);

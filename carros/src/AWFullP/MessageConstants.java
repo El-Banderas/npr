@@ -4,7 +4,7 @@ public class MessageConstants
 {
 
 	public static final int BUFFER_SIZE = 950;
-	public static final int BATCH_SIZE = 4;
+	public static final int MAX_BATCH_SIZE = 4;
 	public static final int ID_SIZE 			= (int) 8;
 	
 	
@@ -191,12 +191,14 @@ public class MessageConstants
 	 * |									Tower ID									|
 	 * |																				|
 	 * +--------------------------------------------------------------------------------+
+	 * |									Batch size									|
+	 * +--------------------------------------------------------------------------------+
 	 * |								   Cars In Range								|
 	 * |									   ...										|
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int SERVER_INFO 		= (int) 6;
-	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + ID_SIZE + ID_SIZE * BATCH_SIZE;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 1 * ID_SIZE + 1 * Integer.BYTES + ID_SIZE * MAX_BATCH_SIZE;
 	
 	
 	//== Car in Range ==//
