@@ -15,8 +15,6 @@ import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarHello;
-import AWFullP.AppLayer.AWFullPCarInRange;
-//import AWFullP.SendMessages;
 import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
@@ -61,16 +59,10 @@ public class Server implements Runnable
 		}
 		
 		Timer timer_1 = new Timer(false);
-		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
+		timer_1.scheduleAtFixedRate(wrap(this::sendBatch), 0, Constants.refreshRate);
 		
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
-	}
-	
-	
-	private void sendHellos()
-	{
-		SendMessages.serverHelloCloud(socket, this.tower, this.cloud);
 	}
 	
 	private void receiveMessages()
@@ -112,15 +104,14 @@ public class Server implements Runnable
 		}
 	}
 	
-	//TODO: Assim está a enviar um a um, e não um batch. Vai ser preciso criar um novo tipo de pacote para batches
 	private void checkAndSendBatch() {
-		if (carsInRange.size() >= MessageConstants.BATCH_SIZE) {
-			for(String carID : carsInRange) {
-				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.tower.getName(), carID);
-				sendToCloud(new AWFullPacket(aw_cir));
-			}
-			carsInRange.clear();
-		}
+		if (carsInRange.size() >= MessageConstants.BATCH_SIZE)
+			this.sendBatch();
+	}
+	
+	private void sendBatch() {
+		SendMessages.serverInfoBatchCloud(socket, tower, carsInRange, cloud);
+		carsInRange.clear();
 	}
 	
 	private void sendToCloud(AWFullPacket message)

@@ -1,7 +1,6 @@
 package Car.Terminal;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
@@ -85,13 +84,11 @@ public class CarTerminal implements Runnable
 		accidentBroadcast.cancel();
 	}
 
-	private static TimerTask wrap(Runnable r)
+	/*private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {
 			@Override
 			public void run() {r.run();}
 		};
-	}
-
-
+	}*/
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.List;
 import java.util.logging.Logger;
 
 import AWFullP.AppLayer.AWFullPCarAccident;
@@ -65,11 +66,11 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
 	}
 	
-	public static void serverHelloCloud(DatagramSocket sender, TowerInfo towerInfo, InfoNode destination)
+	public static void serverInfoBatchCloud(DatagramSocket sender, TowerInfo towerInfo, List<String> cars, InfoNode destination)
 	{
-		//logger.info("Server Sends Hello to Cloud");
+		//logger.info("Server Sends Batch to Cloud");
 		
-		AWFullPServerInfo aw_app = new AWFullPServerInfo(towerInfo.getName(), "Hello".getBytes());
+		AWFullPServerInfo aw_app = new AWFullPServerInfo(towerInfo.getName(), cars);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, destination.ip, destination.port, awpacket);

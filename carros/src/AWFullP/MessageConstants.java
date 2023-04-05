@@ -187,17 +187,16 @@ public class MessageConstants
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|
 	 * +--------------------+-------------------+-------------------+-------------------+
-	 * |									Tower ID									| //TODO: Temporary. Iria na payload, codificado em JSON? :eyes:
+	 * |									Tower ID									|
 	 * |									(8 bytes)									|
 	 * +--------------------------------------------------------------------------------+
-	 * |								 Payload Length									|
-	 * +--------------------------------------------------------------------------------+
-	 * |									Payload										|
+	 * |								   Cars In Range								|
 	 * |									   ...										|
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int SERVER_INFO 		= (int) 6;
-	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 12 + sizeBufferMessages; //TODO: Overkill
+	public static final int BATCH_SIZE = 4;
+	public static final int SERVER_INFO_SIZE 	= (int) APP_HEADER_SIZE + 8 + ID_SIZE * BATCH_SIZE;
 	
 	
 	//== Car in Range ==//
@@ -241,5 +240,4 @@ public class MessageConstants
 				return "Unexpected (" + type + ")";
 		}
 	}
-	public static final int BATCH_SIZE = 4;
 }

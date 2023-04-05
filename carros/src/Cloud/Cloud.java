@@ -79,7 +79,8 @@ public class Cloud implements Runnable
 			case MessageConstants.SERVER_INFO:
 				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
 				String towerID_si = aw_si.getTowerID();
-				towerEventMap.computeIfAbsent(towerID_si, k -> new ArrayList<>()).add("Info: " + aw_si.getPayload().toString()); //TODO
+				for(String carID : aw_si.getCarsInRange())
+					towerEventMap.computeIfAbsent(towerID_si, k -> new ArrayList<>()).add("Car in range: " + carID);
 				break;
 				
 			case MessageConstants.CAR_IN_RANGE:
