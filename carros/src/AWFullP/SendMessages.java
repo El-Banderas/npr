@@ -28,7 +28,7 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Hello");
 		
-		AWFullPCarHello aw_app = new AWFullPCarHello(info.getID());
+		AWFullPCarHello aw_app = new AWFullPCarHello(info);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
