@@ -54,7 +54,7 @@ public class CarTerminal implements Runnable
 	{
 		System.out.println("Pressed Break!");
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.info.getID(), shared.getAndIncrementSeqNumber());
-		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
+		SendMessages.carSendBreak(this.shared.socket, shared.info, fwrInfo);
 	}
 
 

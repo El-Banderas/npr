@@ -34,11 +34,11 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	public static void carSendBreak(DatagramSocket sender, AWFullPFwdLayer fwrInfo)
+	public static void carSendBreak(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
-		AWFullPCarBreak aw_app = new AWFullPCarBreak();
+		AWFullPCarBreak aw_app = new AWFullPCarBreak(info);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
