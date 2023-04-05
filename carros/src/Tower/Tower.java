@@ -74,6 +74,7 @@ public class Tower implements Runnable
 
 	private void handleMessage(AWFullPacket message)
 	{
+		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
 		if (message.appLayer.getType() == MessageConstants.CAR_IN_RANGE || message.appLayer.getType() == MessageConstants.CAR_ACCIDENT) {
 			sendToServer(message);
 		}

@@ -80,6 +80,7 @@ public class Server implements Runnable
 	
 	private void handleMessage(AWFullPacket message)
 	{
+		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.tower.getName()) return)
 		switch (message.appLayer.getType()) {
 		
 			case MessageConstants.CAR_HELLO:
