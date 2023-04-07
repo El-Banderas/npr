@@ -117,6 +117,7 @@ public class Car implements Runnable
 
 		float distanceMessage = message.forwardInfo.getDist();
 		double myDistance = Position.distance(message.forwardInfo.getPosition(), me.getPosition());
+		System.out.println("Compara distância, minha vs. mensagem:" + myDistance +" vs. " + distanceMessage);
 		if (myDistance > distanceMessage){
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
 				sendMessagesClasses.get(message.forwardInfo).cancel();
@@ -134,6 +135,7 @@ public class Car implements Runnable
 			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
 			sendMessagesClasses.put(message.forwardInfo, newSender);
 			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
+			System.out.println("Adiciona mensagem");
 
 		}
 	}
