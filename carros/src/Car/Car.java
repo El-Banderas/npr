@@ -19,6 +19,8 @@ import Common.TowerInfo;
 
 public class Car implements Runnable
 {
+	//private static Logger logger =  Logger.getLogger("npr.car");
+	
 	// Node information
 	private CarInfo me;
 	//private List<TowerInfo> towers;
@@ -119,10 +121,8 @@ public class Car implements Runnable
 				} catch (DontForward e) {
 					System.out.println("Não vou reencaminhar");
 					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
-
 				}
 			}
-
 		}
 		else {
 			if (message.getType() != MessageConstants.CAR_HELLO) System.out.println("Mensagem repetida do tipo: " + message.getType());
@@ -135,8 +135,8 @@ public class Car implements Runnable
 	 * @param message
 	 * @return If the message is new or not to this car.
 	 */
-	private boolean alreadyReceivedMessage(AWFullPacket message){
-
+	private boolean alreadyReceivedMessage(AWFullPacket message)
+	{
 		return queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 

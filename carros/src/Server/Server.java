@@ -14,7 +14,7 @@ import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
-import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.AppLayer.AWFullPCarInRange;
 import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
@@ -81,22 +81,22 @@ public class Server implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.tower.getName()) return)
+		
 		switch (message.appLayer.getType()) {
 		
-			case MessageConstants.CAR_HELLO:
-				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
-				String carID_ch = aw_ch.getCarID();
-				if (!this.carsInRange.contains(carID_ch)){
-					this.carsInRange.add(carID_ch);
+			case MessageConstants.CAR_IN_RANGE:
+				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
+				if(this.tower.getName() != aw_cir.getTowerID()) break;
+				String carID_cir = aw_cir.getCarID();
+				if (!this.carsInRange.contains(carID_cir)) {
+					this.carsInRange.add(carID_cir);
 					checkAndSendBatch();
 				}
 				break;
 				
-			case MessageConstants.CAR_BREAK:
-				break;
-				
 			case MessageConstants.CAR_ACCIDENT:
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
+				if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 				

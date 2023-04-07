@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
+import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.AppLayer.AWFullPCarInRange;
 import Common.Constants;
 import Common.InfoNode;
 import Common.InfoNodeMulticast;
@@ -18,12 +21,14 @@ import Common.TowerInfo;
 
 public class Tower implements Runnable
 {
+	private static Logger logger =  Logger.getLogger("npr.tower");
+	
 	// Node information
 	private TowerInfo me;
 	private InfoNode local_server;
 
 	// Connection information
-	private DatagramSocket wlan_socket; // WLAN
+	private DatagramSocket wlan_socket;
 	private DatagramSocket vanet_socket; //TODO: Multicast
 
 	// Others
@@ -75,8 +80,22 @@ public class Tower implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
-		if (message.appLayer.getType() == MessageConstants.CAR_IN_RANGE || message.appLayer.getType() == MessageConstants.CAR_ACCIDENT) {
-			sendToServer(message);
+		
+		switch(message.appLayer.getType()) {
+		
+			case MessageConstants.CAR_HELLO:
+				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
+				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.me.getName(), aw_ch.getCarID());
+				AWFullPacket awp = new AWFullPacket(aw_cir);
+				sendToServer(awp);
+				break;
+		
+			case MessageConstants.CAR_ACCIDENT:
+				sendToServer(message);
+				break;
+			
+			default:
+				logger.info("Received unexpected message: " + message.toString());
 		}
 	}
 
