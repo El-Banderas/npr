@@ -87,7 +87,11 @@ public class Tower implements Runnable
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
 		System.out.println("Recebeu mensagem");
 		switch(message.appLayer.getType()) {
-		
+			case MessageConstants.TOWER_ANNOUNCE:
+				System.out.println("Hello da própria torre");
+				break;
+
+
 			case MessageConstants.CAR_HELLO:
 				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
 				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.me.getName(), aw_ch.getCarID());
