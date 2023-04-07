@@ -8,13 +8,9 @@ import java.util.*;
 
 import AWFullP.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
-import AWFullP.FwdLayer.DontForward;
 import AWFullP.FwdLayer.SelfCarMessage;
 import Car.Terminal.CarTerminal;
-import Common.CarInfo;
-import Common.Constants;
-import Common.InfoNodeMulticast;
-import Common.TowerInfo;
+import Common.*;
 
 
 public class Car implements Runnable
@@ -34,7 +30,7 @@ public class Car implements Runnable
 	private AWFullPFwdLayer fwrInfoHelloCar;
 	// This map is used to resend messages that are not confirmed
 	// Se calhar vai desaparecer...
-	private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages;
+	//private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages;
 	private Map<AWFullPFwdLayer, SendMessagePeriodically> sendMessagesClasses;
 	// This map is to store already received messages
 	// TODO: Se calhar depois apagar mensagens mais antigas? Para não acumular imensas
@@ -51,7 +47,6 @@ public class Car implements Runnable
 		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.info.getID(), -1);
 
 		this.myIp = Constants.getMyIp();
-		this.queueToResendMessages = new HashMap<>();
 		this.sendMessagesClasses = new HashMap<>();
 		this.messagesAlreadyReceived = new HashSet<>();
 	}
@@ -96,54 +91,46 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		// TODO: O forward message devia estar fora dos ifs, é para testar
-		if (!alreadyReceivedMessage(message) || message.getType() == MessageConstants.CAR_HELLO ) {
-			// Only store new messages if they are hello.
-			// Otherwise, maybe was already received
-			shared.addEntryMessages(message.appLayer.getType());
-			
-			if (message.forwardInfo.getTTL() > 1) {
-				// Check if we should hold or just send message.
-				// So, we could store in map or set.
-				try {
-					if (message.hasDestinationPosition(me.getPosition())) {
+		if (message.forwardInfo.getTTL() > 1 ) {
+			// Is a new message
+			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
+					if (message.hasDestinationPosition()) {
 						resendMessageWithDestination(message);
 					}
 					else {
-						if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
-							messagesAlreadyReceived.add(message.forwardInfo);
-							ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-						}
-						else {
-							System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
-						}
-					}
-				} catch (DontForward e) {
-					System.out.println("Não vou reencaminhar");
-					if (sendMessagesClasses.containsKey(message.forwardInfo)) {
-						sendMessagesClasses.get(message.forwardInfo).cancel();
 						messagesAlreadyReceived.add(message.forwardInfo);
-						System.out.println("E já não volto a tentar reencaminhar");
-
+						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					}
-					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
 				}
+			else {
+				System.out.println("Recebeu mensagem repetida");
 			}
 		}
 		else {
-			if (message.getType() != MessageConstants.CAR_HELLO) System.out.println("Mensagem repetida do tipo: " + message.getType());
+			shared.addEntryMessages(message.appLayer.getType());
 		}
 	}
 
 	private void resendMessageWithDestination(AWFullPacket message) {
 
-		message.forwardInfo.updateInfo(me);
-		queueToResendMessages.put(message.forwardInfo, message);
+		float distanceMessage = message.forwardInfo.getDist();
+		double myDistance = Position.distance(message.forwardInfo.getPosition(), me.getPosition());
+		if (myDistance > distanceMessage){
+			if (sendMessagesClasses.containsKey(message.forwardInfo)){
+				sendMessagesClasses.get(message.forwardInfo).cancel();
+				messagesAlreadyReceived.add(message.forwardInfo);
+				System.out.println("Someone better appear to send my message. Cancel sending message");
+			}
+		}
+		else {
+			message.forwardInfo.updateInfo(me);
 
+			Timer timer_1 = new Timer(false);
+			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
+			sendMessagesClasses.put(message.forwardInfo, newSender);
+			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
 
-		Timer timer_1 = new Timer(false);
-		SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
-		sendMessagesClasses.put(message.forwardInfo, newSender);
-		timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
+		}
 	}
 
 	/**
@@ -154,7 +141,7 @@ public class Car implements Runnable
 	 */
 	private boolean alreadyReceivedMessage(AWFullPacket message)
 	{
-		return queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
+		return sendMessagesClasses.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 
 	private static TimerTask wrap(Runnable r)

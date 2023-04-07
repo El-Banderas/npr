@@ -11,7 +11,6 @@ import AWFullP.AppLayer.AWFullPCarInRange;
 import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
-import AWFullP.FwdLayer.DontForward;
 import Common.Position;
 
 
@@ -106,12 +105,10 @@ public class AWFullPacket
 		return buf;
 	}
 	
-	public boolean hasDestinationPosition(Position currentPosition) throws DontForward
+	public boolean hasDestinationPosition()
 	{
 		if (forwardInfo.getDist() <= 0) return false;
 		Position destiny = forwardInfo.getPosition();
-		double currentDistance = Position.distance(currentPosition, destiny);
-		if (currentDistance > forwardInfo.getDist()) throw new DontForward();
 		return true;
 	}
 	
