@@ -19,7 +19,7 @@ public class SendMessagePeriodically extends TimerTask {
     @Override
     public void run() {
         SendMessages.sendMessage(socket, Constants.MulticastGroup, Constants.portMulticast, message);
-        System.out.println("Envia mensagem");
+        System.out.println("Envia mensagem (TTL) " + message.forwardInfo.getTTL());
 
     }
 }
