@@ -121,6 +121,9 @@ public class Car implements Runnable
 				messagesAlreadyReceived.add(message.forwardInfo);
 				System.out.println("Someone better appear to send my message. Cancel sending message");
 			}
+			else {
+				System.out.println("Não vou reecaminhar porque estou mais longe");
+			}
 		}
 		else {
 			message.forwardInfo.updateInfo(me);
