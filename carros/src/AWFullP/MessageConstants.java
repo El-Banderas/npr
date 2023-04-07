@@ -63,7 +63,7 @@ public class MessageConstants
 	 * Before send a message, should wait to see if a better send is in localisation
 	 * That time is proportional to the distance to target.
 	 */
-	public static final float Delay_Before_Send_Message = 100;
+	public static final float Delay_Before_Send_Message = 1;
 	
 	//=== Application Layer ===//
 	/*
