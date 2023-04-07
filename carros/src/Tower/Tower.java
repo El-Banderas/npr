@@ -58,6 +58,7 @@ public class Tower implements Runnable
 		//message.put(this.me.getName(), this.me.getHowManyCars());
 		//SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
 		SendMessages.towerAnnouncement(this.vanet_socket);
+		System.out.println("Enviou hello?");
 	}
 
 	private void receiveMessages() {
