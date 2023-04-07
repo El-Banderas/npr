@@ -85,10 +85,9 @@ public class Tower implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
-		System.out.println("Recebeu mensagem");
 		switch(message.appLayer.getType()) {
 			case MessageConstants.TOWER_ANNOUNCE:
-				System.out.println("Hello da própria torre");
+				// Ignore :)
 				break;
 
 
