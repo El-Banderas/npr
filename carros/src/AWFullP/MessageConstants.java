@@ -58,8 +58,12 @@ public class MessageConstants
 	 * 4. Destino envia ACK
 	 */
 	public static final int GEO_HEADER_SIZE 	= (int) 2 * Integer.BYTES + 3 * Float.BYTES + 1 * ID_SIZE;
-	
-	
+
+	/**
+	 * Before send a message, should wait to see if a better send is in localisation
+	 * That time is proportional to the distance to target.
+	 */
+	public static final float Delay_Before_Send_Message = 100;
 	
 	//=== Application Layer ===//
 	/*

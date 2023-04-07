@@ -33,7 +33,9 @@ public class Car implements Runnable
 	private SharedClass shared; //for CLI
 	private AWFullPFwdLayer fwrInfoHelloCar;
 	// This map is used to resend messages that are not confirmed
+	// Se calhar vai desaparecer...
 	private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages;
+	private Map<AWFullPFwdLayer, SendMessagePeriodically> sendMessagesClasses;
 	// This map is to store already received messages
 	// TODO: Se calhar depois apagar mensagens mais antigas? Para não acumular imensas
 	private Set<AWFullPFwdLayer> messagesAlreadyReceived;
@@ -103,8 +105,7 @@ public class Car implements Runnable
 				// So, we could store in map or set.
 				try {
 					if (message.hasDestinationPosition(me.getPosition())) {
-						queueToResendMessages.put(message.forwardInfo, message);
-						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+						resendMessageWithDestination(message);
 					}
 					else {
 						if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
@@ -117,6 +118,12 @@ public class Car implements Runnable
 					}
 				} catch (DontForward e) {
 					System.out.println("Não vou reencaminhar");
+					if (sendMessagesClasses.containsKey(message.forwardInfo)) {
+						sendMessagesClasses.get(message.forwardInfo).cancel();
+						messagesAlreadyReceived.add(message.forwardInfo);
+						System.out.println("E já não volto a tentar reencaminhar");
+
+					}
 					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
 				}
 			}
@@ -124,6 +131,18 @@ public class Car implements Runnable
 		else {
 			if (message.getType() != MessageConstants.CAR_HELLO) System.out.println("Mensagem repetida do tipo: " + message.getType());
 		}
+	}
+
+	private void resendMessageWithDestination(AWFullPacket message) {
+
+		message.forwardInfo.updateInfo(me);
+		queueToResendMessages.put(message.forwardInfo, message);
+
+
+		Timer timer_1 = new Timer(false);
+		SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
+		sendMessagesClasses.put(message.forwardInfo, newSender);
+		timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
 	}
 
 	/**

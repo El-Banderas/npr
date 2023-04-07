@@ -62,7 +62,7 @@ public class ReceiveMessages
 		String before = aw.toString();
 
 		// TODO: Check Distance and duplicate messages
-			aw.forwardInfo.updateInfo(carInfo);
+				aw.forwardInfo.updateInfo(carInfo);
 
 			SendMessages.sendMessage(sendSocket, Constants.MulticastGroup, Constants.portMulticast, aw);
 			if (debug) logger.info("\nForwarding packet " + before + " ---> " + aw );
