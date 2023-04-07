@@ -20,7 +20,6 @@ public class Main
 {
 	public static void main(String[] args) throws IOException
 	{
-		System.out.println("Olá da torre");
 		// Gather server info
 		InetAddress server_ip = InetAddress.getByName(args[1]);
 		InfoNode server_info = new InfoNode(server_ip, Constants.serverPort);

@@ -31,7 +31,7 @@ public class Main {
 			return;
 		}
 		if (Integer.parseInt(args[0]) == 1){
-			System.out.println("-> Execute Tower");
+			System.out.println("Execute Tower");
 
 			Tower.Main.main(restArguments);
 			return;
