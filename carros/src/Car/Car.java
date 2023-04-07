@@ -94,10 +94,12 @@ public class Car implements Runnable
 		if (message.forwardInfo.getTTL() > 1 ) {
 			// Is a new message
 			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
-					if (message.hasDestinationPosition()) {
+				shared.addEntryMessages(message.appLayer.getType());
+				if (message.hasDestinationPosition()) {
 						resendMessageWithDestination(message);
 					}
 					else {
+						System.out.println("Aciciona mensagem");
 						messagesAlreadyReceived.add(message.forwardInfo);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					}
