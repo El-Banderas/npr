@@ -89,6 +89,7 @@ public class AWFullPacket
 	
 	
 	public boolean isForwarded() {return this.isForwarded;}
+	public int getType() {return appLayer.getType();}
 	
 	public byte[] toBytes()
 	{
@@ -104,13 +105,10 @@ public class AWFullPacket
 		
 		return buf;
 	}
-
-	public int getType(){
-		return appLayer.getType();
-	}
-	public boolean hasDestinationPosition(Position currentPosition) throws DontForward {
-		if (forwardInfo.getDist() <= 0)
-			return false;
+	
+	public boolean hasDestinationPosition(Position currentPosition) throws DontForward
+	{
+		if (forwardInfo.getDist() <= 0) return false;
 		Position destiny = forwardInfo.getPosition();
 		double currentDistance = Position.distance(currentPosition, destiny);
 		if (currentDistance > forwardInfo.getDist()) throw new DontForward();

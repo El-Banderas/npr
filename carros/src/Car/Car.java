@@ -80,8 +80,8 @@ public class Car implements Runnable
 			try {
 				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);
+				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessageConstants.TIMEOUT);
@@ -97,22 +97,19 @@ public class Car implements Runnable
 			// Only store new messages if they are hello.
 			// Otherwise, maybe was already received
 			shared.addEntryMessages(message.appLayer.getType());
-
-			if (message.forwardInfo.getTTL() > 1){
-
+			
+			if (message.forwardInfo.getTTL() > 1) {
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
 				try {
 					if (message.hasDestinationPosition(me.getPosition())) {
-
 						queueToResendMessages.put(message.forwardInfo, message);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					}
 					else {
-						if (!messagesAlreadyReceived.contains(message.forwardInfo)){
+						if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
 							messagesAlreadyReceived.add(message.forwardInfo);
 							ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-
 						}
 						else {
 							System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
