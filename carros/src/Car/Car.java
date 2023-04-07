@@ -52,6 +52,7 @@ public class Car implements Runnable
 
 		this.myIp = Constants.getMyIp();
 		this.queueToResendMessages = new HashMap<>();
+		this.sendMessagesClasses = new HashMap<>();
 		this.messagesAlreadyReceived = new HashSet<>();
 	}
 
