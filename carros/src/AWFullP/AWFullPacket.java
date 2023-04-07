@@ -8,10 +8,10 @@ import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
 import AWFullP.AppLayer.AWFullPCarInRange;
-import AWFullP.AppLayer.AWFullPServerHello;
 import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
+import AWFullP.FwdLayer.DontForward;
 import Common.Position;
 
 
@@ -42,20 +42,16 @@ public class AWFullPacket
 				this.appLayer = new AWFullPTowerAnnounce(content);
 				break;
 		
-			case MessageConstants.SERVER_HELLO:
-				this.appLayer = new AWFullPServerHello(content);
+			case MessageConstants.SERVER_INFO:
+				this.appLayer = new AWFullPServerInfo(content);
 				break;
 		
 			case MessageConstants.CAR_IN_RANGE:
 				this.appLayer = new AWFullPCarInRange(content);
 				break;
 		
-			case MessageConstants.SERVER_INFO:
-				this.appLayer = new AWFullPServerInfo(content);
-				break;
-		
 			default:
-				System.out.println("Type unknown: " + appType);
+				System.out.println("Unexpected type: " + appType);
 				this.appLayer = new AWFullPAppLayer(content); //do this anyway lmao
 		}
 	}
@@ -65,7 +61,7 @@ public class AWFullPacket
 		this(AWFullPAppLayer.getType(content), content);
 		
 		ByteBuffer buf = ByteBuffer.wrap(content);
-		this.isForwarded = buf.get() == 1;
+		this.isForwarded = buf.get() != 0;
 
 		this.forwardInfo = new AWFullPFwdLayer(content);
 	}
@@ -93,6 +89,7 @@ public class AWFullPacket
 	
 	
 	public boolean isForwarded() {return this.isForwarded;}
+	public int getType() {return appLayer.getType();}
 	
 	public byte[] toBytes()
 	{
@@ -108,13 +105,10 @@ public class AWFullPacket
 		
 		return buf;
 	}
-
-	public int getType(){
-		return appLayer.getType();
-	}
-	public boolean hasDestinationPosition(Position currentPosition) throws DontForward {
-		if (forwardInfo.getDist() <= 0)
-			return false;
+	
+	public boolean hasDestinationPosition(Position currentPosition) throws DontForward
+	{
+		if (forwardInfo.getDist() <= 0) return false;
 		Position destiny = forwardInfo.getPosition();
 		double currentDistance = Position.distance(currentPosition, destiny);
 		if (currentDistance > forwardInfo.getDist()) throw new DontForward();

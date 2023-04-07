@@ -34,8 +34,8 @@ public class CarInfo
 
 	public String getID() {return new String(this.id);}
 	public Position getPosition() {return new Position(this.pos_3);}
-	public double getSpeed() {return this.velocity_2.length() / (pos_3.timestamp - pos_2.timestamp);}
-	public double getAccelerationRate() {return this.acceleration.length() / (pos_3.timestamp - pos_1.timestamp);}
+	public float getSpeed() {return (float) (this.velocity_2.length() / (pos_3.timestamp - pos_2.timestamp));}
+	public float getAccelerationRate() {return (float) (this.acceleration.length() / (pos_3.timestamp - pos_1.timestamp));}
 	public Vector getDirection() {return Vector.normalize(velocity_2);}
 	
 	public void update() {
@@ -46,7 +46,7 @@ public class CarInfo
 		this.velocity_1 = this.velocity_2;
 		this.velocity_2 = new Vector(pos_2, pos_3);
 		
-		this.acceleration = Vector.sum(velocity_1, velocity_2);
+		this.acceleration = Vector.sub(velocity_2, velocity_1);
 	}
 	
 	public void update(Position newPos) {
@@ -57,6 +57,19 @@ public class CarInfo
 		this.velocity_1 = this.velocity_2;
 		this.velocity_2 = new Vector(pos_2, pos_3);
 		
-		this.acceleration = Vector.sum(velocity_1, velocity_2);
+		this.acceleration = Vector.sub(velocity_2, velocity_1);
+	}
+	
+	public String toString()
+	{
+		return new String(
+				"{"
+			+	" ; id: " + this.id
+			+	" ; pos: " + this.getPosition().toString()
+			+	" ; speed: " + this.getSpeed()
+			+	" ; accel: " + this.getAccelerationRate()
+			+	" ; dir: " + this.getDirection().toString()
+			+	"}"
+			);
 	}
 }

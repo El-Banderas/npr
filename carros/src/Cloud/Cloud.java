@@ -13,7 +13,7 @@ import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
-import AWFullP.AppLayer.AWFullPCarInRange;
+import AWFullP.AppLayer.AWFullPServerInfo;
 import Common.Constants;
 import Common.InfoNode;
 import Common.Position;
@@ -75,15 +75,11 @@ public class Cloud implements Runnable
 	{
 		switch(message.appLayer.getType()) {
 		
-			case MessageConstants.SERVER_HELLO:
-				//logger.info("Received Hello from server");
-				break;
-				
-			case MessageConstants.CAR_IN_RANGE:
-				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
-				String towerID_cir = aw_cir.getTowerID();
-				String carID_cir = aw_cir.getCarID();
-				towerEventMap.computeIfAbsent(towerID_cir, k -> new ArrayList<>()).add("Car in range: " + carID_cir);
+			case MessageConstants.SERVER_INFO:
+				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
+				String towerID_si = aw_si.getTowerID();
+				for(String carID : aw_si.getCarsInRange())
+					towerEventMap.computeIfAbsent(towerID_si, k -> new ArrayList<>()).add("Car in range: " + carID);
 				break;
 				
 			case MessageConstants.CAR_ACCIDENT:
@@ -94,7 +90,7 @@ public class Cloud implements Runnable
 				break;
 				
 			default:
-				logger.info("Received unknown message: " + message.toString());
+				logger.info("Received unexpected message: " + message.toString());
 		}
 	}
 

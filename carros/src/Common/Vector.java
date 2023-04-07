@@ -43,6 +43,11 @@ public class Vector
 		return new Vector(v1.x + v2.x, v1.y + v2.y);
 	}
 	
+	public static Vector sub(Vector v1, Vector v2)
+	{
+		return new Vector(v1.x - v2.x, v1.y - v2.y);
+	}
+	
 	public String toString()
 	{
 		return new String(

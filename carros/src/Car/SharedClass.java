@@ -57,7 +57,7 @@ public class SharedClass
 		double minDist = Double.MAX_VALUE;
 		TowerInfo closestTower = null;
 		for (TowerInfo oneTower : towers){
-			double thisDistance = Position.distance(carPos, oneTower.pos);
+			double thisDistance = Position.distance(carPos, oneTower.getPosition());
 			 if (thisDistance < minDist) {
 				 minDist = thisDistance;
 				 closestTower = oneTower;

@@ -8,6 +8,7 @@ import java.util.*;
 
 import AWFullP.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
+import AWFullP.FwdLayer.DontForward;
 import AWFullP.FwdLayer.SelfCarMessage;
 import Car.Terminal.CarTerminal;
 import Common.CarInfo;
@@ -18,6 +19,8 @@ import Common.TowerInfo;
 
 public class Car implements Runnable
 {
+	//private static Logger logger =  Logger.getLogger("npr.car");
+	
 	// Node information
 	private CarInfo me;
 	//private List<TowerInfo> towers;
@@ -77,8 +80,8 @@ public class Car implements Runnable
 			try {
 				this.me.update();
 				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				//AWFullPacket message = ReceiveMessages.receiveData(socket);
+				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				handleMessage(message);
 			} catch (IOException e) {
 				this.shared.addEntryMessages(MessageConstants.TIMEOUT);
@@ -94,22 +97,19 @@ public class Car implements Runnable
 			// Only store new messages if they are hello.
 			// Otherwise, maybe was already received
 			shared.addEntryMessages(message.appLayer.getType());
-
-			if (message.forwardInfo.getTTL() > 1){
-
+			
+			if (message.forwardInfo.getTTL() > 1) {
 				// Check if we should hold or just send message.
 				// So, we could store in map or set.
 				try {
 					if (message.hasDestinationPosition(me.getPosition())) {
-
 						queueToResendMessages.put(message.forwardInfo, message);
 						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					}
 					else {
-						if (!messagesAlreadyReceived.contains(message.forwardInfo)){
+						if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
 							messagesAlreadyReceived.add(message.forwardInfo);
 							ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-
 						}
 						else {
 							System.out.println("\n\n\nAposto que isto nunca vai aparecer\n\n\n");
@@ -118,10 +118,8 @@ public class Car implements Runnable
 				} catch (DontForward e) {
 					System.out.println("Não vou reencaminhar");
 					shared.addEntryMessages(MessageConstants.IGNORED_MESSAGE_DISTANCE);
-
 				}
 			}
-
 		}
 		else {
 			if (message.getType() != MessageConstants.CAR_HELLO) System.out.println("Mensagem repetida do tipo: " + message.getType());
@@ -134,8 +132,8 @@ public class Car implements Runnable
 	 * @param message
 	 * @return If the message is new or not to this car.
 	 */
-	private boolean alreadyReceivedMessage(AWFullPacket message){
-
+	private boolean alreadyReceivedMessage(AWFullPacket message)
+	{
 		return queueToResendMessages.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 

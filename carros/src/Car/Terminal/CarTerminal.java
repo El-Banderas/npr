@@ -1,13 +1,11 @@
 package Car.Terminal;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import AWFullP.MessageConstants;
 import AWFullP.SendMessages;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Car.SharedClass;
-import Common.Constants;
 import Common.Position;
 import Common.TowerInfo;
 
@@ -55,7 +53,7 @@ public class CarTerminal implements Runnable
 	{
 		System.out.println("Pressed Break!");
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.info.getID(), shared.getAndIncrementSeqNumber());
-		SendMessages.carSendBreak(this.shared.socket, fwrInfo);
+		SendMessages.carSendBreak(this.shared.socket, shared.info, fwrInfo);
 	}
 
 
@@ -67,9 +65,9 @@ public class CarTerminal implements Runnable
 	//	accidentBroadcast.scheduleAtFixedRate(wrap(()->
 //		{
 			TowerInfo getNearestTower = shared.getNearestTower();
-			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.pos);
+			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
 			
-			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.pos, distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
+			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.getPosition(), distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
 			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
 //		}
 //		), 0, Constants.refreshRate);
@@ -86,13 +84,11 @@ public class CarTerminal implements Runnable
 		accidentBroadcast.cancel();
 	}
 
-	private static TimerTask wrap(Runnable r)
+	/*private static TimerTask wrap(Runnable r)
 	{
 		return new TimerTask() {
 			@Override
 			public void run() {r.run();}
 		};
-	}
-
-
+	}*/
 }

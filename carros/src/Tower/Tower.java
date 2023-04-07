@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
+import AWFullP.AppLayer.AWFullPCarHello;
+import AWFullP.AppLayer.AWFullPCarInRange;
 import Common.Constants;
 import Common.InfoNode;
 import Common.InfoNodeMulticast;
@@ -18,12 +21,14 @@ import Common.TowerInfo;
 
 public class Tower implements Runnable
 {
+	private static Logger logger =  Logger.getLogger("npr.tower");
+	
 	// Node information
-	//private TowerInfo me;
+	private TowerInfo me;
 	private InfoNode local_server;
 
 	// Connection information
-	private DatagramSocket wlan_socket; // WLAN
+	private DatagramSocket wlan_socket;
 	private DatagramSocket vanet_socket; //TODO: Multicast
 
 	// Others
@@ -32,7 +37,7 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
-		//this.me = tower;
+		this.me = tower;
 		this.local_server = server;
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
@@ -42,7 +47,8 @@ public class Tower implements Runnable
 
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		// Send Hellos
 		Timer timer_1 = new Timer(false);
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
@@ -52,16 +58,14 @@ public class Tower implements Runnable
 		thread_1.start();
 	}
 
-
-	private void sendHellos() {
-		//HashMap<String, Integer> message = new HashMap<>();
-		//message.put(this.me.getName(), this.me.getHowManyCars());
-		//SendMessages.towerHelloServer(this.wlan_socket, this.local_server);
-		SendMessages.towerAnnouncement(this.vanet_socket);
-		System.out.println("Enviou hello?");
+	private void sendHellos()
+	{
+		SendMessages.towerAnnouncement(this.vanet_socket, this.me);
+		System.out.println("Enviou hello");
 	}
 
-	private void receiveMessages() {
+	private void receiveMessages()
+	{
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
@@ -73,16 +77,31 @@ public class Tower implements Runnable
 		}
 	}
 
-	private void handleMessage(AWFullPacket message) {
-		//SendMessages.forwardMessage(message, this.wlan_socket, this.local_server);
-		if (message.appLayer.getType() == MessageConstants.CAR_IN_RANGE || message.appLayer.getType() == MessageConstants.CAR_ACCIDENT) {
-			sendToServer(message);
+	private void handleMessage(AWFullPacket message)
+	{
+		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
+		
+		switch(message.appLayer.getType()) {
+		
+			case MessageConstants.CAR_HELLO:
+				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
+				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.me.getName(), aw_ch.getCarID());
+				AWFullPacket awp = new AWFullPacket(aw_cir);
+				sendToServer(awp);
+				break;
+		
+			case MessageConstants.CAR_ACCIDENT:
+				sendToServer(message);
+				break;
+			
+			default:
+				logger.info("Received unexpected message: " + message.toString());
 		}
 	}
 
-	private void sendToServer(AWFullPacket message) {
-		//SendMessages.towerHelloServer(this.wlan_socket, message);
-		//SendMessages.sendMessage(wlan_socket, this.local_server.ip, this.local_server.port, message); //TODO
+	private void sendToServer(AWFullPacket message)
+	{
+		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
 
 	private static TimerTask wrap(Runnable r)

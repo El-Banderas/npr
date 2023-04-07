@@ -5,22 +5,30 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import AWFullP.MessageConstants;
+import Common.CarInfo;
 import Common.Position;
+import Common.Vector;
 
 public class AWFullPCarAccident extends AWFullPAppLayer
 {
 	private String towerID;
 	private String carID;
-	private Position location;
+	private float posx;
+	private float posy;
+	private float dirx;
+	private float diry;
 	
 	
-	public AWFullPCarAccident(String towerID, String carID, Position location)
+	public AWFullPCarAccident(String towerID, CarInfo info)
 	{
 		super(MessageConstants.CAR_ACCIDENT);
 		
 		this.towerID = towerID;
-		this.carID = carID;
-		this.location = location;
+		this.carID = info.getID();
+		this.posx = info.getPosition().x;
+		this.posy = info.getPosition().y;
+		this.dirx = info.getDirection().x;
+		this.diry = info.getDirection().y;
 	}
 	
 	public AWFullPCarAccident(byte[] arr)
@@ -41,10 +49,11 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 		byte[] carID_bytes = new byte[MessageConstants.ID_SIZE];
 		buf.get(carID_bytes, 0, MessageConstants.ID_SIZE);
 		this.carID = new String(carID_bytes).trim();
-		
-		float x = buf.getFloat();
-		float y = buf.getFloat();
-		this.location = new Position(x,y);
+
+		this.posx = buf.getFloat();
+		this.posy = buf.getFloat();
+		this.dirx = buf.getFloat();
+		this.diry = buf.getFloat();
 	}
 	
 	public AWFullPCarAccident(DatagramPacket packet)
@@ -53,9 +62,10 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 	}
 	
 	
-	public Position getLocation() {return this.location;}
 	public String getTowerID() {return this.towerID;}
 	public String getCarID() {return this.carID;}
+	public Position getLocation() {return new Position(this.posx, this.posy);}
+	public Vector getDirection() {return new Vector(this.dirx, this.diry);}
 	
 	@Override
 	public byte[] toBytes()
@@ -67,8 +77,10 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 				.put(super.toBytes())
 				.put(towerID_bytes)
 				.put(carID_bytes)
-				.putFloat(this.location.x)
-				.putFloat(this.location.y)
+				.putFloat(this.posx)
+				.putFloat(this.posy)
+				.putFloat(this.dirx)
+				.putFloat(this.diry)
 				.array();
 		
 		return buf;
@@ -81,7 +93,10 @@ public class AWFullPCarAccident extends AWFullPAppLayer
 			+	" ; super: " + super.toString()
 			+	" ; tower: " + this.towerID
 			+	" ; car: " + this.carID
-			+	" ; pos: " + this.location.toString()
+			+	" ; posx: " + this.posx
+			+	" ; posy: " + this.posy
+			+	" ; dirx: " + this.dirx
+			+	" ; diry: " + this.diry
 			+	"}"
 			);
 	}

@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.List;
 import java.util.logging.Logger;
 
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
 import AWFullP.AppLayer.AWFullPCarHello;
-import AWFullP.AppLayer.AWFullPServerHello;
+import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Common.CarInfo;
@@ -28,17 +29,17 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Hello");
 		
-		AWFullPCarHello aw_app = new AWFullPCarHello(info.getID());
+		AWFullPCarHello aw_app = new AWFullPCarHello(info);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
-	public static void carSendBreak(DatagramSocket sender, AWFullPFwdLayer fwrInfo)
+	public static void carSendBreak(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)
 	{
 		//logger.info("Car Sends Break");
 		
-		AWFullPCarBreak aw_app = new AWFullPCarBreak();
+		AWFullPCarBreak aw_app = new AWFullPCarBreak(info);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
@@ -48,28 +49,28 @@ public class SendMessages
 	{
 		//logger.info("Car Sends Accident!");
 		
-		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo.getID(), carInfo.getPosition());
+		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
 	//TODO: FWRInfo?
-	public static void towerAnnouncement(DatagramSocket sender)
+	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower)
 	{
 		//logger.info("Tower Sends Hello to Car");
 		
-		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce();
+		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(tower);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
 	}
 	
-	public static void serverHelloCloud(DatagramSocket sender, InfoNode destination)
+	public static void serverInfoBatchCloud(DatagramSocket sender, TowerInfo towerInfo, List<String> cars, InfoNode destination)
 	{
-		//logger.info("Server Sends Hello to Cloud");
+		//logger.info("Server Sends Batch to Cloud");
 		
-		AWFullPServerHello aw_app = new AWFullPServerHello();
+		AWFullPServerInfo aw_app = new AWFullPServerInfo(towerInfo.getName(), cars);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
 		sendMessage(sender, destination.ip, destination.port, awpacket);
