@@ -120,9 +120,9 @@ public class Car implements Runnable
 		System.out.println("Compara distância, minha vs. mensagem:" + myDistance +" vs. " + distanceMessage);
 		if (myDistance > distanceMessage){
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
+				System.out.println("Someone better appear to send my message. Cancel sending message");
 				sendMessagesClasses.get(message.forwardInfo).cancel();
 				messagesAlreadyReceived.add(message.forwardInfo);
-				System.out.println("Someone better appear to send my message. Cancel sending message");
 			}
 			else {
 				System.out.println("Não vou reecaminhar porque estou mais longe");
