@@ -25,6 +25,7 @@ public class InfoNodeMulticast
 
 		multicastSocket.joinGroup(group, netIf);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
+		multicastSocket.setNetworkInterface(netIf);
 
 		this.socket = multicastSocket;
 		this.port = Constants.portMulticast;

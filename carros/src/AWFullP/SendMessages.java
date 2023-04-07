@@ -56,14 +56,14 @@ public class SendMessages
 	}
 	
 	//TODO: FWRInfo?
-	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower)
+	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower , AWFullPFwdLayer fwrInfo )
 	{
 		//logger.info("Tower Sends Hello to Car");
 		
 		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(tower);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 		
-		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket);
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 	
 	public static void serverInfoBatchCloud(DatagramSocket sender, TowerInfo towerInfo, List<String> cars, InfoNode destination)

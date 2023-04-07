@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
+import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
@@ -31,6 +32,9 @@ public class Tower implements Runnable
 	private DatagramSocket wlan_socket;
 	private DatagramSocket vanet_socket; //TODO: Multicast
 
+	private AWFullPFwdLayer fwrInfo;
+
+
 	// Others
 	//...
 
@@ -43,6 +47,8 @@ public class Tower implements Runnable
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
 		
 		this.vanet_socket = new InfoNodeMulticast("eth1").socket;
+
+		this.fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLTowerHello, me.getName(), -1);
 	}
 
 
@@ -60,7 +66,7 @@ public class Tower implements Runnable
 
 	private void sendHellos()
 	{
-		SendMessages.towerAnnouncement(this.vanet_socket, this.me);
+		SendMessages.towerAnnouncement(this.vanet_socket, this.me, fwrInfo);
 	}
 
 	private void receiveMessages()

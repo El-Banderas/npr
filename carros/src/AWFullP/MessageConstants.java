@@ -181,6 +181,8 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int TOWER_ANNOUNCE 		= (int) 5;
+	public static final byte TTLTowerHello = (byte) 1;
+
 	public static final int TOWER_ANNOUNCE_SIZE = (int) APP_HEADER_SIZE + 1 * ID_SIZE + 3 * Float.BYTES;
 	
 	
