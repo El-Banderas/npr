@@ -92,7 +92,7 @@ public class Car implements Runnable
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		// TODO: O forward message devia estar fora dos ifs, é para testar
 		if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("1");
-		if (message.forwardInfo.getTTL() > 1 ) {
+		if (message.forwardInfo.getTTL() > 1 || message.hasDestinationPosition() ) {
 			if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
 
 			// Is a new message
