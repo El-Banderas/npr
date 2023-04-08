@@ -97,14 +97,17 @@ public class Tower implements Runnable
 				AWFullPacket awp = new AWFullPacket(aw_cir);
 				sendToServer(awp);
 				break;
-		
+				
 			case MessageConstants.CAR_ACCIDENT:
 				sendToServer(message);
+				break;
+				
+			case MessageConstants.TOWER_ANNOUNCE:
+				// Probably self announce. Ignore
 				break;
 			
 			default:
 				logger.warning("Received unexpected message: " + message.toString());
-				// Ignore :)
 		}
 	}
 
