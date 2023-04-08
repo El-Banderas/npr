@@ -130,6 +130,8 @@ public class Server implements Runnable
 	
 	private void sendBatch()
 	{
+		if (carsInRange.size() == 0) return;
+		
 		List<String> batch = new ArrayList<String>(MessageConstants.MAX_BATCH_SIZE);
 		for(int i = 0; i < MessageConstants.MAX_BATCH_SIZE && i < carsInRange.size(); i++) {
 			batch.add(carsInRange.get(0));
