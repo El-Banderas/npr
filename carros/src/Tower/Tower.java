@@ -23,12 +23,7 @@ import Common.TowerInfo;
 
 public class Tower implements Runnable
 {
-	private static Logger logger =  Logger.getLogger("npr.tower");
-	static {
-		logger.setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
-	}
+	private static Logger logger;
 	
 	// Node information
 	private TowerInfo me;
@@ -45,6 +40,11 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
+		logger = Logger.getLogger("npr.tower");
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+		
 		logger.config(tower.toString());
 		logger.config(server.toString());
 		

@@ -17,12 +17,7 @@ import Common.*;
 
 public class Car implements Runnable
 {
-	private static Logger logger =  Logger.getLogger("npr.car");
-	static {
-		logger.setLevel(Level.SEVERE);
-		Logger.getLogger("npr.messages.received").setLevel(Level.SEVERE);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.SEVERE);
-	}
+	private static Logger logger;
 	
 	// Node information
 	private CarInfo me;
@@ -42,6 +37,11 @@ public class Car implements Runnable
 
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
 	{
+		logger = Logger.getLogger("npr.car");
+		logger.setLevel(Level.SEVERE);
+		Logger.getLogger("npr.messages.received").setLevel(Level.SEVERE);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.SEVERE);
+		
 		logger.config(info.toString());
 		logger.config(towers.toString());
 		
@@ -98,17 +98,17 @@ public class Car implements Runnable
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		// TODO: O forward message devia estar fora dos ifs, é para testar
 		
-		if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("1");
+		//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("1");
 		
 		// In case is an accident message and we want it to stop
 		if (message.forwardInfo.getTTL() > 1 || message.hasDestinationPosition() ) {
 			
-			if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
+			//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
 
 			// Is a new message
 			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
 				
-				if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("3");
+				//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("3");
 
 				if (message.hasDestinationPosition()) {
 					

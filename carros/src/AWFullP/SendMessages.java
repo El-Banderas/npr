@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import AWFullP.AppLayer.AWFullPCarAccident;
@@ -23,9 +22,6 @@ import Common.TowerInfo;
 public class SendMessages
 {
 	private static Logger logger =  Logger.getLogger("npr.messages.sent");
-	static {
-		logger.setLevel(Level.SEVERE);
-	}
 	
 	
 	public static void carHello(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)

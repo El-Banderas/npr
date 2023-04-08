@@ -22,12 +22,7 @@ import Common.Position;
 
 public class Cloud implements Runnable
 {
-	private static Logger logger =  Logger.getLogger("npr.cloud");
-	static {
-		logger.setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
-	}
+	private static Logger logger;
 	
 	// Node information
 	//private InfoNode me;
@@ -41,6 +36,11 @@ public class Cloud implements Runnable
 
 	public Cloud(InfoNode cloud) throws SocketException
 	{
+		logger = Logger.getLogger("npr.cloud");
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+		
 		logger.config(cloud.toString());
 		
 		//this.me = cloud;
