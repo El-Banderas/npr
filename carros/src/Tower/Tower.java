@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
@@ -23,7 +25,17 @@ import Common.TowerInfo;
 
 public class Tower implements Runnable
 {
-	private static Logger logger;
+	private static Logger logger = Logger.getLogger("npr.tower");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+	}
 	
 	// Node information
 	private TowerInfo me;
@@ -40,11 +52,6 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
-		logger = Logger.getLogger("npr.tower");
-		logger.setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
-		
 		logger.config(tower.toString());
 		logger.config(server.toString());
 		
@@ -82,7 +89,7 @@ public class Tower implements Runnable
 				handleMessage(message);
 			} catch (IOException e) {
 				// TIMEOUT
-				logger.fine("Timeout passed. Nothing received.");
+				//logger.fine("Timeout passed. Nothing received.");
 			}
 		}
 	}
@@ -107,7 +114,7 @@ public class Tower implements Runnable
 				break;
 			
 			default:
-				logger.warning("Received unexpected message: " + message.toString());
+				//logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 

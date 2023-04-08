@@ -5,8 +5,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
@@ -17,7 +19,17 @@ import Common.*;
 
 public class Car implements Runnable
 {
-	private static Logger logger;
+	private static Logger logger = Logger.getLogger("npr.car");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.CONFIG);
+		Logger.getLogger("npr.messages.received").setLevel(Level.SEVERE);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.SEVERE);
+	}
 	
 	// Node information
 	private CarInfo me;
@@ -37,11 +49,6 @@ public class Car implements Runnable
 
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
 	{
-		logger = Logger.getLogger("npr.car");
-		logger.setLevel(Level.SEVERE);
-		Logger.getLogger("npr.messages.received").setLevel(Level.SEVERE);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.SEVERE);
-		
 		logger.config(info.toString());
 		logger.config(towers.toString());
 		

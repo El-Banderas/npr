@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.FwdLayer.SelfCarMessage;
 import Common.CarInfo;
@@ -13,7 +16,15 @@ import Common.Constants;
 
 public class ReceiveMessages
 {
-	private static Logger logger =  Logger.getLogger("npr.messages.received");
+	private static Logger logger = Logger.getLogger("npr.messages.received");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.SEVERE);
+	}
 
 
 	public static AWFullPacket receiveData(DatagramSocket socket) throws IOException

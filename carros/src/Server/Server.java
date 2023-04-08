@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
@@ -23,7 +25,17 @@ import Common.TowerInfo;
 
 public class Server implements Runnable
 {
-	private static Logger logger;
+	private static Logger logger = Logger.getLogger("npr.server");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+	}
 	
 	// Node information
 	//private InfoNode me;
@@ -39,11 +51,6 @@ public class Server implements Runnable
 	
 	public Server(InfoNode server, InfoNode cloud, TowerInfo tower) throws SocketException
 	{
-		logger = Logger.getLogger("npr.server");
-		logger.setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
-		
 		logger.config(server.toString());
 		logger.config(cloud.toString());
 		logger.config(tower.toString());

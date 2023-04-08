@@ -5,7 +5,10 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPCarBreak;
@@ -21,7 +24,15 @@ import Common.TowerInfo;
 
 public class SendMessages
 {
-	private static Logger logger =  Logger.getLogger("npr.messages.sent");
+	private static Logger logger = Logger.getLogger("npr.messages.sent");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.SEVERE);
+	}
 	
 	
 	public static void carHello(DatagramSocket sender, CarInfo info, AWFullPFwdLayer fwrInfo)
