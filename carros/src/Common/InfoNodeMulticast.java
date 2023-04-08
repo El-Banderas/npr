@@ -36,9 +36,11 @@ public class InfoNodeMulticast
 	@Override
 	public String toString()
 	{
-		return "InfoNode{" +
-				"ip=" + ip.toString() +
-				", port=" + port +
-				'}';
+		return new String(
+				"{"
+			+	"ip=" + (ip != null ? ip.toString() : "null")
+			+	", port=" + port
+			+	"}"
+			);
 	}
 }

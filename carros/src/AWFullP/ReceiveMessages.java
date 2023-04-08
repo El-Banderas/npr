@@ -22,8 +22,6 @@ public class ReceiveMessages
 		handler.setFormatter(new SimpleFormatter());
 		handler.setLevel(Level.ALL);
 		logger.addHandler(handler);
-		
-		logger.setLevel(Level.SEVERE);
 	}
 
 
