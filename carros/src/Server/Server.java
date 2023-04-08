@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
@@ -23,6 +24,11 @@ import Common.TowerInfo;
 public class Server implements Runnable
 {
 	private static Logger logger =  Logger.getLogger("npr.server");
+	static {
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+	}
 	
 	// Node information
 	//private InfoNode me;
@@ -38,6 +44,10 @@ public class Server implements Runnable
 	
 	public Server(InfoNode server, InfoNode cloud, TowerInfo tower) throws SocketException
 	{
+		logger.config(server.toString());
+		logger.config(cloud.toString());
+		logger.config(tower.toString());
+		
 		//this.me = server;
 		this.cloud = cloud;
 		this.tower = tower;
@@ -101,7 +111,7 @@ public class Server implements Runnable
 				break;
 				
 			default:
-				logger.info("Received unexpected message: " + message.toString());
+				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 	

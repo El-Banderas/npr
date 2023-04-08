@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
@@ -23,6 +24,11 @@ import Common.TowerInfo;
 public class Tower implements Runnable
 {
 	private static Logger logger =  Logger.getLogger("npr.tower");
+	static {
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+	}
 	
 	// Node information
 	private TowerInfo me;
@@ -30,10 +36,8 @@ public class Tower implements Runnable
 
 	// Connection information
 	private DatagramSocket wlan_socket;
-	private DatagramSocket vanet_socket; //TODO: Multicast
-
+	private DatagramSocket vanet_socket;
 	private AWFullPFwdLayer fwrInfo;
-
 
 	// Others
 	//...
@@ -41,13 +45,14 @@ public class Tower implements Runnable
 
 	public Tower(TowerInfo tower, InfoNode server) throws IOException
 	{
+		logger.config(tower.toString());
+		logger.config(server.toString());
+		
 		this.me = tower;
 		this.local_server = server;
 
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
-		
 		this.vanet_socket = new InfoNodeMulticast("eth1").socket;
-
 		this.fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLTowerHello, me.getName(), -1);
 	}
 
@@ -77,20 +82,15 @@ public class Tower implements Runnable
 				handleMessage(message);
 			} catch (IOException e) {
 				// TIMEOUT
-				//System.out.println("[Tower] Timeout passed. Nothing received.");
+				logger.fine("Timeout passed. Nothing received.");
 			}
 		}
 	}
 
 	private void handleMessage(AWFullPacket message)
 	{
-		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.me.getName()) return)
 		switch(message.appLayer.getType()) {
-			case MessageConstants.TOWER_ANNOUNCE:
-				// Ignore :)
-				break;
-
-
+				
 			case MessageConstants.CAR_HELLO:
 				AWFullPCarHello aw_ch = (AWFullPCarHello) message.appLayer;
 				AWFullPCarInRange aw_cir = new AWFullPCarInRange(this.me.getName(), aw_ch.getCarID());
@@ -103,12 +103,14 @@ public class Tower implements Runnable
 				break;
 			
 			default:
-				logger.info("Received unexpected message: " + message.toString());
+				logger.warning("Received unexpected message: " + message.toString());
+				// Ignore :)
 		}
 	}
 
 	private void sendToServer(AWFullPacket message)
 	{
+		logger.finer("Forwarding to server: " + message.toString());
 		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
 

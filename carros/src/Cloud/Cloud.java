@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import AWFullP.AWFullPacket;
@@ -22,6 +23,11 @@ import Common.Position;
 public class Cloud implements Runnable
 {
 	private static Logger logger =  Logger.getLogger("npr.cloud");
+	static {
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+	}
 	
 	// Node information
 	//private InfoNode me;
@@ -35,6 +41,8 @@ public class Cloud implements Runnable
 
 	public Cloud(InfoNode cloud) throws SocketException
 	{
+		logger.config(cloud.toString());
+		
 		//this.me = cloud;
 
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
@@ -66,7 +74,7 @@ public class Cloud implements Runnable
 				handleMessage(message);
 			} catch (IOException ignore) {
 				// TIMEOUT
-				//logger.info("Timeout passed. Nothing received.");
+				logger.fine("Timeout passed. Nothing received.");
 			}
 		}
 	}
@@ -90,7 +98,7 @@ public class Cloud implements Runnable
 				break;
 				
 			default:
-				logger.info("Received unexpected message: " + message.toString());
+				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 

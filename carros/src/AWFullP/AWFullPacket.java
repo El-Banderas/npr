@@ -11,7 +11,6 @@ import AWFullP.AppLayer.AWFullPCarInRange;
 import AWFullP.AppLayer.AWFullPServerInfo;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
-import Common.Position;
 
 
 public class AWFullPacket
@@ -108,7 +107,7 @@ public class AWFullPacket
 	public boolean hasDestinationPosition()
 	{
 		if (forwardInfo.getDist() <= 0) return false;
-		Position destiny = forwardInfo.getPosition();
+		//Position destiny = forwardInfo.getPosition(); //TODO:?
 		return true;
 	}
 	
