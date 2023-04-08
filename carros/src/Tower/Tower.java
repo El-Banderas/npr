@@ -34,7 +34,7 @@ public class Tower implements Runnable
 		
 		logger.setLevel(Level.ALL);
 		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.FINER);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.FINE);
 	}
 	
 	// Node information

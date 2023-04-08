@@ -125,14 +125,14 @@ public class Car implements Runnable
 					resendMessageWithDestination(message);
 				}
 				else {
-					//System.out.println("Add message");
+					System.out.println("Add message");
 					messagesAlreadyReceived.add(message.forwardInfo);
 					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					shared.addEntryMessages(message.appLayer.getType());
 				}
 			}
-			//else
-				//System.out.println("Received repeated message");
+			else
+				System.out.println("Received repeated message");
 		}
 		else
 			shared.addEntryMessages(message.appLayer.getType());
@@ -143,15 +143,15 @@ public class Car implements Runnable
 		float distanceMessage = message.forwardInfo.getDist();
 		double myDistance = Position.distance(message.forwardInfo.getPosition(), me.getPosition());
 		
-		//System.out.println("Compara distância, minha vs. mensagem:" + myDistance +" vs. " + distanceMessage);
+		System.out.println("Compara distância, minha vs. mensagem:" + myDistance +" vs. " + distanceMessage);
 		if (myDistance > distanceMessage){
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
-				//System.out.println("Someone better appear to send my message. Cancel sending message");
+				System.out.println("Someone better appear to send my message. Cancel sending message");
 				sendMessagesClasses.get(message.forwardInfo).cancel();
 				messagesAlreadyReceived.add(message.forwardInfo);
 			}
-			//else
-				//System.out.println("Não vou reencaminhar porque estou mais longe");
+			else
+				System.out.println("Não vou reencaminhar porque estou mais longe");
 		}
 		else {
 			message.forwardInfo.updateInfo(me);
@@ -159,7 +159,7 @@ public class Car implements Runnable
 			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
 			sendMessagesClasses.put(message.forwardInfo, newSender);
 			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
-			//System.out.println("Adiciona mensagem");
+			System.out.println("Adiciona mensagem");
 		}
 	}
 

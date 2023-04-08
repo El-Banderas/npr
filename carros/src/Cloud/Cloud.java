@@ -32,8 +32,8 @@ public class Cloud implements Runnable
 		logger.addHandler(handler);
 		
 		logger.setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.received").setLevel(Level.ALL);
-		Logger.getLogger("npr.messages.sent").setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.FINE);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.FINE);
 	}
 	
 	// Node information
