@@ -103,7 +103,7 @@ public class Server implements Runnable
 		
 			case MessageConstants.CAR_IN_RANGE:
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
-				if(this.tower.getName() != aw_cir.getTowerID()) break;
+				//if(this.tower.getName() != aw_cir.getTowerID()) break;
 				String carID_cir = aw_cir.getCarID();
 				if (!this.carsInRange.contains(carID_cir)) {
 					this.carsInRange.add(carID_cir);
@@ -113,7 +113,7 @@ public class Server implements Runnable
 				
 			case MessageConstants.CAR_ACCIDENT:
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
-				if(this.tower.getName() != aw_ca.getTowerID()) break;
+				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 				
