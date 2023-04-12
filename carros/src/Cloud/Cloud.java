@@ -106,6 +106,7 @@ public class Cloud implements Runnable
 		switch(message.appLayer.getType()) {
 		
 			case MessageConstants.SERVER_INFO:
+				System.out.println("[Cloud] Recebeu info do servidor");
 				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
 				String towerID_si = aw_si.getTowerID();
 				for(String carID : aw_si.getCarsInRange())
@@ -113,6 +114,8 @@ public class Cloud implements Runnable
 				break;
 				
 			case MessageConstants.CAR_ACCIDENT:
+				System.out.println("[ALERTA CM] Houve um acidente");
+
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
 				String towerID_ca = aw_ca.getTowerID();
 				Position location_ca = aw_ca.getLocation();
