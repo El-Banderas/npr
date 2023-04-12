@@ -45,8 +45,9 @@ for car, (x,y,z) in initial_positions.items():
     f.write(f"$node_({car}) set Y_ {y}\n")
     f.write(f"$node_({car}) set Z_ {z}\n")
 
-for car, car_info in initial_positions.items():
-    for time, (x,y,vel) in initial_positions.items():
+for car, car_info in moves.items():
+    print(car_info)
+    for time, (x,y,vel) in car_info.items():
         f.write(f"$ns_ at {time} \"$node_({car}) setdest {x} {y} {vel}\"\n")
 
 f.close()
