@@ -3,6 +3,14 @@
 public class Mainzinha {
 
     public static void main(String[] args) throws Exception {
+        for (int i = 4; i > 1; i--){
+            System.out.println("Antes");
+            for (int ii = 0; ii < i; i--)
+                System.out.println("I: " + i + " ii: " + ii) ;
+            System.out.println("Depois");
+        }
+
+/*
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
@@ -16,7 +24,7 @@ public class Mainzinha {
             System.out.println("Olá");
             Thread.sleep(1000);
         }
-
+*/
 
     }
 }

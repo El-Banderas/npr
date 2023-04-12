@@ -1,0 +1,54 @@
+$node_(14) set X_ 110
+$node_(14) set Y_ 450
+$node_(14) set Z_ 0
+$node_(15) set X_ 110
+$node_(15) set Y_ 500
+$node_(15) set Z_ 0
+$node_(16) set X_ 110
+$node_(16) set Y_ 600
+$node_(16) set Z_ 0
+$node_(17) set X_ 855
+$node_(17) set Y_ 450
+$node_(17) set Z_ 0
+$node_(18) set X_ 855
+$node_(18) set Y_ 500
+$node_(18) set Z_ 0
+$node_(19) set X_ 855
+$node_(19) set Y_ 600
+$node_(19) set Z_ 0
+$ns_ at 14 "$node_(14) setdest 110 450 0"
+$ns_ at 15 "$node_(14) setdest 110 500 0"
+$ns_ at 16 "$node_(14) setdest 110 600 0"
+$ns_ at 17 "$node_(14) setdest 855 450 0"
+$ns_ at 18 "$node_(14) setdest 855 500 0"
+$ns_ at 19 "$node_(14) setdest 855 600 0"
+$ns_ at 14 "$node_(15) setdest 110 450 0"
+$ns_ at 15 "$node_(15) setdest 110 500 0"
+$ns_ at 16 "$node_(15) setdest 110 600 0"
+$ns_ at 17 "$node_(15) setdest 855 450 0"
+$ns_ at 18 "$node_(15) setdest 855 500 0"
+$ns_ at 19 "$node_(15) setdest 855 600 0"
+$ns_ at 14 "$node_(16) setdest 110 450 0"
+$ns_ at 15 "$node_(16) setdest 110 500 0"
+$ns_ at 16 "$node_(16) setdest 110 600 0"
+$ns_ at 17 "$node_(16) setdest 855 450 0"
+$ns_ at 18 "$node_(16) setdest 855 500 0"
+$ns_ at 19 "$node_(16) setdest 855 600 0"
+$ns_ at 14 "$node_(17) setdest 110 450 0"
+$ns_ at 15 "$node_(17) setdest 110 500 0"
+$ns_ at 16 "$node_(17) setdest 110 600 0"
+$ns_ at 17 "$node_(17) setdest 855 450 0"
+$ns_ at 18 "$node_(17) setdest 855 500 0"
+$ns_ at 19 "$node_(17) setdest 855 600 0"
+$ns_ at 14 "$node_(18) setdest 110 450 0"
+$ns_ at 15 "$node_(18) setdest 110 500 0"
+$ns_ at 16 "$node_(18) setdest 110 600 0"
+$ns_ at 17 "$node_(18) setdest 855 450 0"
+$ns_ at 18 "$node_(18) setdest 855 500 0"
+$ns_ at 19 "$node_(18) setdest 855 600 0"
+$ns_ at 14 "$node_(19) setdest 110 450 0"
+$ns_ at 15 "$node_(19) setdest 110 500 0"
+$ns_ at 16 "$node_(19) setdest 110 600 0"
+$ns_ at 17 "$node_(19) setdest 855 450 0"
+$ns_ at 18 "$node_(19) setdest 855 500 0"
+$ns_ at 19 "$node_(19) setdest 855 600 0"
