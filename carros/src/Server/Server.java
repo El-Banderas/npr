@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.MessageConstants;
@@ -22,7 +25,17 @@ import Common.TowerInfo;
 
 public class Server implements Runnable
 {
-	private static Logger logger =  Logger.getLogger("npr.server");
+	private static Logger logger = Logger.getLogger("npr.server");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.ALL);
+		Logger.getLogger("npr.messages.received").setLevel(Level.FINE);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.FINE);
+	}
 	
 	// Node information
 	//private InfoNode me;
@@ -38,6 +51,10 @@ public class Server implements Runnable
 	
 	public Server(InfoNode server, InfoNode cloud, TowerInfo tower) throws SocketException
 	{
+		logger.config(server.toString());
+		logger.config(cloud.toString());
+		logger.config(tower.toString());
+		
 		//this.me = server;
 		this.cloud = cloud;
 		this.tower = tower;
@@ -86,7 +103,7 @@ public class Server implements Runnable
 		
 			case MessageConstants.CAR_IN_RANGE:
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
-				if(this.tower.getName() != aw_cir.getTowerID()) break;
+				//if(this.tower.getName() != aw_cir.getTowerID()) break;
 				String carID_cir = aw_cir.getCarID();
 				if (!this.carsInRange.contains(carID_cir)) {
 					this.carsInRange.add(carID_cir);
@@ -96,12 +113,12 @@ public class Server implements Runnable
 				
 			case MessageConstants.CAR_ACCIDENT:
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
-				if(this.tower.getName() != aw_ca.getTowerID()) break;
+				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 				
 			default:
-				logger.info("Received unexpected message: " + message.toString());
+				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 	
@@ -113,6 +130,8 @@ public class Server implements Runnable
 	
 	private void sendBatch()
 	{
+		if (carsInRange.size() == 0) return;
+		
 		List<String> batch = new ArrayList<String>(MessageConstants.MAX_BATCH_SIZE);
 		for(int i = 0; i < MessageConstants.MAX_BATCH_SIZE && i < carsInRange.size(); i++) {
 			batch.add(carsInRange.get(0));

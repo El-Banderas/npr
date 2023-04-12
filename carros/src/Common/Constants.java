@@ -13,17 +13,6 @@ public final class Constants
 	public static int refreshRate = 1000; //ms
 
 
-	/**
-	 * Topologia atual:
-	 *
-	 * T1 (8000) - S1 (9000)
-	 * 						\
-	 * 						Cloud (5000)
-	 * 						/
-	 * T2 (8001) - S2 (9001)
-	 */
-
-
 	/*
 	 * +-------------------------+------------------------------------------------------------+
 	 * |     FF7E:230::1234      |                          Unicast                           |

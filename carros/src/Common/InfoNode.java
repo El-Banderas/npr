@@ -17,23 +17,25 @@ public class InfoNode
 
 	public InfoNode(InetAddress ip, int port) throws SocketException
 	{
-		this.port = port;
 		this.ip = ip;
+		this.port = port;
 	}
 
 	public InfoNode(DatagramSocket socket)
 	{
-		this.port = socket.getLocalPort();
 		this.ip = socket.getLocalAddress();
+		this.port = socket.getLocalPort();
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return "InfoNode{" +
-				"ip=" + ip.toString() +
-				", port=" + port +
-				'}';
+		return new String(
+				"{"
+			+	"ip=" + (ip != null ? ip.toString() : "null")
+			+	", port=" + port
+			+	"}"
+			);
 	}
 }

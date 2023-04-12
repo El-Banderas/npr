@@ -26,6 +26,7 @@ public class InfoNodeMulticast
 		multicastSocket.joinGroup(group, netIf);
 		multicastSocket.setSoTimeout(Constants.refreshRate);
 		multicastSocket.setNetworkInterface(netIf);
+		
 		this.socket = multicastSocket;
 		this.port = Constants.portMulticast;
 		this.ip = Constants.MulticastGroup;
@@ -35,9 +36,11 @@ public class InfoNodeMulticast
 	@Override
 	public String toString()
 	{
-		return "InfoNode{" +
-				"ip=" + ip.toString() +
-				", port=" + port +
-				'}';
+		return new String(
+				"{"
+			+	"ip=" + (ip != null ? ip.toString() : "null")
+			+	", port=" + port
+			+	"}"
+			);
 	}
 }

@@ -5,6 +5,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import AWFullP.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
@@ -15,7 +19,17 @@ import Common.*;
 
 public class Car implements Runnable
 {
-	//private static Logger logger =  Logger.getLogger("npr.car");
+	private static Logger logger = Logger.getLogger("npr.car");
+	static {
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		handler.setLevel(Level.ALL);
+		logger.addHandler(handler);
+		
+		logger.setLevel(Level.CONFIG);
+		Logger.getLogger("npr.messages.received").setLevel(Level.SEVERE);
+		Logger.getLogger("npr.messages.sent").setLevel(Level.SEVERE);
+	}
 	
 	// Node information
 	private CarInfo me;
@@ -23,30 +37,30 @@ public class Car implements Runnable
 
 	// Connection information
 	private DatagramSocket socket;
-	private InetAddress myIp; //TODO: temporary. Use random string
+	private InetAddress myIp; //TODO: temporary. Use ID
 
 	// Others
 	private SharedClass shared; //for CLI
 	private AWFullPFwdLayer fwrInfoHelloCar;
-	// This map is used to resend messages that are not confirmed
-	// Se calhar vai desaparecer...
-	//private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages;
+	//private Map<AWFullPFwdLayer, AWFullPacket> queueToResendMessages; // This map is used to resend messages that are not confirmed
 	private Map<AWFullPFwdLayer, SendMessagePeriodically> sendMessagesClasses;
-	// This map is to store already received messages
-	// TODO: Se calhar depois apagar mensagens mais antigas? Para não acumular imensas
-	private Set<AWFullPFwdLayer> messagesAlreadyReceived;
+	private Set<AWFullPFwdLayer> messagesAlreadyReceived; // This map is to store already received messages; TODO: Apagar mensagens mais antigas
 
 
 	public Car(CarInfo info, List<TowerInfo> towers) throws IOException
 	{
+		logger.config(info.toString());
+		logger.config(towers.toString());
+		
 		this.me = info;
 		//this.towers = towers;
+		
 		this.socket = new InfoNodeMulticast("eth0").socket;
+		this.myIp = Constants.getMyIp();
+		
 		this.shared = new SharedClass(me, this.socket, towers);
-
 		this.fwrInfoHelloCar = new AWFullPFwdLayer(MessageConstants.TTLCarHelloMessage, shared.info.getID(), -1);
 
-		this.myIp = Constants.getMyIp();
 		this.sendMessagesClasses = new HashMap<>();
 		this.messagesAlreadyReceived = new HashSet<>();
 	}
@@ -77,8 +91,7 @@ public class Car implements Runnable
 		while (true) {
 			try {
 				this.me.update();
-				//System.out.println("Posição atual: " + info.pos.x + " | " + info.pos.y);
-				//AWFullPacket message = ReceiveMessages.receiveData(socket);
+				logger.finer("Current position: " + this.me.getPosition().x + " , " + this.me.getPosition().y);
 				AWFullPacket message = ReceiveMessages.parseMessageCar(this.socket, myIp, me.getID());
 				handleMessage(message);
 			} catch (IOException e) {
@@ -91,42 +104,45 @@ public class Car implements Runnable
 	{
 		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
 		// TODO: O forward message devia estar fora dos ifs, é para testar
+		
 		//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("1");
+		
 		// In case is an accident message and we want it to stop
 		if (message.forwardInfo.getTTL() > 1 || message.hasDestinationPosition() ) {
-		//	if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
+			
+			//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
 
 			// Is a new message
 			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
-		//		if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("3");
+				
+				//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("3");
 
 				if (message.hasDestinationPosition()) {
+					
 					if (!sendMessagesClasses.containsKey(message.forwardInfo))
 						shared.addEntryMessages(message.appLayer.getType());
-
+					
 					resendMessageWithDestination(message);
-					}
-					else {
-						System.out.println("Aciciona mensagem");
-						messagesAlreadyReceived.add(message.forwardInfo);
-						ReceiveMessages.maybeForwardMessage(message, this.socket, me);
-					shared.addEntryMessages(message.appLayer.getType());
-
-					}
 				}
-			else {
-				System.out.println("Recebeu mensagem repetida");
+				else {
+					System.out.println("Add message");
+					messagesAlreadyReceived.add(message.forwardInfo);
+					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+					shared.addEntryMessages(message.appLayer.getType());
+				}
 			}
+			else
+				System.out.println("Received repeated message");
 		}
-		else {
+		else
 			shared.addEntryMessages(message.appLayer.getType());
-		}
 	}
 
-	private void resendMessageWithDestination(AWFullPacket message) {
-
+	private void resendMessageWithDestination(AWFullPacket message)
+	{
 		float distanceMessage = message.forwardInfo.getDist();
 		double myDistance = Position.distance(message.forwardInfo.getPosition(), me.getPosition());
+		
 		System.out.println("Compara distância, minha vs. mensagem:" + myDistance +" vs. " + distanceMessage);
 		if (myDistance > distanceMessage){
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
@@ -134,30 +150,23 @@ public class Car implements Runnable
 				sendMessagesClasses.get(message.forwardInfo).cancel();
 				messagesAlreadyReceived.add(message.forwardInfo);
 			}
-			else {
-				System.out.println("Não vou reecaminhar porque estou mais longe");
-			}
+			else
+				System.out.println("Não vou reencaminhar porque estou mais longe");
 		}
 		else {
 			message.forwardInfo.updateInfo(me);
-
 			Timer timer_1 = new Timer(false);
 			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
 			sendMessagesClasses.put(message.forwardInfo, newSender);
 			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
 			System.out.println("Adiciona mensagem");
-
 		}
 	}
 
-	/**
-	 * Here we check if a message has been received before. It can be stored in two places, or be a Hello Message.
-	 * Hellos message are not stored.
-	 * @param message
-	 * @return If the message is new or not to this car.
-	 */
 	private boolean alreadyReceivedMessage(AWFullPacket message)
 	{
+		//Message can be stored in two places, or be a Hello Message.
+		//Hellos message are not stored.
 		return sendMessagesClasses.containsKey(message.forwardInfo) || messagesAlreadyReceived.contains(message.forwardInfo);
 	}
 
