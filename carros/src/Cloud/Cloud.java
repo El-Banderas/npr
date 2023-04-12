@@ -1,5 +1,6 @@
 package Cloud;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
@@ -25,7 +26,7 @@ import Common.Position;
 public class Cloud implements Runnable
 {
 	private static Logger logger = Logger.getLogger("npr.cloud");
-	private static Logger hist = Logger.getLogger("npr.hist");
+
 	static {
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setFormatter(new SimpleFormatter());
@@ -47,7 +48,7 @@ public class Cloud implements Runnable
 	private Map<String, List<String>> towerEventMap;
 
 
-	public Cloud(InfoNode cloud) throws SocketException
+	public Cloud(InfoNode cloud) throws IOException
 	{
 		logger.config(cloud.toString());
 		
@@ -74,12 +75,25 @@ public class Cloud implements Runnable
 	}
 
 
+	FileWriter hist;
+
+	{
+		try {
+			hist = new FileWriter("hist.txt");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
 	private void receiveMessages()
 	{
 		while(true) {
 			try {
+
 				AWFullPacket message = ReceiveMessages.receiveData(this.socket);
 				handleMessage(message);
+				hist.write(message.getType());
 			} catch (IOException ignore) {
 				// TIMEOUT
 				//logger.fine("Timeout passed. Nothing received.");
