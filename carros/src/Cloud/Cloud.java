@@ -25,6 +25,7 @@ import Common.Position;
 public class Cloud implements Runnable
 {
 	private static Logger logger = Logger.getLogger("npr.cloud");
+	private static Logger hist = Logger.getLogger("npr.hist");
 	static {
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setFormatter(new SimpleFormatter());
