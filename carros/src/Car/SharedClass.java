@@ -44,7 +44,7 @@ public class SharedClass
 	public void printMessagesInfo()
 	{
 		for (MessageEntry message : receivedMessages.values()) {
-			System.out.println(message.toString());
+			System.out.println("[SharedClass] " + message.toString());
 		}
 	}
 	public int getAndIncrementSeqNumber(){

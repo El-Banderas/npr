@@ -2,6 +2,7 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.MulticastSocket;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.ConsoleHandler;
@@ -121,6 +122,8 @@ public class Tower implements Runnable
 	private void sendToServer(AWFullPacket message)
 	{
 		logger.finer("Forwarding to server: " + message.toString());
+		//this.wlan_socket.setNetworkInterface()
+
 		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);
 	}
 
