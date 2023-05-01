@@ -1,4 +1,8 @@
+'''
+Notas para utilizar: 
+Largura de banda = 110 (alterar na nuvem do core)
 
+'''
 f = open("movesPortugal.scen", "w")
 
 cityes_positinions_Towers = {
@@ -27,27 +31,27 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        2 :( "Porto", 15),
-        7 :( "Braga2", 25),
+        12 :( "Porto", 15),
+        27 :( "Braga2", 25),
     },
 
     16: {
-        3 :( "Porto", 15),
-        9 :( "Braga2", 25),
+        13 :( "Porto", 15),
+        29 :( "Braga2", 25),
     },
 
     17: {
-        2 :( "Braga2", 25),
-        7 :( "VC", 15),
+        12 :( "Braga2", 25),
+        27 :( "VC", 15),
     },
 
     18: {
-        2 : ("VC", 15),
-        7 : ("Braga2", 25),
+        12 : ("VC", 15),
+        27 : ("Braga2", 25),
     },
     19: {
-        2 : ("Porto", 25),
-        7 : ("VC", 17),
+        12 : ("Porto", 25),
+        27 : ("VC", 17),
     },
 }
 
