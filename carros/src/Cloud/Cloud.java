@@ -14,10 +14,12 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
+import AWFullP.AppLayer.AWFullPAmbPath;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPServerInfo;
+import Car.AmbulanceInfo;
 import Common.Constants;
 import Common.InfoNode;
 import Common.Position;
@@ -121,10 +123,19 @@ public class Cloud implements Runnable
 				Position location_ca = aw_ca.getLocation();
 				towerEventMap.computeIfAbsent(towerID_ca, k -> new ArrayList<>()).add("Accident at location: " + location_ca.toString());
 				break;
-				
+			case MessageConstants.AMBULANCE_PATH:
+				System.out.println("[Cloud] Ambulance info");
+				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
+				handleAmbulanceInfo(aw_ap.getAmbulanceInfo());
+
+
 			default:
 				logger.warning("Received unexpected message: " + message.toString());
 		}
+	}
+
+	private void handleAmbulanceInfo(AmbulanceInfo ambulanceInfo) {
+		return;
 	}
 
 	/*private static TimerTask wrap(Runnable r)

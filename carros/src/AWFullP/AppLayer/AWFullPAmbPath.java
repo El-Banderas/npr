@@ -32,7 +32,6 @@ public class AWFullPAmbPath extends AWFullPAppLayer
 	public AWFullPAmbPath(byte[] arr)
 	{
 		super(arr);
-		System.out.println("Aqui");
 
 		ByteBuffer buf = ByteBuffer.wrap(arr);
 		buf.position(
@@ -53,19 +52,12 @@ public class AWFullPAmbPath extends AWFullPAppLayer
 			int time = buf.getInt();
 			float posX = buf.getFloat();
 			float posY = buf.getFloat();
-			System.out.println("Paragem: " + time + " ("+posX+" , " + posY + ")");
+			//System.out.println("Paragem: " + time + " ("+posX+" , " + posY + ")");
 			ambulanceInfo.put(time, new Position(posX, posY));
 
 		}
 		this.ambulanceInfo = new AmbulanceInfo(ambulanceInfo);
 	}
-
-	public AWFullPAmbPath(DatagramPacket packet)
-	{
-		this(packet.getData());
-	}
-	
-	
 
 	@Override
 	public byte[] toBytes()
@@ -91,7 +83,11 @@ public class AWFullPAmbPath extends AWFullPAppLayer
 }
 
 }
-	
+
+	public AmbulanceInfo getAmbulanceInfo() {
+		return ambulanceInfo;
+	}
+
 	public String toString()
 	{
 		return new String(
