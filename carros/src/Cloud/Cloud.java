@@ -127,7 +127,7 @@ public class Cloud implements Runnable
 				System.out.println("[Cloud] Ambulance info");
 				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
 				handleAmbulanceInfo(aw_ap.getAmbulanceInfo());
-
+				break;
 
 			default:
 				System.out.println("Não sei o que é: " +message.appLayer.getType());
