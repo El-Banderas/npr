@@ -44,6 +44,8 @@ public class SharedClass
 	}
 	public void addSendMessages(int typeMessage, Position pos)
 	{
+		System.out.println("Aqui2");
+
 		if (sendMessages.containsKey(pos)) {
 			sendMessages.get(pos).addEntry();
 		} else {
@@ -53,6 +55,7 @@ public class SharedClass
 	}
 	public void addSendMessages(int typeMessage)
 	{
+		System.out.println("Aqui1");
 		Position noDestination = new Position(-typeMessage, -typeMessage);
 		if (sendMessages.containsKey(noDestination)) {
 			sendMessages.get(noDestination).addEntry();
