@@ -33,7 +33,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/35193/Desktop/npr/carros",
+    "last_opened_file_path": "C:/Users/35193/Desktop/npr/carros/out/artifacts/carros_jar",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -47,8 +47,8 @@
       <recent name="Common.FWRMessages" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\35193\Desktop\npr\carros\src\Car" />
       <recent name="C:\Users\35193\Desktop\npr\carros\out\artifacts\carros_jar" />
+      <recent name="C:\Users\35193\Desktop\npr\carros\src\Car" />
       <recent name="C:\Users\35193\Desktop\npr\carros\out\artifacts\car_jar" />
       <recent name="C:\Users\35193\Desktop\npr\carros\src\Server" />
     </key>

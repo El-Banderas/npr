@@ -3,9 +3,7 @@ package Car;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +14,7 @@ import Common.TowerInfo;
 
 /**
  * 	0: File path that stores the information about towers
- * 	Example: "src/Car/TowersPosWindows"
+ * 	Example: "src/Car/TowersPosWindows" "Path_Ambulance"
  */
 public class Main
 {
@@ -34,7 +32,14 @@ public class Main
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 
-		List<TowerInfo> towers = parseFile(args[0]);
+		List<TowerInfo> towers = parseFileTowers(args[0]);
+		AmbulanceInfo ambulanceInfo = null;
+		// It it is a car, we pass anothre argument, the path that it will use.
+		if (args.length > 0) {
+			System.out.println("[CAR] Is an ambulance");
+			ambulanceInfo = parseFileAmbulances(args[1]);
+
+		}
 
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		Position pos = new Position();
@@ -42,6 +47,7 @@ public class Main
 
 		CarInfo info = null;
 		Car carMove = null;
+		// The name of the car is used in terminal, and stored in CarInfo
 		String carName = getNameNode(System.getProperty("user.dir"));
 		try {
 			info = new CarInfo(id, pos, carName);
@@ -56,7 +62,7 @@ public class Main
 	}
 
 	// Parse file that contains information about the RSUs
-	private static List<TowerInfo> parseFile(String filePath)
+	private static List<TowerInfo> parseFileTowers(String filePath)
 	{
 		List<TowerInfo> res = new ArrayList<>();
 		try {
@@ -78,6 +84,36 @@ public class Main
 
 			scanner.close();
 			return res;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		return null;
+	}
+
+	// Parse file that contains information about the RSUs
+	private static AmbulanceInfo parseFileAmbulances(String filePath)
+	{
+		Map<Integer, Position> positions = new HashMap<>();
+		try {
+			Scanner scanner = new Scanner(new File(filePath));
+			scanner.nextLine(); // Ignore first line, header
+
+			Pattern pattern = Pattern.compile("(\\d+);(\\d+),(\\d+);");
+
+			while (scanner.hasNextLine()) {
+				String fileLine = scanner.nextLine();
+				Matcher matcher = pattern.matcher(fileLine);
+				if (matcher.find()) {
+					int time = Integer.parseInt(matcher.group(1));
+					Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
+					positions.put(time, pos);
+				} else
+					System.out.println("Invalid line in tower info file");
+			}
+
+			scanner.close();
+			return new AmbulanceInfo(positions);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.exit(-1);

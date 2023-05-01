@@ -82,3 +82,39 @@ for car, car_info in moves.items():
         f.write(f"$ns_ at {time} \"$node_({car}) setdest {x} {y} {vel}\"\n")
 
 f.close()
+
+# Ambulance part
+
+ambulance = 15
+import os
+'''
+def read_file(file_name):
+    file_handle = open(file_name, "w+")
+    file_handle.write("#Time;x,y")
+    for time, (city_name,vel) in moves[ambulance].items():
+        (x,y) = get_pos_city(city_name)
+        file_handle.write(f"{time};{x},{y}")
+    file_handle.close()
+
+# f_amb = open("./src/Car/mov_amb.txt", "w")
+'''
+from os import path
+
+#file_path = path.relpath("src/Car/mov_amb.txt", "w")
+#with open("src/Car/mov_amb.txt", "w") as f2:
+file1 ="carros/src/Car/amb_moves" 
+file2 ="carros/out/artifacts/carros_jar/amb_moves" 
+def write_ambs(file_path): 
+    with open(file_path, "w") as f2:
+        f2.write("#Time;x,y\n")
+        for time, (city_name,vel) in moves[ambulance].items():
+            (x,y) = get_pos_city(city_name)
+            f2.write(f"{time};{x},{y};\n")
+        f2.close()
+
+write_ambs(file1)
+write_ambs(file2)
+'''
+cur_dir = os.path.dirname(os.path.realpath('__file__'))
+file_name = os.path.join(cur_dir, 'src/Car/mov_amb.txt')
+'''
