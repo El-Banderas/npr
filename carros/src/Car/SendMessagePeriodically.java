@@ -23,6 +23,7 @@ public class SendMessagePeriodically extends TimerTask
 	@Override
 	public void run()
 	{
+		System.out.println("[Send Message perio...]Send message");
 		SendMessages.sendMessage(socket, Constants.MulticastGroup, Constants.portMulticast, message);
 	}
 }
