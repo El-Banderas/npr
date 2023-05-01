@@ -30,10 +30,10 @@ public class Tower implements Runnable
 	static {
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setFormatter(new SimpleFormatter());
-		handler.setLevel(Level.ALL);
+		handler.setLevel(Level.OFF);
 		logger.addHandler(handler);
 		
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
 		Logger.getLogger("npr.messages.sent").setLevel(Level.FINE);
 	}
