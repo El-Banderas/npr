@@ -69,7 +69,7 @@ public class SendMessages
 
 	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower , AWFullPFwdLayer fwrInfo)
 	{
-		logger.fine("Tower Sends Hello to Car");
+		//logger.fine("Tower Sends Hello to Car");
 
 		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(tower);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
@@ -104,7 +104,7 @@ public class SendMessages
 		
 		try {
 			sender.send(packet);
-			logger.finest("\nSent packet " + message.toString() + " to " + to.toString() + ":" + port + "\n");
+			//logger.finest("\nSent packet " + message.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + message.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage1", e);
@@ -120,7 +120,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.finest("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");
+			//logger.finest("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + to.toString() + ":" + port);
 			logger.throwing("SendMessages", "sendMessage2", e);
@@ -138,7 +138,7 @@ public class SendMessages
 		
 		try {
 			sender.send(readyToSend);
-			logger.finest("\nSent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort() + "\n");
+			//logger.finest("\nSent packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort() + "\n");
 		} catch (IOException e) {
 			logger.severe("IOException when sending packet " + after.toString() + " to " + packet.getAddress().toString() + ":" + packet.getPort());
 			logger.throwing("SendMessages", "sendMessage3", e);
