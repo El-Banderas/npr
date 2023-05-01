@@ -35,7 +35,7 @@ public class Main
 		List<TowerInfo> towers = parseFileTowers(args[0]);
 		AmbulanceInfo ambulanceInfo = null;
 		// It it is a car, we pass anothre argument, the path that it will use.
-		if (args.length > 0) {
+		if (args.length > 1) {
 			System.out.println("[CAR] Is an ambulance");
 			ambulanceInfo = parseFileAmbulances(args[1]);
 

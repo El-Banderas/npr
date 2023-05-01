@@ -1,0 +1,31 @@
+$node_(15) set X_ 276
+$node_(15) set Y_ 414
+$node_(15) set Z_ 0
+$node_(16) set X_ 276
+$node_(16) set Y_ 414
+$node_(16) set Z_ 0
+$node_(17) set X_ 306
+$node_(17) set Y_ 670
+$node_(17) set Z_ 0
+$node_(18) set X_ 306
+$node_(18) set Y_ 670
+$node_(18) set Z_ 0
+$node_(19) set X_ 739
+$node_(19) set Y_ 406
+$node_(19) set Z_ 0
+$ns_ at 7 "$node_(15) setdest 306 670 15"
+$ns_ at 20 "$node_(15) setdest 530 530 25"
+$ns_ at 30 "$node_(15) setdest 739 406 25"
+$ns_ at 45 "$node_(15) setdest 276 414 25"
+$ns_ at 2 "$node_(16) setdest 276 414 15"
+$ns_ at 13 "$node_(16) setdest 386 480 15"
+$ns_ at 31 "$node_(16) setdest 739 406 25"
+$ns_ at 2 "$node_(17) setdest 306 670 15"
+$ns_ at 12 "$node_(17) setdest 739 406 25"
+$ns_ at 27 "$node_(17) setdest 276 414 15"
+$ns_ at 2 "$node_(18) setdest 306 670 15"
+$ns_ at 12 "$node_(18) setdest 276 414 15"
+$ns_ at 27 "$node_(18) setdest 739 406 25"
+$ns_ at 2 "$node_(19) setdest 739 406 25"
+$ns_ at 12 "$node_(19) setdest 306 670 25"
+$ns_ at 27 "$node_(19) setdest 276 414 17"

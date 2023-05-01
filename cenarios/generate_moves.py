@@ -102,8 +102,8 @@ from os import path
 
 #file_path = path.relpath("src/Car/mov_amb.txt", "w")
 #with open("src/Car/mov_amb.txt", "w") as f2:
-file1 ="carros/src/Car/amb_moves" 
-file2 ="carros/out/artifacts/carros_jar/amb_moves" 
+file1 ="./carros/src/Car/amb_moves" 
+file2 ="./carros/out/artifacts/carros_jar/amb_moves" 
 def write_ambs(file_path): 
     with open(file_path, "w") as f2:
         f2.write("#Time;x,y\n")
