@@ -52,9 +52,9 @@ public class Main
 		try {
 			info = new CarInfo(id, pos, carName);
 			if (ambulanceInfo != null)
-				carMove = new Car(info, towers);
-			else
 				carMove = new Car(info, towers, ambulanceInfo);
+			else
+				carMove = new Car(info, towers);
 
 		} catch (IOException e) {
 			e.printStackTrace();
