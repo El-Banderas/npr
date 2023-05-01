@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class AWFullPCloudAmbulanceServer extends AWFullPAppLayer
 {
 	private Timestamp whenToSend;
-	private Position pos;
+	public Position pos;
 
 
 
@@ -36,15 +36,11 @@ public class AWFullPCloudAmbulanceServer extends AWFullPAppLayer
 				MessageConstants.APP_HEADER_SIZE
 				);
 
-		byte[] towerID_bytes = new byte[MessageConstants.ID_SIZE];
-		buf.get(towerID_bytes, 0, MessageConstants.ID_SIZE);
-		/*
-		this.towerID = new String(towerID_bytes).trim();
+		this.whenToSend = new Timestamp(buf.getLong());
 
-		this.posx = buf.getFloat();
-		this.posy = buf.getFloat();
-		this.max_speed = buf.getFloat();
-		 */
+		float posx = buf.getFloat();
+		float posy = buf.getFloat();
+		this.pos = new Position(posx, posy);
 	}
 
 	public AWFullPCloudAmbulanceServer(DatagramPacket packet)
@@ -57,21 +53,17 @@ public class AWFullPCloudAmbulanceServer extends AWFullPAppLayer
 	@Override
 	public byte[] toBytes()
 	{
-		/*
-		byte[] towerID_bytes = Arrays.copyOf(this.towerID.getBytes(), MessageConstants.ID_SIZE);
+//		byte[] towerID_bytes = Arrays.copyOf(this.towerID.getBytes(), MessageConstants.ID_SIZE);
 		
 		byte[] buf = ByteBuffer.allocate(MessageConstants.TOWER_ANNOUNCE_SIZE)
 				.put(super.toBytes())
-				.put(towerID_bytes)
-				.putFloat(this.posx)
-				.putFloat(this.posy)
-				.putFloat(this.max_speed)
+				.putLong(whenToSend.getTime())
+				.putFloat(this.pos.x)
+				.putFloat(this.pos.y)
 				.array();
 		
 		return buf;
 
-		 */
-		return new byte[10] ;
 	}
 
 }

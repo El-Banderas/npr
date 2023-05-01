@@ -48,7 +48,11 @@ public class TowerInfo
 	public Position getPosition() {return this.pos;}
 	public float getMaxSpeed() {return this.max_speed;}
 	public void setMaxSpeed(float max_speed) {this.max_speed = max_speed;}
-	
+
+	public void setPos(Position pos) {
+		this.pos = pos;
+	}
+
 	@Override
 	public String toString()
 	{

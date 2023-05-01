@@ -208,10 +208,9 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos y 									|
 	 * +--------------------------------------------------------------------------------+
-	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CLOUD_AMBULANCE_PATH 		= (int) 11;
-	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
+	public static final int CLOUD_AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + Long.BYTES + 2 * Float.BYTES;
 	public static final byte TTL_Cloud_Ambulance_Path = (byte) 4;
 
 

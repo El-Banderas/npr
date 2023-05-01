@@ -13,13 +13,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
-import AWFullP.AppLayer.AWFullPAmbPath;
-import AWFullP.AppLayer.AWFullPTowerAnnounce;
+import AWFullP.AppLayer.*;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
-import AWFullP.AppLayer.AWFullPCarAccident;
-import AWFullP.AppLayer.AWFullPCarInRange;
 import Common.Constants;
 import Common.InfoNode;
 import Common.TowerInfo;
@@ -105,8 +102,10 @@ public class Server implements Runnable
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.tower.getName()) return)
 		
 		switch (message.appLayer.getType()) {
+			// Update position of tower with announce from tower.
 			case MessageConstants.TOWER_ANNOUNCE:
 				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
+				this.tower.setPos(aw_ta.getPos());
 				sendToCloud(new AWFullPacket(aw_ta));
 				break;
 
@@ -129,12 +128,22 @@ public class Server implements Runnable
 				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ap));
 				break;
-				
+			case MessageConstants.CLOUD_AMBULANCE_PATH:
+				AWFullPCloudAmbulanceServer aw_cap = (AWFullPCloudAmbulanceServer) message.appLayer;
+				//if(this.tower.getName() != aw_ca.getTowerID()) break;
+				handlePathAmbulanceFromCloud(aw_cap);
+				break;
+
 			default:
 				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
-	
+
+	private void handlePathAmbulanceFromCloud(AWFullPCloudAmbulanceServer awCap) {
+		System.out.println("Recebeu info da cloud para avisar de ambulância");
+		System.out.println(awCap.pos);
+	}
+
 	private void checkAndSendBatch()
 	{
 		if (carsInRange.size() >= MessageConstants.MAX_BATCH_SIZE)
@@ -166,4 +175,5 @@ public class Server implements Runnable
 			public void run() {r.run();}
 		};
 	}
+
 }

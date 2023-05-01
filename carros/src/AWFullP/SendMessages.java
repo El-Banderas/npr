@@ -59,7 +59,7 @@ public class SendMessages
 	}
 
 	public static void sendAmbulanceInfo(DatagramSocket sender, CarInfo carInfo, AWFullPFwdLayer fwrInfo ,AmbulanceInfo ambulanceInfo) {
-		System.out.println("Envia info");
+		System.out.println("Send AMB info to tower");
 		AWFullPAmbPath aw_app = new AWFullPAmbPath(carInfo, ambulanceInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 
@@ -89,14 +89,12 @@ public class SendMessages
 
 	public static void cloudInfoAmbulanceServer(DatagramSocket sender, InetAddress destinationIP, Position destination, Timestamp whenToSend)
 	{
-		/*
 		logger.fine("Cloud sends ambulance path to server: " + sender);
 
-		AWFullPCloudAmbulanceServer aw_app = new AWFullPCloudAmbulanceServer(destination, cars);
+		AWFullPCloudAmbulanceServer aw_app = new AWFullPCloudAmbulanceServer(destination, whenToSend);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 
-		sendMessage(sender, destination.ip, destination.port, awpacket);
-		 */
+		sendMessage(sender, destinationIP, Constants.serverPort, awpacket);
 	}
 
 	

@@ -16,7 +16,7 @@ public class Main
 {
 	public static void main(String[] args) throws UnknownHostException, SocketException
 	{
-		TowerInfo towerInfo = new TowerInfo("t1", new Position(0,0)); //TODO: not use default values lol
+		TowerInfo towerInfo = new TowerInfo("t1", new Position());
 		InfoNode cloudInfo = new InfoNode(Constants.CloudIP, Constants.cloudPort);
 		InfoNode thisServer = new InfoNode(null, Constants.serverPort);
 

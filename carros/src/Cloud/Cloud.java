@@ -161,12 +161,11 @@ public class Cloud implements Runnable
 		}
 	}
 
+	// This works :)
 	private Timestamp calculateWhenToSendInfoServer(int seconds){
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		Timestamp later = new Timestamp(System.currentTimeMillis() + (seconds * 1000L));
-		System.out.println("Antes: " + now);
-		System.out.println("Sec: " + seconds);
-		System.out.println("After: " + later);
+
 		return later;
 	}
 
