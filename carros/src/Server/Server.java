@@ -118,6 +118,7 @@ public class Server implements Runnable
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 			case MessageConstants.AMBULANCE_PATH:
+				System.out.println("Sabe que é duma ambulência");
 				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
 				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ap));
