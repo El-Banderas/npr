@@ -16,6 +16,7 @@ cityes_positinions_car = {
     "Porto" : (306, 670),
     "Braga" : (386, 480),
     "Braga2" : (739, 406),
+    "VR" : (530, 530),  # Vila Real
 }
 
 initial_positions = {
@@ -34,8 +35,9 @@ moves = {
     #},
     15: {
         7 :( "Porto", 15),
-        20 :( "Braga2", 25),
-        35 :( "VC", 25),
+        20 :( "VR", 25),
+        30 :( "Braga2", 25),
+        45 :( "VC", 25),
     },
 
     16: {
