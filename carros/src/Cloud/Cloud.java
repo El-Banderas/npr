@@ -106,7 +106,10 @@ public class Cloud implements Runnable
 	private void handleMessage(AWFullPacket message)
 	{
 		switch(message.appLayer.getType()) {
-		
+			case MessageConstants.TOWER_ANNOUNCE:
+				System.out.println("Recebu info de uma torre?");
+				break;
+
 			case MessageConstants.SERVER_INFO:
 				System.out.println("[Cloud] Recebeu info do servidor");
 				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
