@@ -1,5 +1,6 @@
 '''
 Notas para utilizar: 
+O fundo está no git
 Largura de banda = 110 (alterar na nuvem do core)
 
 '''
@@ -31,25 +32,30 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
+        2 :( "VC", 15),
         12 :( "Porto", 15),
         27 :( "Braga2", 25),
     },
 
     16: {
+        2 :( "VC", 15),
         13 :( "Porto", 15),
         29 :( "Braga2", 25),
     },
 
     17: {
+        2 :( "Porto", 15),
         12 :( "Braga2", 25),
         27 :( "VC", 15),
     },
 
     18: {
+        2 :( "Porto", 15),
         12 : ("VC", 15),
         27 : ("Braga2", 25),
     },
     19: {
+        2 : ("Braga2", 25),
         12 : ("Porto", 25),
         27 : ("VC", 17),
     },
