@@ -106,15 +106,13 @@ public class Tower implements Runnable
 				sendToServer(awp);
 				break;
 				
-			case MessageConstants.CAR_ACCIDENT:
+			case MessageConstants.CAR_ACCIDENT, MessageConstants.AMBULANCE_PATH:
 				sendToServer(message);
 				break;
 				
 			case MessageConstants.TOWER_ANNOUNCE:
 				// Probably self announce. Ignore
 				break;
-			case MessageConstants.AMBULANCE_PATH:
-				System.out.println("Ambulância!!!!");
 
 			default:
 				//logger.warning("Received unexpected message: " + message.toString());

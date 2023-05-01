@@ -32,6 +32,7 @@ public class AWFullPAmbPath extends AWFullPAppLayer
 	public AWFullPAmbPath(byte[] arr)
 	{
 		super(arr);
+		System.out.println("Aqui");
 
 		ByteBuffer buf = ByteBuffer.wrap(arr);
 		buf.position(

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
+import AWFullP.AppLayer.AWFullPAmbPath;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
@@ -115,6 +116,11 @@ public class Server implements Runnable
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
 				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ca));
+				break;
+			case MessageConstants.AMBULANCE_PATH:
+				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
+				//if(this.tower.getName() != aw_ca.getTowerID()) break;
+				sendToCloud(new AWFullPacket(aw_ap));
 				break;
 				
 			default:
