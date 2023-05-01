@@ -4,3 +4,10 @@
 .gitignore
 carros.vpp
 carros.vpp.bak_000f
+
+*.xml
+*.iml
+.idea
+.settings
+.project
+.classpath
