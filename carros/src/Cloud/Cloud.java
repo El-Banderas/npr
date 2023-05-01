@@ -156,7 +156,7 @@ public class Cloud implements Runnable
 			//System.out.println(entry.getKey() + "/" + entry.getValue());
 			TowerInfoWithIP nearest = TowerInfo.getNearestTowerPosition(entry.getValue(), knownTowers);
 			Timestamp whenToSend = calculateWhenToSendInfoServer(entry.getKey());
-			SendMessages.cloudInfoAmbulanceServer(this.socket, nearest.serverIP, nearest.getPosition(), whenToSend );
+			SendMessages.cloudInfoAmbulanceServer(this.socket, nearest.serverIP, entry.getValue(), whenToSend );
 
 		}
 	}

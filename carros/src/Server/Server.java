@@ -140,6 +140,7 @@ public class Server implements Runnable
 	}
 
 	private void handlePathAmbulanceFromCloud(AWFullPCloudAmbulanceServer awCap) {
+		// TODO: Falta agora adicionar um TimerTask para depois enviar para a torre quando for preciso
 		System.out.println("Recebeu info da cloud para avisar de ambulância");
 		System.out.println(awCap.pos);
 	}
