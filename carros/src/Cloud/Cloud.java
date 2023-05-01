@@ -48,6 +48,8 @@ public class Cloud implements Runnable
 
 	// Others
 	private Map<String, List<String>> towerEventMap;
+
+	// The InetAddress is from server
 	private Map<TowerInfo, InetAddress> knownTowers;
 
 
@@ -147,6 +149,7 @@ public class Cloud implements Runnable
 		TowerInfo newTower = new TowerInfo(awSi.getTowerID(), awSi.getPos());
 		knownTowers.put(newTower, sender);
 		System.out.println("Nova torre, posição: " + awSi.getPos());
+		System.out.println("IP: " + sender);
 	}
 
 	private void handleAmbulanceInfo(AmbulanceInfo ambulanceInfo) {
