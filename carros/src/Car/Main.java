@@ -24,7 +24,7 @@ public class Main
 		Pattern pattern = Pattern.compile("\\/\\w+\\/\\w+.\\d+\\w\\/(\\w\\d+).conf");
 			Matcher matcher = pattern.matcher(workingDirectory);
 			if (matcher.find()) {
-				return matcher.group(2);
+				return matcher.group(1);
 			}
 			return "None";
 	}
