@@ -6,7 +6,8 @@ import java.io.IOException;
 public class CarInfo
 {
 	private String id;
-	
+	private String name;
+
 	//timestamps in positions
 	private Position pos_1; // least recent
 	private Position pos_2;
@@ -18,10 +19,11 @@ public class CarInfo
 	private Vector acceleration; //velocity2 - velocity1
 
 
-	public CarInfo(String id, Position pos) throws IOException
+	public CarInfo(String id, Position pos, String name) throws IOException
 	{
 		this.id = id;
-		
+		this.name = name;
+
 		this.pos_1 = new Position(pos);
 		this.pos_2 = new Position(pos);
 		this.pos_3 = new Position(pos);
@@ -33,6 +35,7 @@ public class CarInfo
 	}
 
 	public String getID() {return new String(this.id);}
+	public String getName() {return new String(this.name);}
 	public Position getPosition() {return new Position(this.pos_3);}
 	public float getSpeed() {return (float) (this.velocity_2.length() / (pos_3.timestamp - pos_2.timestamp));}
 	public float getAccelerationRate() {return (float) (this.acceleration.length() / (pos_3.timestamp - pos_1.timestamp));}

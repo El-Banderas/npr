@@ -12,6 +12,7 @@ import java.util.Scanner;
  * @version v3.4 (20210930)
  */
 public class Menu {
+	private String name;
 
 	public interface Handler {void execute();}
 	public interface PreCondition {boolean validate();}
@@ -83,7 +84,7 @@ public class Menu {
 	 *
 	 * @param options String array with the menu options
 	 */
-	public Menu(String[] options) { this(Arrays.asList(options)); }
+	public Menu(String[] options, String name) { this(Arrays.asList(options)); this.name = name; }
 
 
 
@@ -185,7 +186,7 @@ public class Menu {
 	private int readOption() {
 		int op;
 
-		System.out.print("> ");
+		System.out.print(this.name + "> ");
 		try {
 			String line = is.nextLine();
 			op = Integer.parseInt(line);

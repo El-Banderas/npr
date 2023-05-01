@@ -20,6 +20,14 @@ import Common.TowerInfo;
  */
 public class Main
 {
+	private static String getNameNode(String workingDirectory){
+		Pattern pattern = Pattern.compile("\\/\\w+\\/\\w+.\\d+\\w\\/(\\w\\d+).conf");
+			Matcher matcher = pattern.matcher(workingDirectory);
+			if (matcher.find()) {
+				return matcher.group(2);
+			}
+			return "None";
+	}
 	public static void main(String[] args)
 	{
 		System.out.println(" ----  > Execute car");
@@ -34,8 +42,9 @@ public class Main
 
 		CarInfo info = null;
 		Car carMove = null;
+		String carName = getNameNode(System.getProperty("user.dir"));
 		try {
-			info = new CarInfo(id, pos);
+			info = new CarInfo(id, pos, carName);
 			carMove = new Car(info, towers);
 		} catch (IOException e) {
 			e.printStackTrace();

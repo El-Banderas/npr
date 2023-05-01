@@ -69,7 +69,7 @@ public class Car implements Runnable
 	@Override
 	public void run()
 	{
-		CarTerminal carTerminal = new CarTerminal(shared);
+		CarTerminal carTerminal = new CarTerminal(shared, me.getName());
 		Thread thread_1 = new Thread(carTerminal);
 		thread_1.start();
 

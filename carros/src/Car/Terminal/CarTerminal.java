@@ -16,11 +16,13 @@ public class CarTerminal implements Runnable
 
 	private boolean inAccident = false;
 	private Timer accidentBroadcast;
+	private String name;
 
 
-	public CarTerminal(SharedClass shared)
+	public CarTerminal(SharedClass shared, String name)
 	{
 		this.shared = shared;
+		this.name = name;
 	}
 
 
@@ -33,7 +35,7 @@ public class CarTerminal implements Runnable
 			"Accident happened",
 			"Accident resolved",
 			"Check send messages"
-		});
+		}, this.name);
 
 		menu.setHandler(1, ()->{});
 		menu.setHandler(2, this::breakHandler);
