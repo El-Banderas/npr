@@ -1,6 +1,7 @@
 package Car;
 
 import java.net.DatagramSocket;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -15,7 +16,7 @@ public class SharedClass
 {
 	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
-	public TreeMap<Position, MessageEntry> sendMessages;
+	public HashMap<Position, MessageEntry> sendMessages;
 	private int currentSeqNumberMessage;
 	private List<TowerInfo> towers;
 	public CarInfo info;
@@ -26,7 +27,7 @@ public class SharedClass
 	{
 		this.socket = socket;
 		receivedMessages = new TreeMap<>();
-		sendMessages = new TreeMap<>();
+		sendMessages = new HashMap<Position, MessageEntry>();
 		this.currentSeqNumberMessage = 0;
 		this.towers = towers;
 		this.info = info;
@@ -44,7 +45,6 @@ public class SharedClass
 	}
 	public void addSendMessages(int typeMessage, Position pos)
 	{
-		System.out.println("Aqui2");
 
 		if (sendMessages.containsKey(pos)) {
 			sendMessages.get(pos).addEntry();
@@ -55,7 +55,6 @@ public class SharedClass
 	}
 	public void addSendMessages(int typeMessage)
 	{
-		System.out.println("Aqui1");
 		Position noDestination = new Position(-typeMessage, -typeMessage);
 		if (sendMessages.containsKey(noDestination)) {
 			sendMessages.get(noDestination).addEntry();

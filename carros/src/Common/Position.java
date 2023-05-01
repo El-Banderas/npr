@@ -91,7 +91,6 @@ public class Position
 
 	@Override
 	public boolean equals(Object o) {
-		System.out.println("Equals");
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Position position = (Position) o;
@@ -100,7 +99,7 @@ public class Position
 
 	@Override
 	public int hashCode() {
-		System.out.println("Hash");
 		return Objects.hash(x, y);
 	}
+
 }
