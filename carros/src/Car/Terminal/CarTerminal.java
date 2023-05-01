@@ -54,7 +54,7 @@ public class CarTerminal implements Runnable
 		System.out.println("###############");
 		System.out.println("Send messages:");
 		for (MessageEntry type : shared.sendMessages.values()){
-			System.out.println(type);
+			System.out.println(type.toStringSend());
 		}
 		System.out.println("###############");
 

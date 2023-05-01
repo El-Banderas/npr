@@ -43,6 +43,15 @@ public class SharedClass
 			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
 		}
 	}
+	public void addRepeatedMessages(int type) {
+		int typeMessage = -type;
+		if (receivedMessages.containsKey(typeMessage)) {
+			receivedMessages.get(typeMessage).addEntry();
+		} else {
+			String textMessage = "Type (duplicate) " + MessageConstants.convertTypeString(typeMessage);
+			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
+		}
+	}
 	public void addSendMessages(int typeMessage, Position pos)
 	{
 
@@ -88,4 +97,6 @@ public class SharedClass
 		}
 		return closestTower;
 	}
+
+
 }

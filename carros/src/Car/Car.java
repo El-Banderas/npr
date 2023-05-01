@@ -132,7 +132,9 @@ public class Car implements Runnable
 				}
 			}
 			else
-				System.out.println("Received repeated message");
+				shared.addRepeatedMessages(message.appLayer.getType());
+
+//			System.out.println("Received repeated message");
 		}
 		else
 			shared.addEntryMessages(message.appLayer.getType());
