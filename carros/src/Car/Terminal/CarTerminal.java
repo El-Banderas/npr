@@ -65,7 +65,7 @@ public class CarTerminal implements Runnable
 	//	accidentBroadcast.scheduleAtFixedRate(wrap(()->
 //		{
 			TowerInfo getNearestTower = shared.getNearestTower();
-			System.out.println("Posição destino: (" + getNearestTower.getPosition().x + " , "+ getNearestTower.getPosition().y +")");
+			System.out.println("Posição destino ["+getNearestTower.getName()+"]: (" + getNearestTower.getPosition().x + " , "+ getNearestTower.getPosition().y +")");
 			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
 			
 			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.getPosition(), distance, shared.info.getID(), shared.getAndIncrementSeqNumber());

@@ -106,7 +106,7 @@ public class Car implements Runnable
 		// TODO: O forward message devia estar fora dos ifs, é para testar
 		
 
-		// In case is an accident message and we want it to stop
+		// In case is an accident message, and we want it to stop
 		if (message.forwardInfo.getTTL() > 1 || message.hasDestinationPosition() ) {
 			
 			//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
@@ -147,6 +147,7 @@ public class Car implements Runnable
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
 				System.out.println("Someone better appear to send my message. Cancel sending message");
 				sendMessagesClasses.get(message.forwardInfo).cancel();
+				sendMessagesClasses.remove(message.forwardInfo);
 				messagesAlreadyReceived.add(message.forwardInfo);
 			}
 			else
