@@ -14,7 +14,7 @@ $node_(19) set X_ 739
 $node_(19) set Y_ 406
 $node_(19) set Z_ 0
 $ns_ at 2 "$node_(15) setdest 276 414 15"
-$ns_ at 12 "$node_(15) setdest 306 670 15"
+$ns_ at 15 "$node_(15) setdest 306 670 15"
 $ns_ at 27 "$node_(15) setdest 739 406 25"
 $ns_ at 2 "$node_(16) setdest 276 414 15"
 $ns_ at 13 "$node_(16) setdest 386 480 15"
