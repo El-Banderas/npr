@@ -64,6 +64,10 @@ public class MessageConstants
 	 * That time is proportional to the distance to target.
 	 */
 	public static final float Delay_Before_Send_Message = 1;
+	/**
+	 * Number of tries that a car tries sending a message to a geographical destination.
+	 */
+	public static final float Number_Of_Tries_FWD = 10;
 	
 	//=== Application Layer ===//
 	/*
@@ -226,9 +230,10 @@ public class MessageConstants
 
 	
 	
-	
+	// Can receive a negative number beacuse negative types are used to indicate duplicate messages.
 	public static String convertTypeString(int type)
 	{
+		if (type < 0) type = -type;
 		switch(type) {
 			case CAR_HELLO:
 				return "Hello Message from Car";
