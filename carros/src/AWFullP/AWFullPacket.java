@@ -3,13 +3,7 @@ package AWFullP;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 
-import AWFullP.AppLayer.AWFullPAppLayer;
-import AWFullP.AppLayer.AWFullPCarAccident;
-import AWFullP.AppLayer.AWFullPCarBreak;
-import AWFullP.AppLayer.AWFullPCarHello;
-import AWFullP.AppLayer.AWFullPCarInRange;
-import AWFullP.AppLayer.AWFullPServerInfo;
-import AWFullP.AppLayer.AWFullPTowerAnnounce;
+import AWFullP.AppLayer.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 
 
@@ -46,6 +40,9 @@ public class AWFullPacket
 		
 			case MessageConstants.CAR_IN_RANGE:
 				this.appLayer = new AWFullPCarInRange(content);
+				break;
+			case MessageConstants.AMBULANCE_PATH:
+				this.appLayer = new AWFullPAmbPath(content);
 				break;
 		
 			default:
