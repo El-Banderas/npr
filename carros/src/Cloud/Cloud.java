@@ -130,6 +130,7 @@ public class Cloud implements Runnable
 
 
 			default:
+				System.out.println("Não sei o que é: " +message.appLayer.getType());
 				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
