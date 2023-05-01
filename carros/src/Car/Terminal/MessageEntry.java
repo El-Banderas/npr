@@ -24,4 +24,8 @@ public class MessageEntry
 	{
 		return "Received "+ numberEntryes + " from type " + text;
 	}
+	public String toStringSend()
+	{
+		return "Send "+ numberEntryes + " to " + text;
+	}
 }

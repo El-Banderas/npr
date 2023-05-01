@@ -128,6 +128,7 @@ public class Car implements Runnable
 					messagesAlreadyReceived.add(message.forwardInfo);
 					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
 					shared.addEntryMessages(message.appLayer.getType());
+					shared.addSendMessages(message.appLayer.getType());
 				}
 			}
 			else
@@ -156,7 +157,7 @@ public class Car implements Runnable
 		else {
 			message.forwardInfo.updateInfo(me);
 			Timer timer_1 = new Timer(false);
-			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message);
+			SendMessagePeriodically newSender = new SendMessagePeriodically(this.socket, message, shared, message.forwardInfo.getPosition());
 			sendMessagesClasses.put(message.forwardInfo, newSender);
 			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
 			System.out.println("Adiciona mensagem");

@@ -15,6 +15,7 @@ public class SharedClass
 {
 	public DatagramSocket socket;
 	public TreeMap<Integer, MessageEntry> receivedMessages;
+	public TreeMap<Position, MessageEntry> sendMessages;
 	private int currentSeqNumberMessage;
 	private List<TowerInfo> towers;
 	public CarInfo info;
@@ -25,6 +26,7 @@ public class SharedClass
 	{
 		this.socket = socket;
 		receivedMessages = new TreeMap<>();
+		sendMessages = new TreeMap<>();
 		this.currentSeqNumberMessage = 0;
 		this.towers = towers;
 		this.info = info;
@@ -38,6 +40,25 @@ public class SharedClass
 		} else {
 			String textMessage = "Type " + MessageConstants.convertTypeString(typeMessage);
 			receivedMessages.put(typeMessage, new MessageEntry(textMessage));
+		}
+	}
+	public void addSendMessages(int typeMessage, Position pos)
+	{
+		if (sendMessages.containsKey(pos)) {
+			sendMessages.get(pos).addEntry();
+		} else {
+			String textMessage = "Type " + MessageConstants.convertTypeString(typeMessage) + " destination " + pos.toString();
+			sendMessages.put(pos, new MessageEntry(textMessage));
+		}
+	}
+	public void addSendMessages(int typeMessage)
+	{
+		Position noDestination = new Position(-typeMessage, -typeMessage);
+		if (sendMessages.containsKey(noDestination)) {
+			sendMessages.get(noDestination).addEntry();
+		} else {
+			String textMessage = "Type " + MessageConstants.convertTypeString(typeMessage) + " send";
+			sendMessages.put(noDestination, new MessageEntry(textMessage));
 		}
 	}
 

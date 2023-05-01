@@ -31,13 +31,15 @@ public class CarTerminal implements Runnable
 			"Refresh Terminal",
 			"Press break and notify others",
 			"Accident happened",
-			"Accident resolved"
+			"Accident resolved",
+			"Check send messages"
 		});
 
 		menu.setHandler(1, ()->{});
 		menu.setHandler(2, this::breakHandler);
 		menu.setHandler(3, this::accidentHandler);
 		menu.setHandler(4, this::stopAccidentHandler);
+		menu.setHandler(5, this::seeSendMessages);
 
 		menu.setPreCondition(3, ()->!this.inAccident);
 		menu.setPreCondition(4, ()->this.inAccident);
@@ -46,6 +48,16 @@ public class CarTerminal implements Runnable
 			shared.printMessagesInfo();
 			menu.runOnce();
 		}
+	}
+
+	private void seeSendMessages() {
+		System.out.println("###############");
+		System.out.println("Send messages:");
+		for (MessageEntry type : shared.sendMessages.values()){
+			System.out.println(type);
+		}
+		System.out.println("###############");
+
 	}
 
 
