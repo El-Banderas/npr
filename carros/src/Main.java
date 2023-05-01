@@ -10,8 +10,11 @@ public class Main {
 	 * Generate executable for all applications to test in linux
 	 * First argument -> 0 -> Car
 	 * Car arguments (file): "src/Car/TowersPosWindows"
+	 * First argument -> 0 -> Car (Ambulance
+	 * Car arguments (file): "src/Car/TowersPosWindows" file_amb
+	 *
 	 * First argument -> 1 -> Tower
-	 * Tower arguments: t1 IP_Server 40 40
+	 * Tower arguments: t1 IP_Server 
 	 * First argument -> 2 -> Server
 	 * Server arguments: t1  40 40
 	 *

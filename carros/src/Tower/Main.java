@@ -26,7 +26,7 @@ public class Main
 
 		// Gather tower info
 		String tower_name = args[0]; //TODO: gerado aleatoriamente ou lido do 'working directory', e transmitido aos carros
-		Position tower_pos = new Position(Integer.parseInt(args[2]), Integer.parseInt(args[3])); // TODO: lido do .xy, e transmitido aos carros
+		Position tower_pos = new Position(); // TODO: lido do .xy, e transmitido aos carros
 		TowerInfo tower_info = new TowerInfo(tower_name, tower_pos);
 
 		// Instanciate and run tower
