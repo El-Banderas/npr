@@ -3,11 +3,9 @@ package Cloud;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +13,7 @@ import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.AppLayer.AWFullPAmbPath;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
@@ -23,6 +22,7 @@ import Car.AmbulanceInfo;
 import Common.Constants;
 import Common.InfoNode;
 import Common.Position;
+import Common.TowerInfo;
 
 
 public class Cloud implements Runnable
@@ -48,6 +48,7 @@ public class Cloud implements Runnable
 
 	// Others
 	private Map<String, List<String>> towerEventMap;
+	private Map<TowerInfo, InetAddress> knownTowers;
 
 
 	public Cloud(InfoNode cloud) throws IOException
@@ -59,6 +60,8 @@ public class Cloud implements Runnable
 		this.socket = new DatagramSocket(cloud.port, cloud.ip);
 
 		this.towerEventMap = new HashMap<>();
+
+		this.knownTowers = new HashMap<>();
 	}
 
 
@@ -108,6 +111,8 @@ public class Cloud implements Runnable
 		switch(message.appLayer.getType()) {
 			case MessageConstants.TOWER_ANNOUNCE:
 				System.out.println("Recebu info de uma torre?");
+				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
+				addTower(aw_ta, message.sender);
 				break;
 
 			case MessageConstants.SERVER_INFO:
@@ -136,6 +141,12 @@ public class Cloud implements Runnable
 				System.out.println("Não sei o que é: " +message.appLayer.getType());
 				logger.warning("Received unexpected message: " + message.toString());
 		}
+	}
+
+	private void addTower(AWFullPTowerAnnounce awSi, InetAddress sender) {
+		TowerInfo newTower = new TowerInfo(awSi.getTowerID(), awSi.getPos());
+		knownTowers.put(newTower, sender);
+		System.out.println("Nova torre, posição: " + awSi.getPos());
 	}
 
 	private void handleAmbulanceInfo(AmbulanceInfo ambulanceInfo) {

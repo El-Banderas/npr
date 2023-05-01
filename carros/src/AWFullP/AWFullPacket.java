@@ -1,6 +1,7 @@
 package AWFullP;
 
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 import AWFullP.AppLayer.*;
@@ -12,6 +13,7 @@ public class AWFullPacket
 	private boolean isForwarded;
 	public AWFullPFwdLayer forwardInfo;
 	public AWFullPAppLayer appLayer;
+	public InetAddress sender;
 	
 	
 	private AWFullPacket(int appType, byte[] content)
@@ -64,6 +66,7 @@ public class AWFullPacket
 	public AWFullPacket(DatagramPacket packet)
 	{
 		this(packet.getData());
+		this.sender = packet.getAddress();
 	}
 	
 	public AWFullPacket(AWFullPAppLayer appLayer)
