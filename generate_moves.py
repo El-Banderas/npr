@@ -14,6 +14,7 @@ cityes_positinions_Towers = {
 cityes_positinions_car = {
     "VC" : (276, 414),
     "Porto" : (306, 670),
+    "Braga" : (386, 480),
     "Braga2" : (739, 406),
 }
 
@@ -39,8 +40,8 @@ moves = {
 
     16: {
         2 :( "VC", 15),
-        13 :( "Porto", 15),
-        29 :( "Braga2", 25),
+        13 :( "Braga", 15),
+        31 :( "Braga2", 25),
     },
 
     17: {
