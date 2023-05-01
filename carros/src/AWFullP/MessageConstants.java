@@ -173,7 +173,7 @@ public class MessageConstants
 	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
 	public static final byte TTLAccidentMessage = (byte) 3;
 
-	//== Ambulance Path ==// O que são os primeiros 4 bytes
+	//== Ambulance Path ==// O que são os primeiros 4 bytes ???
 	/*
 	 * |		byte		|		byte		|		----		|		----		|
 	 * +--------------------+-------------------+-------------------+-------------------+
@@ -196,8 +196,25 @@ public class MessageConstants
 	public static final int AMBULANCE_PATH 		= (int) 10;
 	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
 	public static final byte TTLAmbulance_Path = (byte) 2;
-	
-	
+
+	//== Ambulance Path to Each Server ==// O que são os primeiros 4 bytes ???
+	/*
+	 * |		byte		|		byte		|		----		|		----		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |					Timestamp of when ambulance stops							|
+	 * |																				|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x	    								|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y 									|
+	 * +--------------------------------------------------------------------------------+
+	 * +--------------------------------------------------------------------------------+
+	 */
+	public static final int CLOUD_AMBULANCE_PATH 		= (int) 11;
+	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
+	public static final byte TTL_Cloud_Ambulance_Path = (byte) 4;
+
+
 	//== Tower Announce ==//
 	/*
 	 * |		byte		|		byte		|		byte		|		byte		|

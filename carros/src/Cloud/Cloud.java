@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -18,11 +20,9 @@ import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.AppLayer.AWFullPCarAccident;
 import AWFullP.AppLayer.AWFullPServerInfo;
+import AWFullP.SendMessages;
 import Car.AmbulanceInfo;
-import Common.Constants;
-import Common.InfoNode;
-import Common.Position;
-import Common.TowerInfo;
+import Common.*;
 
 
 public class Cloud implements Runnable
@@ -50,7 +50,7 @@ public class Cloud implements Runnable
 	private Map<String, List<String>> towerEventMap;
 
 	// The InetAddress is from server
-	private Map<TowerInfo, InetAddress> knownTowers;
+	private Set<TowerInfoWithIP> knownTowers;
 
 
 	public Cloud(InfoNode cloud) throws IOException
@@ -63,7 +63,7 @@ public class Cloud implements Runnable
 
 		this.towerEventMap = new HashMap<>();
 
-		this.knownTowers = new HashMap<>();
+		this.knownTowers = new HashSet<>();
 	}
 
 
@@ -112,13 +112,11 @@ public class Cloud implements Runnable
 	{
 		switch(message.appLayer.getType()) {
 			case MessageConstants.TOWER_ANNOUNCE:
-				System.out.println("Recebu info de uma torre?");
 				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
 				addTower(aw_ta, message.sender);
 				break;
 
 			case MessageConstants.SERVER_INFO:
-				System.out.println("[Cloud] Recebeu info do servidor");
 				AWFullPServerInfo aw_si = (AWFullPServerInfo) message.appLayer;
 				String towerID_si = aw_si.getTowerID();
 				for(String carID : aw_si.getCarsInRange())
@@ -140,21 +138,38 @@ public class Cloud implements Runnable
 				break;
 
 			default:
-				System.out.println("Não sei o que é: " +message.appLayer.getType());
 				logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 
 	private void addTower(AWFullPTowerAnnounce awSi, InetAddress sender) {
-		TowerInfo newTower = new TowerInfo(awSi.getTowerID(), awSi.getPos());
-		knownTowers.put(newTower, sender);
-		System.out.println("Nova torre, posição: " + awSi.getPos());
+		TowerInfoWithIP newTower = new TowerInfoWithIP(awSi.getTowerID(), awSi.getPos(), sender);
+		knownTowers.add(newTower);
+		System.out.println("New tower, position: " + awSi.getPos());
 		System.out.println("IP: " + sender);
 	}
 
+
 	private void handleAmbulanceInfo(AmbulanceInfo ambulanceInfo) {
-		return;
+
+		for (Map.Entry<Integer, Position> entry : ambulanceInfo.path.entrySet()) {
+			//System.out.println(entry.getKey() + "/" + entry.getValue());
+			TowerInfoWithIP nearest = TowerInfo.getNearestTowerPosition(entry.getValue(), knownTowers);
+			Timestamp whenToSend = calculateWhenToSendInfoServer(entry.getKey());
+			SendMessages.cloudInfoAmbulanceServer(this.socket, nearest.serverIP, nearest.getPosition(), whenToSend );
+
+		}
 	}
+
+	private Timestamp calculateWhenToSendInfoServer(int seconds){
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		Timestamp later = new Timestamp(System.currentTimeMillis() + (seconds * 1000L));
+		System.out.println("Antes: " + now);
+		System.out.println("Sec: " + seconds);
+		System.out.println("After: " + later);
+		return later;
+	}
+
 
 	/*private static TimerTask wrap(Runnable r)
 	{

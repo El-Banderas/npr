@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -13,10 +14,7 @@ import java.util.logging.SimpleFormatter;
 import AWFullP.AppLayer.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import Car.AmbulanceInfo;
-import Common.CarInfo;
-import Common.Constants;
-import Common.InfoNode;
-import Common.TowerInfo;
+import Common.*;
 
 
 public class SendMessages
@@ -88,8 +86,19 @@ public class SendMessages
 		
 		sendMessage(sender, destination.ip, destination.port, awpacket);
 	}
-	
-	
+
+	public static void cloudInfoAmbulanceServer(DatagramSocket sender, InetAddress destinationIP, Position destination, Timestamp whenToSend)
+	{
+		/*
+		logger.fine("Cloud sends ambulance path to server: " + sender);
+
+		AWFullPCloudAmbulanceServer aw_app = new AWFullPCloudAmbulanceServer(destination, cars);
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
+
+		sendMessage(sender, destination.ip, destination.port, awpacket);
+		 */
+	}
+
 	
 	public static void sendMessage(DatagramSocket sender, InetAddress to, int port, AWFullPacket message)
 	{

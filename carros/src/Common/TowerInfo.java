@@ -1,5 +1,9 @@
 package Common;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class TowerInfo
 {
 	private String name;
@@ -24,8 +28,22 @@ public class TowerInfo
 		this.pos = pos;
 		this.max_speed = max_speed;
 	}
+	public static TowerInfo getNearestTower(Position pos, List<TowerInfo> towers){
+		double minDist = Double.MAX_VALUE;
+		TowerInfo closestTower = null;
+		for (TowerInfo oneTower : towers){
+			double thisDistance = Position.distance(pos, oneTower.getPosition());
+			if (thisDistance < minDist) {
+				minDist = thisDistance;
+				closestTower = oneTower;
+			}
+		}
+		return closestTower;
+	}
+	public static TowerInfoWithIP getNearestTowerPosition(Position posToLook, Set<TowerInfoWithIP> towers){
 
-
+		return (TowerInfoWithIP) getNearestTower(posToLook, new ArrayList<>(towers));
+	}
 	public String getName() {return this.name;}
 	public Position getPosition() {return this.pos;}
 	public float getMaxSpeed() {return this.max_speed;}

@@ -85,18 +85,10 @@ public class SharedClass
 	}
 
 	public TowerInfo getNearestTower(){
-		Position carPos = info.getPosition();
-		double minDist = Double.MAX_VALUE;
-		TowerInfo closestTower = null;
-		for (TowerInfo oneTower : towers){
-			double thisDistance = Position.distance(carPos, oneTower.getPosition());
-			 if (thisDistance < minDist) {
-				 minDist = thisDistance;
-				 closestTower = oneTower;
-			 }
-		}
-		return closestTower;
+		return TowerInfo.getNearestTower(info.getPosition(), towers);
 	}
+
+
 
 
 }
