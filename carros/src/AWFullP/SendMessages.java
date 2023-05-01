@@ -10,12 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import AWFullP.AppLayer.AWFullPCarAccident;
-import AWFullP.AppLayer.AWFullPCarBreak;
-import AWFullP.AppLayer.AWFullPCarHello;
-import AWFullP.AppLayer.AWFullPServerInfo;
-import AWFullP.AppLayer.AWFullPTowerAnnounce;
+import AWFullP.AppLayer.*;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
+import Car.AmbulanceInfo;
 import Common.CarInfo;
 import Common.Constants;
 import Common.InfoNode;
@@ -56,23 +53,32 @@ public class SendMessages
 	public static void carSendAccident(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, AWFullPFwdLayer fwrInfo)
 	{
 		logger.fine("Car Sends Accident!");
-		
+
 		AWFullPCarAccident aw_app = new AWFullPCarAccident(towerInfo.getName(), carInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
-	
+
+	public static void sendAmbulanceInfo(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, AWFullPFwdLayer fwrInfo ,AmbulanceInfo ambulanceInfo) {
+
+		AWFullPAmbPath aw_app = new AWFullPAmbPath(carInfo, ambulanceInfo);
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
+
+		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
+
+	}
+
 	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower , AWFullPFwdLayer fwrInfo)
 	{
 		logger.fine("Tower Sends Hello to Car");
-		
+
 		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(tower);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
-		
+
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
-	
+
 	public static void serverInfoBatchCloud(DatagramSocket sender, TowerInfo towerInfo, List<String> cars, InfoNode destination)
 	{
 		logger.fine("Server Sends Batch to Cloud");
@@ -131,4 +137,6 @@ public class SendMessages
 			logger.throwing("SendMessages", "sendMessage3", e);
 		}
 	}
+
+
 }

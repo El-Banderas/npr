@@ -172,6 +172,30 @@ public class MessageConstants
 	public static final int CAR_ACCIDENT 		= (int) 4;
 	public static final int CAR_ACCIDENT_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
 	public static final byte TTLAccidentMessage = (byte) 3;
+
+	//== Ambulance Path ==// O que são os primeiros 4 bytes
+	/*
+	 * |		byte		|		byte		|		----		|		----		|
+	 * +--------------------+-------------------+-------------------+-------------------+
+	 * |									Number of stops								|
+	 * |																				|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Time 1									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x 1									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y	 1									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Time 2									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos x 2									|
+	 * +--------------------------------------------------------------------------------+
+	 * |									  Pos y	 2									|
+
+	 */
+	public static final int AMBULANCE_PATH 		= (int) 10;
+	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
+	public static final byte TTLAmbulance_Path = (byte) 2;
 	
 	
 	//== Tower Announce ==//
@@ -249,6 +273,8 @@ public class MessageConstants
 				return "Cars in Range";
 			case IGNORED_MESSAGE_DISTANCE:
 				return "Ignored message because distance";
+			case AMBULANCE_PATH:
+				return "Ambulance path";
 			default:
 				return "Unexpected (" + type + ")";
 		}

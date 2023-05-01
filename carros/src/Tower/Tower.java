@@ -30,10 +30,10 @@ public class Tower implements Runnable
 	static {
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setFormatter(new SimpleFormatter());
-		handler.setLevel(Level.OFF);
+		handler.setLevel(Level.ALL);
 		logger.addHandler(handler);
 		
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		Logger.getLogger("npr.messages.received").setLevel(Level.WARNING);
 		Logger.getLogger("npr.messages.sent").setLevel(Level.FINE);
 	}
@@ -113,7 +113,9 @@ public class Tower implements Runnable
 			case MessageConstants.TOWER_ANNOUNCE:
 				// Probably self announce. Ignore
 				break;
-			
+			case MessageConstants.AMBULANCE_PATH:
+				System.out.println("Ambulância!!!!");
+
 			default:
 				//logger.warning("Received unexpected message: " + message.toString());
 		}

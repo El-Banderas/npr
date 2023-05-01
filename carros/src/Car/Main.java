@@ -51,7 +51,11 @@ public class Main
 		String carName = getNameNode(System.getProperty("user.dir"));
 		try {
 			info = new CarInfo(id, pos, carName);
-			carMove = new Car(info, towers);
+			if (ambulanceInfo != null)
+				carMove = new Car(info, towers);
+			else
+				carMove = new Car(info, towers, ambulanceInfo);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
