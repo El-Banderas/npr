@@ -60,7 +60,7 @@ public class SendMessages
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
 	}
 
-	public static void sendAmbulanceInfo(DatagramSocket sender, TowerInfo towerInfo, CarInfo carInfo, AWFullPFwdLayer fwrInfo ,AmbulanceInfo ambulanceInfo) {
+	public static void sendAmbulanceInfo(DatagramSocket sender, CarInfo carInfo, AWFullPFwdLayer fwrInfo ,AmbulanceInfo ambulanceInfo) {
 
 		AWFullPAmbPath aw_app = new AWFullPAmbPath(carInfo, ambulanceInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);

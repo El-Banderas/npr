@@ -73,7 +73,7 @@ public class Car implements Runnable
 
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAmbulance_Path, getNearestTower.getPosition(), distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
 
-		SendMessages.sendAmbulanceInfo(shared.socket, getNearestTower, shared.info, fwrInfo, ambulanceInfo);
+		SendMessages.sendAmbulanceInfo(shared.socket,shared.info, fwrInfo, ambulanceInfo);
 	}
 
 	@Override
