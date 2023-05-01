@@ -127,7 +127,7 @@ public class Tower implements Runnable
 
 	private void sendToServer(AWFullPacket message)
 	{
-		logger.finer("Forwarding to server: " + message.toString());
+		//logger.finer("Forwarding to server: " + message.toString());
 		//this.wlan_socket.setNetworkInterface()
 
 		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, message);

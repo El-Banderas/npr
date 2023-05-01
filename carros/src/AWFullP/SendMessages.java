@@ -89,7 +89,7 @@ public class SendMessages
 
 	public static void cloudInfoAmbulanceServer(DatagramSocket sender, InetAddress destinationIP, Position destination, Timestamp whenToSend)
 	{
-		logger.fine("Cloud sends ambulance path to server: " + sender);
+		System.out.println("Cloud sends ambulance path to server: " + destinationIP);
 
 		AWFullPCloudAmbulanceServer aw_app = new AWFullPCloudAmbulanceServer(destination, whenToSend);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
