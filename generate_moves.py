@@ -35,6 +35,7 @@ moves = {
     15: {
         7 :( "Porto", 15),
         20 :( "Braga2", 25),
+        35 :( "VC", 25),
     },
 
     16: {
@@ -62,9 +63,6 @@ moves = {
 }
 
 def get_pos_city(city_name):
-    print(city_name)
-    thing = cityes_positinions_car[city_name]
-    print(thing)
     (x,y) = cityes_positinions_car[city_name]
     return (x,y)
 
