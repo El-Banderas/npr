@@ -5,8 +5,8 @@
 carros.vpp
 carros.vpp.bak_000f
 
-.xml
-.iml
+*.xml
+*.iml
 .idea
 .settings
 .project
