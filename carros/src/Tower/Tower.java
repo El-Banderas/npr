@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
@@ -68,6 +69,11 @@ public class Tower implements Runnable
 	@Override
 	public void run()
 	{
+		// Send hello to server, so it can forward to cloud and know this tower and it's position.
+		AWFullPTowerAnnounce aw_app = new AWFullPTowerAnnounce(me);
+		AWFullPacket awpacket = new AWFullPacket(aw_app);
+		SendMessages.sendMessage(this.wlan_socket, this.local_server.ip, this.local_server.port, awpacket);
+
 		// Send Hellos
 		Timer timer_1 = new Timer(false);
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);

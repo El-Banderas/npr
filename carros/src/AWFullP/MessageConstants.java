@@ -191,7 +191,7 @@ public class MessageConstants
 	 * |									  Pos x 2									|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos y	 2									|
-
+ 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int AMBULANCE_PATH 		= (int) 10;
 	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;

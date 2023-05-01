@@ -14,6 +14,7 @@ import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.AppLayer.AWFullPAmbPath;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
@@ -63,6 +64,9 @@ public class Server implements Runnable
 		this.socket = new DatagramSocket(Constants.serverPort);
 
 		this.carsInRange = new ArrayList<>();
+
+		// Initial message so the cloud knows this server and tower
+
 	}
 	
 	
@@ -101,7 +105,11 @@ public class Server implements Runnable
 		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.tower.getName()) return)
 		
 		switch (message.appLayer.getType()) {
-		
+			case MessageConstants.TOWER_ANNOUNCE:
+				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
+				sendToCloud(new AWFullPacket(aw_ta));
+				break;
+
 			case MessageConstants.CAR_IN_RANGE:
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
 				//if(this.tower.getName() != aw_cir.getTowerID()) break;
@@ -114,7 +122,6 @@ public class Server implements Runnable
 				
 			case MessageConstants.CAR_ACCIDENT:
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
-				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 			case MessageConstants.AMBULANCE_PATH:
