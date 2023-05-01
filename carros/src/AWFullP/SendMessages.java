@@ -61,7 +61,7 @@ public class SendMessages
 	}
 
 	public static void sendAmbulanceInfo(DatagramSocket sender, CarInfo carInfo, AWFullPFwdLayer fwrInfo ,AmbulanceInfo ambulanceInfo) {
-
+		System.out.println("Envia info");
 		AWFullPAmbPath aw_app = new AWFullPAmbPath(carInfo, ambulanceInfo);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 
