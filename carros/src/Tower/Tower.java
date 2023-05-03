@@ -145,12 +145,13 @@ public class Tower implements Runnable
 				// Probably self announce. Ignore
 				break;
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
-				System.out.println("[TOWER] Recebeu info do servidor, posição");
 				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
 				AWFullPFwdLayer aw_fwd =  message.forwardInfo;
 				// We need to check if we haven't already send this message.
 				// Probably was the WLAN socket that send.
 				if (!messagesAlreadyReceived.contains(aw_fwd)) {
+					System.out.println("[TOWER] Recebeu info do servidor, posição");
+					
 					messagesAlreadyReceived.add(aw_fwd);
 					// DatagramSocket sender, InetAddress to, int port, AWFullPacket message
 					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
