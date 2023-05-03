@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.ConsoleHandler;
@@ -156,7 +155,7 @@ public class Cloud implements Runnable
 			//System.out.println(entry.getKey() + "/" + entry.getValue());
 			TowerInfoWithIP nearest = TowerInfo.getNearestTowerPosition(entry.getValue(), knownTowers);
 			Timestamp whenToSend = calculateWhenToSendInfoServer(entry.getKey());
-			SendMessages.cloudInfoAmbulanceServer(this.socket, nearest.serverIP, entry.getValue(), whenToSend );
+			SendMessages.cloudInfoAmbulanceServer(this.socket, nearest.ip, entry.getValue(), whenToSend );
 
 		}
 	}

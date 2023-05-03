@@ -15,12 +15,11 @@ import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
 import AWFullP.AppLayer.*;
+import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.MessageConstants;
 import AWFullP.ReceiveMessages;
 import AWFullP.SendMessages;
-import Common.Constants;
-import Common.InfoNode;
-import Common.TowerInfo;
+import Common.*;
 
 
 public class Server implements Runnable
@@ -40,16 +39,20 @@ public class Server implements Runnable
 	// Node information
 	//private InfoNode me;
 	private InfoNode cloud;
-	private TowerInfo tower;
+	private TowerInfoWithIP tower;
 
 	// Connection information
 	private DatagramSocket socket;
 
 	// Others
 	private List<String> carsInRange;
+
+	// ID is necessary to send messages to cars
+	private final String id;
+	private int sequenceNumber;
+
 	
-	
-	public Server(InfoNode server, InfoNode cloud, TowerInfo tower) throws SocketException
+	public Server(InfoNode server, InfoNode cloud, TowerInfoWithIP tower, String id) throws SocketException
 	{
 		logger.config(server.toString());
 		logger.config(cloud.toString());
@@ -62,7 +65,8 @@ public class Server implements Runnable
 		this.socket = new DatagramSocket(Constants.serverPort);
 
 		this.carsInRange = new ArrayList<>();
-
+		this.id = id;
+		this.sequenceNumber = 0;
 		// Initial message so the cloud knows this server and tower
 
 	}
@@ -107,6 +111,7 @@ public class Server implements Runnable
 			case MessageConstants.TOWER_ANNOUNCE:
 				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
 				this.tower.setPos(aw_ta.getPos());
+				this.tower.setIP(message.sender);
 				sendToCloud(new AWFullPacket(aw_ta));
 				break;
 
@@ -147,17 +152,25 @@ public class Server implements Runnable
 		System.out.println(awCap.pos);
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
-		int delay = awCap.whenToSend.compareTo(now);
+		long delay = awCap.whenToSend.getTime() - now.getTime();
 		System.out.println("Delay: " + delay);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
 					@Override
 					public void run() {
 						// your code here
+						float distance = (float) Position.distance(tower.getPosition(), awCap.pos);
+						AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, awCap.pos, distance, id , getAndIncrementSeqNumber());
+
+						SendMessages.sendAmbulanceInfotoTower(socket, tower.ip, fwrInfo, awCap);
 					}
 				},
 				delay
 		);
+	}
+
+	private int getAndIncrementSeqNumber() {
+		return this.sequenceNumber++;
 	}
 
 	private void checkAndSendBatch()

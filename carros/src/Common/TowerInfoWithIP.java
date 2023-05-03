@@ -1,16 +1,21 @@
 package Common;
 
 import java.net.InetAddress;
-import java.util.List;
-import java.util.Set;
 
 public class TowerInfoWithIP extends TowerInfo
 {
-	public InetAddress serverIP;
+	public InetAddress ip;
 
 
 	public TowerInfoWithIP(String towerID, Position pos, InetAddress sender) {
 		super(towerID, pos);
-		this.serverIP = sender;
+		this.ip = sender;
+	}
+	public TowerInfoWithIP(String towerID, Position pos) {
+		super(towerID, pos);
+	}
+
+	public void setIP(InetAddress serverIP) {
+		this.ip = serverIP;
 	}
 }

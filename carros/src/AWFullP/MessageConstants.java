@@ -201,7 +201,7 @@ public class MessageConstants
 	/*
 	 * |		byte		|		byte		|		----		|		----		|
 	 * +--------------------+-------------------+-------------------+-------------------+
-	 * |					Timestamp of when ambulance stops							|
+	 * |					Timestamp of when ambulance goes							|
 	 * |																				|
 	 * +--------------------------------------------------------------------------------+
 	 * |									  Pos x	    								|

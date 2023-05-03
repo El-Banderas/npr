@@ -64,8 +64,16 @@ public class SendMessages
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
 
 		sendMessage(sender, Constants.MulticastGroup, Constants.portMulticast, awpacket, fwrInfo);
-
 	}
+
+	// Server send ambulance info to tower, with fwd header done
+	public static void sendAmbulanceInfotoTower(DatagramSocket sender, InetAddress tower , AWFullPFwdLayer fwrInfo , AWFullPCloudAmbulanceServer ambulanceInfo) {
+		System.out.println("Send AMB info to tower");
+		AWFullPacket awpacket = new AWFullPacket(ambulanceInfo);
+
+		sendMessage(sender, tower, Constants.towerPort, awpacket, fwrInfo);
+	}
+
 
 	public static void towerAnnouncement(DatagramSocket sender, TowerInfo tower , AWFullPFwdLayer fwrInfo)
 	{

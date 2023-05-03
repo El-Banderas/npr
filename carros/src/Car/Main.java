@@ -125,7 +125,7 @@ public class Main
 		return null;
 	}
 
-	private static String idGenerator(int n)
+	public static String idGenerator(int n)
 	{
 		String alphaNumeric = "0123456789" + "abcdefghijklmnopqrstuvxyz";
 

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.AWFullPacket;
+import AWFullP.AppLayer.AWFullPCloudAmbulanceServer;
 import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.MessageConstants;
@@ -118,6 +119,11 @@ public class Tower implements Runnable
 				
 			case MessageConstants.TOWER_ANNOUNCE:
 				// Probably self announce. Ignore
+				break;
+			case MessageConstants.CLOUD_AMBULANCE_PATH:
+				System.out.println("Recebeu info da torre, posição");
+				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
+				System.out.println(aw_amb.pos);
 				break;
 
 			default:
