@@ -2,7 +2,6 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.net.MulticastSocket;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.ConsoleHandler;
@@ -80,8 +79,13 @@ public class Tower implements Runnable
 		timer_1.scheduleAtFixedRate(wrap(this::sendHellos), 0, Constants.refreshRate);
 
 		// Receive Messages
-		Thread thread_1 = new Thread(this::receiveMessages);
+		Thread thread_1 = new Thread(this::receiveMessagesVANET);
 		thread_1.start();
+
+		Thread thread_2 = new Thread(this::receiveMessagesWLAN);
+		thread_2.start();
+
+
 	}
 
 	private void sendHellos()
@@ -89,11 +93,23 @@ public class Tower implements Runnable
 		SendMessages.towerAnnouncement(this.vanet_socket, this.me, fwrInfo);
 	}
 
-	private void receiveMessages()
+	private void receiveMessagesVANET()
 	{
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
+				handleMessage(message);
+			} catch (IOException e) {
+				// TIMEOUT
+				//logger.fine("Timeout passed. Nothing received.");
+			}
+		}
+	}
+	private void receiveMessagesWLAN()
+	{
+		while (true) {
+			try {
+				AWFullPacket message = ReceiveMessages.receiveData(this.wlan_socket);
 				handleMessage(message);
 			} catch (IOException e) {
 				// TIMEOUT
