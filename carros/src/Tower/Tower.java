@@ -2,6 +2,7 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -68,6 +69,7 @@ public class Tower implements Runnable
 		this.wlan_socket = new DatagramSocket(Constants.towerPort);
 		this.vanet_socket = new InfoNodeMulticast("eth1").socket;
 		this.fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLTowerHello, me.getName(), -1);
+		this.messagesAlreadyReceived = new HashSet<>();
 	}
 
 
