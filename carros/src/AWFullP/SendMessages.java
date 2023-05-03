@@ -67,7 +67,7 @@ public class SendMessages
 	}
 
 	// Server send ambulance info to tower, with fwd header done
-	public static void sendAmbulanceInfotoTower(DatagramSocket sender, InetAddress tower , AWFullPFwdLayer fwrInfo , AWFullPCloudAmbulanceServer ambulanceInfo) {
+	public static void sendAmbulanceInfoToTower(DatagramSocket sender, InetAddress tower , AWFullPFwdLayer fwrInfo , AWFullPCloudAmbulanceServer ambulanceInfo) {
 		System.out.println("Send AMB info to tower");
 		AWFullPacket awpacket = new AWFullPacket(ambulanceInfo);
 

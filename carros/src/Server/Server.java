@@ -163,9 +163,8 @@ public class Server implements Runnable
 						// your code here
 						float distance = (float) Position.distance(tower.getPosition(), awCap.pos);
 						AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, awCap.pos, distance, id , getAndIncrementSeqNumber());
-						System.out.println("IP da torre");
-						System.out.println(tower.ip.toString());
-						SendMessages.sendAmbulanceInfotoTower(socket, tower.ip, fwrInfo, awCap);
+						System.out.println("Send amb info to tower");
+						SendMessages.sendAmbulanceInfoToTower(socket, tower.ip, fwrInfo, awCap);
 					}
 				},
 				delay
