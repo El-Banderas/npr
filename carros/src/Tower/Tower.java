@@ -140,7 +140,8 @@ public class Tower implements Runnable
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
 				System.out.println("[TOWER] Recebeu info do servidor, posição");
 				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
-				System.out.println(aw_amb.pos);
+				// DatagramSocket sender, InetAddress to, int port, AWFullPacket message
+				SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup,Constants.portMulticast, message);
 				break;
 
 			default:

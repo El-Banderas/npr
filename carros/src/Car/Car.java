@@ -112,7 +112,8 @@ public class Car implements Runnable
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-		// TODO: Depois reencaminhar mensagens que estão no map de reenvio
+
+
 		// TODO: O forward message devia estar fora dos ifs, é para testar
 		
 
