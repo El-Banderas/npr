@@ -3,6 +3,7 @@ package Server;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -142,7 +143,21 @@ public class Server implements Runnable
 	private void handlePathAmbulanceFromCloud(AWFullPCloudAmbulanceServer awCap) {
 		// TODO: Falta agora adicionar um TimerTask para depois enviar para a torre quando for preciso
 		System.out.println("Recebeu info da cloud para avisar de ambulância");
+		System.out.println(awCap);
 		System.out.println(awCap.pos);
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
+		int delay = awCap.whenToSend.compareTo(now);
+		System.out.println("Delay: " + delay);
+		new java.util.Timer().schedule(
+				new java.util.TimerTask() {
+					@Override
+					public void run() {
+						// your code here
+					}
+				},
+				delay
+		);
 	}
 
 	private void checkAndSendBatch()

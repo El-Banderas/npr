@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class AWFullPCloudAmbulanceServer extends AWFullPAppLayer
 {
-	private Timestamp whenToSend;
+	public Timestamp whenToSend;
 	public Position pos;
 
 
