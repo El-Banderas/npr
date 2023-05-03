@@ -110,6 +110,7 @@ public class Tower implements Runnable
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.wlan_socket);
+				System.out.println("Escuta WLAN?");
 				handleMessage(message);
 			} catch (IOException e) {
 				// TIMEOUT
@@ -137,7 +138,7 @@ public class Tower implements Runnable
 				// Probably self announce. Ignore
 				break;
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
-				System.out.println("Recebeu info da torre, posição");
+				System.out.println("[TOWER] Recebeu info do servidor, posição");
 				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
 				System.out.println(aw_amb.pos);
 				break;
