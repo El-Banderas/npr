@@ -153,6 +153,8 @@ public class Server implements Runnable
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
 		long delay = awCap.whenToSend.getTime() - now.getTime();
+		// TODO: DEpois retirar isto, é para ser mais rápido testar
+		delay = 0;
 		System.out.println("Delay: " + delay);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
@@ -161,7 +163,8 @@ public class Server implements Runnable
 						// your code here
 						float distance = (float) Position.distance(tower.getPosition(), awCap.pos);
 						AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, awCap.pos, distance, id , getAndIncrementSeqNumber());
-
+						System.out.println("IP da torre");
+						System.out.println(tower.ip.toString());
 						SendMessages.sendAmbulanceInfotoTower(socket, tower.ip, fwrInfo, awCap);
 					}
 				},
