@@ -2,6 +2,7 @@ package Tower;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.ConsoleHandler;
@@ -47,6 +48,10 @@ public class Tower implements Runnable
 	private DatagramSocket wlan_socket;
 	private DatagramSocket vanet_socket;
 	private AWFullPFwdLayer fwrInfo;
+
+	// Filter Amb messages
+	private Set<AWFullPFwdLayer> messagesAlreadyReceived; // This map is to store already received messages; TODO: Apagar mensagens mais antigas
+
 
 	// Others
 	//...
@@ -140,8 +145,14 @@ public class Tower implements Runnable
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
 				System.out.println("[TOWER] Recebeu info do servidor, posição");
 				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
-				// DatagramSocket sender, InetAddress to, int port, AWFullPacket message
-				SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup,Constants.portMulticast, message);
+				AWFullPFwdLayer aw_fwd =  message.forwardInfo;
+				// We need to check if we haven't already send this message.
+				// Probably was the WLAN socket that send.
+				if (!messagesAlreadyReceived.contains(aw_fwd)) {
+					messagesAlreadyReceived.add(aw_fwd);
+					// DatagramSocket sender, InetAddress to, int port, AWFullPacket message
+					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
+				}
 				break;
 
 			default:
