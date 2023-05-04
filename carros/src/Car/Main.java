@@ -92,6 +92,7 @@ public class Main
 
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
+				System.out.println(fileLine);
 				Matcher matcher = patternActions.matcher(fileLine);
 				if (matcher.find()) {
 					String node = matcher.group(1);
@@ -100,6 +101,7 @@ public class Main
 						Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 						CarAction read = new CarAction(pos, carName, matcher.group(4));
 						actions.add(read);
+						System.out.println("Após adicionar ação");
 					} else {
 						System.out.println("Ignore action: " + matcher.group(1));
 
