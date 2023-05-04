@@ -1,7 +1,7 @@
 '''
 Notas para utilizar: 
 O fundo está no git
-Largura de banda = 110 (alterar na nuvem do core)
+Largura de banda = 100 (alterar na nuvem do core)
 
 '''
 f = open("movesPortugal.scen", "w")
@@ -44,7 +44,6 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        7 :( "Porto", 15),
         25 :( "VC-BG2-4", 25),
     },
 
