@@ -145,6 +145,7 @@ temp ="Tower_Pos_generates"
 file1Car ="../carros/src/Car/Tower_Pos_generates" 
 file2Car ="../carros/out/artifacts/carros_jar/Tower_Pos_generates" 
 
+# There can only be one action per position per car.
 actions = [
     ("n15","VC", "break"),
     ("n15","VC-BG2-4", "break"),

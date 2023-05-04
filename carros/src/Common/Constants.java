@@ -12,6 +12,12 @@ public final class Constants
 {
 	public static int refreshRate = 1000; //ms
 
+	/**
+	 * This constant is used in tests.
+	 * The radius is the maximum distance between the position that trigger's the action and the current position of vehicle.
+	 */
+	public static int radius_test = 10; //ms
+
 
 	/*
 	 * +-------------------------+------------------------------------------------------------+

@@ -33,7 +33,7 @@ public class Main
 		System.out.println("Id: " + id);
 
 		AmbulanceInfo ambulanceInfo = null;
-		// It it is a car, we pass anothre argument, the path that it will use.
+		// If it is a car, we pass anothre argument, the path that it will use.
 		if (args.length > 1) {
 			System.out.println("[CAR] Is an ambulance");
 			ambulanceInfo = parseFileAmbulances(args[1]);
@@ -51,9 +51,9 @@ public class Main
 		List <CarAction> actions = new ArrayList<>();
 		List<TowerInfo> towers = parseFileConfigs(args[0], carName, actions);
 		try {
-			info = new CarInfo(id, pos, carName);
+			info = new CarInfo(id, pos, carName, actions);
 			if (ambulanceInfo != null)
-				carMove = new Car(info, towers, ambulanceInfo);
+				carMove = new Car(info, towers,  ambulanceInfo);
 			else
 				carMove = new Car(info, towers);
 
@@ -92,7 +92,6 @@ public class Main
 
 			while (scanner.hasNextLine()) {
 				String fileLine = scanner.nextLine();
-				System.out.println(fileLine);
 				Matcher matcher = patternActions.matcher(fileLine);
 				if (matcher.find()) {
 					String node = matcher.group(1);
@@ -101,7 +100,6 @@ public class Main
 						Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 						CarAction read = new CarAction(pos, carName, matcher.group(4));
 						actions.add(read);
-						System.out.println("Após adicionar ação");
 					} else {
 						System.out.println("Ignore action: " + matcher.group(1));
 

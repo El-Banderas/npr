@@ -1,12 +1,16 @@
 package Common;
 
+import Car.CarAction;
+
 import java.io.IOException;
+import java.util.List;
 
 
 public class CarInfo
 {
 	private String id;
 	private String name;
+	private List<CarAction> actions;
 
 	//timestamps in positions
 	private Position pos_1; // least recent
@@ -19,10 +23,11 @@ public class CarInfo
 	private Vector acceleration; //velocity2 - velocity1
 
 
-	public CarInfo(String id, Position pos, String name) throws IOException
+	public CarInfo(String id, Position pos, String name, List<CarAction> actions) throws IOException
 	{
 		this.id = id;
 		this.name = name;
+		this.actions = actions;
 
 		this.pos_1 = new Position(pos);
 		this.pos_2 = new Position(pos);
@@ -61,6 +66,21 @@ public class CarInfo
 		this.velocity_2 = new Vector(pos_2, pos_3);
 		
 		this.acceleration = Vector.sub(velocity_2, velocity_1);
+	}
+
+	public String actionTriggered (){
+		for (CarAction action : actions){
+			if (Position.distance(this.getPosition(), action.pos) < Constants.radius_test) {
+				actions.remove(action);
+				System.out.println("Resto de ações");
+				for (CarAction action_temp : actions){
+					System.out.println(action_temp.action);
+				}
+				return action.action;
+			}
+
+		}
+		return "None";
 	}
 	
 	public String toString()

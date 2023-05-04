@@ -66,7 +66,7 @@ public class Car implements Runnable
 	}
 
 	public Car(CarInfo info, List<TowerInfo> towers, AmbulanceInfo ambulanceInfo) throws IOException {
-		this(info, towers);
+		this(info,  towers);
 		TowerInfo getNearestTower = shared.getNearestTower();
 		System.out.println("Send Amblance info ["+getNearestTower.getName()+"]");
 		int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
@@ -93,6 +93,10 @@ public class Car implements Runnable
 
 	private void sendHellos()
 	{
+		String action = me.actionTriggered();
+		if (!action.equals("None")){
+			System.out.println("Action triggered: " + action);
+		}
 		SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);
 	}
 
