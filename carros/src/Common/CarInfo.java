@@ -72,10 +72,6 @@ public class CarInfo
 		for (CarAction action : actions){
 			if (Position.distance(this.getPosition(), action.pos) < Constants.radius_test) {
 				actions.remove(action);
-				System.out.println("Resto de ações");
-				for (CarAction action_temp : actions){
-					System.out.println(action_temp.action);
-				}
 				return action.action;
 			}
 
