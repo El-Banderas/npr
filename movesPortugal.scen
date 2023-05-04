@@ -19,17 +19,18 @@ $node_(18) set Z_ 0
 $node_(19) set X_ 739
 $node_(19) set Y_ 406
 $node_(19) set Z_ 0
-$ns_ at 7 "$node_(15) setdest 598 422 25"
+$ns_ at 2 "$node_(15) setdest 276 414 15"
+$ns_ at 5 "$node_(15) setdest 598 422 25"
 $ns_ at 30 "$node_(15) setdest 598 422 25"
 $ns_ at 2 "$node_(16) setdest 276 414 15"
-$ns_ at 7 "$node_(16) setdest 502 422 25"
+$ns_ at 5 "$node_(16) setdest 502 422 25"
 $ns_ at 30 "$node_(16) setdest 502 422 25"
 $ns_ at 2 "$node_(17) setdest 306 670 15"
-$ns_ at 7 "$node_(17) setdest 410 422 25"
+$ns_ at 5 "$node_(17) setdest 410 422 25"
 $ns_ at 30 "$node_(17) setdest 410 422 25"
 $ns_ at 2 "$node_(18) setdest 306 670 15"
-$ns_ at 7 "$node_(18) setdest 313 418 25"
+$ns_ at 5 "$node_(18) setdest 313 418 25"
 $ns_ at 30 "$node_(18) setdest 313 418 25"
 $ns_ at 2 "$node_(19) setdest 739 406 25"
-$ns_ at 7 "$node_(19) setdest 690 422 25"
+$ns_ at 5 "$node_(19) setdest 690 422 25"
 $ns_ at 30 "$node_(19) setdest 690 422 25"

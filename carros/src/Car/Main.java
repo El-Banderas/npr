@@ -32,7 +32,6 @@ public class Main
 		String id = idGenerator(8);
 		System.out.println("Id: " + id);
 
-		List<TowerInfo> towers = parseFileTowers(args[0]);
 		AmbulanceInfo ambulanceInfo = null;
 		// It it is a car, we pass anothre argument, the path that it will use.
 		if (args.length > 1) {
@@ -49,6 +48,8 @@ public class Main
 		Car carMove = null;
 		// The name of the car is used in terminal, and stored in CarInfo
 		String carName = getNameNode(System.getProperty("user.dir"));
+		List <CarAction> actions = new ArrayList<>();
+		List<TowerInfo> towers = parseFileConfigs(args[0], carName, actions);
 		try {
 			info = new CarInfo(id, pos, carName);
 			if (ambulanceInfo != null)
@@ -66,13 +67,14 @@ public class Main
 	}
 
 	// Parse file that contains information about the RSUs
-	private static List<TowerInfo> parseFileTowers(String filePath)
+	private static List<TowerInfo> parseFileConfigs(String filePath, String carName, List<CarAction> actions)
 	{
 		List<TowerInfo> res = new ArrayList<>();
 		try {
 			Scanner scanner = new Scanner(new File(filePath));
 			scanner.nextLine(); // Ignore first line, header
 
+			// Parse towers positions
 			Pattern pattern = Pattern.compile("(\\w+);(\\d+),(\\d+);");
 
 			while (scanner.hasNextLine()) {
@@ -83,8 +85,28 @@ public class Main
 					Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 					res.add(new TowerInfo(name, pos));
 				} else
-					System.out.println("Invalid line in tower info file");
+					break;
 			}
+
+			scanner.nextLine(); // Ignore first line, header
+			// Parse towers positions
+			Pattern patternActions = Pattern.compile("(\\w+);(\\d+),(\\d+);(\\w+);");
+
+			while (scanner.hasNextLine()) {
+				String fileLine = scanner.nextLine();
+				Matcher matcher = patternActions.matcher(fileLine);
+				if (matcher.find()) {
+					String node = matcher.group(1);
+					if (node.equals(carName)) {
+						System.out.println("Add action: " + matcher.group(4));
+						Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
+						CarAction read = new CarAction(pos, carName, matcher.group(4));
+						actions.add(read);
+					}
+				} else
+					System.out.println("Ignore action: " + matcher.group(1));
+			}
+
 
 			scanner.close();
 			return res;

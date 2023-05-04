@@ -38,7 +38,9 @@ initial_positions = {
     19:"Braga2" ,
 }
 
-time_init_move_1 = 7
+time_init_move_1 = 5
+time_chega_move_1 = 20
+
 time_fim_move_1 = 30
 
 moves = {
@@ -47,6 +49,7 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
+        2 :( "VC", 15),
         time_init_move_1 :( "VC-BG2-4", 25),
         time_fim_move_1 :( "VC-BG2-4", 25),
     },
@@ -137,6 +140,30 @@ def write_ambs(file_path):
 
 write_ambs(file1)
 write_ambs(file2)
+
+temp ="Tower_Pos_generates" 
+file1Car ="../carros/src/Car/Tower_Pos_generates" 
+file2Car ="../carros/out/artifacts/carros_jar/Tower_Pos_generates" 
+
+actions = [
+    ("n15","VC", "break"),
+    ("n15","VC-BG2-4", "break"),
+]
+
+def write_Car_config(file_path): 
+    with open(file_path, "w") as f2:
+        f2.write("Nome;PosX,PosY;\n")
+        for city_name, (x,y) in cityes_positinions_Towers.items():
+            f2.write(f"{city_name};{x},{y};\n")
+        f2.write("Node;PosX,PosY;action;\n")
+        for (node_name, pos, action) in actions:
+            (x,y) = get_pos_city(pos)
+            f2.write(f"{node_name};{x},{y};{action};\n")
+        f2.close()
+
+write_Car_config(temp)
+write_Car_config(file1Car)
+write_Car_config(file2Car)
 '''
 cur_dir = os.path.dirname(os.path.realpath('__file__'))
 file_name = os.path.join(cur_dir, 'src/Car/mov_amb.txt')
