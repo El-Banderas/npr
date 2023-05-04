@@ -67,8 +67,7 @@ public class Main
 	}
 
 	// Parse file that contains information about the RSUs
-	private static List<TowerInfo> parseFileConfigs(String filePath, String carName, List<CarAction> actions)
-	{
+	private static List<TowerInfo> parseFileConfigs(String filePath, String carName, List<CarAction> actions) {
 		List<TowerInfo> res = new ArrayList<>();
 		try {
 			Scanner scanner = new Scanner(new File(filePath));
@@ -102,17 +101,21 @@ public class Main
 						Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 						CarAction read = new CarAction(pos, carName, matcher.group(4));
 						actions.add(read);
+					} else {
+						System.out.println("Ignore action: " + matcher.group(1));
+
 					}
-				} else
-					System.out.println("Ignore action: " + matcher.group(1));
+				}
+				else {
+					System.out.println("Invalid line");
+				}
+
+
+				scanner.close();
+				return res;
 			}
-
-
-			scanner.close();
-			return res;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(-1);
+			throw new RuntimeException(e);
 		}
 		return null;
 	}
