@@ -106,19 +106,16 @@ public class Main
 						System.out.println("Ignore action: " + matcher.group(1));
 
 					}
-				}
-				else {
+				} else {
 					System.out.println("Invalid line");
 				}
 
-
+			}
 				scanner.close();
 				return res;
-			}
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	// Parse file that contains information about the RSUs
