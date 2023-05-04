@@ -1,5 +1,6 @@
 package Car.Terminal;
 
+import java.net.DatagramSocket;
 import java.util.Timer;
 
 import AWFullP.MessageConstants;
@@ -65,11 +66,16 @@ public class CarTerminal implements Runnable
 
 	private void breakHandler()
 	{
-		System.out.println("Pressed Break!");
-		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, shared.info.getID(), shared.getAndIncrementSeqNumber());
-		SendMessages.carSendBreak(this.shared.socket, shared.info, fwrInfo);
+		sendBreak(this.shared);
 	}
 
+	// TODO: Se calhar isto vai para outra classe?
+	public static void sendBreak(SharedClass givenShared)
+	{
+		System.out.println("Pressed Break!");
+		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, givenShared.info.getID(), givenShared.getAndIncrementSeqNumber());
+		SendMessages.carSendBreak(givenShared.socket, givenShared.info, fwrInfo);
+	}
 
 	private void accidentHandler()
 	{
