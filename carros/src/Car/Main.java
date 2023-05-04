@@ -96,11 +96,13 @@ public class Main
 				Matcher matcher = patternActions.matcher(fileLine);
 				if (matcher.find()) {
 					String node = matcher.group(1);
+					System.out.println("1");
 					if (node.equals(carName)) {
 						System.out.println("Add action: " + matcher.group(4));
 						Position pos = new Position(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
 						CarAction read = new CarAction(pos, carName, matcher.group(4));
 						actions.add(read);
+						System.out.println("Adicionou ação");
 					} else {
 						System.out.println("Ignore action: " + matcher.group(1));
 
