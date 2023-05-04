@@ -39,7 +39,7 @@ initial_positions = {
 }
 
 time_init_move_1 = 7
-time_fim_move_1 = 23
+time_fim_move_1 = 30
 
 moves = {
     #14: {
