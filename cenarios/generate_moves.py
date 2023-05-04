@@ -4,7 +4,7 @@ O fundo está no git
 Largura de banda = 100 (alterar na nuvem do core)
 
 '''
-f = open("movesPortugal.scen", "w")
+f = open("../movesPortugal.scen", "w")
 
 cityes_positinions_Towers = {
     "VC" : (235, 378),
