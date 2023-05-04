@@ -291,6 +291,8 @@ public class MessageConstants
 				return "Ignored message because distance";
 			case AMBULANCE_PATH:
 				return "Ambulance path";
+			case CLOUD_AMBULANCE_PATH:
+				return "Ambulance path filtered";
 			default:
 				return "Unexpected (" + type + ")";
 		}

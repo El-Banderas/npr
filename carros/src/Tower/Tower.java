@@ -117,7 +117,6 @@ public class Tower implements Runnable
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.wlan_socket);
-				System.out.println("Escuta WLAN?");
 				handleMessage(message);
 			} catch (IOException e) {
 				// TIMEOUT
@@ -150,8 +149,7 @@ public class Tower implements Runnable
 				// We need to check if we haven't already send this message.
 				// Probably was the WLAN socket that send.
 				if (!messagesAlreadyReceived.contains(aw_fwd)) {
-					System.out.println("[TOWER] Recebeu info do servidor, posição");
-					
+					System.out.println("Receive ambulance info from server.");
 					messagesAlreadyReceived.add(aw_fwd);
 					// DatagramSocket sender, InetAddress to, int port, AWFullPacket message
 					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);

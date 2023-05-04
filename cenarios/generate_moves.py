@@ -7,16 +7,26 @@ Largura de banda = 110 (alterar na nuvem do core)
 f = open("movesPortugal.scen", "w")
 
 cityes_positinions_Towers = {
-    "VC" : (252, 397),
+    "VC" : (235, 378),
     "Porto" : (300, 633),
-    "Braga2" : (761, 360),
+    "Braga2" : (755, 349),
 }
 cityes_positinions_car = {
     "VC" : (276, 414),
+    "VC(L)-BG2-1" : (313, 418),
+    "VC-BG2-2" : (410, 422),
+    "VC-BG2-3" : (502, 422),
+    "VC-BG2-4" : (598, 422),
+    "VC-BG2(L)-5" : (690, 422),
     "Porto" : (306, 670),
     "Braga" : (386, 480),
     "Braga2" : (739, 406),
     "VR" : (530, 530),  # Vila Real
+}
+
+initial_positions_tower = {
+    12: "VC",
+    13: "Braga2"
 }
 
 initial_positions = {
@@ -35,34 +45,39 @@ moves = {
     #},
     15: {
         7 :( "Porto", 15),
-        20 :( "VR", 25),
-        30 :( "Braga2", 25),
-        45 :( "VC", 25),
+        25 :( "VC-BG2-4", 25),
     },
 
     16: {
         2 :( "VC", 15),
-        13 :( "Braga", 15),
-        31 :( "Braga2", 25),
+        25 :( "VC-BG2-3", 25),
     },
 
     17: {
         2 :( "Porto", 15),
-        12 :( "Braga2", 25),
-        27 :( "VC", 15),
+        25 :( "VC-BG2-2", 25),
     },
 
     18: {
         2 :( "Porto", 15),
-        12 : ("VC", 15),
-        27 : ("Braga2", 25),
+        25 :( "VC(L)-BG2-1", 25),
     },
     19: {
         2 : ("Braga2", 25),
-        12 : ("Porto", 25),
-        27 : ("VC", 17),
+        12 : ("VC-BG2(L)-5", 25),
     },
 }
+
+def get_pos_city_tower(city_name):
+    (x,y) = cityes_positinions_Towers[city_name]
+    return (x,y)
+
+for tower, (city_name) in initial_positions_tower.items():
+    (x,y) = get_pos_city_tower(city_name)
+    z = 0
+    f.write(f"$node_({tower}) set X_ {x}\n")
+    f.write(f"$node_({tower}) set Y_ {y}\n")
+    f.write(f"$node_({tower}) set Z_ {z}\n")
 
 def get_pos_city(city_name):
     (x,y) = cityes_positinions_car[city_name]
@@ -74,6 +89,7 @@ for car, (city_name) in initial_positions.items():
     f.write(f"$node_({car}) set X_ {x}\n")
     f.write(f"$node_({car}) set Y_ {y}\n")
     f.write(f"$node_({car}) set Z_ {z}\n")
+
 
 for car, car_info in moves.items():
     print(car_info)
@@ -102,8 +118,8 @@ from os import path
 
 #file_path = path.relpath("src/Car/mov_amb.txt", "w")
 #with open("src/Car/mov_amb.txt", "w") as f2:
-file1 ="./carros/src/Car/amb_moves" 
-file2 ="./carros/out/artifacts/carros_jar/amb_moves" 
+file1 ="../carros/src/Car/amb_moves" 
+file2 ="../carros/out/artifacts/carros_jar/amb_moves" 
 def write_ambs(file_path): 
     with open(file_path, "w") as f2:
         f2.write("#Time;x,y\n")
