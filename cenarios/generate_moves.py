@@ -38,7 +38,8 @@ initial_positions = {
     19:"Braga2" ,
 }
 
-time_pos_1 = 13
+time_init_move_1 = 7
+time_fim_move_1 = 23
 
 moves = {
     #14: {
@@ -46,26 +47,31 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        time_pos_1 :( "VC-BG2-4", 25),
+        time_init_move_1 :( "VC-BG2-4", 25),
+        time_fim_move_1 :( "VC-BG2-4", 25),
     },
 
     16: {
         2 :( "VC", 15),
-        time_pos_1 :( "VC-BG2-3", 25),
+        time_init_move_1 :( "VC-BG2-3", 25),
+        time_fim_move_1 :( "VC-BG2-3", 25),
     },
 
     17: {
         2 :( "Porto", 15),
-        time_pos_1 :( "VC-BG2-2", 25),
+        time_init_move_1 :( "VC-BG2-2", 25),
+        time_fim_move_1 :( "VC-BG2-2", 25),
     },
 
     18: {
         2 :( "Porto", 15),
-        time_pos_1 :( "VC(L)-BG2-1", 25),
+        time_init_move_1 :( "VC(L)-BG2-1", 25),
+        time_fim_move_1 :( "VC(L)-BG2-1", 25),
     },
     19: {
         2 : ("Braga2", 25),
-        time_pos_1 : ("VC-BG2(L)-5", 25),
+        time_init_move_1 : ("VC-BG2(L)-5", 25),
+        time_fim_move_1 : ("VC-BG2(L)-5", 25),
     },
 }
 
