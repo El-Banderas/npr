@@ -60,7 +60,6 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        2 :( "AMB1", 15),
         time_amb_1 :( "AMB2", 25),
         time_amb_2 :( "AMB3", 25),
         time_chega_move_acident :( "AMB4", 25),

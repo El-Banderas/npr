@@ -127,9 +127,6 @@ public class Tower implements Runnable
 	// Sometimes we have different behaviours if the same message comes from cars or wlans.
 	private void handleMessage(AWFullPacket message, boolean fromCars)
 	{
-		if (message.appLayer.getType() != MessageConstants.CAR_HELLO && message.appLayer.getType() != MessageConstants.TOWER_ANNOUNCE)
-			System.out.println("Received from type: " + MessageConstants.convertTypeString(message.appLayer.getType()) + " And from cars? " + fromCars);
-
 		switch(message.appLayer.getType()) {
 				
 			case MessageConstants.CAR_HELLO:
