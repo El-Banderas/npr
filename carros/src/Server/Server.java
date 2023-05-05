@@ -154,7 +154,7 @@ public class Server implements Runnable
 
 		long delay = awCap.whenToSend.getTime() - now.getTime();
 		// TODO: DEpois retirar isto, é para ser mais rápido testar
-		delay = 0;
+		//delay = 0;
 		System.out.println("Delay: " + delay);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {
