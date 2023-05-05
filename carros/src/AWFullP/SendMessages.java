@@ -87,7 +87,7 @@ public class SendMessages
 
 	public static void serverInfoBatchCloud(DatagramSocket sender, TowerInfo towerInfo, List<String> cars, InfoNode destination)
 	{
-		logger.fine("Server Sends Batch to Cloud");
+		//logger.fine("Server Sends Batch to Cloud");
 		
 		AWFullPServerInfo aw_app = new AWFullPServerInfo(towerInfo.getName(), cars);
 		AWFullPacket awpacket = new AWFullPacket(aw_app);
