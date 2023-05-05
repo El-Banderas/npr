@@ -46,7 +46,7 @@ initial_positions = {
 time_init_move_amb = 5
 time_amb_1 = 13
 time_amb_2 = 23
-time_chega_move_amb = 30
+time_chega_move_amb = 28
 time_fim_simulation = 40
 
 time_init_move_acident = 5
