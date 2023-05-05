@@ -105,7 +105,7 @@ public class Tower implements Runnable
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.vanet_socket);
-				handleMessage(message);
+				handleMessage(message, true);
 			} catch (IOException e) {
 				// TIMEOUT
 				//logger.fine("Timeout passed. Nothing received.");
@@ -117,15 +117,15 @@ public class Tower implements Runnable
 		while (true) {
 			try {
 				AWFullPacket message = ReceiveMessages.receiveData(this.wlan_socket);
-				handleMessage(message);
+				handleMessage(message, false);
 			} catch (IOException e) {
 				// TIMEOUT
 				//logger.fine("Timeout passed. Nothing received.");
 			}
 		}
 	}
-
-	private void handleMessage(AWFullPacket message)
+	// Sometimes we have different behaviours if the same message comes from cars or wlans.
+	private void handleMessage(AWFullPacket message, boolean fromCars)
 	{
 		switch(message.appLayer.getType()) {
 				
@@ -137,7 +137,10 @@ public class Tower implements Runnable
 				break;
 				
 			case MessageConstants.CAR_ACCIDENT, MessageConstants.AMBULANCE_PATH:
-				sendToServer(message);
+				if (fromCars)
+					sendToServer(message);
+				else
+					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
 				break;
 				
 			case MessageConstants.TOWER_ANNOUNCE:

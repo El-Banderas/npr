@@ -167,6 +167,7 @@ public class Car implements Runnable
 		if (myDistance > distanceMessage){
 			if (sendMessagesClasses.containsKey(message.forwardInfo)){
 				System.out.println("Someone better appear to send my message. Cancel sending message");
+				// Cancel timertask
 				sendMessagesClasses.get(message.forwardInfo).cancel();
 				sendMessagesClasses.remove(message.forwardInfo);
 				messagesAlreadyReceived.add(message.forwardInfo);

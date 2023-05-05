@@ -2,6 +2,7 @@ package Server;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -127,12 +128,15 @@ public class Server implements Runnable
 				
 			case MessageConstants.CAR_ACCIDENT:
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
+				sendConfirmationCar(message);
 				sendToCloud(new AWFullPacket(aw_ca));
 				break;
 			case MessageConstants.AMBULANCE_PATH:
 				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
 				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ap));
+				sendConfirmationCar(message);
+
 				break;
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
 				AWFullPCloudAmbulanceServer aw_cap = (AWFullPCloudAmbulanceServer) message.appLayer;
@@ -145,16 +149,21 @@ public class Server implements Runnable
 		}
 	}
 
+	// To confirm that the message was received
+	private void sendConfirmationCar(AWFullPacket message) {
+		message.forwardInfo.setThisMessageAsAck(); // AWFullPFwdLayer
+		System.out.println("Send confirmation to tower (and then cars)");
+		SendMessages.sendMessage(socket, tower.ip, Constants.towerPort, message,message.forwardInfo );
+
+
+	}
+
 	private void handlePathAmbulanceFromCloud(AWFullPCloudAmbulanceServer awCap) {
 		// TODO: Falta agora adicionar um TimerTask para depois enviar para a torre quando for preciso
-		System.out.println("Recebeu info da cloud para avisar de ambulância");
-		System.out.println(awCap);
-		System.out.println(awCap.pos);
+		System.out.println("Recebeu info da cloud para avisar de ambulância, pos: " + awCap.pos);
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 
 		long delay = awCap.whenToSend.getTime() - now.getTime();
-		// TODO: DEpois retirar isto, é para ser mais rápido testar
-		//delay = 0;
 		System.out.println("Delay: " + delay);
 		new java.util.Timer().schedule(
 				new java.util.TimerTask() {

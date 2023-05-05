@@ -63,7 +63,7 @@ public class MessageConstants
 	 * Before send a message, should wait to see if a better send is in localisation
 	 * That time is proportional to the distance to target.
 	 */
-	public static final float Delay_Before_Send_Message = 1;
+	public static final float Delay_Before_Send_Message = 5;
 	/**
 	 * Number of tries that a car tries sending a message to a geographical destination.
 	 */
@@ -290,9 +290,9 @@ public class MessageConstants
 			case IGNORED_MESSAGE_DISTANCE:
 				return "Ignored message because distance";
 			case AMBULANCE_PATH:
-				return "Ambulance path";
+				return "Ambulance path to tower";
 			case CLOUD_AMBULANCE_PATH:
-				return "Ambulance path filtered";
+				return "Ambulance path";
 			default:
 				return "Unexpected (" + type + ")";
 		}

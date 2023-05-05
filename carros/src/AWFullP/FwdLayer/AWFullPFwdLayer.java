@@ -140,4 +140,8 @@ public class AWFullPFwdLayer
 	public int hashCode() {
 		return Objects.hash(seq, senderID);
 	}
+
+	public void setThisMessageAsAck(){
+		this.dist = 0;
+	}
 }
