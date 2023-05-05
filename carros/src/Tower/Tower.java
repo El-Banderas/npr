@@ -141,8 +141,10 @@ public class Tower implements Runnable
 			case MessageConstants.CAR_ACCIDENT, MessageConstants.AMBULANCE_PATH:
 				if (fromCars)
 					sendToServer(message);
-				else
+				else {
+					messagesAlreadyReceived.add(message.forwardInfo);
 					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
+				}
 				break;
 				
 			case MessageConstants.TOWER_ANNOUNCE:
