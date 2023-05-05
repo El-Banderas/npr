@@ -139,7 +139,7 @@ public class Tower implements Runnable
 				sendToServer(awp);
 				break;
 			case MessageConstants.CAR_ACCIDENT, MessageConstants.AMBULANCE_PATH:
-				if (fromCars)
+				if (fromCars && !messagesAlreadyReceived.contains(message.forwardInfo))
 					sendToServer(message);
 				else {
 					messagesAlreadyReceived.add(message.forwardInfo);
