@@ -142,8 +142,9 @@ public class Tower implements Runnable
 				if (fromCars && !messagesAlreadyReceived.contains(message.forwardInfo))
 					sendToServer(message);
 				else {
-					messagesAlreadyReceived.add(message.forwardInfo);
-					SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
+					// It is a new message, send to cars
+					if (messagesAlreadyReceived.add(message.forwardInfo))
+						SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
 				}
 				break;
 				
@@ -151,7 +152,6 @@ public class Tower implements Runnable
 				// Probably self announce. Ignore
 				break;
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
-				AWFullPCloudAmbulanceServer aw_amb = (AWFullPCloudAmbulanceServer) message.appLayer;
 				AWFullPFwdLayer aw_fwd =  message.forwardInfo;
 				// We need to check if we haven't already send this message.
 				// Probably was the WLAN socket that send.
