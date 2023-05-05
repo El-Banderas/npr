@@ -7,41 +7,50 @@ Largura de banda = 100 (alterar na nuvem do core)
 f = open("../movesPortugal.scen", "w")
 
 cityes_positinions_Towers = {
-    "VC" : (235, 378),
-    "Porto" : (300, 633),
-    "Braga2" : (755, 349),
+    "Esq" : (100, 355),
+    "Dir" : (857, 362),
 }
 cityes_positinions_car = {
-    "VC" : (276, 414),
-    "VC(L)-BG2-1" : (313, 418),
-    "VC-BG2-2" : (410, 422),
-    "VC-BG2-3" : (502, 422),
-    "VC-BG2-4" : (598, 422),
-    "VC-BG2(L)-5" : (690, 422),
-    "Porto" : (306, 670),
-    "Braga" : (386, 480),
-    "Braga2" : (739, 406),
-    "VR" : (530, 530),  # Vila Real
+    "AMB1" : (100, 442),
+    "AMB2" : (467, 420),
+    "AMB3" : (430, 545),
+    "AMB4" : (102, 548),
+    "N16_1" : (248, 460),
+    "N16_2" : (100, 449),
+    "N14" : (50, 530),
+# Mais perto da torre e recebe acidente
+    "N17_1" : (654, 400),
+    "N17_2" : (950, 421),
+# Deve ignorar mensagem
+    "N18_1" : (654, 479),
+    "N18_2" : (950, 478),
+# Fica quase parada e tem acidente
+    "N19_1" : (789, 531),
+    "N19_2" : (858, 531),
 }
 
 initial_positions_tower = {
-    12: "VC",
-    13: "Braga2"
+    12: "Esq",
+    13: "Dir"
 }
 
 initial_positions = {
- #   14: (110, 450, 0),
-    15:"VC" ,
-    16: "VC",
-    17: "Porto",
-    18:"Porto" ,
-    19:"Braga2" ,
+   14: "N14",
+    15:"AMB1" ,
+    16: "N16_1",
+    17: "N17_1",
+    18:"N18_1" ,
+    19:"N19_1" ,
 }
 
-time_init_move_1 = 5
-time_chega_move_1 = 20
+time_init_move_amb = 5
+time_chega_move_amb = 25
+time_fim_simulation = 40
 
-time_fim_move_1 = 30
+time_init_move_acident = 5
+time_chega_move_acident = 25
+
+time_acident = 24
 
 moves = {
     #14: {
@@ -49,33 +58,37 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        2 :( "VC", 15),
-        time_init_move_1 :( "VC-BG2-4", 25),
-        time_fim_move_1 :( "VC-BG2-4", 25),
+        2 :( "AMB1", 15),
+        time_init_move_amb :( "AMB2", 15),
+        time_chega_move_acident :( "AMB3", 25),
+        time_fim_simulation :( "AMB3", 25),
     },
 
     16: {
-        2 :( "VC", 15),
-        time_init_move_1 :( "VC-BG2-3", 25),
-        time_fim_move_1 :( "VC-BG2-3", 25),
+        2 :( "N16_1", 15),
+        time_init_move_amb :( "N16_1", 25),
+        time_chega_move_acident :( "N16_2", 25),
+        time_fim_simulation :( "N16_2", 25),
     },
 
     17: {
-        2 :( "Porto", 15),
-        time_init_move_1 :( "VC-BG2-2", 25),
-        time_fim_move_1 :( "VC-BG2-2", 25),
+        2 :( "N17_1", 15),
+        time_init_move_acident :( "N17_1", 25),
+        time_chega_move_acident :( "N17_2", 25),
+        time_fim_simulation :( "N17_2", 25),
     },
 
     18: {
-        2 :( "Porto", 15),
-        time_init_move_1 :( "VC(L)-BG2-1", 25),
-        time_fim_move_1 :( "VC(L)-BG2-1", 25),
+        2 :( "N18_1", 15),
+        time_init_move_acident :( "N18_1", 25),
+        time_chega_move_acident :( "N18_2", 25),
+        time_fim_simulation :( "N18_2", 25),
     },
     19: {
-        2 : ("Braga2", 25),
-        time_init_move_1 : ("VC-BG2(L)-5", 25),
-        time_fim_move_1 : ("VC-BG2(L)-5", 25),
-    },
+        2 :( "N19_1", 15),
+        time_acident :( "N19_2", 25),
+        time_fim_simulation :( "N19_2", 25),
+    }
 }
 
 def get_pos_city_tower(city_name):
@@ -147,8 +160,7 @@ file2Car ="../carros/out/artifacts/carros_jar/Tower_Pos_generates"
 
 # There can only be one action per position per car.
 actions = [
-    ("n15","VC", "break"),
-    ("n15","VC-BG2-4", "break"),
+    ("n19","N19_2", "break"),
 ]
 
 def write_Car_config(file_path): 
