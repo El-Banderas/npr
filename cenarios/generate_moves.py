@@ -44,13 +44,15 @@ initial_positions = {
 }
 
 time_init_move_amb = 5
-time_chega_move_amb = 25
+time_amb_1 = 13
+time_amb_2 = 23
+time_chega_move_amb = 30
 time_fim_simulation = 40
 
 time_init_move_acident = 5
 time_chega_move_acident = 25
 
-time_acident = 24
+time_acident = 28
 
 moves = {
     #14: {
@@ -59,9 +61,10 @@ moves = {
     #},
     15: {
         2 :( "AMB1", 15),
-        time_init_move_amb :( "AMB2", 15),
-        time_chega_move_acident :( "AMB3", 25),
-        time_fim_simulation :( "AMB3", 25),
+        time_amb_1 :( "AMB2", 15),
+        time_amb_2 :( "AMB3", 15),
+        time_chega_move_acident :( "AMB4", 25),
+        time_fim_simulation :( "AMB4", 25),
     },
 
     16: {
