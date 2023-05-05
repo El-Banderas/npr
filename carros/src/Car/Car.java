@@ -132,9 +132,8 @@ public class Car implements Runnable
 			// Is a new message
 			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
 				
-				//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("3");
-
-				if (message.hasDestinationPosition()) {
+				// If the message is in destination, we fwd one time, and not wait for confirmation
+				if (message.hasDestinationPosition() && !inDestination(message.forwardInfo)) {
 					
 					if (!sendMessagesClasses.containsKey(message.forwardInfo))
 						shared.addEntryMessages(message.appLayer.getType());
@@ -156,6 +155,14 @@ public class Car implements Runnable
 		}
 		else
 			shared.addEntryMessages(message.appLayer.getType());
+	}
+
+	private boolean inDestination(AWFullPFwdLayer forwardInfo) {
+		if (Position.distance(forwardInfo.getPosition(), me.getPosition()) < MessageConstants.RADIUS_DESTINATION_POSITION) {
+			System.out.println("Message reached destination!");
+			return true;
+		}
+		else return false;
 	}
 
 	private void resendMessageWithDestination(AWFullPacket message)
@@ -182,6 +189,7 @@ public class Car implements Runnable
 			sendMessagesClasses.put(message.forwardInfo, newSender);
 			timer_1.scheduleAtFixedRate(newSender, (long) (message.forwardInfo.getDist() * MessageConstants.Delay_Before_Send_Message), Constants.refreshRate);
 			System.out.println("Adiciona mensagem");
+
 		}
 	}
 

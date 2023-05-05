@@ -267,6 +267,8 @@ public class MessageConstants
 
 
 	public static final int IGNORED_MESSAGE_DISTANCE = (int) 9;
+	// The radius in witch we consider the message is delivered
+	public static final int RADIUS_DESTINATION_POSITION = (int) 100;
 
 	
 	
