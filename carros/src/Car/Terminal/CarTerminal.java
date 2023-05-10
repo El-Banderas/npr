@@ -27,7 +27,9 @@ public class CarTerminal implements Runnable
 	}
 
 
-	@Override
+
+
+    @Override
 	public void run()
 	{
 		Menu menu = new Menu(new String[] {
@@ -76,24 +78,28 @@ public class CarTerminal implements Runnable
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLBreakMessage, givenShared.info.getID(), givenShared.getAndIncrementSeqNumber());
 		SendMessages.carSendBreak(givenShared.socket, givenShared.info, fwrInfo);
 	}
+	public static void sendAccident(SharedClass givenShared) {
+		System.out.println("Accident happened!");
+// Meti em comentário porque é mais fácil para ver a implementação
+		//	this.accidentBroadcast = new Timer(false);
+		//	accidentBroadcast.scheduleAtFixedRate(wrap(()->
+//		{
+		TowerInfo getNearestTower = givenShared.getNearestTower();
+		System.out.println("Posição destino ["+getNearestTower.getName()+"]: (" + getNearestTower.getPosition().x + " , "+ getNearestTower.getPosition().y +")");
+		int distance = (int) Position.distance(givenShared.info.getPosition(), getNearestTower.getPosition());
+
+		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.getPosition(), distance, givenShared.info.getID(), givenShared.getAndIncrementSeqNumber());
+		SendMessages.carSendAccident(givenShared.socket, getNearestTower, givenShared.info, fwrInfo);
+
+//		}
+//		), 0, Constants.refreshRate);
+
+//		this.inAccident = true;
+	}
 
 	private void accidentHandler()
 	{
-		System.out.println("Accident happened!");
-// Meti em comentário porque é mais fácil para ver a implementação
-	//	this.accidentBroadcast = new Timer(false);
-	//	accidentBroadcast.scheduleAtFixedRate(wrap(()->
-//		{
-			TowerInfo getNearestTower = shared.getNearestTower();
-			System.out.println("Posição destino ["+getNearestTower.getName()+"]: (" + getNearestTower.getPosition().x + " , "+ getNearestTower.getPosition().y +")");
-			int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
-			
-			AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAccidentMessage, getNearestTower.getPosition(), distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
-			SendMessages.carSendAccident(shared.socket, getNearestTower, shared.info, fwrInfo);
-//		}
-//		), 0, Constants.refreshRate);
-		
-//		this.inAccident = true;
+		sendAccident(shared);
 	}
 
 	private void stopAccidentHandler()

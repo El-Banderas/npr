@@ -98,6 +98,9 @@ public class Car implements Runnable
 			System.out.println("Action triggered: " + action);
 			if (action.equals("break")) {
 				CarTerminal.sendBreak(shared);
+			} else if (action.equals("accident")) {
+				CarTerminal.sendAccident(shared);
+
 			}
 		}
 		SendMessages.carHello(this.socket, this.me, fwrInfoHelloCar);

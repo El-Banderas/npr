@@ -1,7 +1,7 @@
 '''
 Notas para utilizar: 
 O fundo está no git
-Largura de banda = 100 (alterar na nuvem do core)
+Largura de banda = 130 (alterar na nuvem do core)
 
 '''
 f = open("../movesPortugal.scen", "w")
@@ -163,6 +163,7 @@ file2Car ="../carros/out/artifacts/carros_jar/Tower_Pos_generates"
 # There can only be one action per position per car.
 actions = [
     ("n19","N19_2", "break"),
+    ("n19","N19_2", "accident"),
 ]
 
 def write_Car_config(file_path): 
