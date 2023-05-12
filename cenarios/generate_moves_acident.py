@@ -48,10 +48,10 @@ initial_positions = {
 
 time_fim_simulation = 40
 
-time_init_move_acident = 5
-time_chega_move_acident = 25
+time_init_move_acident = 1
+time_chega_move_acident = 5
 
-time_acident = 28
+time_acident = 9
 
 moves = {
     17: {
