@@ -4,7 +4,7 @@ O fundo está no git
 Largura de banda = 130 (alterar na nuvem do core)
 
 '''
-f = open("../movesPortugal.scen", "w")
+f = open("../movesAmb.scen", "w")
 
 cityes_positinions_Towers = {
     "Esq" : (100, 355),
@@ -27,6 +27,7 @@ cityes_positinions_car = {
 # Fica quase parada e tem acidente
     "N19_1" : (789, 531),
     "N19_2" : (858, 531),
+    "Fora" : (37, 700),
 }
 
 initial_positions_tower = {
@@ -38,9 +39,9 @@ initial_positions = {
    14: "N14",
     15:"AMB1" ,
     16: "N16_1",
-    17: "N17_1",
-    18:"N18_1" ,
-    19:"N19_1" ,
+    17: "Fora",
+    18:"Fora" ,
+    19:"Fora" ,
 }
 
 time_init_move_amb = 5
@@ -73,24 +74,7 @@ moves = {
         time_fim_simulation :( "N16_2", 25),
     },
 
-    17: {
-        2 :( "N17_1", 15),
-        time_init_move_acident :( "N17_1", 25),
-        time_chega_move_acident :( "N17_2", 25),
-        time_fim_simulation :( "N17_2", 25),
-    },
-
-    18: {
-        2 :( "N18_1", 15),
-        time_init_move_acident :( "N18_1", 25),
-        time_chega_move_acident :( "N18_2", 25),
-        time_fim_simulation :( "N18_2", 25),
-    },
-    19: {
-        2 :( "N19_1", 15),
-        time_acident :( "N19_2", 25),
-        time_fim_simulation :( "N19_2", 25),
-    }
+    
 }
 
 def get_pos_city_tower(city_name):
@@ -128,17 +112,7 @@ f.close()
 
 ambulance = 15
 import os
-'''
-def read_file(file_name):
-    file_handle = open(file_name, "w+")
-    file_handle.write("#Time;x,y")
-    for time, (city_name,vel) in moves[ambulance].items():
-        (x,y) = get_pos_city(city_name)
-        file_handle.write(f"{time};{x},{y}")
-    file_handle.close()
 
-# f_amb = open("./src/Car/mov_amb.txt", "w")
-'''
 from os import path
 
 #file_path = path.relpath("src/Car/mov_amb.txt", "w")
@@ -156,14 +130,12 @@ def write_ambs(file_path):
 write_ambs(file1)
 write_ambs(file2)
 
-temp ="Tower_Pos_generates" 
-file1Car ="../carros/src/Car/Tower_Pos_generates" 
-file2Car ="../carros/out/artifacts/carros_jar/Tower_Pos_generates" 
+temp ="Amb_Conf" 
+file1Car ="../carros/src/Car/Amb_Conf" 
+file2Car ="../carros/out/artifacts/carros_jar/Amb_Conf" 
 
 # There can only be one action per position per car.
 actions = [
-    ("n19","N19_2", "break"),
-    ("n19","N19_2", "accident"),
 ]
 
 def write_Car_config(file_path): 
@@ -180,7 +152,3 @@ def write_Car_config(file_path):
 write_Car_config(temp)
 write_Car_config(file1Car)
 write_Car_config(file2Car)
-'''
-cur_dir = os.path.dirname(os.path.realpath('__file__'))
-file_name = os.path.join(cur_dir, 'src/Car/mov_amb.txt')
-'''
