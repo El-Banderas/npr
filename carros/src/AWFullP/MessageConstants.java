@@ -195,7 +195,7 @@ public class MessageConstants
 	 */
 	public static final int AMBULANCE_PATH 		= (int) 10;
 	//public static final int AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + 2 * ID_SIZE + 4 * Float.BYTES;
-	public static final byte TTLAmbulance_Path = (byte) 2;
+	public static final byte TTLAmbulance_Path = (byte) 3;
 
 	//== Ambulance Path to Each Server ==// O que são os primeiros 4 bytes ???
 	/*

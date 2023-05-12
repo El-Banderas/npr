@@ -11,23 +11,12 @@ cityes_positinions_Towers = {
     "Dir" : (857, 362),
 }
 cityes_positinions_car = {
-    "AMB1" : (100, 442),
-    "AMB2" : (467, 420),
-    "AMB3" : (430, 545),
-    "AMB4" : (102, 548),
-    "N16_1" : (248, 460),
-    "N16_2" : (100, 449),
-    "N14" : (50, 530),
-# Mais perto da torre e recebe acidente
-    "N17_1" : (654, 400),
-    "N17_2" : (950, 421),
-# Deve ignorar mensagem
-    "N18_1" : (654, 479),
-    "N18_2" : (950, 478),
-# Fica quase parada e tem acidente
-    "N19_1" : (789, 531),
-    "N19_2" : (858, 531),
-    "Fora" : (37, 700),
+    "AMB1" : (96, 534),
+    "AMB2" : (856, 549),
+    "N16_1" : (98, 442),
+    "N16_2" : (859, 455),
+    "N14" : (916, 551),
+   "Fora" : (37, 700),
 }
 
 initial_positions_tower = {
@@ -61,17 +50,13 @@ moves = {
     #    5 : (855.0 ,450.0 ,25.0),
     #},
     15: {
-        time_amb_1 :( "AMB2", 25),
-        time_amb_2 :( "AMB3", 25),
-        time_chega_move_acident :( "AMB4", 25),
-        time_fim_simulation :( "AMB4", 25),
+        time_amb_1 :( "AMB1", 35),
+        time_amb_2 :( "AMB2", 35),
     },
 
     16: {
-        2 :( "N16_1", 15),
-        time_init_move_amb :( "N16_1", 25),
-        time_chega_move_acident :( "N16_2", 25),
-        time_fim_simulation :( "N16_2", 25),
+        time_amb_1 :( "N16_1", 35),
+        time_amb_2 :( "N16_2", 35),
     },
 
     
