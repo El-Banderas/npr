@@ -147,6 +147,10 @@ public class Car implements Runnable
 					System.out.println("Add message");
 					messagesAlreadyReceived.add(message.forwardInfo);
 					ReceiveMessages.maybeForwardMessage(message, this.socket, me);
+					if (inDestination(message.forwardInfo)){
+						shared.addEntryMessages(MessageConstants.CLOUD_AMBULANCE_PATH_IN_DESTINATION);
+					}
+					else
 					shared.addEntryMessages(message.appLayer.getType());
 					shared.addSendMessages(message.appLayer.getType());
 				}

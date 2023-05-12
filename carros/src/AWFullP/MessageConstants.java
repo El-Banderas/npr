@@ -210,6 +210,8 @@ public class MessageConstants
 	 * +--------------------------------------------------------------------------------+
 	 */
 	public static final int CLOUD_AMBULANCE_PATH 		= (int) 11;
+	public static final int CLOUD_AMBULANCE_PATH_IN_DESTINATION = 12;
+
 	public static final int CLOUD_AMB_PATH_SIZE 	= (int) APP_HEADER_SIZE + Long.BYTES + 2 * Float.BYTES;
 	public static final byte TTL_Cloud_Ambulance_Path = (byte) 4;
 
@@ -268,10 +270,9 @@ public class MessageConstants
 
 	public static final int IGNORED_MESSAGE_DISTANCE = (int) 9;
 	// The radius in witch we consider the message is delivered
-	public static final int RADIUS_DESTINATION_POSITION = (int) 100;
+	public static final int RADIUS_DESTINATION_POSITION = (int) 90;
 
-	
-	
+
 	// Can receive a negative number beacuse negative types are used to indicate duplicate messages.
 	public static String convertTypeString(int type)
 	{
@@ -295,6 +296,8 @@ public class MessageConstants
 				return "Ambulance path to tower";
 			case CLOUD_AMBULANCE_PATH:
 				return "Ambulance path";
+			case CLOUD_AMBULANCE_PATH_IN_DESTINATION:
+				return "Ambulance path reached destination";
 			default:
 				return "Unexpected (" + type + ")";
 		}

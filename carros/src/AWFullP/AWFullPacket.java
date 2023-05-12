@@ -49,6 +49,9 @@ public class AWFullPacket
 			case MessageConstants.CLOUD_AMBULANCE_PATH:
 				this.appLayer = new AWFullPCloudAmbulanceServer(content);
 				break;
+			case MessageConstants.CLOUD_AMBULANCE_PATH_IN_DESTINATION:
+				this.appLayer = new AWFullPCloudAmbulanceServer(content);
+				break;
 		
 			default:
 				System.out.println("Unexpected type: " + appType);
