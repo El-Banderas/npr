@@ -20,8 +20,8 @@ cityes_positinions_car = {
     "N18_2" : (950, 478),
 # Fica quase parada e tem acidente
     "N19_Ini" : (604, 530),
-    "N19_1" : (689, 531),
-    "N19_2" : (614, 531),
+    "N19_1" : (614, 531),
+    "N19_2" : (689, 531),
     "Fora" : (37, 700),
 
 }
@@ -121,7 +121,7 @@ file2Car ="../carros/out/artifacts/carros_jar/Acident_Conf"
 
 # There can only be one action per position per car.
 actions = [
-    ("n19","N19_2", "break"),
+    ("n19","N19_Ini", "break"),
     ("n19","N19_2", "accident"),
 ]
 
