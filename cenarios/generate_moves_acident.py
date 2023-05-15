@@ -45,25 +45,25 @@ initial_positions = {
 
 time_fim_simulation = 40
 
-time_init_move_acident = 1
+time_init_move_acident = 6
 time_chega_move_acident = 5
 
-time_acident = 15
+time_acident = 17
 
 moves = {
     17: {
-        time_acident :( "N17_Acident", 25),
-        time_fim_simulation :( "N17_Fim", 25),
+        time_init_move_acident :( "N17_Acident", 25),
+        time_acident :( "N17_Fim", 25),
     },
 
     18: {
-        time_acident :( "N18_Acident", 25),
-        time_fim_simulation :( "N18_Fim", 25),
+        time_init_move_acident  :( "N18_Acident", 25),
+        time_acident  :( "N18_Fim", 25),
     },
     19: {
         2 :( "N19_Ini", 15),
-        time_acident :( "N19_Acident", 25),
-        time_fim_simulation :( "N19_Fim", 25),
+        time_init_move_acident :( "N19_Acident", 25),
+        time_acident :( "N19_Fim", 25),
     }
 }
 
