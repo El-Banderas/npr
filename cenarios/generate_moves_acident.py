@@ -21,7 +21,7 @@ cityes_positinions_car = {
 # Fica quase parada e tem acidente
     "N19_Ini" : (604, 530),
     "N19_1" : (614, 531),
-    "N19_2" : (689, 531),
+    "N19_2" : (659, 531),
     "Fora" : (37, 700),
 
 }
