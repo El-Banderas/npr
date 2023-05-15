@@ -133,7 +133,7 @@ public class Car implements Runnable
 			//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
 
 			// Is a new message
-			if (!(messagesAlreadyReceived.contains(message.forwardInfo) || sendMessagesClasses.containsKey(message.forwardInfo) )) {
+			if (!messagesAlreadyReceived.contains(message.forwardInfo) ) {
 				
 				// If the message is in destination, we fwd one time, and not wait for confirmation
 				if (message.hasDestinationPosition() && !inDestination(message.forwardInfo)) {
