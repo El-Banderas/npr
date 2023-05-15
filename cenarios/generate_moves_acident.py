@@ -61,9 +61,9 @@ moves = {
         time_acident  :( "N18_Fim", 25),
     },
     19: {
-        2 :( "N19_Ini", 15),
-        time_init_move_acident :( "N19_Acident", 25),
-        time_acident :( "N19_Fim", 25),
+        2 :( "N19_Ini", 10),
+        time_init_move_acident :( "N19_Acident", 10),
+        time_acident :( "N19_Fim", 15),
     }
 }
 
