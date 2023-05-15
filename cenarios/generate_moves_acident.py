@@ -13,15 +13,15 @@ cityes_positinions_Towers = {
 cityes_positinions_car = {
     
 # Mais perto da torre e recebe acidente
-    "N17_1" : (554, 400),
+    "N17_1" : (604, 400),
     "N17_2" : (950, 421),
 # Deve ignorar mensagem
-    "N18_1" : (554, 479),
+    "N18_1" : (604, 479),
     "N18_2" : (950, 478),
 # Fica quase parada e tem acidente
     "N19_Ini" : (604, 530),
-    "N19_1" : (614, 531),
-    "N19_2" : (689, 531),
+    "N19_1" : (664, 531),
+    "N19_2" : (699, 531),
     "Fora" : (37, 700),
 
 }
