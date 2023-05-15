@@ -133,7 +133,7 @@ public class Car implements Runnable
 			//if (message.getType() != MessageConstants.CAR_HELLO ) System.out.println("2");
 
 			// Is a new message
-			if (!messagesAlreadyReceived.contains(message.forwardInfo)) {
+			if (!(messagesAlreadyReceived.contains(message.forwardInfo) || sendMessagesClasses.containsKey(message.forwardInfo) )) {
 				
 				// If the message is in destination, we fwd one time, and not wait for confirmation
 				if (message.hasDestinationPosition() && !inDestination(message.forwardInfo)) {
@@ -151,7 +151,7 @@ public class Car implements Runnable
 						shared.addEntryMessages(MessageConstants.CLOUD_AMBULANCE_PATH_IN_DESTINATION);
 					}
 					else
-					shared.addEntryMessages(message.appLayer.getType());
+						shared.addEntryMessages(message.appLayer.getType());
 					shared.addSendMessages(message.appLayer.getType());
 				}
 			}
