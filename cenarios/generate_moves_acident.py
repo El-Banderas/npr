@@ -48,7 +48,7 @@ time_fim_simulation = 40
 time_init_move_acident = 6
 time_chega_move_acident = 5
 
-time_acident = 17
+time_acident = 15
 
 moves = {
     17: {
