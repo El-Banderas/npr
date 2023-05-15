@@ -52,15 +52,12 @@ time_acident = 15
 
 moves = {
     17: {
-        time_init_move_acident :( "N17_Acident", 25),
         time_acident :( "N17_Acident", 25),
         time_fim_simulation :( "N17_Fim", 25),
     },
 
     18: {
-        2 :( "N18_1", 15),
-        time_init_move_acident :( "N18_1", 25),
-        time_chega_move_acident :( "N18_Acident", 25),
+        time_acident :( "N18_Acident", 25),
         time_fim_simulation :( "N18_Fim", 25),
     },
     19: {

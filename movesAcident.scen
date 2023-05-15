@@ -22,12 +22,9 @@ $node_(18) set Z_ 0
 $node_(19) set X_ 604
 $node_(19) set Y_ 530
 $node_(19) set Z_ 0
-$ns_ at 1 "$node_(17) setdest 689 393 25"
 $ns_ at 15 "$node_(17) setdest 689 393 25"
 $ns_ at 40 "$node_(17) setdest 950 421 25"
-$ns_ at 2 "$node_(18) setdest 554 479 15"
-$ns_ at 1 "$node_(18) setdest 554 479 25"
-$ns_ at 5 "$node_(18) setdest 687 476 25"
+$ns_ at 15 "$node_(18) setdest 687 476 25"
 $ns_ at 40 "$node_(18) setdest 950 478 25"
 $ns_ at 2 "$node_(19) setdest 604 530 15"
 $ns_ at 15 "$node_(19) setdest 646 522 25"
