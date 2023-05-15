@@ -25,8 +25,9 @@ cityes_positinions_car = {
     "N18_1" : (654, 479),
     "N18_2" : (950, 478),
 # Fica quase parada e tem acidente
+    "N19_Ini" : (704, 530),
     "N19_1" : (789, 531),
-    "N19_2" : (858, 531),
+    "N19_2" : (714, 531),
     "Fora" : (37, 700),
 
 }
@@ -42,7 +43,7 @@ initial_positions = {
     16: "Fora",
     17: "N17_1",
     18:"N18_1" ,
-    19:"N19_1" ,
+    19:"N19_Ini" ,
 }
 
 
