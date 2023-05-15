@@ -125,8 +125,15 @@ public class Car implements Runnable
 
 
 		// TODO: O forward message devia estar fora dos ifs, é para testar
-		
+		// Ack from tower
+		if (sendMessagesClasses.containsKey(message.forwardInfo) && message.forwardInfo.getDist() == 0){
+			System.out.println("Receive ACK from tower");
+			sendMessagesClasses.get(message.forwardInfo).cancel();
+			sendMessagesClasses.remove(message.forwardInfo);
+			messagesAlreadyReceived.add(message.forwardInfo);
+			shared.addEntryMessages(message.appLayer.getType());
 
+		}
 		// In case is an accident message, and we want it to stop
 		if (message.forwardInfo.getTTL() > 1 || message.hasDestinationPosition() ) {
 			
