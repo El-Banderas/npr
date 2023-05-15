@@ -124,7 +124,6 @@ public class SendMessages
 		AWFullPacket after = new AWFullPacket(before.appLayer, fwrInfo);
 		
 		DatagramPacket readyToSend = new DatagramPacket(after.toBytes(), after.toBytes().length, to, port);
-		
 		try {
 			sender.send(readyToSend);
 			//logger.finest("\nSent packet " + after.toString() + " to " + to.toString() + ":" + port + "\n");

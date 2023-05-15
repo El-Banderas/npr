@@ -153,6 +153,8 @@ public class Server implements Runnable
 	private void sendConfirmationCar(AWFullPacket message) {
 		message.forwardInfo.setThisMessageAsAck(); // AWFullPFwdLayer
 		System.out.println("Send confirmation to tower (and then cars)");
+		System.out.println(tower.ip);
+		System.out.println(socket.getLocalAddress());
 		SendMessages.sendMessage(socket, tower.ip, Constants.towerPort, message,message.forwardInfo );
 
 
