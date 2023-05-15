@@ -140,8 +140,11 @@ public class Tower implements Runnable
 					sendToServer(message);
 				else {
 					// It is a new message, send to cars
-					if (messagesAlreadyReceived.add(message.forwardInfo))
+					if (messagesAlreadyReceived.add(message.forwardInfo)){
+						System.out.println("Send message to cars");
 						SendMessages.sendMessage(vanet_socket, Constants.MulticastGroup, Constants.portMulticast, message);
+
+					}
 				}
 				break;
 				
