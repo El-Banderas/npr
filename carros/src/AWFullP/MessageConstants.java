@@ -67,7 +67,7 @@ public class MessageConstants
 	/**
 	 * Number of tries that a car tries sending a message to a geographical destination.
 	 */
-	public static final float Number_Of_Tries_FWD = 10;
+	public static final float Number_Of_Tries_FWD = 20;
 	
 	//=== Application Layer ===//
 	/*
