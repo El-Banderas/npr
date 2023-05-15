@@ -69,7 +69,7 @@ moves = {
         time_fim_simulation :( "N18_2", 25),
     },
     19: {
-        2 :( "N19_1", 15),
+        2 :( "N19_Ini", 15),
         time_acident :( "N19_2", 25),
         time_fim_simulation :( "N19_2", 25),
     }
