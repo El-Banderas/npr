@@ -37,6 +37,7 @@ time_init_move_amb = 5
 time_amb_1 = 2
 time_amb_2 = 6
 time_chega_move_amb = 28
+time_fim_simulation1 = 32
 time_fim_simulation = 35
 
 time_init_move_acident = 5
@@ -52,6 +53,7 @@ moves = {
     15: {
         time_amb_1 :( "AMB1", 35),
         time_amb_2 :( "AMB2", 35),
+        time_fim_simulation1 :( "AMB2", 35),
         time_fim_simulation :( "AMB2", 35),
     },
 
