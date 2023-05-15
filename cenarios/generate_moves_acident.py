@@ -14,14 +14,16 @@ cityes_positinions_car = {
     
 # Mais perto da torre e recebe acidente
     "N17_1" : (554, 400),
-    "N17_2" : (950, 421),
+    "N17_Acident" : (689, 393),
+    "N17_Fim" : (950, 421),
 # Deve ignorar mensagem
     "N18_1" : (554, 479),
-    "N18_2" : (950, 478),
+    "N18_Acident" : (687, 476),
+    "N18_Fim" : (950, 478),
 # Fica quase parada e tem acidente
     "N19_Ini" : (604, 530),
-    "N19_1" : (614, 531),
-    "N19_2" : (659, 531),
+    "N19_Acident" : (646, 522),
+    "N19_Fim" : (659, 531),
     "Fora" : (37, 700),
 
 }
@@ -46,26 +48,25 @@ time_fim_simulation = 40
 time_init_move_acident = 1
 time_chega_move_acident = 5
 
-time_acident = 9
+time_acident = 15
 
 moves = {
     17: {
-        2 :( "N17_1", 15),
-        time_init_move_acident :( "N17_1", 25),
-        time_chega_move_acident :( "N17_2", 25),
-        time_fim_simulation :( "N17_2", 25),
+        time_init_move_acident :( "N17_Acident", 25),
+        time_acident :( "N17_Acident", 25),
+        time_fim_simulation :( "N17_Fim", 25),
     },
 
     18: {
         2 :( "N18_1", 15),
         time_init_move_acident :( "N18_1", 25),
-        time_chega_move_acident :( "N18_2", 25),
-        time_fim_simulation :( "N18_2", 25),
+        time_chega_move_acident :( "N18_Acident", 25),
+        time_fim_simulation :( "N18_Fim", 25),
     },
     19: {
         2 :( "N19_Ini", 15),
-        time_acident :( "N19_2", 25),
-        time_fim_simulation :( "N19_2", 25),
+        time_acident :( "N19_Acident", 25),
+        time_fim_simulation :( "N19_Fim", 25),
     }
 }
 
@@ -122,7 +123,7 @@ file2Car ="../carros/out/artifacts/carros_jar/Acident_Conf"
 # There can only be one action per position per car.
 actions = [
     ("n19","N19_Ini", "break"),
-    ("n19","N19_2", "accident"),
+    ("n19","N19_Acident", "accident"),
 ]
 
 def write_Car_config(file_path): 
