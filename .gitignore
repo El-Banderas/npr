@@ -11,3 +11,5 @@ carros.vpp.bak_000f
 .settings
 .project
 .classpath
+*.bak_001d
+*.bak_000f
