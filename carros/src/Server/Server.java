@@ -105,47 +105,39 @@ public class Server implements Runnable
 	
 	private void handleMessage(AWFullPacket message)
 	{
-		//TODO: filtrar mensagens de outras torres (if (message.getTowerID() != this.tower.getName()) return)
-		
 		switch (message.appLayer.getType()) {
 			// Update position of tower with announce from tower.
-			case MessageConstants.TOWER_ANNOUNCE:
+			case MessageConstants.TOWER_ANNOUNCE -> {
 				AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
 				this.tower.setPos(aw_ta.getPos());
 				this.tower.setIP(message.sender);
 				sendToCloud(new AWFullPacket(aw_ta));
-				break;
-
-			case MessageConstants.CAR_IN_RANGE:
+			}
+			case MessageConstants.CAR_IN_RANGE -> {
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
-				//if(this.tower.getName() != aw_cir.getTowerID()) break;
+				if (!this.tower.getName().equals(aw_cir.getTowerID())) break; // Filter packets from other zones
 				String carID_cir = aw_cir.getCarID();
 				if (!this.carsInRange.contains(carID_cir)) {
 					this.carsInRange.add(carID_cir);
 					checkAndSendBatch();
 				}
-				break;
-				
-			case MessageConstants.CAR_ACCIDENT:
+			}
+			case MessageConstants.CAR_ACCIDENT -> {
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
+				if (!this.tower.getName().equals(aw_ca.getTowerID())) break; // Filter packets from other zones
 				sendConfirmationCar(message);
 				sendToCloud(new AWFullPacket(aw_ca));
-				break;
-			case MessageConstants.AMBULANCE_PATH:
+			}
+			case MessageConstants.AMBULANCE_PATH -> {
 				AWFullPAmbPath aw_ap = (AWFullPAmbPath) message.appLayer;
-				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				sendToCloud(new AWFullPacket(aw_ap));
 				sendConfirmationCar(message);
-
-				break;
-			case MessageConstants.CLOUD_AMBULANCE_PATH:
+			}
+			case MessageConstants.CLOUD_AMBULANCE_PATH -> {
 				AWFullPCloudAmbulanceServer aw_cap = (AWFullPCloudAmbulanceServer) message.appLayer;
-				//if(this.tower.getName() != aw_ca.getTowerID()) break;
 				handlePathAmbulanceFromCloud(aw_cap);
-				break;
-
-			default:
-				logger.warning("Received unexpected message: " + message.toString());
+			}
+			default -> logger.warning("Received unexpected message: " + message.toString());
 		}
 	}
 

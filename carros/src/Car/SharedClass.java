@@ -18,7 +18,7 @@ public class SharedClass
 	public TreeMap<Integer, MessageEntry> receivedMessages;
 	public HashMap<Position, MessageEntry> sendMessages;
 	private int currentSeqNumberMessage;
-	private List<TowerInfo> towers;
+	private final List<TowerInfo> towers;
 	public CarInfo info;
 
 
@@ -79,16 +79,13 @@ public class SharedClass
 			System.out.println("[SharedClass] " + message.toString());
 		}
 	}
-	public int getAndIncrementSeqNumber(){
+	public int getAndIncrementSeqNumber()
+	{
 		this.currentSeqNumberMessage++;
 		return this.currentSeqNumberMessage;
 	}
 
-	public TowerInfo getNearestTower(){
-		return TowerInfo.getNearestTower(info.getPosition(), towers);
-	}
-
-
-
-
+	public TowerInfo getNearestTower() {return TowerInfo.getNearestTower(info.getPosition(), towers);}
+	public boolean knowsTower(TowerInfo tower) {return this.towers.stream().anyMatch((t)->t.getName().equals(tower.getName()));}
+	public void addTower(TowerInfo tower) {this.towers.add(tower);}
 }
