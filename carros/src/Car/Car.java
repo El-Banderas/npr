@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import AWFullP.*;
+import AWFullP.AppLayer.AWFullPTowerAnnounce;
 import AWFullP.FwdLayer.AWFullPFwdLayer;
 import AWFullP.FwdLayer.SelfCarMessage;
 import Car.Terminal.CarTerminal;
@@ -33,7 +34,6 @@ public class Car implements Runnable
 	
 	// Node information
 	private CarInfo me;
-	//private List<TowerInfo> towers;
 
 	// Connection information
 	private DatagramSocket socket;
@@ -53,7 +53,6 @@ public class Car implements Runnable
 		logger.config(towers.toString());
 		
 		this.me = info;
-		//this.towers = towers;
 		
 		this.socket = new InfoNodeMulticast("eth0").socket;
 		this.myIp = Constants.getMyIp();
@@ -66,7 +65,7 @@ public class Car implements Runnable
 	}
 
 	public Car(CarInfo info, List<TowerInfo> towers, AmbulanceInfo ambulanceInfo) throws IOException {
-		this(info,  towers);
+		this(info, towers);
 		TowerInfo getNearestTower = shared.getNearestTower();
 		System.out.println("Send Amblance info ["+getNearestTower.getName()+"]");
 		int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
@@ -122,7 +121,13 @@ public class Car implements Runnable
 
 	private void handleMessage(AWFullPacket message) throws UnknownHostException
 	{
-
+		// Upon receiving a tower announce, add it to the list
+		if (message.appLayer.getType() == MessageConstants.TOWER_ANNOUNCE) {
+			AWFullPTowerAnnounce aw_ta = (AWFullPTowerAnnounce) message.appLayer;
+			TowerInfo tower = new TowerInfo(aw_ta.getTowerID(), aw_ta.getPos(), aw_ta.getMaxSpeed());
+			if (!this.shared.knowsTower(tower))
+				this.shared.addTower(tower);
+		}
 
 		// TODO: O forward message devia estar fora dos ifs, é para testar
 		// Ack from tower
@@ -165,7 +170,7 @@ public class Car implements Runnable
 			else
 				shared.addRepeatedMessages(message.appLayer.getType());
 
-//			System.out.println("Received repeated message");
+			//System.out.println("Received repeated message");
 		}
 		else
 			shared.addEntryMessages(message.appLayer.getType());

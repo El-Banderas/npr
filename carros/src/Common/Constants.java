@@ -11,6 +11,7 @@ import java.util.Enumeration;
 public final class Constants
 {
 	public static int refreshRate = 1000; //ms
+	public static int longRefreshRate = 10000; //ms
 
 	/**
 	 * This constant is used in tests.
