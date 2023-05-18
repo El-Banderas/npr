@@ -84,7 +84,7 @@ public class Server implements Runnable
 		}
 		
 		Timer timer_1 = new Timer(false);
-		timer_1.scheduleAtFixedRate(wrap(this::sendBatch), 0, Constants.refreshRate); //fazer flush regularmente
+		timer_1.scheduleAtFixedRate(wrap(this::sendBatch), 0, Constants.longRefreshRate); //fazer flush regularmente (mas com menos frequencia)
 		
 		Thread thread_1 = new Thread(this::receiveMessages);
 		thread_1.start();
