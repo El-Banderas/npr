@@ -115,7 +115,7 @@ public class Server implements Runnable
 			}
 			case MessageConstants.CAR_IN_RANGE -> {
 				AWFullPCarInRange aw_cir = (AWFullPCarInRange) message.appLayer;
-				if (!this.tower.getName().equals(aw_cir.getTowerID())) break; // Filter packets from other zones
+				//if (!this.tower.getName().equals(aw_cir.getTowerID())) break; // Filter packets from other zones
 				String carID_cir = aw_cir.getCarID();
 				if (!this.carsInRange.contains(carID_cir)) {
 					this.carsInRange.add(carID_cir);
@@ -124,7 +124,7 @@ public class Server implements Runnable
 			}
 			case MessageConstants.CAR_ACCIDENT -> {
 				AWFullPCarAccident aw_ca = (AWFullPCarAccident) message.appLayer;
-				if (!this.tower.getName().equals(aw_ca.getTowerID())) break; // Filter packets from other zones
+				//if (!this.tower.getName().equals(aw_ca.getTowerID())) break; // Filter packets from other zones
 				sendConfirmationCar(message);
 				sendToCloud(new AWFullPacket(aw_ca));
 			}

@@ -67,7 +67,7 @@ public class Car implements Runnable
 	public Car(CarInfo info, List<TowerInfo> towers, AmbulanceInfo ambulanceInfo) throws IOException {
 		this(info, towers);
 		TowerInfo getNearestTower = shared.getNearestTower();
-		System.out.println("Send Amblance info ["+getNearestTower.getName()+"]");
+		System.out.println("Send Ambulance info ["+getNearestTower.getName()+"]");
 		int distance = (int) Position.distance(shared.info.getPosition(), getNearestTower.getPosition());
 
 		AWFullPFwdLayer fwrInfo = new AWFullPFwdLayer(MessageConstants.TTLAmbulance_Path, getNearestTower.getPosition(), distance, shared.info.getID(), shared.getAndIncrementSeqNumber());
